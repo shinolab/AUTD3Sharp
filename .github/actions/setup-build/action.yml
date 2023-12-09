@@ -20,3 +20,9 @@ runs:
       shell: bash
       run: |
         python3 -m pip install -U packaging requests
+
+    - name: Setup .NET Core
+      if: needs.check.outputs.status
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '8.0.x'

@@ -40,19 +40,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - name: Setup
         if: needs.check.outputs.status
         uses: ./.github/actions/setup-build
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           os: ${{ matrix.os }}
-
-      - name: Setup .NET Core
-        if: needs.check.outputs.status
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
 
       - name: Build cs library on ${{ matrix.os }}
         if: needs.check.outputs.status
@@ -80,19 +73,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-
       - name: Setup
         if: needs.check.outputs.status
         uses: ./.github/actions/setup-build
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           os: ${{ matrix.os }}
-
-      - name: Setup .NET Core
-        if: needs.check.outputs.status
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
 
       - name: Build unity library on ${{ matrix.os }}
         if: needs.check.outputs.status
