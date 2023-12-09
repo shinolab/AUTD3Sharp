@@ -1,6 +1,12 @@
 # autd3sharp
 
-[autd3](https://github.com/shinolab/autd3) wrapper for .Net Standard 2.1
+
+![build](https://github.com/shinolab/AUTD3Sharp/workflows/build/badge.svg)
+[![codecov](https://codecov.io/gh/shinolab/AUTD3Sharp/graph/badge.svg)](https://codecov.io/gh/shinolab/AUTD3Sharp)
+[![NuGet stable version](https://img.shields.io/nuget/v/autd3sharp)](https://nuget.org/packages/AUTD3Sharp)
+[![autd3-unity](https://img.shields.io/npm/v/com.shinolab.autd3?label=autd3-unity)](https://www.npmjs.com/package/com.shinolab.autd3)
+
+[autd3](https://github.com/shinolab/autd3-rs) wrapper for .Net Standard 2.1
 
 ## Install
 
@@ -9,7 +15,7 @@
 
 ## Example
 
-* Please refer to [example](./example)
+* Please refer to [C# example](./example/cs) or [F# example](./example/fs).
 
 * If you are using Linux/macOS, you may need to run as root (e.g. `sudo dotnet run`).
     * On Ubuntu 20.04, you may need to specify runtime (e.g. `sudo dotnet run -r ubuntu-x64`).
@@ -21,7 +27,7 @@
 
 ## LICENSE
 
-See [LICENSE](../LICENSE).
+See [LICENSE](./LICENSE) and [ThirdPartyNotice](./ThirdPartyNotice.txt).
 
 # Author
 
