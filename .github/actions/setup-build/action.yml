@@ -1,0 +1,22 @@
+name: 'build tools setup action'
+inputs:
+  github-token:
+    description: 'GITHUB_TOKEN'
+    required: true
+    default: ''
+  os:
+    description: 'os'
+    required: true
+    default: ''
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: 3.12
+
+    - name: Install packaging
+      shell: bash
+      run: |
+        python3 -m pip install -U packaging requests
