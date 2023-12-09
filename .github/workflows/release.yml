@@ -10,6 +10,7 @@ jobs:
     name: publish-unity
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
       - name: Build project
         run: |
           python3 build.py unity build --release
@@ -22,7 +23,7 @@ jobs:
         continue-on-error: true
         run: |
           mv unity/Assets/Samples unity/Assets/Samples~
-          rm -Force unity/Assets/Samples.meta
+          rm -f unity/Assets/Samples.meta
           cd unity/Assets
           npm install
           npm publish
