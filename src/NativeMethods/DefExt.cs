@@ -16,12 +16,6 @@
 #define USE_SINGLE
 #endif
 
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 using System;
 using System.Runtime.InteropServices;
 
@@ -346,6 +340,37 @@ namespace AUTD3Sharp
             public static SamplingConfigurationRaw Validate(this ResultSamplingConfig res)
             {
                 if (res.result.div != 0) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsDef.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            public static BackendPtr Validate(this ResultBackend res)
+            {
+                if (res.result.Item1 != IntPtr.Zero) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsDef.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+            public static PlotConfigPtr Validate(this ResultPlotConfig res)
+            {
+                if (res.result.Item1 != IntPtr.Zero) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsDef.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+            public static PyPlotConfigPtr Validate(this ResultPyPlotConfig res)
+            {
+                if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
                 unsafe
                 {
