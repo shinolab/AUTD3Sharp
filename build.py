@@ -392,7 +392,9 @@ def copy_dll_unity(config: Config):
     with open("unity/Assets/package.json", "r") as f:
         content = f.read()
         version = re.search(r'"version": "(.*)"', content).group(1)
-        version = ".".join(version.split(".")[:3])
+        version_tokens = version.split(".")
+        version_tokens[2] = version_tokens[2].split("-")[0]
+        version = ".".join(version_tokens)
 
     if not should_update_dll_unity(config, version):
         return
