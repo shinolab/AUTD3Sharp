@@ -23,7 +23,15 @@
 ## Unity
 
 * Please install via Unity Package Manager
- - See [document](https://shinolab.github.io/autd3/book/en/Users_Manual/getting_started/unity.html) for more details.
+
+    1. From the menu bar, select `Edit > Project settings > Package Manager`.
+    1. Add the following `Scoped registory`.
+        - Name : shinolab
+        - URL : https://registry.npmjs.com
+        - Scope(s): com.shinolab
+    1. From the menu bar, select `Window > Package Manager`.
+    1. Select `My Registries` from the drop-down menu in the upper left corner.
+    1. Install `autd3-unity` package.
 
 ## LICENSE
 
