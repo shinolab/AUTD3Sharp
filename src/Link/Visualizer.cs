@@ -4,7 +4,7 @@
  * Created Date: 13/10/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 13/10/2023
+ * Last Modified: 12/12/2023
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -20,6 +20,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -32,7 +33,6 @@ using Vector3 = UnityEngine.Vector3;
 #else
 using Vector3 = AUTD3Sharp.Utils.Vector3d;
 using AUTD3Sharp.Internal;
-
 #endif
 
 #if USE_SINGLE
@@ -248,37 +248,30 @@ namespace AUTD3Sharp.Link
                 _backend = backend;
                 _directivity = directivity;
             }
+
+#pragma warning disable CS8524
+            [ExcludeFromCodeCoverage]
             LinkBuilderPtr ILinkBuilder<Visualizer>.Ptr()
             {
-                return _backend switch
+                return (_backend, _directivity) switch
                 {
-                    Backend.Plotters => _directivity switch
-                    {
-                        Directivity.Sphere => NativeMethodsLinkVisualizer.AUTDLinkVisualizerSpherePlotters(
+                    (Backend.Plotters, Directivity.Sphere) => NativeMethodsLinkVisualizer.AUTDLinkVisualizerSpherePlotters(
                             _gpuIdx.HasValue, _gpuIdx ?? 0),
-                        Directivity.T4010A1 => NativeMethodsLinkVisualizer.AUTDLinkVisualizerT4010A1Plotters(
+                    (Backend.Plotters, Directivity.T4010A1) => NativeMethodsLinkVisualizer.AUTDLinkVisualizerT4010A1Plotters(
+                           _gpuIdx.HasValue, _gpuIdx ?? 0),
+                    (Backend.Python, Directivity.Sphere) => NativeMethodsLinkVisualizer.AUTDLinkVisualizerSpherePython(
                             _gpuIdx.HasValue, _gpuIdx ?? 0),
-                        _ => throw new ArgumentOutOfRangeException()
-                    },
-                    Backend.Python => _directivity switch
-                    {
-                        Directivity.Sphere => NativeMethodsLinkVisualizer.AUTDLinkVisualizerSpherePython(
+                    (Backend.Python, Directivity.T4010A1) => NativeMethodsLinkVisualizer.AUTDLinkVisualizerT4010A1Python(
                             _gpuIdx.HasValue, _gpuIdx ?? 0),
-                        Directivity.T4010A1 => NativeMethodsLinkVisualizer.AUTDLinkVisualizerT4010A1Python(
-                            _gpuIdx.HasValue, _gpuIdx ?? 0),
-                        _ => throw new ArgumentOutOfRangeException()
-                    },
-                    Backend.Null => _directivity switch
-                    {
-                        Directivity.Sphere => NativeMethodsLinkVisualizer.AUTDLinkVisualizerSphereNull(
-                            _gpuIdx.HasValue, _gpuIdx ?? 0),
-                        Directivity.T4010A1 => NativeMethodsLinkVisualizer.AUTDLinkVisualizerT4010A1Null(
-                            _gpuIdx.HasValue, _gpuIdx ?? 0),
-                        _ => throw new ArgumentOutOfRangeException()
-                    },
-                    _ => throw new ArgumentOutOfRangeException()
+                    (Backend.Null, Directivity.Sphere) => NativeMethodsLinkVisualizer.AUTDLinkVisualizerSphereNull(
+                             _gpuIdx.HasValue, _gpuIdx ?? 0),
+                    (Backend.Null, Directivity.T4010A1) => NativeMethodsLinkVisualizer.AUTDLinkVisualizerT4010A1Null(
+                        _gpuIdx.HasValue, _gpuIdx ?? 0),
                 };
             }
+#pragma warning restore CS8524
+
+            [ExcludeFromCodeCoverage]
             public VisualizerBuilder WithGpu(int gpuIdx)
             {
                 _gpuIdx = gpuIdx;
