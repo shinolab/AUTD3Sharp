@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
+using AUTD3Sharp.Internal;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -32,7 +33,6 @@ using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 #else
 using Vector3 = AUTD3Sharp.Utils.Vector3d;
-using AUTD3Sharp.Internal;
 #endif
 
 #if USE_SINGLE

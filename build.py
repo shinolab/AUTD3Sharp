@@ -518,69 +518,43 @@ def fs_run(args):
 def util_update_ver(args):
     version = args.version
 
-    with working_dir("dotnet"):
-        with working_dir("cs"):
-            for proj in glob.glob("example/**/*.csproj", recursive=True):
-                with open(proj, "r") as f:
-                    content = f.read()
-                    content = re.sub(
-                        r'"AUTD3Sharp" Version="(.*)"',
-                        f'"AUTD3Sharp" Version="{version}"',
-                        content,
-                        flags=re.MULTILINE,
-                    )
-                with open(proj, "w") as f:
-                    f.write(content)
-
-            with open("src/AUTD3Sharp.csproj", "r") as f:
+    with working_dir("."):
+        for proj in glob.glob("example/**/*.csproj", recursive=True):
+            with open(proj, "r") as f:
                 content = f.read()
                 content = re.sub(
-                    r"<Version>(.*)</Version>",
-                    f"<Version>{version}</Version>",
+                    r'"AUTD3Sharp" Version="(.*)"',
+                    f'"AUTD3Sharp" Version="{version}"',
                     content,
                     flags=re.MULTILINE,
                 )
-            with open("src/AUTD3Sharp.csproj", "w") as f:
+            with open(proj, "w") as f:
                 f.write(content)
 
-        with working_dir("fs"):
-            for proj in glob.glob("example/**/*.fsproj", recursive=True):
-                with open(proj, "r") as f:
-                    content = f.read()
-                    content = re.sub(
-                        r'"AUTD3Sharp" Version="(.*)"',
-                        f'"AUTD3Sharp" Version="{version}"',
-                        content,
-                        flags=re.MULTILINE,
-                    )
-                with open(proj, "w") as f:
-                    f.write(content)
+        for proj in glob.glob("example/**/*.fsproj", recursive=True):
+            with open(proj, "r") as f:
+                content = f.read()
+                content = re.sub(
+                    r'"AUTD3Sharp" Version="(.*)"',
+                    f'"AUTD3Sharp" Version="{version}"',
+                    content,
+                    flags=re.MULTILINE,
+                )
+            with open(proj, "w") as f:
+                f.write(content)
+
+        with open("src/AUTD3Sharp.csproj", "r") as f:
+            content = f.read()
+            content = re.sub(
+                r"<Version>(.*)</Version>",
+                f"<Version>{version}</Version>",
+                content,
+                flags=re.MULTILINE,
+            )
+        with open("src/AUTD3Sharp.csproj", "w") as f:
+            f.write(content)
 
         with working_dir("unity"):
-            with open("Assets/package.json", "r") as f:
-                content = f.read()
-                content = re.sub(
-                    r'"version": "(.*)"',
-                    f'"version": "{version}"',
-                    content,
-                    flags=re.MULTILINE,
-                )
-            with open("Assets/package.json", "w") as f:
-                f.write(content)
-
-        with working_dir("unity-mac"):
-            with open("Assets/package.json", "r") as f:
-                content = f.read()
-                content = re.sub(
-                    r'"version": "(.*)"',
-                    f'"version": "{version}"',
-                    content,
-                    flags=re.MULTILINE,
-                )
-            with open("Assets/package.json", "w") as f:
-                f.write(content)
-
-        with working_dir("unity-linux"):
             with open("Assets/package.json", "r") as f:
                 content = f.read()
                 content = re.sub(
