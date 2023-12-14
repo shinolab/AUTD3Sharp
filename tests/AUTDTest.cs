@@ -4,7 +4,7 @@
  * Created Date: 25/09/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 07/12/2023
+ * Last Modified: 14/12/2023
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -257,9 +257,6 @@ public class AUTDTest
 
             await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
             Assert.Equal(2000ul, autd.Link.LastTimeoutNs());
-
-            await autd.SendAsync(new Stop(), TimeSpan.FromMicroseconds(3));
-            Assert.Equal(3000ul, autd.Link.LastTimeoutNs());
         }
 
         {
@@ -274,9 +271,6 @@ public class AUTDTest
 
             await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
             Assert.Equal(2000ul, autd.Link.LastTimeoutNs());
-
-            await autd.SendAsync(new Stop(), TimeSpan.FromMicroseconds(3));
-            Assert.Equal(3000ul, autd.Link.LastTimeoutNs());
         }
     }
 
@@ -295,9 +289,6 @@ public class AUTDTest
 
             autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
             Assert.Equal(2000ul, autd.Link.LastTimeoutNs());
-
-            autd.Send(new Stop(), TimeSpan.FromMicroseconds(3));
-            Assert.Equal(3000ul, autd.Link.LastTimeoutNs());
         }
 
         {
@@ -312,9 +303,6 @@ public class AUTDTest
 
             autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
             Assert.Equal(2000ul, autd.Link.LastTimeoutNs());
-
-            autd.Send(new Stop(), TimeSpan.FromMicroseconds(3));
-            Assert.Equal(3000ul, autd.Link.LastTimeoutNs());
         }
     }
 
@@ -429,58 +417,6 @@ public class AUTDTest
     }
 
     [Fact]
-    public async Task TestSendSpecial()
-    {
-        using var autd = await CreateController();
-        Assert.True(await autd.SendAsync(new Uniform(EmitIntensity.Max)));
-
-        foreach (var dev in autd.Geometry)
-        {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
-            Assert.All(intensities, d => Assert.Equal(0xFF, d));
-        }
-        Assert.True(await autd.SendAsync(new Stop()));
-
-        foreach (var dev in autd.Geometry)
-        {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
-            Assert.All(intensities, d => Assert.Equal(0, d));
-        }
-
-        autd.Link.Down();
-        Assert.False(await autd.SendAsync(new Stop()));
-
-        autd.Link.BreakDown();
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Stop()));
-    }
-
-    [Fact]
-    public void TestSendSpecialSync()
-    {
-        var autd = CreateControllerSync();
-        Assert.True(autd.Send(new Uniform(EmitIntensity.Max)));
-
-        foreach (var dev in autd.Geometry)
-        {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
-            Assert.All(intensities, d => Assert.Equal(0xFF, d));
-        }
-        Assert.True(autd.Send(new Stop()));
-
-        foreach (var dev in autd.Geometry)
-        {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
-            Assert.All(intensities, d => Assert.Equal(0, d));
-        }
-
-        autd.Link.Down();
-        Assert.False(autd.Send(new Stop()));
-
-        autd.Link.BreakDown();
-        Assert.Throws<AUTDException>(() => autd.Send(new Stop()));
-    }
-
-    [Fact]
     public async Task TestGroup()
     {
         using var autd = await CreateController();
@@ -506,7 +442,7 @@ public class AUTDTest
         }
 
         await autd.Group(dev => dev.Idx.ToString())
-             .Set("1", new Stop())
+             .Set("1", new Null())
              .Set("0", new Uniform(EmitIntensity.Max))
              .SendAsync();
         {
@@ -535,11 +471,11 @@ public class AUTDTest
         }
 
         Assert.Throws<AUTDException>(() => autd.Group(dev => dev.Idx.ToString())
-             .Set("0", new Stop())
+             .Set("0", new Null())
              .Set("0", new Uniform(EmitIntensity.Max)));
         Assert.Throws<AUTDException>(() => autd.Group(dev => dev.Idx.ToString())
              .Set("0", new Uniform(EmitIntensity.Max))
-             .Set("0", new Stop()));
+             .Set("0", new Null()));
     }
 
 
@@ -569,7 +505,7 @@ public class AUTDTest
         }
 
         autd.Group(dev => dev.Idx.ToString())
-            .Set("1", new Stop())
+            .Set("1", new Null())
             .Set("0", new Uniform(EmitIntensity.Max))
             .Send();
         {
@@ -605,7 +541,7 @@ public class AUTDTest
 
         await autd.Group(dev => dev.Idx.ToString())
              .Set("0", (new Static(), new Null()), TimeSpan.FromSeconds(10))
-             .Set("1", new Stop(), TimeSpan.FromSeconds(5))
+             .Set("1", new Null(), TimeSpan.FromSeconds(5))
              .SendAsync();
         {
             Assert.Equal(10ul * 1000ul * 1000ul * 1000ul, autd.Link.LastTimeoutNs());
@@ -664,26 +600,6 @@ public class AUTDTest
             var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
-        }
-    }
-
-    [Fact]
-    public async Task TestStop()
-    {
-        using var autd = await CreateController();
-        Assert.True(await autd.SendAsync(new Uniform(EmitIntensity.Max).WithPhase(new Phase(0x90))));
-        foreach (var dev in autd.Geometry)
-        {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
-            Assert.All(intensities, d => Assert.Equal(0xFF, d));
-            Assert.All(phases, p => Assert.Equal(0x90, p));
-        }
-
-        Assert.True(await autd.SendAsync(new Stop()));
-        foreach (var dev in autd.Geometry)
-        {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
-            Assert.All(intensities, d => Assert.Equal(0, d));
         }
     }
 

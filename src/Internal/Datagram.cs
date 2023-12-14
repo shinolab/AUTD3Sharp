@@ -4,7 +4,7 @@
  * Created Date: 20/08/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 29/11/2023
+ * Last Modified: 14/12/2023
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -17,12 +17,6 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Internal
 {
-    [ComVisible(false)]
-    public interface ISpecialDatagram
-    {
-        internal DatagramSpecialPtr Ptr();
-    }
-
     [ComVisible(false)]
     public interface IDatagram
     {

@@ -179,9 +179,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDatagramClear", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramClear();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDatagramStop", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern DatagramSpecialPtr AUTDDatagramStop();
-
         [DllImport(__DllName, EntryPoint = "AUTDDatagramConfigureModDelay", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramConfigureModDelay(IntPtr f, IntPtr context, GeometryPtr geometry);
 
@@ -200,17 +197,11 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDControllerSend", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultI32 AUTDControllerSend(ControllerPtr cnt, DatagramPtr d1, DatagramPtr d2, long timeout_ns);
 
-        [DllImport(__DllName, EntryPoint = "AUTDControllerSendSpecial", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDControllerSendSpecial(ControllerPtr cnt, DatagramSpecialPtr special, long timeout_ns);
-
         [DllImport(__DllName, EntryPoint = "AUTDControllerGroupCreateKVMap", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GroupKVMapPtr AUTDControllerGroupCreateKVMap();
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerGroupKVMapSet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultGroupKVMap AUTDControllerGroupKVMapSet(GroupKVMapPtr map, int key, DatagramPtr d1, DatagramPtr d2, long timeout_ns);
-
-        [DllImport(__DllName, EntryPoint = "AUTDControllerGroupKVMapSetSpecial", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultGroupKVMap AUTDControllerGroupKVMapSetSpecial(GroupKVMapPtr map, int key, DatagramSpecialPtr special, long timeout_ns);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultI32 AUTDControllerGroup(ControllerPtr cnt, int* map, GroupKVMapPtr kv_map);

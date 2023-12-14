@@ -3,7 +3,7 @@
 // Created Date: 03/02/2023
 // Author: Shun Suzuki
 // -----
-// Last Modified: 02/12/2023
+// Last Modified: 14/12/2023
 // Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
 // -----
 // Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -55,7 +55,7 @@ module SampleRunner =
 
                     printfn "finish."
 
-                    (new Stop()) |> autd.SendAsync  |> Async.AwaitTask|> ignore;
+                    (new Silencer(), new Null()) |> autd.SendAsync  |> Async.AwaitTask|> ignore;
 
                     run_example()
                 | _ -> ()

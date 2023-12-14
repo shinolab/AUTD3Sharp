@@ -4,7 +4,7 @@
  * Created Date: 23/05/2022
  * Author: Shun Suzuki
  * -----
- * Last Modified: 07/12/2023
+ * Last Modified: 14/12/2023
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2022-2023 Shun Suzuki. All rights reserved.
@@ -296,35 +296,6 @@ namespace AUTD3Sharp
         /// <summary>
         /// Send data to the devices
         /// </summary>
-        /// <param name="special">Special data (Stop)</param>
-        /// <param name="timeout"></param>
-        /// <returns> If true, it is confirmed that the data has been successfully transmitted. Otherwise, there are no errors, but it is unclear whether the data has been sent reliably or not.</returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="AUTDException"></exception>
-        public async Task<bool> SendAsync(ISpecialDatagram special, TimeSpan? timeout = null)
-        {
-            return await Task.Run(() =>
-               NativeMethodsBase.AUTDControllerSendSpecial(Ptr, special.Ptr(),
-                   (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1)).Validate() == NativeMethodsDef.AUTD3_TRUE);
-        }
-
-        /// <summary>
-        /// Send data to the devices
-        /// </summary>
-        /// <param name="special">Special data (Stop)</param>
-        /// <param name="timeout"></param>
-        /// <returns> If true, it is confirmed that the data has been successfully transmitted. Otherwise, there are no errors, but it is unclear whether the data has been sent reliably or not.</returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="AUTDException"></exception>
-        public bool Send(ISpecialDatagram special, TimeSpan? timeout = null)
-        {
-            return NativeMethodsBase.AUTDControllerSendSpecial(Ptr, special.Ptr(),
-                    (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1)).Validate() == NativeMethodsDef.AUTD3_TRUE;
-        }
-
-        /// <summary>
-        /// Send data to the devices
-        /// </summary>
         /// <param name="data">Data</param>
         /// <param name="timeout"></param>
         /// <returns> If true, it is confirmed that the data has been successfully transmitted. Otherwise, there are no errors, but it is unclear whether the data has been sent reliably or not.</returns>
@@ -447,17 +418,6 @@ namespace AUTD3Sharp
                 return Set(key, data.Item1, data.Item2, timeout);
             }
 
-            public GroupGuard Set(object key, ISpecialDatagram data, TimeSpan? timeout = null)
-            {
-                if (_keymap.ContainsKey(key)) throw new AUTDException("Key already exists");
-
-                var timeoutNs = (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1);
-                var ptr = data.Ptr();
-                _keymap[key] = _k++;
-                _kvMap = NativeMethodsBase.AUTDControllerGroupKVMapSetSpecial(_kvMap, _keymap[key], ptr, timeoutNs).Validate();
-                return this;
-            }
-
             public async Task<bool> SendAsync()
             {
                 var map = _controller.Geometry.Select(dev =>
@@ -559,14 +519,6 @@ namespace AUTD3Sharp
     public sealed class Synchronize : IDatagram
     {
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSynchronize();
-    }
-
-    /// <summary>
-    /// SpecialData to stop output
-    /// </summary>
-    public sealed class Stop : ISpecialDatagram
-    {
-        DatagramSpecialPtr ISpecialDatagram.Ptr() => NativeMethodsBase.AUTDDatagramStop();
     }
 
     /// <summary>
