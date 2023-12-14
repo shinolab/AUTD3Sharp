@@ -12,6 +12,7 @@
 namespace Samples
 
 open AUTD3Sharp
+open AUTD3Sharp.Gain
 
 module SampleRunner =
     let Run<'T> (autd : Controller<'T>) = 
