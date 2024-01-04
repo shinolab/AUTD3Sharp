@@ -4,7 +4,7 @@
  * Created Date: 12/12/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 12/12/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -25,7 +25,7 @@ public class VisualizerTest
         var center = autd.Geometry.Center + new Vector3d(0, 0, 150);
 
         var g = new Uniform(0x80).WithPhase(new Phase(0x81));
-        var m = new Static().WithIntensity(0x82);
+        var m = Static.WithIntensity(0x82);
 
         autd.Send(m, g);
 

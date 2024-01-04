@@ -4,7 +4,7 @@
  * Created Date: 15/09/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 02/12/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -22,7 +22,7 @@ internal static class GroupByDeviceTest
 {
     public static async Task Test<T>(Controller<T> autd)
     {
-        var config = new Silencer();
+        var config = ConfigureSilencer.Default();
         await autd.SendAsync(config);
 
         await autd.Group(dev =>
@@ -45,7 +45,7 @@ internal static class GroupByTransducerTest
 {
     public static async Task Test<T>(Controller<T> autd)
     {
-        var config = new Silencer();
+        var config = ConfigureSilencer.Default();
         await autd.SendAsync(config);
 
         var cx = autd.Geometry.Center.x;

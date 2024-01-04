@@ -4,7 +4,7 @@
  * Created Date: 13/09/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 29/11/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -36,15 +36,14 @@ namespace AUTD3Sharp.Modulation
     {
         private EmitIntensity? _intensity;
 
-        /// <summary>
-        /// Set amplitude
-        /// </summary>
-        /// <param name="intensity">Emission intensity</param>
-        /// <returns></returns>
-        public Static WithIntensity(byte intensity)
+        public Static()
         {
-            _intensity = new EmitIntensity(intensity);
-            return this;
+            _intensity = null;
+        }
+
+        private Static(EmitIntensity intensity)
+        {
+            _intensity = intensity;
         }
 
         /// <summary>
@@ -52,18 +51,26 @@ namespace AUTD3Sharp.Modulation
         /// </summary>
         /// <param name="intensity">Emission intensity</param>
         /// <returns></returns>
-        public Static WithIntensity(EmitIntensity intensity)
+        public static Static WithIntensity(byte intensity)
         {
-            _intensity = intensity;
-            return this;
+            return new Static(new EmitIntensity(intensity));
+        }
+
+        /// <summary>
+        /// Set amplitude
+        /// </summary>
+        /// <param name="intensity">Emission intensity</param>
+        /// <returns></returns>
+        public static Static WithIntensity(EmitIntensity intensity)
+        {
+            return new Static(intensity);
         }
 
         internal override ModulationPtr ModulationPtr()
         {
-            var ptr = NativeMethodsBase.AUTDModulationStatic();
             if (_intensity != null)
-                ptr = NativeMethodsBase.AUTDModulationStaticWithIntensity(ptr, _intensity.Value.Value);
-            return ptr;
+                return NativeMethodsBase.AUTDModulationStaticWithIntensity(_intensity.Value.Value);
+            else return NativeMethodsBase.AUTDModulationStatic();
         }
     }
 }

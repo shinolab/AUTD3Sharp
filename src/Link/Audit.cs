@@ -4,7 +4,7 @@
  * Created Date: 22/09/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 06/12/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -89,14 +89,29 @@ namespace AUTD3Sharp.Link
             NativeMethodsBase.AUTDLinkAuditCpuUpdate(_ptr, (uint)idx);
         }
 
-        public ushort SilencerStepIntensity(int idx)
+        public ushort SilencerUpdateRateIntensity(int idx)
         {
-            return NativeMethodsBase.AUTDLinkAuditFpgaSilencerStepIntensity(_ptr, (uint)idx);
+            return NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (uint)idx);
         }
 
-        public ushort SilencerStepPhase(int idx)
+        public ushort SilencerUpdateRatePhase(int idx)
         {
-            return NativeMethodsBase.AUTDLinkAuditFpgaSilencerStepPhase(_ptr, (uint)idx);
+            return NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (uint)idx);
+        }
+
+        public ushort SilencerCompletionStepsIntensity(int idx)
+        {
+            return NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (uint)idx);
+        }
+
+        public ushort SilencerCompletionStepsPhase(int idx)
+        {
+            return NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (uint)idx);
+        }
+
+        public bool SilencerFixedCompletionStepsMode(int idx)
+        {
+            return NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (uint)idx);
         }
 
         public byte DebugOutputIdx(int idx)

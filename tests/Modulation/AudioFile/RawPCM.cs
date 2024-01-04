@@ -4,7 +4,7 @@
  * Created Date: 25/09/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 06/12/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -111,12 +111,12 @@ public class RawPCMTest
             Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx));
         }
 
-        var m = new RawPCM("sin150.dat", 4000).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512));
-        Assert.Equal(SamplingConfiguration.FromFrequencyDivision(512), m.SamplingConfiguration);
+        var m = new RawPCM("sin150.dat", 4000).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240));
+        Assert.Equal(SamplingConfiguration.FromFrequencyDivision(10240), m.SamplingConfiguration);
         Assert.True(await autd.SendAsync(m));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(512u, autd.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx));
         }
     }
 }

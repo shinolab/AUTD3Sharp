@@ -4,7 +4,7 @@
  * Created Date: 23/05/2022
  * Author: Shun Suzuki
  * -----
- * Last Modified: 14/12/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2022-2023 Shun Suzuki. All rights reserved.
@@ -612,31 +612,90 @@ namespace AUTD3Sharp
     /// <summary>
     /// Datagram to configure silencer
     /// </summary>
-    public sealed class Silencer : IDatagram
+    public sealed class ConfigureSilencer
     {
-        private readonly ushort _stepIntensity;
-        private readonly ushort _stepPhase;
+        public sealed class ConfigureSilencerFixedUpdateRate : IDatagram
+        {
+            private readonly ushort _valueIntensity;
+            private readonly ushort _valuePhase;
+
+            public ConfigureSilencerFixedUpdateRate(ushort valueIntensity, ushort valuePhase)
+            {
+                _valueIntensity = valueIntensity;
+                _valuePhase = valuePhase;
+            }
+
+            DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRate(_valueIntensity, _valuePhase).Validate();
+        }
+
+        public sealed class ConfigureSilencerFixedCompletionSteps : IDatagram
+        {
+            private readonly ushort _valueIntensity;
+            private readonly ushort _valuePhase;
+            private bool? _strictMode;
+
+            public ConfigureSilencerFixedCompletionSteps(ushort valueIntensity, ushort valuePhase)
+            {
+                _valueIntensity = valueIntensity;
+                _valuePhase = valuePhase;
+                _strictMode = null;
+            }
+
+            /// <summary>
+            /// Set strict mode
+            /// </summary>
+            /// <param name="mode">strict mode</param>
+            /// <returns></returns>
+            public ConfigureSilencerFixedCompletionSteps WithStrictMode(bool mode)
+            {
+                _strictMode = mode;
+                return this;
+            }
+
+            DatagramPtr IDatagram.Ptr(Geometry geometry)
+            {
+                var ptr = NativeMethodsBase.AUTDDatagramSilencerFixedCompletionSteps(_valueIntensity, _valuePhase).Validate();
+                if (_strictMode != null) NativeMethodsBase.AUTDDatagramSilencerFixedCompletionStepsWithStrictMode(ptr, _strictMode.Value);
+                return ptr;
+            }
+        }
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="stepIntensity">Intensity update step of silencer. The smaller step is, the quieter the output is.</param>
-        /// <param name="stepPhase">Phase update step of silencer. The smaller step is, the quieter the output is.</param>
-        public Silencer(ushort stepIntensity = 256, ushort stepPhase = 256)
+        /// <param name="valueIntensity">Intensity update rate of silencer. The smaller step is, the quieter the output is.</param>
+        /// <param name="valuePhase">Phase update rate of silencer. The smaller step is, the quieter the output is.</param>
+        public static ConfigureSilencerFixedUpdateRate FixedUpdateRate(ushort stepsIntensity, ushort stepsPhase)
         {
-            _stepIntensity = stepIntensity;
-            _stepPhase = stepPhase;
+            return new ConfigureSilencerFixedUpdateRate(stepsIntensity, stepsPhase);
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencer(_stepIntensity, _stepPhase).Validate();
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="valueIntensity">Intensity update rate of silencer. The smaller step is, the quieter the output is.</param>
+        /// <param name="valuePhase">Phase update rate of silencer. The smaller step is, the quieter the output is.</param>
+        public static ConfigureSilencerFixedCompletionSteps FixedCompletionSteps(ushort stepsIntensity, ushort stepsPhase)
+        {
+            return new ConfigureSilencerFixedCompletionSteps(stepsIntensity, stepsPhase);
+        }
 
         /// <summary>
         /// Disable silencer
         /// </summary>
         /// <returns></returns>
-        public static Silencer Disable()
+        public static ConfigureSilencerFixedCompletionSteps Disable()
         {
-            return new Silencer(0xFFFF, 0xFFFF);
+            return new ConfigureSilencerFixedCompletionSteps(1, 1);
+        }
+
+        /// <summary>
+        /// Default silencer
+        /// </summary>
+        /// <returns></returns>
+        public static ConfigureSilencerFixedCompletionSteps Default()
+        {
+            return new ConfigureSilencerFixedCompletionSteps(10, 40);
         }
     }
 }

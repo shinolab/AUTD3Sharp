@@ -204,7 +204,7 @@ def copy_dll(config: Config):
         f.write(requests.get(url).content)
     shutil.unpack_archive("tmp.zip", ".")
     rm_f("tmp.zip")
-    for dll in glob.glob("bin/*"):
+    for dll in glob.glob("bin/*.dll"):
         shutil.copy(dll, "src/native/windows/x64")
         shutil.copy(dll, "tests")
     rmtree_f("bin")
@@ -215,7 +215,7 @@ def copy_dll(config: Config):
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
-    for dll in glob.glob("bin/*"):
+    for dll in glob.glob("bin/*.dylib"):
         shutil.copy(dll, "src/native/osx/universal")
         shutil.copy(dll, "tests")
     rmtree_f("bin")
@@ -226,7 +226,7 @@ def copy_dll(config: Config):
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
-    for dll in glob.glob("bin/*"):
+    for dll in glob.glob("bin/*.so"):
         shutil.copy(dll, "src/native/linux/x64")
         shutil.copy(dll, "tests")
     rmtree_f("bin")
@@ -362,6 +362,9 @@ def cs_clear(_):
         rmtree_f("src/obj")
 
         rmtree_f("tests/bin")
+        rm_glob_f("tests/*.dll")
+        rm_glob_f("tests/*.dylib")
+        rm_glob_f("tests/*.so")
         rmtree_f("tests/obj")
 
         rmtree_glob_f("example/**/bin")

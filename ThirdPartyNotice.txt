@@ -14,7 +14,7 @@ adler 1.0.2 (0BSD OR Apache-2.0 OR MIT)
 https://github.com/jonas-schievink/adler.git
 ---------------------------------------------------------
 
-ahash 0.8.6 (Apache-2.0 OR MIT)
+ahash 0.8.7 (Apache-2.0 OR MIT)
 https://github.com/tkaitchuck/ahash
 ---------------------------------------------------------
 
@@ -30,7 +30,7 @@ android_system_properties 0.1.5 (Apache-2.0 OR MIT)
 https://github.com/nical/android_system_properties
 ---------------------------------------------------------
 
-anyhow 1.0.75 (Apache-2.0 OR MIT)
+anyhow 1.0.79 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/anyhow
 ---------------------------------------------------------
 
@@ -54,7 +54,7 @@ async-stream-impl 0.3.5 (MIT)
 https://github.com/tokio-rs/async-stream
 ---------------------------------------------------------
 
-async-trait 0.1.74 (Apache-2.0 OR MIT)
+async-trait 0.1.77 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/async-trait
 ---------------------------------------------------------
 
@@ -62,35 +62,35 @@ atomic-polyfill 1.0.3 (Apache-2.0 OR MIT)
 https://github.com/embassy-rs/atomic-polyfill
 ---------------------------------------------------------
 
-autd3 19.1.0 (MIT)
+autd3 20.0.2 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-backend-cuda 19.0.0 (MIT)
+autd3-backend-cuda 20.0.0 (MIT)
 https://github.com/shinolab/autd3-backend-cuda
 ---------------------------------------------------------
 
-autd3-derive 19.1.0 (MIT)
+autd3-derive 20.0.2 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 19.1.0 (MIT)
+autd3-driver 20.0.2 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 19.1.0 (MIT)
+autd3-firmware-emulator 20.0.2 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 19.1.0 (MIT)
+autd3-gain-holo 20.0.2 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 19.1.0 (MIT)
+autd3-link-simulator 20.0.2 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 19.1.0
+autd3-link-soem 20.0.2
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -156,7 +156,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 19.1.0
+autd3-link-twincat 20.0.2
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -208,44 +208,44 @@ SOFTWARE.
 
 ---------------------------------------------------------
 
-autd3-link-visualizer 19.0.0 (MIT)
+autd3-link-visualizer 20.0.1 (MIT)
 https://github.com/shinolab/autd3-link-visualizer
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 19.1.0 (MIT)
+autd3-modulation-audio-file 20.0.2 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 19.1.0 (MIT)
+autd3-protobuf 20.0.2 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 19.1.0 (MIT)
+autd3capi 20.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-backend-cuda 19.1.0 (MIT)
+autd3capi-backend-cuda 20.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-def 19.1.0 (MIT)
+autd3capi-def 20.0.0 (MIT)
 https://github.com/shinolab/autd3
 ---------------------------------------------------------
 
-autd3capi-gain-holo 19.1.0 (MIT)
+autd3capi-gain-holo 20.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-simulator 19.1.0 (MIT)
+autd3capi-link-simulator 20.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-soem 19.1.0 (MIT)
+autd3capi-link-soem 20.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-twincat 19.1.0 (MIT)
+autd3capi-link-twincat 20.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-visualizer 19.1.0 (MIT)
+autd3capi-link-visualizer 20.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 19.1.0 (MIT)
+autd3capi-modulation-audio-file 20.0.0 (MIT)
 ---------------------------------------------------------
 
 autocfg 1.1.0 (Apache-2.0 OR MIT)
@@ -352,15 +352,15 @@ critical-section 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/rust-embedded/critical-section
 ---------------------------------------------------------
 
-crossbeam-channel 0.5.8 (Apache-2.0 OR MIT)
+crossbeam-channel 0.5.10 (Apache-2.0 OR MIT)
 https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
-crossbeam-queue 0.3.8 (Apache-2.0 OR MIT)
+crossbeam-queue 0.3.10 (Apache-2.0 OR MIT)
 https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
-crossbeam-utils 0.8.16 (Apache-2.0 OR MIT)
+crossbeam-utils 0.8.18 (Apache-2.0 OR MIT)
 https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
@@ -383,7 +383,7 @@ cuda-sys 0.2.0 (MIT)
 https://github.com/termoshtt/accel
 ---------------------------------------------------------
 
-deranged 0.3.10 (Apache-2.0 OR MIT)
+deranged 0.3.11 (Apache-2.0 OR MIT)
 https://github.com/jhpratt/deranged
 ---------------------------------------------------------
 
@@ -423,7 +423,7 @@ fastrand 2.0.1 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/fastrand
 ---------------------------------------------------------
 
-fdeflate 0.3.1 (Apache-2.0 OR MIT)
+fdeflate 0.3.3 (Apache-2.0 OR MIT)
 https://github.com/image-rs/fdeflate
 ---------------------------------------------------------
 
@@ -475,23 +475,23 @@ funty 2.0.0 (MIT)
 https://github.com/myrrlyn/funty
 ---------------------------------------------------------
 
-futures-channel 0.3.29 (Apache-2.0 OR MIT)
+futures-channel 0.3.30 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
-futures-core 0.3.29 (Apache-2.0 OR MIT)
+futures-core 0.3.30 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
-futures-sink 0.3.29 (Apache-2.0 OR MIT)
+futures-sink 0.3.30 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
-futures-task 0.3.29 (Apache-2.0 OR MIT)
+futures-task 0.3.30 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
-futures-util 0.3.29 (Apache-2.0 OR MIT)
+futures-util 0.3.30 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
@@ -559,7 +559,7 @@ hermit-abi 0.3.3 (Apache-2.0 OR MIT)
 https://github.com/hermitcore/hermit-rs
 ---------------------------------------------------------
 
-home 0.5.5 (Apache-2.0 OR MIT)
+home 0.5.9 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/cargo
 ---------------------------------------------------------
 
@@ -575,7 +575,7 @@ http 1.0.0 (Apache-2.0 OR MIT)
 https://github.com/hyperium/http
 ---------------------------------------------------------
 
-http-body 0.4.5 (MIT)
+http-body 0.4.6 (MIT)
 https://github.com/hyperium/http-body
 ---------------------------------------------------------
 
@@ -587,7 +587,7 @@ httpdate 1.0.3 (Apache-2.0 OR MIT)
 https://github.com/pyfisch/httpdate
 ---------------------------------------------------------
 
-hyper 0.14.27 (MIT)
+hyper 0.14.28 (MIT)
 https://github.com/hyperium/hyper
 ---------------------------------------------------------
 
@@ -595,7 +595,7 @@ hyper-timeout 0.4.1 (Apache-2.0 OR MIT)
 https://github.com/hjr3/hyper-timeout
 ---------------------------------------------------------
 
-iana-time-zone 0.1.58 (Apache-2.0 OR MIT)
+iana-time-zone 0.1.59 (Apache-2.0 OR MIT)
 https://github.com/strawlab/iana-time-zone
 ---------------------------------------------------------
 
@@ -627,7 +627,7 @@ itertools 0.12.0 (Apache-2.0 OR MIT)
 https://github.com/rust-itertools/itertools
 ---------------------------------------------------------
 
-itoa 1.0.9 (Apache-2.0 OR MIT)
+itoa 1.0.10 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/itoa
 ---------------------------------------------------------
 
@@ -647,7 +647,7 @@ lazy_static 1.4.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang-nursery/lazy-static.rs
 ---------------------------------------------------------
 
-libc 0.2.150 (Apache-2.0 OR MIT)
+libc 0.2.151 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/libc
 ---------------------------------------------------------
 
@@ -695,7 +695,7 @@ matrixmultiply 0.3.8 (Apache-2.0 OR MIT)
 https://github.com/bluss/matrixmultiply/
 ---------------------------------------------------------
 
-memchr 2.6.4 (MIT OR Unlicense)
+memchr 2.7.1 (MIT OR Unlicense)
 https://github.com/BurntSushi/memchr
 ---------------------------------------------------------
 
@@ -763,7 +763,7 @@ objc 0.2.7 (MIT)
 http://github.com/SSheldon/rust-objc
 ---------------------------------------------------------
 
-object 0.32.1 (Apache-2.0 OR MIT)
+object 0.32.2 (Apache-2.0 OR MIT)
 https://github.com/gimli-rs/object
 ---------------------------------------------------------
 
@@ -815,7 +815,7 @@ pin-utils 0.1.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang-nursery/pin-utils
 ---------------------------------------------------------
 
-pkg-config 0.3.27 (Apache-2.0 OR MIT)
+pkg-config 0.3.28 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/pkg-config-rs
 ---------------------------------------------------------
 
@@ -847,7 +847,7 @@ ppv-lite86 0.2.17 (Apache-2.0 OR MIT)
 https://github.com/cryptocorrosion/cryptocorrosion
 ---------------------------------------------------------
 
-prettyplease 0.2.15 (Apache-2.0 OR MIT)
+prettyplease 0.2.16 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/prettyplease
 ---------------------------------------------------------
 
@@ -855,7 +855,7 @@ proc-macro-crate 1.3.1 (Apache-2.0 OR MIT)
 https://github.com/bkchr/proc-macro-crate
 ---------------------------------------------------------
 
-proc-macro2 1.0.70 (Apache-2.0 OR MIT)
+proc-macro2 1.0.74 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/proc-macro2
 ---------------------------------------------------------
 
@@ -875,27 +875,27 @@ prost-types 0.12.3 (Apache-2.0)
 https://github.com/tokio-rs/prost
 ---------------------------------------------------------
 
-pyo3 0.20.0 (Apache-2.0 OR MIT)
+pyo3 0.20.1 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-pyo3-build-config 0.20.0 (Apache-2.0 OR MIT)
+pyo3-build-config 0.20.1 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-pyo3-ffi 0.20.0 (Apache-2.0 OR MIT)
+pyo3-ffi 0.20.1 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-pyo3-macros 0.20.0 (Apache-2.0 OR MIT)
+pyo3-macros 0.20.1 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-pyo3-macros-backend 0.20.0 (Apache-2.0 OR MIT)
+pyo3-macros-backend 0.20.1 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-quote 1.0.33 (Apache-2.0 OR MIT)
+quote 1.0.35 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/quote
 ---------------------------------------------------------
 
@@ -962,7 +962,7 @@ rustc_version 0.4.0 (Apache-2.0 OR MIT)
 https://github.com/Kimundi/rustc-version-rs
 ---------------------------------------------------------
 
-rustix 0.38.26 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
+rustix 0.38.28 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
 https://github.com/bytecodealliance/rustix
 ---------------------------------------------------------
 
@@ -994,15 +994,15 @@ semver 1.0.20 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/semver
 ---------------------------------------------------------
 
-serde 1.0.193 (Apache-2.0 OR MIT)
+serde 1.0.194 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/serde
 ---------------------------------------------------------
 
-serde_derive 1.0.193 (Apache-2.0 OR MIT)
+serde_derive 1.0.194 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/serde
 ---------------------------------------------------------
 
-serde_json 1.0.108 (Apache-2.0 OR MIT)
+serde_json 1.0.110 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/json
 ---------------------------------------------------------
 
@@ -1030,10 +1030,6 @@ smallvec 1.11.2 (Apache-2.0 OR MIT)
 https://github.com/servo/rust-smallvec
 ---------------------------------------------------------
 
-socket2 0.4.10 (Apache-2.0 OR MIT)
-https://github.com/rust-lang/socket2
----------------------------------------------------------
-
 socket2 0.5.5 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/socket2
 ---------------------------------------------------------
@@ -1050,7 +1046,7 @@ syn 1.0.109 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
-syn 2.0.39 (Apache-2.0 OR MIT)
+syn 2.0.46 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
@@ -1066,15 +1062,15 @@ target-lexicon 0.12.12 (Apache-2.0 WITH LLVM-exception)
 https://github.com/bytecodealliance/target-lexicon
 ---------------------------------------------------------
 
-tempfile 3.8.1 (Apache-2.0 OR MIT)
+tempfile 3.9.0 (Apache-2.0 OR MIT)
 https://github.com/Stebalien/tempfile
 ---------------------------------------------------------
 
-thiserror 1.0.50 (Apache-2.0 OR MIT)
+thiserror 1.0.56 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
-thiserror-impl 1.0.50 (Apache-2.0 OR MIT)
+thiserror-impl 1.0.56 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
@@ -1082,7 +1078,7 @@ thread_local 1.1.7 (Apache-2.0 OR MIT)
 https://github.com/Amanieu/thread_local-rs
 ---------------------------------------------------------
 
-time 0.3.30 (Apache-2.0 OR MIT)
+time 0.3.31 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
@@ -1090,7 +1086,7 @@ time-core 0.1.2 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
-tokio 1.34.0 (MIT)
+tokio 1.35.1 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
@@ -1262,10 +1258,6 @@ windows 0.52.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-windows-core 0.51.1 (Apache-2.0 OR MIT)
-https://github.com/microsoft/windows-rs
----------------------------------------------------------
-
 windows-core 0.52.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
@@ -1342,7 +1334,7 @@ windows_x86_64_msvc 0.52.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-winnow 0.5.26 (MIT)
+winnow 0.5.31 (MIT)
 https://github.com/winnow-rs/winnow
 ---------------------------------------------------------
 
@@ -1366,11 +1358,11 @@ yeslogic-fontconfig-sys 3.2.0 (MIT)
 https://github.com/yeslogic/fontconfig-rs
 ---------------------------------------------------------
 
-zerocopy 0.7.30 (Apache-2.0 OR BSD-2-Clause OR MIT)
+zerocopy 0.7.32 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
-zerocopy-derive 0.7.30 (Apache-2.0 OR BSD-2-Clause OR MIT)
+zerocopy-derive 0.7.32 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 
 ---------------------------------------------------------

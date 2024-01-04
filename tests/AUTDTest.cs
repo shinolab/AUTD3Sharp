@@ -4,7 +4,7 @@
  * Created Date: 25/09/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 14/12/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -32,29 +32,33 @@ public class AUTDTest
 
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(256, autd.Link.SilencerStepIntensity(dev.Idx));
-            Assert.Equal(256, autd.Link.SilencerStepPhase(dev.Idx));
+            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
-        Assert.True(await autd.SendAsync(new Silencer(10, 20)));
+        Assert.True(await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(2, 3)));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(10, autd.Link.SilencerStepIntensity(dev.Idx));
-            Assert.Equal(20, autd.Link.SilencerStepPhase(dev.Idx));
+            Assert.Equal(2, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(3, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
-        Assert.True(await autd.SendAsync(Silencer.Disable()));
+        Assert.True(await autd.SendAsync(ConfigureSilencer.Disable()));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(0xFFFF, autd.Link.SilencerStepIntensity(dev.Idx));
-            Assert.Equal(0xFFFF, autd.Link.SilencerStepPhase(dev.Idx));
+            Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(1, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
-        Assert.True(await autd.SendAsync(new Silencer()));
+        Assert.True(await autd.SendAsync(ConfigureSilencer.Default()));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(256, autd.Link.SilencerStepIntensity(dev.Idx));
-            Assert.Equal(256, autd.Link.SilencerStepPhase(dev.Idx));
+            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
     }
 
@@ -169,13 +173,13 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v4.1.2", FirmwareInfo.LatestVersion);
+        Assert.Equal("v5.0.0", FirmwareInfo.LatestVersion);
 
         {
             foreach (var (info, i) in (await autd.FirmwareInfoListAsync()).Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v4.1.2, FPGA = v4.1.2 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v4.1.2, FPGA = v4.1.2 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v5.0.0, FPGA = v5.0.0 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v5.0.0, FPGA = v5.0.0 [Emulator]");
             }
         }
 
@@ -191,7 +195,7 @@ public class AUTDTest
         var autd = CreateControllerSync();
 
         foreach (var (info, i) in autd.FirmwareInfoList().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v4.1.2, FPGA = v4.1.2 [Emulator]");
+            Assert.Equal(info.Info, $"{i}: CPU = v5.0.0, FPGA = v5.0.0 [Emulator]");
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareInfoList().Last());

@@ -4,7 +4,7 @@
  * Created Date: 25/09/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 06/12/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -22,10 +22,12 @@ public class FocusSTMTest
     {
         var autd = await AUTDTest.CreateController();
 
-        ; const double radius = 30.0;
+        Assert.True(await autd.SendAsync(ConfigureSilencer.Disable()));
+
+        const double radius = 30.0;
         const int size = 2;
         var center = autd.Geometry.Center + new Vector3d(0, 0, 150);
-        var stm = new FocusSTM(1)
+        var stm = FocusSTM.FromFreq(1)
             .AddFociFromIter(Enumerable.Range(0, size).Select(i => 2 * Math.PI * i / size).Select(theta =>
                 (center + radius * new Vector3d(Math.Cos(theta), Math.Sin(theta), 0), EmitIntensity.Max)));
         Assert.True(await autd.SendAsync(stm));

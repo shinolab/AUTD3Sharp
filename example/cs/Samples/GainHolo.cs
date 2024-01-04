@@ -4,7 +4,7 @@
  * Created Date: 30/04/2021
  * Author: Shun Suzuki
  * -----
- * Last Modified: 27/11/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2022-2023 Shun Suzuki. All rights reserved.
@@ -23,7 +23,7 @@ internal static class GainHoloTest
 {
     public static async Task Test<T>(Controller<T> autd)
     {
-        var config = new Silencer();
+        var config = ConfigureSilencer.Default();
         await autd.SendAsync(config);
 
         var center = autd.Geometry.Center + new Vector3d(0, 0, 150);

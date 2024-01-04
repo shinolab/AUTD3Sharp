@@ -3,7 +3,7 @@
 // Created Date: 03/02/2023
 // Author: Shun Suzuki
 // -----
-// Last Modified: 02/12/2023
+// Last Modified: 04/01/2024
 // Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
 // -----
 // Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -28,7 +28,7 @@ module CustomTest =
         override this.Calc (geometry: Geometry) = AUTD3Sharp.Gain.Gain.Transform(geometry, Calc_);
         
     let Test<'T> (autd : Controller<'T>) = 
-        (Silencer.Disable()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (ConfigureSilencer.Disable()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 
         let m = new Sine 150;
         let g = new Focus (autd.Geometry.Center + Vector3d(0, 0, 150))

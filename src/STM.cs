@@ -4,7 +4,7 @@
  * Created Date: 20/08/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 06/12/2023
+ * Last Modified: 04/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -72,7 +72,7 @@ namespace AUTD3Sharp
             {
                 var ptr = new STMPropsPtr();
                 if (_freq != null)
-                    ptr = NativeMethodsBase.AUTDSTMPropsNew(_freq.Value);
+                    ptr = NativeMethodsBase.AUTDSTMPropsFromFreq(_freq.Value);
                 if (_period != null)
                     ptr = NativeMethodsBase.AUTDSTMPropsFromPeriod((ulong)(_period.Value.TotalSeconds * 1000 * 1000 *
                                                                               1000));
@@ -115,8 +115,9 @@ namespace AUTD3Sharp
                 _intensities = new List<EmitIntensity>();
             }
 
-            public FocusSTM(float_t freq) : this(freq, null, null)
+            public static FocusSTM FromFreq(float_t freq)
             {
+                return new FocusSTM(freq, null, null);
             }
 
             public static FocusSTM FromPeriod(TimeSpan period)
@@ -214,8 +215,9 @@ namespace AUTD3Sharp
                 _mode = GainSTMMode.PhaseIntensityFull;
             }
 
-            public GainSTM(float_t freq) : this(freq, null, null)
+            public static GainSTM FromFreq(float_t freq)
             {
+                return new GainSTM(freq, null, null);
             }
 
             public static GainSTM FromPeriod(TimeSpan period)
