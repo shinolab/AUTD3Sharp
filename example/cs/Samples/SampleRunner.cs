@@ -4,7 +4,7 @@
  * Created Date: 13/10/2022
  * Author: Shun Suzuki
  * -----
- * Last Modified: 04/01/2024
+ * Last Modified: 05/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2022-2023 Shun Suzuki. All rights reserved.
@@ -56,7 +56,7 @@ public class SampleRunner
             Console.ReadKey(true);
 
             Console.WriteLine("finish.");
-            await autd.SendAsync(ConfigureSilencer.Default(), new Null());
+            await autd.SendAsync(new Null(), ConfigureSilencer.Default());
         }
 
         await autd.CloseAsync();
