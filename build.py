@@ -407,7 +407,7 @@ def copy_dll_unity(config: Config):
         f.write(requests.get(url).content)
     shutil.unpack_archive("tmp.zip", ".")
     rm_f("tmp.zip")
-    for dll in glob.glob("bin/*"):
+    for dll in glob.glob("bin/*.dll"):
         shutil.copy(dll, "unity/Assets/Plugins/x86_64")
     rmtree_f("bin")
 
@@ -417,7 +417,7 @@ def copy_dll_unity(config: Config):
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
-    for dll in glob.glob("bin/*"):
+    for dll in glob.glob("bin/*.dylib"):
         shutil.copy(dll, "unity/Assets/Plugins/x86_64")
         shutil.copy(dll, "unity/Assets/Plugins/aarch64")
     rmtree_f("bin")
@@ -428,7 +428,7 @@ def copy_dll_unity(config: Config):
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
-    for dll in glob.glob("bin/*"):
+    for dll in glob.glob("bin/*.so"):
         shutil.copy(dll, "unity/Assets/Plugins/x86_64")
     rmtree_f("bin")
 
