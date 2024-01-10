@@ -4,7 +4,7 @@
  * Created Date: 12/12/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 04/01/2024
+ * Last Modified: 11/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -73,6 +73,28 @@ public class VisualizerTest
 
         autd.Close();
     }
+
+
+    [Fact]
+    public void TestPlotRange()
+    {
+        var range = new PlotRange
+        {
+            XStart = -20,
+            XEnd = 20,
+            YStart = -30,
+            YEnd = 30,
+            ZStart = 0,
+            ZEnd = 0,
+            Resolution = 1,
+        };
+        var points = range.ObservePoints();
+        Assert.Equal(41 * 61, points.Length);
+        Assert.Equal(new Vector3d(-20, -30, 0), points[0]);
+        Assert.Equal(new Vector3d(-19, -30, 0), points[1]);
+        Assert.Equal(new Vector3d(20, 30, 0), points[^1]);
+    }
+
 
     [Fact]
     public void TestPlotters()

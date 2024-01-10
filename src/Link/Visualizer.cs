@@ -4,7 +4,7 @@
  * Created Date: 13/10/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 12/12/2023
+ * Last Modified: 11/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -87,6 +87,21 @@ namespace AUTD3Sharp.Link
         public float_t ZStart { get; set; }
         public float_t ZEnd { get; set; }
         public float_t Resolution { get; set; }
+
+        internal PlotRangePtr Ptr => NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRange(XStart, XEnd, YStart, YEnd, ZStart, ZEnd, Resolution);
+
+        public Vector3[] ObservePoints()
+        {
+            var range = Ptr;
+            var pointsLen = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePointsLen(range);
+            var buf = new Vector3[pointsLen];
+            unsafe
+            {
+                fixed (Vector3* p = &buf[0])
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePoints(range, (float_t*)p);
+            }
+            return buf;
+        }
     }
 
     public interface IPlotConfig
@@ -400,7 +415,7 @@ namespace AUTD3Sharp.Link
         public void PlotFieldOf(IPlotConfig config, PlotRange range, Geometry geometry, int idx)
         {
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
-            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotFieldOf(_ptr, _backend, _directivity, config.Ptr(), NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRange(range.XStart, range.XEnd, range.YStart, range.YEnd, range.ZStart, range.ZEnd, range.Resolution), geometry.Ptr, (uint)idx).Validate();
+            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotFieldOf(_ptr, _backend, _directivity, config.Ptr(), range.Ptr, geometry.Ptr, (uint)idx).Validate();
         }
 
         public void PlotField(IPlotConfig config, PlotRange range, Geometry geometry)
