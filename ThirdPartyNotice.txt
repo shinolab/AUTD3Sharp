@@ -62,35 +62,35 @@ atomic-polyfill 1.0.3 (Apache-2.0 OR MIT)
 https://github.com/embassy-rs/atomic-polyfill
 ---------------------------------------------------------
 
-autd3 20.0.2 (MIT)
+autd3 20.0.3 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-backend-cuda 20.0.0 (MIT)
+autd3-backend-cuda 20.0.3 (MIT)
 https://github.com/shinolab/autd3-backend-cuda
 ---------------------------------------------------------
 
-autd3-derive 20.0.2 (MIT)
+autd3-derive 20.0.3 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 20.0.2 (MIT)
+autd3-driver 20.0.3 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 20.0.2 (MIT)
+autd3-firmware-emulator 20.0.3 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 20.0.2 (MIT)
+autd3-gain-holo 20.0.3 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 20.0.2 (MIT)
+autd3-link-simulator 20.0.3 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 20.0.2
+autd3-link-soem 20.0.3
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -156,7 +156,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 20.0.2
+autd3-link-twincat 20.0.3
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -208,44 +208,44 @@ SOFTWARE.
 
 ---------------------------------------------------------
 
-autd3-link-visualizer 20.0.1 (MIT)
+autd3-link-visualizer 20.0.3 (MIT)
 https://github.com/shinolab/autd3-link-visualizer
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 20.0.2 (MIT)
+autd3-modulation-audio-file 20.0.3 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 20.0.2 (MIT)
+autd3-protobuf 20.0.3 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 20.0.0 (MIT)
+autd3capi 20.0.3 (MIT)
 ---------------------------------------------------------
 
-autd3capi-backend-cuda 20.0.0 (MIT)
+autd3capi-backend-cuda 20.0.3 (MIT)
 ---------------------------------------------------------
 
-autd3capi-def 20.0.0 (MIT)
+autd3capi-def 20.0.3 (MIT)
 https://github.com/shinolab/autd3
 ---------------------------------------------------------
 
-autd3capi-gain-holo 20.0.0 (MIT)
+autd3capi-gain-holo 20.0.3 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-simulator 20.0.0 (MIT)
+autd3capi-link-simulator 20.0.3 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-soem 20.0.0 (MIT)
+autd3capi-link-soem 20.0.3 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-twincat 20.0.0 (MIT)
+autd3capi-link-twincat 20.0.3 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-visualizer 20.0.0 (MIT)
+autd3capi-link-visualizer 20.0.3 (MIT)
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 20.0.0 (MIT)
+autd3capi-modulation-audio-file 20.0.3 (MIT)
 ---------------------------------------------------------
 
 autocfg 1.1.0 (Apache-2.0 OR MIT)
@@ -264,7 +264,7 @@ backtrace 0.3.69 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/backtrace-rs
 ---------------------------------------------------------
 
-base64 0.21.5 (Apache-2.0 OR MIT)
+base64 0.21.6 (Apache-2.0 OR MIT)
 https://github.com/marshallpierce/rust-base64
 ---------------------------------------------------------
 
@@ -352,15 +352,15 @@ critical-section 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/rust-embedded/critical-section
 ---------------------------------------------------------
 
-crossbeam-channel 0.5.10 (Apache-2.0 OR MIT)
+crossbeam-channel 0.5.11 (Apache-2.0 OR MIT)
 https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
-crossbeam-queue 0.3.10 (Apache-2.0 OR MIT)
+crossbeam-queue 0.3.11 (Apache-2.0 OR MIT)
 https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
-crossbeam-utils 0.8.18 (Apache-2.0 OR MIT)
+crossbeam-utils 0.8.19 (Apache-2.0 OR MIT)
 https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
@@ -507,7 +507,7 @@ geographiclib-rs 0.2.3 (MIT)
 https://github.com/georust/geographiclib-rs
 ---------------------------------------------------------
 
-getrandom 0.2.11 (Apache-2.0 OR MIT)
+getrandom 0.2.12 (Apache-2.0 OR MIT)
 https://github.com/rust-random/getrandom
 ---------------------------------------------------------
 
@@ -527,7 +527,7 @@ h2 0.3.22 (MIT)
 https://github.com/hyperium/h2
 ---------------------------------------------------------
 
-h2 0.4.0 (MIT)
+h2 0.4.1 (MIT)
 https://github.com/hyperium/h2
 ---------------------------------------------------------
 
@@ -647,7 +647,7 @@ lazy_static 1.4.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang-nursery/lazy-static.rs
 ---------------------------------------------------------
 
-libc 0.2.151 (Apache-2.0 OR MIT)
+libc 0.2.152 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/libc
 ---------------------------------------------------------
 
@@ -855,7 +855,7 @@ proc-macro-crate 1.3.1 (Apache-2.0 OR MIT)
 https://github.com/bkchr/proc-macro-crate
 ---------------------------------------------------------
 
-proc-macro2 1.0.74 (Apache-2.0 OR MIT)
+proc-macro2 1.0.76 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/proc-macro2
 ---------------------------------------------------------
 
@@ -875,23 +875,23 @@ prost-types 0.12.3 (Apache-2.0)
 https://github.com/tokio-rs/prost
 ---------------------------------------------------------
 
-pyo3 0.20.1 (Apache-2.0 OR MIT)
+pyo3 0.20.2 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-pyo3-build-config 0.20.1 (Apache-2.0 OR MIT)
+pyo3-build-config 0.20.2 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-pyo3-ffi 0.20.1 (Apache-2.0 OR MIT)
+pyo3-ffi 0.20.2 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-pyo3-macros 0.20.1 (Apache-2.0 OR MIT)
+pyo3-macros 0.20.2 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
-pyo3-macros-backend 0.20.1 (Apache-2.0 OR MIT)
+pyo3-macros-backend 0.20.2 (Apache-2.0 OR MIT)
 https://github.com/pyo3/pyo3
 ---------------------------------------------------------
 
@@ -990,19 +990,19 @@ scopeguard 1.2.0 (Apache-2.0 OR MIT)
 https://github.com/bluss/scopeguard
 ---------------------------------------------------------
 
-semver 1.0.20 (Apache-2.0 OR MIT)
+semver 1.0.21 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/semver
 ---------------------------------------------------------
 
-serde 1.0.194 (Apache-2.0 OR MIT)
+serde 1.0.195 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/serde
 ---------------------------------------------------------
 
-serde_derive 1.0.194 (Apache-2.0 OR MIT)
+serde_derive 1.0.195 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/serde
 ---------------------------------------------------------
 
-serde_json 1.0.110 (Apache-2.0 OR MIT)
+serde_json 1.0.111 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/json
 ---------------------------------------------------------
 
@@ -1046,7 +1046,7 @@ syn 1.0.109 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
-syn 2.0.46 (Apache-2.0 OR MIT)
+syn 2.0.48 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
@@ -1058,7 +1058,7 @@ tap 1.0.1 (MIT)
 https://github.com/myrrlyn/tap
 ---------------------------------------------------------
 
-target-lexicon 0.12.12 (Apache-2.0 WITH LLVM-exception)
+target-lexicon 0.12.13 (Apache-2.0 WITH LLVM-exception)
 https://github.com/bytecodealliance/target-lexicon
 ---------------------------------------------------------
 
@@ -1334,7 +1334,7 @@ windows_x86_64_msvc 0.52.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-winnow 0.5.31 (MIT)
+winnow 0.5.33 (MIT)
 https://github.com/winnow-rs/winnow
 ---------------------------------------------------------
 

@@ -19,6 +19,12 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotRange", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern PlotRangePtr AUTDLinkVisualizerPlotRange(float x_min, float x_max, float y_min, float y_max, float z_min, float z_max, float resolution);
 
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotRangeObservePointsLen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ulong AUTDLinkVisualizerPlotRangeObservePointsLen(PlotRangePtr range);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotRangeObservePoints", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDLinkVisualizerPlotRangeObservePoints(PlotRangePtr range, float* points);
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPhasesOf", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDLinkVisualizerPhasesOf(LinkPtr visualizer, Backend backend, Directivity directivity, uint idx, byte* buf);
 
