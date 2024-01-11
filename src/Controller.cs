@@ -655,7 +655,7 @@ namespace AUTD3Sharp
             DatagramPtr IDatagram.Ptr(Geometry geometry)
             {
                 var ptr = NativeMethodsBase.AUTDDatagramSilencerFixedCompletionSteps(_valueIntensity, _valuePhase).Validate();
-                if (_strictMode != null) NativeMethodsBase.AUTDDatagramSilencerFixedCompletionStepsWithStrictMode(ptr, _strictMode.Value);
+                if (_strictMode != null) ptr = NativeMethodsBase.AUTDDatagramSilencerFixedCompletionStepsWithStrictMode(ptr, _strictMode.Value);
                 return ptr;
             }
         }
@@ -665,9 +665,9 @@ namespace AUTD3Sharp
         /// </summary>
         /// <param name="valueIntensity">Intensity update rate of silencer. The smaller step is, the quieter the output is.</param>
         /// <param name="valuePhase">Phase update rate of silencer. The smaller step is, the quieter the output is.</param>
-        public static ConfigureSilencerFixedUpdateRate FixedUpdateRate(ushort stepsIntensity, ushort stepsPhase)
+        public static ConfigureSilencerFixedUpdateRate FixedUpdateRate(ushort valueIntensity, ushort valuePhase)
         {
-            return new ConfigureSilencerFixedUpdateRate(stepsIntensity, stepsPhase);
+            return new ConfigureSilencerFixedUpdateRate(valueIntensity, valuePhase);
         }
 
         /// <summary>
@@ -675,9 +675,9 @@ namespace AUTD3Sharp
         /// </summary>
         /// <param name="valueIntensity">Intensity update rate of silencer. The smaller step is, the quieter the output is.</param>
         /// <param name="valuePhase">Phase update rate of silencer. The smaller step is, the quieter the output is.</param>
-        public static ConfigureSilencerFixedCompletionSteps FixedCompletionSteps(ushort stepsIntensity, ushort stepsPhase)
+        public static ConfigureSilencerFixedCompletionSteps FixedCompletionSteps(ushort valueIntensity, ushort valuePhase)
         {
-            return new ConfigureSilencerFixedCompletionSteps(stepsIntensity, stepsPhase);
+            return new ConfigureSilencerFixedCompletionSteps(valueIntensity, valuePhase);
         }
 
         /// <summary>

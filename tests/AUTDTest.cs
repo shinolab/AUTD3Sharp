@@ -4,7 +4,7 @@
  * Created Date: 25/09/2023
  * Author: Shun Suzuki
  * -----
- * Last Modified: 04/01/2024
+ * Last Modified: 11/01/2024
  * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
  * -----
  * Copyright (c) 2023 Shun Suzuki. All rights reserved.
@@ -26,7 +26,7 @@ public class AUTDTest
     }
 
     [Fact]
-    public async Task TestSilencer()
+    public async Task TestSilencerFixedCompletionSteps()
     {
         using var autd = await CreateController();
 
@@ -61,6 +61,97 @@ public class AUTDTest
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
     }
+
+    [Fact]
+    public async Task TestSilencerFixedUpdateRate()
+    {
+        using var autd = await CreateController();
+
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+        }
+
+        Assert.True(await autd.SendAsync(ConfigureSilencer.FixedUpdateRate(256, 257)));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(256, autd.Link.SilencerUpdateRateIntensity(dev.Idx));
+            Assert.Equal(257, autd.Link.SilencerUpdateRatePhase(dev.Idx));
+            Assert.False(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+        }
+    }
+
+    [Fact]
+    public async Task TestSilencerLargeSteps()
+    {
+        using var autd = await CreateController();
+
+        Assert.True(await autd.SendAsync(ConfigureSilencer.Disable()));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(1, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+        }
+
+        Assert.True(await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
+
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(10, 40)));
+    }
+
+    [Fact]
+    public async Task TestSilencerSmallFreqDivMod()
+    {
+        using var autd = await CreateController();
+
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+        }
+
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
+
+        Assert.True(await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(10, 40).WithStrictMode(false)));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+        }
+
+        Assert.True(await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
+    }
+
+    [Fact]
+    public async Task TestSilencerSmallFreqDivSTM()
+    {
+        using var autd = await CreateController();
+
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+        }
+
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(AUTD3Sharp.STM.GainSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddGain(new Null()).AddGain(new Null())));
+
+        Assert.True(await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(10, 40).WithStrictMode(false)));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+        }
+        Assert.True(await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
+
+        Assert.True(await autd.SendAsync(AUTD3Sharp.STM.GainSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddGain(new Null()).AddGain(new Null())));
+    }
+
 
     [Fact]
     public async Task TestDebugOutputIdx()
