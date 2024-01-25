@@ -46,6 +46,14 @@ assert_approx_eq 1.1.0 (Apache-2.0 OR MIT)
 https://github.com/ashleygwilliams/assert_approx_eq.git
 ---------------------------------------------------------
 
+async-channel 2.1.1 (Apache-2.0 OR MIT)
+https://github.com/smol-rs/async-channel
+---------------------------------------------------------
+
+async-ffi 0.5.0 (MIT)
+https://github.com/oxalica/async-ffi
+---------------------------------------------------------
+
 async-stream 0.3.5 (MIT)
 https://github.com/tokio-rs/async-stream
 ---------------------------------------------------------
@@ -62,35 +70,35 @@ atomic-polyfill 1.0.3 (Apache-2.0 OR MIT)
 https://github.com/embassy-rs/atomic-polyfill
 ---------------------------------------------------------
 
-autd3 20.0.3 (MIT)
+autd3 21.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-backend-cuda 20.0.3 (MIT)
+autd3-backend-cuda 21.0.0 (MIT)
 https://github.com/shinolab/autd3-backend-cuda
 ---------------------------------------------------------
 
-autd3-derive 20.0.3 (MIT)
+autd3-derive 21.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 20.0.3 (MIT)
+autd3-driver 21.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 20.0.3 (MIT)
+autd3-firmware-emulator 21.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 20.0.3 (MIT)
+autd3-gain-holo 21.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 20.0.3 (MIT)
+autd3-link-simulator 21.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 20.0.3
+autd3-link-soem 21.0.0
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -156,7 +164,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 20.0.3
+autd3-link-twincat 21.0.0
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -208,44 +216,44 @@ SOFTWARE.
 
 ---------------------------------------------------------
 
-autd3-link-visualizer 20.0.3 (MIT)
+autd3-link-visualizer 21.0.0 (MIT)
 https://github.com/shinolab/autd3-link-visualizer
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 20.0.3 (MIT)
+autd3-modulation-audio-file 21.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 20.0.3 (MIT)
+autd3-protobuf 21.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 20.0.3 (MIT)
+autd3capi 21.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-backend-cuda 20.0.3 (MIT)
+autd3capi-backend-cuda 21.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-def 20.0.3 (MIT)
+autd3capi-def 21.0.0 (MIT)
 https://github.com/shinolab/autd3
 ---------------------------------------------------------
 
-autd3capi-gain-holo 20.0.3 (MIT)
+autd3capi-gain-holo 21.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-simulator 20.0.3 (MIT)
+autd3capi-link-simulator 21.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-soem 20.0.3 (MIT)
+autd3capi-link-soem 21.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-twincat 20.0.3 (MIT)
+autd3capi-link-twincat 21.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-visualizer 20.0.3 (MIT)
+autd3capi-link-visualizer 21.0.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 20.0.3 (MIT)
+autd3capi-modulation-audio-file 21.0.0 (MIT)
 ---------------------------------------------------------
 
 autocfg 1.1.0 (Apache-2.0 OR MIT)
@@ -264,7 +272,7 @@ backtrace 0.3.69 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/backtrace-rs
 ---------------------------------------------------------
 
-base64 0.21.6 (Apache-2.0 OR MIT)
+base64 0.21.7 (Apache-2.0 OR MIT)
 https://github.com/marshallpierce/rust-base64
 ---------------------------------------------------------
 
@@ -272,7 +280,7 @@ bitflags 1.3.2 (Apache-2.0 OR MIT)
 https://github.com/bitflags/bitflags
 ---------------------------------------------------------
 
-bitflags 2.4.1 (Apache-2.0 OR MIT)
+bitflags 2.4.2 (Apache-2.0 OR MIT)
 https://github.com/bitflags/bitflags
 ---------------------------------------------------------
 
@@ -308,7 +316,7 @@ cfg-if 1.0.0 (Apache-2.0 OR MIT)
 https://github.com/alexcrichton/cfg-if
 ---------------------------------------------------------
 
-chrono 0.4.31 (Apache-2.0 OR MIT)
+chrono 0.4.32 (Apache-2.0 OR MIT)
 https://github.com/chronotope/chrono
 ---------------------------------------------------------
 
@@ -318,6 +326,10 @@ https://github.com/rust-lang/cmake-rs
 
 color_quant 1.1.0 (MIT)
 https://github.com/image-rs/color_quant.git
+---------------------------------------------------------
+
+concurrent-queue 2.4.0 (Apache-2.0 OR MIT)
+https://github.com/smol-rs/concurrent-queue
 ---------------------------------------------------------
 
 const-cstr 0.3.0 (Apache-2.0 OR MIT)
@@ -350,10 +362,6 @@ https://github.com/srijs/rust-crc32fast
 
 critical-section 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/rust-embedded/critical-section
----------------------------------------------------------
-
-crossbeam-channel 0.5.11 (Apache-2.0 OR MIT)
-https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
 crossbeam-queue 0.3.11 (Apache-2.0 OR MIT)
@@ -419,11 +427,19 @@ errno 0.3.8 (Apache-2.0 OR MIT)
 https://github.com/lambda-fairy/rust-errno
 ---------------------------------------------------------
 
+event-listener 4.0.3 (Apache-2.0 OR MIT)
+https://github.com/smol-rs/event-listener
+---------------------------------------------------------
+
+event-listener-strategy 0.4.0 (Apache-2.0 OR MIT)
+https://github.com/smol-rs/event-listener
+---------------------------------------------------------
+
 fastrand 2.0.1 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/fastrand
 ---------------------------------------------------------
 
-fdeflate 0.3.3 (Apache-2.0 OR MIT)
+fdeflate 0.3.4 (Apache-2.0 OR MIT)
 https://github.com/image-rs/fdeflate
 ---------------------------------------------------------
 
@@ -463,11 +479,11 @@ foreign-types-shared 0.1.1 (Apache-2.0 OR MIT)
 https://github.com/sfackler/foreign-types
 ---------------------------------------------------------
 
-freetype 0.7.0 (Apache-2.0 OR MIT)
+freetype 0.7.1 (Apache-2.0 OR MIT)
 https://github.com/servo/rust-freetype
 ---------------------------------------------------------
 
-freetype-sys 0.13.1 (MIT)
+freetype-sys 0.19.0 (MIT)
 https://github.com/PistonDevelopers/freetype-sys.git
 ---------------------------------------------------------
 
@@ -523,11 +539,11 @@ glob 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/glob
 ---------------------------------------------------------
 
-h2 0.3.22 (MIT)
+h2 0.3.24 (MIT)
 https://github.com/hyperium/h2
 ---------------------------------------------------------
 
-h2 0.4.1 (MIT)
+h2 0.4.2 (MIT)
 https://github.com/hyperium/h2
 ---------------------------------------------------------
 
@@ -555,7 +571,7 @@ heck 0.4.1 (Apache-2.0 OR MIT)
 https://github.com/withoutboats/heck
 ---------------------------------------------------------
 
-hermit-abi 0.3.3 (Apache-2.0 OR MIT)
+hermit-abi 0.3.4 (Apache-2.0 OR MIT)
 https://github.com/hermitcore/hermit-rs
 ---------------------------------------------------------
 
@@ -603,7 +619,7 @@ iana-time-zone-haiku 0.1.2 (Apache-2.0 OR MIT)
 https://github.com/strawlab/iana-time-zone
 ---------------------------------------------------------
 
-image 0.24.7 (MIT)
+image 0.24.8 (MIT)
 https://github.com/image-rs/image
 ---------------------------------------------------------
 
@@ -635,11 +651,11 @@ jobserver 0.1.27 (Apache-2.0 OR MIT)
 https://github.com/alexcrichton/jobserver-rs
 ---------------------------------------------------------
 
-jpeg-decoder 0.3.0 (Apache-2.0 OR MIT)
+jpeg-decoder 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/image-rs/jpeg-decoder
 ---------------------------------------------------------
 
-js-sys 0.3.66 (Apache-2.0 OR MIT)
+js-sys 0.3.67 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/js-sys
 ---------------------------------------------------------
 
@@ -667,7 +683,7 @@ libredox 0.0.1 (MIT)
 https://gitlab.redox-os.org/redox-os/libredox.git
 ---------------------------------------------------------
 
-linux-raw-sys 0.4.12 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
+linux-raw-sys 0.4.13 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
 https://github.com/sunfishcode/linux-raw-sys
 ---------------------------------------------------------
 
@@ -771,6 +787,10 @@ once_cell 1.19.0 (Apache-2.0 OR MIT)
 https://github.com/matklad/once_cell
 ---------------------------------------------------------
 
+parking 2.2.0 (Apache-2.0 OR MIT)
+https://github.com/smol-rs/parking
+---------------------------------------------------------
+
 parking_lot 0.12.1 (Apache-2.0 OR MIT)
 https://github.com/Amanieu/parking_lot
 ---------------------------------------------------------
@@ -815,7 +835,7 @@ pin-utils 0.1.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang-nursery/pin-utils
 ---------------------------------------------------------
 
-pkg-config 0.3.28 (Apache-2.0 OR MIT)
+pkg-config 0.3.29 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/pkg-config-rs
 ---------------------------------------------------------
 
@@ -835,8 +855,8 @@ plotters-svg 0.3.5 (MIT)
 https://github.com/plotters-rs/plotters.git
 ---------------------------------------------------------
 
-png 0.17.10 (Apache-2.0 OR MIT)
-https://github.com/image-rs/image-png.git
+png 0.17.11 (Apache-2.0 OR MIT)
+https://github.com/image-rs/image-png
 ---------------------------------------------------------
 
 powerfmt 0.2.0 (Apache-2.0 OR MIT)
@@ -855,7 +875,7 @@ proc-macro-crate 1.3.1 (Apache-2.0 OR MIT)
 https://github.com/bkchr/proc-macro-crate
 ---------------------------------------------------------
 
-proc-macro2 1.0.76 (Apache-2.0 OR MIT)
+proc-macro2 1.0.78 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/proc-macro2
 ---------------------------------------------------------
 
@@ -931,11 +951,11 @@ redox_users 0.4.4 (MIT)
 https://gitlab.redox-os.org/redox-os/users
 ---------------------------------------------------------
 
-regex 1.10.2 (Apache-2.0 OR MIT)
+regex 1.10.3 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/regex
 ---------------------------------------------------------
 
-regex-automata 0.4.3 (Apache-2.0 OR MIT)
+regex-automata 0.4.4 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/regex/tree/master/regex-automata
 ---------------------------------------------------------
 
@@ -962,7 +982,7 @@ rustc_version 0.4.0 (Apache-2.0 OR MIT)
 https://github.com/Kimundi/rustc-version-rs
 ---------------------------------------------------------
 
-rustix 0.38.28 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
+rustix 0.38.30 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
 https://github.com/bytecodealliance/rustix
 ---------------------------------------------------------
 
@@ -1026,7 +1046,7 @@ slab 0.4.9 (MIT)
 https://github.com/tokio-rs/slab
 ---------------------------------------------------------
 
-smallvec 1.11.2 (Apache-2.0 OR MIT)
+smallvec 1.13.1 (Apache-2.0 OR MIT)
 https://github.com/servo/rust-smallvec
 ---------------------------------------------------------
 
@@ -1194,23 +1214,23 @@ wasi 0.11.0+wasi-snapshot-preview1 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception
 https://github.com/bytecodealliance/wasi
 ---------------------------------------------------------
 
-wasm-bindgen 0.2.89 (Apache-2.0 OR MIT)
+wasm-bindgen 0.2.90 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen
 ---------------------------------------------------------
 
-wasm-bindgen-backend 0.2.89 (Apache-2.0 OR MIT)
+wasm-bindgen-backend 0.2.90 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/backend
 ---------------------------------------------------------
 
-wasm-bindgen-macro 0.2.89 (Apache-2.0 OR MIT)
+wasm-bindgen-macro 0.2.90 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro
 ---------------------------------------------------------
 
-wasm-bindgen-macro-support 0.2.89 (Apache-2.0 OR MIT)
+wasm-bindgen-macro-support 0.2.90 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro-support
 ---------------------------------------------------------
 
-wasm-bindgen-shared 0.2.89 (Apache-2.0 OR MIT)
+wasm-bindgen-shared 0.2.90 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/shared
 ---------------------------------------------------------
 
@@ -1218,23 +1238,23 @@ wav_io 0.1.12 (MIT)
 https://github.com/kujirahand/wav_io
 ---------------------------------------------------------
 
-web-sys 0.3.66 (Apache-2.0 OR MIT)
+web-sys 0.3.67 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/web-sys
 ---------------------------------------------------------
 
-weezl 0.1.7 (Apache-2.0 OR MIT)
-https://github.com/image-rs/lzw.git
+weezl 0.1.8 (Apache-2.0 OR MIT)
+https://github.com/image-rs/lzw
 ---------------------------------------------------------
 
 which 4.4.2 (MIT)
 https://github.com/harryfei/which-rs.git
 ---------------------------------------------------------
 
-which 5.0.0 (MIT)
+which 6.0.0 (MIT)
 https://github.com/harryfei/which-rs.git
 ---------------------------------------------------------
 
-wide 0.7.13 (Apache-2.0 OR MIT OR Zlib)
+wide 0.7.14 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/wide
 ---------------------------------------------------------
 
@@ -1334,7 +1354,7 @@ windows_x86_64_msvc 0.52.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-winnow 0.5.33 (MIT)
+winnow 0.5.34 (MIT)
 https://github.com/winnow-rs/winnow
 ---------------------------------------------------------
 

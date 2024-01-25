@@ -17,16 +17,16 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDAdapterPointer", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern IntPtr AUTDAdapterPointer();
+        public static extern EthernetAdaptersPtr AUTDAdapterPointer();
 
         [DllImport(__DllName, EntryPoint = "AUTDAdapterGetSize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDAdapterGetSize(IntPtr adapters);
+        public static extern uint AUTDAdapterGetSize(EthernetAdaptersPtr adapters);
 
         [DllImport(__DllName, EntryPoint = "AUTDAdapterGetAdapter", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDAdapterGetAdapter(IntPtr adapters, uint idx, byte* desc, byte* name);
+        public static extern void AUTDAdapterGetAdapter(EthernetAdaptersPtr adapters, uint idx, byte* desc, byte* name);
 
         [DllImport(__DllName, EntryPoint = "AUTDAdapterPointerDelete", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDAdapterPointerDelete(IntPtr adapters);
+        public static extern void AUTDAdapterPointerDelete(EthernetAdaptersPtr adapters);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEM();
@@ -74,6 +74,12 @@ namespace AUTD3Sharp.NativeMethods
         public static extern LinkBuilderPtr AUTDLinkRemoteSOEMIntoBuilder(LinkRemoteSOEMBuilderPtr soem);
 
 
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct EthernetAdaptersPtr
+    {
+        public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]

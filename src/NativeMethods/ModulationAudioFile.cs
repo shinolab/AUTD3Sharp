@@ -17,16 +17,16 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationWav", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationWav(byte* path);
+        public static extern ResultModulation AUTDModulationWav(byte* path, SamplingConfigurationRaw config);
 
-        [DllImport(__DllName, EntryPoint = "AUTDModulationWavWithSamplingConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ModulationPtr AUTDModulationWavWithSamplingConfig(ModulationPtr m, SamplingConfigurationRaw config);
+        [DllImport(__DllName, EntryPoint = "AUTDModulationWavDefaultSamplingConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern SamplingConfigurationRaw AUTDModulationWavDefaultSamplingConfig();
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationRawPCM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationRawPCM(byte* path, uint sample_rate);
+        public static extern ResultModulation AUTDModulationRawPCM(byte* path, uint sample_rate, SamplingConfigurationRaw config);
 
-        [DllImport(__DllName, EntryPoint = "AUTDModulationRawPCMWithSamplingConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ModulationPtr AUTDModulationRawPCMWithSamplingConfig(ModulationPtr m, SamplingConfigurationRaw config);
+        [DllImport(__DllName, EntryPoint = "AUTDModulationRawPCMDefaultSamplingConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern SamplingConfigurationRaw AUTDModulationRawPCMDefaultSamplingConfig();
 
 
     }
