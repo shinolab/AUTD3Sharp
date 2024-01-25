@@ -1,16 +1,3 @@
-/*
- * File: Holo.cs
- * Project: Holo
- * Created Date: 24/11/2023
- * Author: Shun Suzuki
- * -----
- * Last Modified: 24/11/2023
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2023 Shun Suzuki. All rights reserved.
- * 
- */
-
 
 #if UNITY_2018_3_OR_NEWER
 #define USE_SINGLE
@@ -38,7 +25,7 @@ using float_t = System.Double;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    public abstract class Holo<TH> : Internal.Gain 
+    public abstract class Holo<TH> : Internal.Gain
         where TH : Holo<TH>
     {
         protected readonly List<float_t> Foci = new List<float_t>();

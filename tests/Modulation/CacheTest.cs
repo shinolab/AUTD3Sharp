@@ -1,16 +1,3 @@
-/*
- * File: CacheTest.cs
- * Project: Modulation
- * Created Date: 25/09/2023
- * Author: Shun Suzuki
- * -----
- * Last Modified: 07/12/2023
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2023 Shun Suzuki. All rights reserved.
- * 
- */
-
 namespace tests.Modulation;
 
 public class CacheTest

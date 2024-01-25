@@ -1,16 +1,3 @@
-/*
- * File: main.rs
- * Project: src
- * Created Date: 08/12/2023
- * Author: Shun Suzuki
- * -----
- * Last Modified: 09/12/2023
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2023 Shun Suzuki. All rights reserved.
- *
- */
-
 use std::env;
 use std::path::Path;
 

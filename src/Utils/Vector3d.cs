@@ -1,17 +1,4 @@
-﻿/*
- * File: Vector3d.cs
- * Project: Util
- * Created Date: 02/07/2018
- * Author: Shun Suzuki
- * -----
- * Last Modified: 06/12/2023
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2018-2019 Shun Suzuki. All rights reserved.
- * 
- */
-
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;

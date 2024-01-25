@@ -39,4 +39,4 @@ See [LICENSE](./LICENSE) and [ThirdPartyNotice](./ThirdPartyNotice.txt).
 
 # Author
 
-Shun Suzuki 2022-2023
+Shun Suzuki 2022-2024

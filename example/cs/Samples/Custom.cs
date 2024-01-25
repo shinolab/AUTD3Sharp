@@ -1,17 +1,4 @@
-﻿/*
- * File: Custom.cs
- * Project: Test
- * Created Date: 14/10/2021
- * Author: Shun Suzuki
- * -----
- * Last Modified: 04/01/2024
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2022-2023 Shun Suzuki. All rights reserved.
- * 
- */
-
-
+﻿
 using AUTD3Sharp;
 using AUTD3Sharp.Gain;
 using AUTD3Sharp.Modulation;

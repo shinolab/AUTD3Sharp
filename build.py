@@ -1,17 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-File: build.py
-Project: autd3
-Created Date: 16/10/2023
-Author: Shun Suzuki
------
-Last Modified: 19/10/2023
-Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
------
-Copyright (c) 2023 Shun Suzuki. All rights reserved.
-
-"""
 
 import argparse
 import contextlib

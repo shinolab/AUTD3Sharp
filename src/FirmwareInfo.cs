@@ -1,17 +1,4 @@
-﻿/*
- * File: FirmwareInfo.cs
- * Project: src
- * Created Date: 28/04/2021
- * Author: Shun Suzuki
- * -----
- * Last Modified: 06/12/2023
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2021 Shun Suzuki. All rights reserved.
- * 
- */
-
-using System;
+﻿using System;
 using System.Text;
 using AUTD3Sharp.NativeMethods;
 

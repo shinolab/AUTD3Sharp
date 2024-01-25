@@ -1,17 +1,4 @@
-﻿/*
- * File: Quaterniond.cs
- * Project: Util
- * Created Date: 02/07/2018
- * Author: Shun Suzuki
- * -----
- * Last Modified: 26/10/2022
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2019 Shun Suzuki. All rights reserved.
- * 
- */
-
-using System;
+﻿using System;
 
 namespace AUTD3Sharp.Utils
 {
@@ -83,7 +70,7 @@ namespace AUTD3Sharp.Utils
 
         #region util
         public override int GetHashCode() => w.GetHashCode() ^ x.GetHashCode() ^ y.GetHashCode() ^ z.GetHashCode();
-        
+
         public override string ToString() => $"({w}, {x}, {y}, {z})";
         #endregion
     }

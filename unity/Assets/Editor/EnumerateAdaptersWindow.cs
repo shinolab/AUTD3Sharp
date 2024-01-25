@@ -1,17 +1,4 @@
-﻿/*
- * File: EnumerateAdaptersWindow.cs
- * Project: Editor
- * Created Date: 03/07/2020
- * Author: Shun Suzuki
- * -----
- * Last Modified: 13/09/2023
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2021 Shun Suzuki. All rights reserved.
- * 
- */
-
-#if UNITY_EDITOR
+﻿#if UNITY_EDITOR
 
 using UnityEditor;
 using UnityEngine;

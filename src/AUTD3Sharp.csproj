@@ -8,7 +8,7 @@
     <Authors>Shun Suzuki</Authors>
     <Company>Shinolab</Company>
     <Description>AUTD3 library wrapper for .Net</Description>
-    <Copyright>Copyright (c) 2022-2023 Shun Suzuki. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) 2022-2024 Shun Suzuki. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/shinolab/autd3</PackageProjectUrl>
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetNativeLibraryFiles</TargetsForTfmSpecificBuildOutput>
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>

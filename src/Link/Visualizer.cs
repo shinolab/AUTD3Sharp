@@ -1,16 +1,3 @@
-/*
- * File: Visualizer.cs
- * Project: Link
- * Created Date: 13/10/2023
- * Author: Shun Suzuki
- * -----
- * Last Modified: 11/01/2024
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2023 Shun Suzuki. All rights reserved.
- *
- */
-
 
 
 #if UNITY_2018_3_OR_NEWER

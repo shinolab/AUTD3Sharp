@@ -1,15 +1,4 @@
-﻿// File: Flag.fs
-// Project: Samples
-// Created Date: 14/09/2023
-// Author: Shun Suzuki
-// -----
-// Last Modified: 08/12/2023
-// Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
-// -----
-// Copyright (c) 2023 Shun Suzuki. All rights reserved.
-// 
-
-namespace Samples
+﻿namespace Samples
 
 open AUTD3Sharp
 open System

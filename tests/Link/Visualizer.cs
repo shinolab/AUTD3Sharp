@@ -1,16 +1,3 @@
-/*
- * File: NopTest.cs
- * Project: Link
- * Created Date: 12/12/2023
- * Author: Shun Suzuki
- * -----
- * Last Modified: 11/01/2024
- * Modified By: Shun Suzuki (suzuki@hapis.k.u-tokyo.ac.jp)
- * -----
- * Copyright (c) 2023 Shun Suzuki. All rights reserved.
- * 
- */
-
 
 using System.Net;
 using AUTD3Sharp.NativeMethods;
