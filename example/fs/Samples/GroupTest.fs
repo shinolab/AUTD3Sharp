@@ -3,6 +3,7 @@ namespace Samples
 open AUTD3Sharp
 open AUTD3Sharp.Gain
 open AUTD3Sharp.Modulation
+open AUTD3Sharp.Driver.Geometry
 open AUTD3Sharp.Utils
 
 module GroupByDeviceTest =

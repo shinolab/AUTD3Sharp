@@ -2,7 +2,6 @@
 
 open System
 open AUTD3Sharp
-open AUTD3Sharp.STM
 open AUTD3Sharp.Gain
 open AUTD3Sharp.Modulation
 open AUTD3Sharp.Utils
