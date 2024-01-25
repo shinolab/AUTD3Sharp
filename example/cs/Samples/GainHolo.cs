@@ -16,7 +16,7 @@ internal static class GainHoloTest
         var center = autd.Geometry.Center + new Vector3d(0, 0, 150);
 
         var backend = new NalgebraBackend();
-        var g = new GSPAT<NalgebraBackend>(backend).WithConstraint(new Uniform(EmitIntensity.Max))
+        var g = new GSPAT<NalgebraBackend>(backend)
             .AddFocus(center + 20.0 * Vector3d.UnitX, 5e3 * Pascal)
             .AddFocus(center - 20.0 * Vector3d.UnitX, 5e3 * Pascal);
 

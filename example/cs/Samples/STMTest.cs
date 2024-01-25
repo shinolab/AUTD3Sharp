@@ -1,6 +1,5 @@
 ﻿using AUTD3Sharp;
 using AUTD3Sharp.Gain;
-using AUTD3Sharp.STM;
 using AUTD3Sharp.Modulation;
 using AUTD3Sharp.Utils;
 

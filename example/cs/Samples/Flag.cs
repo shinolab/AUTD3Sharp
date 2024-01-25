@@ -12,9 +12,9 @@ internal static class FlagTest
         await autd.SendAsync(new ConfigureForceFan(_ => true), new ConfigureReadsFPGAState(_ => true));
 
         var fin = false;
+        Console.WriteLine("press any key stop checking FPGA status...");
         var th = Task.Run(() =>
         {
-            Console.WriteLine("press any key stop checking FPGA status...");
             Console.ReadKey(true);
             fin = true;
         });
@@ -25,7 +25,7 @@ internal static class FlagTest
         {
             var states = await autd.FPGAStateAsync();
             Console.WriteLine($"{prompts[promptsIdx++ / 1000 % prompts.Length]} FPGA Status...");
-            Console.WriteLine(string.Join("\n", states));
+            Console.WriteLine(string.Join("\n", states.Select((s, i) => s == null ? $"[{i}]: -" : $"[{i}]: {s.IsThermalAssert}")));
             Console.Write($"\x1b[{states.Length + 1}A");
         }
 

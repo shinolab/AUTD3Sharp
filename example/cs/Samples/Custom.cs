@@ -2,6 +2,7 @@
 using AUTD3Sharp;
 using AUTD3Sharp.Gain;
 using AUTD3Sharp.Modulation;
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.Utils;
 
 namespace Samples;
