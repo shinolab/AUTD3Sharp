@@ -2,10 +2,7 @@
 #define USE_SINGLE
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 #if USE_SINGLE
@@ -25,14 +22,13 @@ namespace AUTD3Sharp.Gain.Holo
         where TB : Backend
     {
         private readonly TB _backend;
-        private float_t? _alpha;
-        private float_t? _lambda;
-        private uint? _repeat;
-        private IAmplitudeConstraint? _constraint;
 
-        public SDP(TB backend)
+        public SDP(TB backend) : base(EmissionConstraint.DontCare())
         {
             _backend = backend;
+            Alpha = 1e-3f;
+            Lambda = 0.9;
+            Repeat = 100;
         }
 
         /// <summary>
@@ -42,7 +38,7 @@ namespace AUTD3Sharp.Gain.Holo
         /// <returns></returns>
         public SDP<TB> WithAlpha(float_t value)
         {
-            _alpha = value;
+            Alpha = value;
             return this;
         }
 
@@ -53,7 +49,7 @@ namespace AUTD3Sharp.Gain.Holo
         /// <returns></returns>
         public SDP<TB> WithLambda(float_t value)
         {
-            _lambda = value;
+            Lambda = value;
             return this;
         }
 
@@ -64,34 +60,19 @@ namespace AUTD3Sharp.Gain.Holo
         /// <returns></returns>
         public SDP<TB> WithRepeat(uint value)
         {
-            _repeat = value;
+            Repeat = value;
             return this;
         }
 
-        /// <summary>
-        /// Set amplitude constraint
-        /// </summary>
-        /// <param name="constraint"></param>
-        /// <returns></returns>
-        public SDP<TB> WithConstraint(IAmplitudeConstraint constraint)
-        {
-            _constraint = constraint;
-            return this;
-        }
 
-        internal override GainPtr GainPtr(Geometry geometry)
-        {
-            var ptr = _backend.Sdp(Foci.ToArray(), Amps.ToArray(),
-                (ulong)Amps.Count);
-            if (_alpha.HasValue) ptr = _backend.SdpWithAlpha(ptr, _alpha.Value);
-            if (_lambda.HasValue) ptr = _backend.SdpWithLambda(ptr, _lambda.Value);
-            if (_repeat.HasValue) ptr = _backend.SdpWithRepeat(ptr, _repeat.Value);
-            if (_constraint != null) ptr = _backend.SdpWithConstraint(ptr, _constraint.Ptr());
-            return ptr;
-        }
+        public float_t Alpha { get; private set; }
+
+        public float_t Lambda { get; private set; }
+
+        public uint Repeat { get; private set; }
+
+        internal override GainPtr GainPtr(Geometry geometry) =>
+            _backend.Sdp(Foci.ToArray(), Amps.ToArray(),
+                (ulong)Amps.Count, Alpha, Repeat, Lambda, Constraint.Ptr);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

@@ -1,11 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
-namespace AUTD3Sharp.Internal
+namespace AUTD3Sharp.Driver
 {
     [ComVisible(false)]
     public interface ILinkBuilder<out T>
@@ -14,7 +10,3 @@ namespace AUTD3Sharp.Internal
         internal T ResolveLink(LinkPtr ptr);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

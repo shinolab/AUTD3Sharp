@@ -1,4 +1,3 @@
-
 #if UNITY_2018_3_OR_NEWER
 #define USE_SINGLE
 #endif
@@ -12,6 +11,7 @@ using Quaternion = UnityEngine.Quaternion;
 #else
 using Vector3 = AUTD3Sharp.Utils.Vector3d;
 using Quaternion = AUTD3Sharp.Utils.Quaterniond;
+
 #endif
 
 #if USE_SINGLE
@@ -20,7 +20,7 @@ using float_t = System.Single;
 using float_t = System.Double;
 #endif
 
-namespace AUTD3Sharp
+namespace AUTD3Sharp.Driver.Geometry
 {
     public sealed class Transducer
     {
@@ -46,7 +46,7 @@ namespace AUTD3Sharp
             {
                 unsafe
                 {
-                    float_t* pos = stackalloc float_t[3];
+                    var pos = stackalloc float_t[3];
                     NativeMethodsBase.AUTDTransducerPosition(Ptr, pos);
                     return new Vector3(pos[0], pos[1], pos[2]);
                 }
@@ -62,7 +62,7 @@ namespace AUTD3Sharp
             {
                 unsafe
                 {
-                    float_t* rot = stackalloc float_t[3];
+                    var rot = stackalloc float_t[3];
                     NativeMethodsBase.AUTDTransducerRotation(Ptr, rot);
                     return new Quaternion(rot[1], rot[2], rot[3], rot[0]);
                 }
@@ -78,7 +78,7 @@ namespace AUTD3Sharp
             {
                 unsafe
                 {
-                    float_t* dir = stackalloc float_t[3];
+                    var dir = stackalloc float_t[3];
                     NativeMethodsBase.AUTDTransducerDirectionX(Ptr, dir);
                     return new Vector3(dir[0], dir[1], dir[2]);
                 }
@@ -94,7 +94,7 @@ namespace AUTD3Sharp
             {
                 unsafe
                 {
-                    float_t* dir = stackalloc float_t[3];
+                    var dir = stackalloc float_t[3];
                     NativeMethodsBase.AUTDTransducerDirectionY(Ptr, dir);
                     return new Vector3(dir[0], dir[1], dir[2]);
                 }
@@ -110,7 +110,7 @@ namespace AUTD3Sharp
             {
                 unsafe
                 {
-                    float_t* dir = stackalloc float_t[3];
+                    var dir = stackalloc float_t[3];
                     NativeMethodsBase.AUTDTransducerDirectionZ(Ptr, dir);
                     return new Vector3(dir[0], dir[1], dir[2]);
                 }

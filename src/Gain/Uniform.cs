@@ -2,38 +2,26 @@
 #define USE_SINGLE
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
 
 namespace AUTD3Sharp.Gain
 {
     /// <summary>
     /// Gain to set amp and phase uniformly
     /// </summary>
-    public sealed class Uniform : Internal.Gain
+    public sealed class Uniform : Driver.Datagram.Gain
     {
-        private readonly EmitIntensity _intensity;
-        private Phase? _phase;
-
         public Uniform(byte intensity)
         {
-            _intensity = new EmitIntensity(intensity);
-            _phase = null;
+            Intensity = new EmitIntensity(intensity);
+            Phase = new Phase(0);
         }
 
         public Uniform(EmitIntensity intensity)
         {
-            _intensity = intensity;
-            _phase = null;
+            Intensity = intensity;
+            Phase = new Phase(0);
         }
 
         /// <summary>
@@ -43,20 +31,13 @@ namespace AUTD3Sharp.Gain
         /// <returns></returns>
         public Uniform WithPhase(Phase phase)
         {
-            _phase = phase;
+            Phase = phase;
             return this;
         }
 
-        internal override GainPtr GainPtr(Geometry geometry)
-        {
-            var ptr = NativeMethodsBase.AUTDGainUniform(_intensity.Value);
-            if (_phase != null)
-                ptr = NativeMethodsBase.AUTDGainUniformWithPhase(ptr, _phase.Value.Value);
-            return ptr;
-        }
+        public EmitIntensity Intensity { get; }
+        public Phase Phase { get; private set; }
+
+        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainUniform(Intensity.Value, Phase.Value);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

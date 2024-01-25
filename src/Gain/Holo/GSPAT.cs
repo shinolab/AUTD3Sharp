@@ -1,7 +1,4 @@
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain.Holo
@@ -15,12 +12,11 @@ namespace AUTD3Sharp.Gain.Holo
         where TB : Backend
     {
         private readonly TB _backend;
-        private uint? _repeat;
-        private IAmplitudeConstraint? _constraint;
 
-        public GSPAT(TB backend)
+        public GSPAT(TB backend) : base(EmissionConstraint.DontCare())
         {
             _backend = backend;
+            Repeat = 100;
         }
 
         /// <summary>
@@ -30,32 +26,15 @@ namespace AUTD3Sharp.Gain.Holo
         /// <returns></returns>
         public GSPAT<TB> WithRepeat(uint value)
         {
-            _repeat = value;
+            Repeat = value;
             return this;
         }
 
-        /// <summary>
-        /// Set amplitude constraint
-        /// </summary>
-        /// <param name="constraint"></param>
-        /// <returns></returns>
-        public GSPAT<TB> WithConstraint(IAmplitudeConstraint constraint)
-        {
-            _constraint = constraint;
-            return this;
-        }
+        public uint Repeat { get; private set; }
 
         internal override GainPtr GainPtr(Geometry geometry)
         {
-            var ptr = _backend.Gspat(Foci.ToArray(), Amps.ToArray(),
-                (ulong)Amps.Count);
-            if (_repeat.HasValue) ptr = _backend.GspatWithRepeat(ptr, _repeat.Value);
-            if (_constraint != null) ptr = _backend.GspatWithConstraint(ptr, _constraint.Ptr());
-            return ptr;
+            return _backend.Gspat(Foci.ToArray(), Amps.ToArray(), (ulong)Amps.Count, Repeat, Constraint.Ptr);
         }
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

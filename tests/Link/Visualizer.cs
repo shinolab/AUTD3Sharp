@@ -1,5 +1,3 @@
-
-using System.Net;
 using AUTD3Sharp.NativeMethods;
 
 namespace tests.Link;
@@ -7,7 +5,7 @@ namespace tests.Link;
 public class VisualizerTest
 {
 
-    private void VisualizerTestWith(Controller<Visualizer> autd, IPlotConfig config)
+    private static void VisualizerTestWith(Controller<Visualizer> autd, IPlotConfig config)
     {
         var center = autd.Geometry.Center + new Vector3d(0, 0, 150);
 
@@ -27,7 +25,7 @@ public class VisualizerTest
                 YEnd = center[1],
                 ZStart = center[2],
                 ZEnd = center[2],
-                Resolution = 1,
+                Resolution = 1
             },
             autd.Geometry
         );
@@ -41,7 +39,7 @@ public class VisualizerTest
                  YEnd = center[1] + 30,
                  ZStart = center[2],
                  ZEnd = center[2],
-                 Resolution = 1,
+                 Resolution = 1
              },
             autd.Geometry
         );
@@ -52,9 +50,9 @@ public class VisualizerTest
         var phases = autd.Link.Phases();
         Assert.Equal(Enumerable.Range(0, autd.Geometry.NumTransducers).Select(_ => (byte)0x81).ToArray(), phases);
         var mod = autd.Link.Modulation();
-        Assert.Equal(new byte[2] { 0x82, 0x82 }, mod);
+        Assert.Equal([0x82, 0x82], mod);
 
-        var points = new Vector3d[] { center };
+        var points = new[] { center };
         autd.Link.CalcField(points, autd.Geometry);
         autd.Link.CalcField(Enumerable.Range(0, 1).Select(_ => center), autd.Geometry);
 
@@ -73,7 +71,7 @@ public class VisualizerTest
             YEnd = 30,
             ZStart = 0,
             ZEnd = 0,
-            Resolution = 1,
+            Resolution = 1
         };
         var points = range.ObservePoints();
         Assert.Equal(41 * 61, points.Length);
@@ -90,7 +88,10 @@ public class VisualizerTest
             using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Builder().WithBackend<PlottersBackend>().WithDirectivity<Sphere>());
             VisualizerTestWith(
                    autd,
-                   new PlotConfig()
+                   new PlotConfig
+                   {
+                       Fname = "test.png",
+                   }
                );
         }
         {
@@ -100,13 +101,13 @@ public class VisualizerTest
                    new PlotConfig
                    {
                        Fname = "test.png",
-                       Figsize = (960, 640),
+                       FigSize = (960, 640),
                        CbarSize = 0.15f,
                        FontSize = 24,
                        LabelAreaSize = 80,
                        Margin = 10,
                        TicksStep = 10f,
-                       Cmap = CMap.Jet,
+                       Cmap = CMap.Jet
                    }
                );
         }
@@ -120,6 +121,9 @@ public class VisualizerTest
             VisualizerTestWith(
                    autd,
                    new PyPlotConfig()
+                   {
+                       Fname = "test.png",
+                   }
                );
         }
         {
@@ -129,7 +133,7 @@ public class VisualizerTest
                    new PyPlotConfig
                    {
                        Fname = "test.png",
-                       Figsize = (6, 4),
+                       FigSize = (6, 4),
                        Dpi = 72,
                        CbarPosition = "right",
                        CbarSize = "5%",
@@ -180,7 +184,7 @@ public class VisualizerTest
                 YEnd = 0,
                 ZStart = 0,
                 ZEnd = 0,
-                Resolution = 1,
+                Resolution = 1
             },
             autd.Geometry
         ));
@@ -204,7 +208,7 @@ public class VisualizerTest
                 YEnd = 0,
                 ZStart = 0,
                 ZEnd = 0,
-                Resolution = 1,
+                Resolution = 1
             },
             autd.Geometry
         ));

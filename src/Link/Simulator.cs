@@ -1,8 +1,8 @@
-
-using AUTD3Sharp.Internal;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using AUTD3Sharp.Driver;
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 

@@ -1,4 +1,3 @@
-
 namespace tests;
 
 public class SamplingConfigTest

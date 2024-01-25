@@ -3,27 +3,17 @@ using Xunit.Abstractions;
 
 namespace tests.Link;
 
-public class SOEMTest
+public class SOEMTest(ITestOutputHelper testOutputHelper)
 {
-    private readonly ITestOutputHelper _testOutputHelper;
-
-    public SOEMTest(ITestOutputHelper testOutputHelper)
-    {
-        _testOutputHelper = testOutputHelper;
-    }
-
     [Fact, Trait("require", "soem")]
     public async Task TestSOEM()
     {
         var onLost = new SOEM.OnErrCallbackDelegate(msg =>
         {
-            _testOutputHelper.WriteLine(msg);
+            testOutputHelper.WriteLine(msg);
             Environment.Exit(-1);
         });
-        var onErr = new SOEM.OnErrCallbackDelegate(msg =>
-        {
-            _testOutputHelper.WriteLine(msg);
-        });
+        var onErr = new SOEM.OnErrCallbackDelegate(testOutputHelper.WriteLine);
 
         await Assert.ThrowsAsync<AUTDException>(async () => _ = await new ControllerBuilder()
              .AddDevice(new AUTD3(Vector3d.zero))
@@ -44,7 +34,7 @@ public class SOEMTest
     [Fact, Trait("require", "soem")]
     public void TestRemoteSOEM()
     {
-        var _ = RemoteSOEM.Builder(new IPEndPoint(IPAddress.Parse("172.0.0.1"), 8080))
-                .WithTimeout(TimeSpan.FromMilliseconds(200));
+        _ = RemoteSOEM.Builder(new IPEndPoint(IPAddress.Parse("172.0.0.1"), 8080))
+            .WithTimeout(TimeSpan.FromMilliseconds(200));
     }
 }

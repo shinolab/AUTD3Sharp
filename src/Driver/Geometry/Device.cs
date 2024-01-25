@@ -22,7 +22,7 @@ using float_t = System.Single;
 using float_t = System.Double;
 #endif
 
-namespace AUTD3Sharp
+namespace AUTD3Sharp.Driver.Geometry
 {
     public sealed class Device : IEnumerable<Transducer>
     {
@@ -79,7 +79,7 @@ namespace AUTD3Sharp
             {
                 unsafe
                 {
-                    float_t* center = stackalloc float_t[3];
+                    var center = stackalloc float_t[3];
                     NativeMethodsBase.AUTDDeviceCenter(Ptr, center);
                     return new Vector3(center[0], center[1], center[2]);
                 }

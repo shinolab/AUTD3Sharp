@@ -15,7 +15,7 @@ public class GSPATTest
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
             .AddFociFromIter(new double[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3d(x, 0, 150), 5e3 * Pascal)))
             .WithRepeat(100)
-            .WithConstraint(new AUTD3Sharp.Gain.Holo.Uniform(new EmitIntensity(0x80)));
+            .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
         Assert.True(await autd.SendAsync(g));
 

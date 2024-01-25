@@ -1,14 +1,14 @@
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
-namespace AUTD3Sharp.Internal
+namespace AUTD3Sharp.Driver.Datagram
 {
     [ComVisible(false)]
     public abstract class Modulation : IDatagram
     {
         public SamplingConfiguration SamplingConfiguration => new SamplingConfiguration(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
+        DatagramPtr IDatagram.Ptr(Geometry.Geometry _) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
 
         internal abstract ModulationPtr ModulationPtr();
 
@@ -18,7 +18,12 @@ namespace AUTD3Sharp.Internal
     public abstract class ModulationWithSamplingConfig<T> : Modulation
         where T : ModulationWithSamplingConfig<T>
     {
-        protected SamplingConfiguration? Config;
+        protected SamplingConfiguration Config;
+
+        protected ModulationWithSamplingConfig(SamplingConfiguration config)
+        {
+            Config = config;
+        }
 
         /// <summary>
         /// Set sampling frequency division

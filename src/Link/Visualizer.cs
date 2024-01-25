@@ -1,14 +1,13 @@
-
-
 #if UNITY_2018_3_OR_NEWER
 #define USE_SINGLE
 #endif
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
-using AUTD3Sharp.Internal;
+using AUTD3Sharp.Driver;
+using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -16,7 +15,6 @@ using AUTD3Sharp.NativeMethods;
 #endif
 
 #if UNITY_2018_3_OR_NEWER
-using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 #else
 using Vector3 = AUTD3Sharp.Utils.Vector3d;
@@ -99,40 +97,23 @@ namespace AUTD3Sharp.Link
 
     public sealed class PlotConfig : IPlotConfig
     {
-        public (uint, uint)? Figsize { get; set; }
-        public float_t? CbarSize { get; set; }
-        public uint? FontSize { get; set; }
-        public uint? LabelAreaSize { get; set; }
-        public uint? Margin { get; set; }
-        public float_t? TicksStep { get; set; }
-        public CMap? Cmap { get; set; }
-        public string? Fname { get; set; }
+        public (uint, uint) FigSize { get; set; } = (960, 640);
+        public float_t CbarSize { get; set; } = 0.15;
+        public uint FontSize { get; set; } = 24;
+        public uint LabelAreaSize { get; set; } = 80;
+        public uint Margin { get; set; } = 10;
+        public float_t TicksStep { get; set; } = 10;
+        public CMap Cmap { get; set; } = CMap.Jet;
+        public string Fname { get; set; } = "";
 
         public ConfigPtr Ptr()
         {
-            var ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigDefault();
-            if (Figsize.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigWithFigSize(ptr, Figsize.Value.Item1, Figsize.Value.Item2);
-            if (CbarSize.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigWithCBarSize(ptr, CbarSize.Value);
-            if (FontSize.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigWithFontSize(ptr, FontSize.Value);
-            if (LabelAreaSize.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigWithLabelAreaSize(ptr, LabelAreaSize.Value);
-            if (Margin.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigWithMargin(ptr, Margin.Value);
-            if (TicksStep.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigWithTicksStep(ptr, TicksStep.Value);
-            if (Cmap.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigWithCMap(ptr, Cmap.Value);
-            if (Fname == null) return new ConfigPtr { Item1 = ptr.Item1 };
             var bytes = System.Text.Encoding.UTF8.GetBytes(Fname);
             unsafe
             {
                 fixed (byte* p = &bytes[0])
-                    ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigWithFName(ptr, p).Validate();
+                    return new ConfigPtr { Item1 = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfig(FigSize.Item1, FigSize.Item2, CbarSize, FontSize, LabelAreaSize, Margin, TicksStep, Cmap, p).Validate().Item1 };
             }
-            return new ConfigPtr { Item1 = ptr.Item1 };
         }
 
         public Backend Backend()
@@ -143,76 +124,33 @@ namespace AUTD3Sharp.Link
 
     public sealed class PyPlotConfig : IPlotConfig
     {
-        public (int, int)? Figsize { get; set; }
-        public int? Dpi { get; set; }
-        public string? CbarPosition { get; set; }
-        public string? CbarSize { get; set; }
-        public string? CbarPad { get; set; }
-        public int? FontSize { get; set; }
-        public float_t? TicksStep { get; set; }
-        public string? Cmap { get; set; }
-        public bool? Show { get; set; }
-        public string? Fname { get; set; }
+        public (int, int) FigSize { get; set; } = (8, 6);
+        public int Dpi { get; set; } = 72;
+        public string CbarPosition { get; set; } = "right";
+        public string CbarSize { get; set; } = "5%";
+        public string CbarPad { get; set; } = "3%";
+        public int FontSize { get; set; } = 12;
+        public float_t TicksStep { get; set; } = 10;
+        public string Cmap { get; set; } = "jet";
+        public bool Show { get; set; } = false;
+        public string Fname { get; set; } = "";
 
         public ConfigPtr Ptr()
         {
-            var ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigDefault();
-            if (Figsize.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithFigSize(ptr, Figsize.Value.Item1, Figsize.Value.Item2);
-            if (Dpi.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithDPI(ptr, Dpi.Value);
-            if (CbarPosition != null)
+            var cbarPosition = System.Text.Encoding.UTF8.GetBytes(CbarPosition);
+            var cbarSizeBytes = System.Text.Encoding.UTF8.GetBytes(CbarSize);
+            var cbarPadBytes = System.Text.Encoding.UTF8.GetBytes(CbarPad);
+            var cmapBytes = System.Text.Encoding.UTF8.GetBytes(Cmap);
+            var fnameBytes = System.Text.Encoding.UTF8.GetBytes(Fname);
+            unsafe
             {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(CbarPosition);
-                unsafe
-                {
-                    fixed (byte* p = &bytes[0])
-                        ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithCBarPosition(ptr, p).Validate();
-                }
+                fixed (byte* pCbarPosition = &cbarPosition[0])
+                fixed (byte* pCbarSize = &cbarSizeBytes[0])
+                fixed (byte* pCbarPad = &cbarPadBytes[0])
+                fixed (byte* pCmap = &cmapBytes[0])
+                fixed (byte* pFname = &fnameBytes[0])
+                    return new ConfigPtr { Item1 = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfig(FigSize.Item1, FigSize.Item2, Dpi, pCbarPosition, pCbarSize, pCbarPad, FontSize, TicksStep, pCmap, Show, pFname).Validate().Item1 };
             }
-            if (CbarSize != null)
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(CbarSize);
-                unsafe
-                {
-                    fixed (byte* p = &bytes[0])
-                        ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithCBarSize(ptr, p).Validate();
-                }
-            }
-            if (CbarPad != null)
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(CbarPad);
-                unsafe
-                {
-                    fixed (byte* p = &bytes[0])
-                        ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithCBarPad(ptr, p).Validate();
-                }
-            }
-            if (FontSize.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithFontSize(ptr, FontSize.Value);
-            if (TicksStep.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithTicksStep(ptr, TicksStep.Value);
-            if (Cmap != null)
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(Cmap);
-                unsafe
-                {
-                    fixed (byte* p = &bytes[0])
-                        ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithCMap(ptr, p).Validate();
-                }
-            }
-            if (Show.HasValue)
-                ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithShow(ptr, Show.Value);
-            if (Fname == null) return new ConfigPtr { Item1 = ptr.Item1 };
-            {
-                var bytes = System.Text.Encoding.UTF8.GetBytes(Fname);
-                unsafe
-                {
-                    fixed (byte* p = &bytes[0])
-                        ptr = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigWithFName(ptr, p).Validate();
-                }
-            }
-            return new ConfigPtr { Item1 = ptr.Item1 };
         }
 
         public Backend Backend()
@@ -268,7 +206,7 @@ namespace AUTD3Sharp.Link
                     (Backend.Null, Directivity.Sphere) => NativeMethodsLinkVisualizer.AUTDLinkVisualizerSphereNull(
                              _gpuIdx.HasValue, _gpuIdx ?? 0),
                     (Backend.Null, Directivity.T4010A1) => NativeMethodsLinkVisualizer.AUTDLinkVisualizerT4010A1Null(
-                        _gpuIdx.HasValue, _gpuIdx ?? 0),
+                        _gpuIdx.HasValue, _gpuIdx ?? 0)
                 };
             }
 #pragma warning restore CS8524
@@ -332,11 +270,11 @@ namespace AUTD3Sharp.Link
             unsafe
             {
                 var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity,
-                    (uint)(idx), null);
+                    (uint)idx, null);
                 var buf = new byte[size];
                 fixed (byte* p = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity,
-                    (uint)(idx), p);
+                    (uint)idx, p);
                 return buf;
             }
         }
@@ -351,11 +289,11 @@ namespace AUTD3Sharp.Link
             unsafe
             {
                 var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensitiesOf(_ptr, _backend, _directivity,
-                    (uint)(idx), null);
+                    (uint)idx, null);
                 var buf = new byte[size];
                 fixed (byte* p = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensitiesOf(_ptr, _backend, _directivity,
-                    (uint)(idx), p);
+                    (uint)idx, p);
                 return buf;
             }
         }
@@ -381,7 +319,7 @@ namespace AUTD3Sharp.Link
         public System.Numerics.Complex[] CalcFieldOf(IEnumerable<Vector3> pointsIter, Geometry geometry, int idx)
         {
             var points = pointsIter as Vector3[] ?? pointsIter.ToArray();
-            var pointsLen = points.Count();
+            var pointsLen = points.Length;
             var pointsPtr = points.SelectMany(v => new[] { v.x, v.y, v.z }).ToArray();
             var buf = new float_t[pointsLen * 2];
             unsafe
@@ -389,7 +327,7 @@ namespace AUTD3Sharp.Link
                 fixed (float_t* pp = &pointsPtr[0])
                 fixed (float_t* bp = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerCalcFieldOf(_ptr, _backend, _directivity,
-                        pp, (uint)pointsLen, geometry.Ptr, (uint)(idx), bp);
+                        pp, (uint)pointsLen, geometry.Ptr, (uint)idx, bp);
             }
             return Enumerable.Range(0, pointsLen).Select(i => new System.Numerics.Complex(buf[2 * i], buf[2 * i + 1])).ToArray();
         }

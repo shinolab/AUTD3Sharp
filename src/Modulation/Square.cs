@@ -2,10 +2,6 @@
 #define USE_SINGLE
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
 using AUTD3Sharp.NativeMethods;
 
 #if USE_SINGLE
@@ -19,21 +15,15 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Square wave modulation
     /// </summary>
-    public sealed class Square : Internal.ModulationWithSamplingConfig<Square>
+    public sealed class Square : Driver.Datagram.ModulationWithSamplingConfig<Square>
     {
-        private readonly float_t _freq;
-        private EmitIntensity? _low;
-        private EmitIntensity? _high;
-        private float_t? _duty;
-        private SamplingMode? _mode;
-
-        public Square(float_t freq)
+        public Square(float_t freq) : base(SamplingConfiguration.FromFrequency(4e3))
         {
-            _freq = freq;
-            _low = null;
-            _high = null;
-            _duty = null;
-            _mode = null;
+            Freq = freq;
+            Low = EmitIntensity.Min;
+            High = EmitIntensity.Max;
+            Duty = 0.5;
+            Mode = SamplingMode.ExactFrequency;
         }
 
         /// <summary>
@@ -43,7 +33,7 @@ namespace AUTD3Sharp.Modulation
         /// <returns></returns>
         public Square WithLow(byte low)
         {
-            _low = new EmitIntensity(low);
+            Low = new EmitIntensity(low);
             return this;
         }
 
@@ -54,7 +44,7 @@ namespace AUTD3Sharp.Modulation
         /// <returns></returns>
         public Square WithLow(EmitIntensity low)
         {
-            _low = low;
+            Low = low;
             return this;
         }
 
@@ -65,7 +55,7 @@ namespace AUTD3Sharp.Modulation
         /// <returns></returns>
         public Square WithHigh(byte high)
         {
-            _high = new EmitIntensity(high);
+            High = new EmitIntensity(high);
             return this;
         }
 
@@ -76,7 +66,7 @@ namespace AUTD3Sharp.Modulation
         /// <returns></returns>
         public Square WithHigh(EmitIntensity high)
         {
-            _high = high;
+            High = high;
             return this;
         }
 
@@ -88,7 +78,7 @@ namespace AUTD3Sharp.Modulation
         /// <returns></returns>
         public Square WithDuty(float_t duty)
         {
-            _duty = duty;
+            Duty = duty;
             return this;
         }
 
@@ -99,28 +89,20 @@ namespace AUTD3Sharp.Modulation
         /// <returns></returns>
         public Square WithMode(SamplingMode mode)
         {
-            _mode = mode;
+            Mode = mode;
             return this;
         }
 
-        internal override ModulationPtr ModulationPtr()
-        {
-            var ptr = NativeMethodsBase.AUTDModulationSquare(_freq);
-            if (_low != null)
-                ptr = NativeMethodsBase.AUTDModulationSquareWithLow(ptr, _low.Value.Value);
-            if (_high != null)
-                ptr = NativeMethodsBase.AUTDModulationSquareWithHigh(ptr, _high.Value.Value);
-            if (_duty != null)
-                ptr = NativeMethodsBase.AUTDModulationSquareWithDuty(ptr, _duty.Value);
-            if (Config != null)
-                ptr = NativeMethodsBase.AUTDModulationSquareWithSamplingConfig(ptr, Config.Value.Internal);
-            if (_mode != null)
-                ptr = NativeMethodsBase.AUTDModulationSquareWithMode(ptr, _mode.Value);
-            return ptr;
-        }
+        public float_t Freq { get; }
+
+        public EmitIntensity Low { get; private set; }
+
+        public EmitIntensity High { get; private set; }
+
+        public float_t Duty { get; private set; }
+
+        public SamplingMode Mode { get; private set; }
+
+        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSquare(Freq, Config.Internal, Low.Value, High.Value, Duty, Mode);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

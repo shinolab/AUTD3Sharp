@@ -5,7 +5,6 @@
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2018_3_OR_NEWER
-using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 #else
 using Quaternion = AUTD3Sharp.Utils.Quaterniond;
@@ -19,7 +18,7 @@ using float_t = System.Double;
 
 namespace AUTD3Sharp
 {
-    public struct Angle
+    public readonly struct Angle
     {
         public static Angle FromDegree(float_t degree) => new Angle(degree / 180 * AUTD3.Pi);
         public static Angle FromRadian(float_t radian) => new Angle(radian);
@@ -29,12 +28,12 @@ namespace AUTD3Sharp
         public class UnitRadian
         {
             internal UnitRadian() { }
-            public static Angle operator *(float_t a, UnitRadian b) => FromRadian(a);
+            public static Angle operator *(float_t a, UnitRadian _) => FromRadian(a);
         }
         public class UnitDegree
         {
             internal UnitDegree() { }
-            public static Angle operator *(float_t a, UnitDegree b) => FromDegree(a);
+            public static Angle operator *(float_t a, UnitDegree _) => FromDegree(a);
         }
 
         public static class Units
@@ -51,11 +50,11 @@ namespace AUTD3Sharp
 
     public static class EulerAngles
     {
-        public static Quaternion FromZYZ(Angle z1, Angle y, Angle z2)
+        public static Quaternion FromZyz(Angle z1, Angle y, Angle z2)
         {
             unsafe
             {
-                float_t* rot = stackalloc float_t[4];
+                var rot = stackalloc float_t[4];
                 NativeMethodsBase.AUTDRotationFromEulerZYZ(z1.Radian, y.Radian, z2.Radian, rot);
                 return new Quaternion(rot[1], rot[2], rot[3], rot[0]);
             }

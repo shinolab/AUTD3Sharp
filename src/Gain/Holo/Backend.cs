@@ -5,10 +5,6 @@
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
 #if USE_SINGLE
 using float_t = System.Single;
 #else
@@ -22,33 +18,15 @@ namespace AUTD3Sharp.Gain.Holo
     {
         internal BackendPtr Ptr;
 
-        internal abstract GainPtr Sdp(float_t[] foci, Amplitude[] amps, ulong size);
-        internal abstract GainPtr SdpWithAlpha(GainPtr ptr, float_t v);
-        internal abstract GainPtr SdpWithRepeat(GainPtr ptr, uint v);
-        internal abstract GainPtr SdpWithLambda(GainPtr ptr, float_t v);
-        internal abstract GainPtr SdpWithConstraint(GainPtr ptr, EmissionConstraintPtr v);
+        internal abstract GainPtr Sdp(float_t[] foci, Amplitude[] amps, ulong size, float_t alpha, uint repeat, float_t lambda, EmissionConstraintPtr constraint);
 
-        internal abstract GainPtr Gs(float_t[] foci, Amplitude[] amps, ulong size);
-        internal abstract GainPtr GsWithRepeat(GainPtr ptr, uint v);
-        internal abstract GainPtr GsWithConstraint(GainPtr ptr, EmissionConstraintPtr v);
+        internal abstract GainPtr Gs(float_t[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint);
 
-        internal abstract GainPtr Gspat(float_t[] foci, Amplitude[] amps, ulong size);
-        internal abstract GainPtr GspatWithRepeat(GainPtr ptr, uint v);
-        internal abstract GainPtr GspatWithConstraint(GainPtr ptr, EmissionConstraintPtr v);
+        internal abstract GainPtr Gspat(float_t[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint);
 
-        internal abstract GainPtr Naive(float_t[] foci, Amplitude[] amps, ulong size);
-        internal abstract GainPtr NaiveWithConstraint(GainPtr ptr, EmissionConstraintPtr v);
+        internal abstract GainPtr Naive(float_t[] foci, Amplitude[] amps, ulong size, EmissionConstraintPtr constraint);
 
-        internal abstract GainPtr Lm(float_t[] foci, Amplitude[] amps, ulong size);
-        internal abstract GainPtr LmWithEps1(GainPtr ptr, float_t v);
-        internal abstract GainPtr LmWithEps2(GainPtr ptr, float_t v);
-        internal abstract GainPtr LmWithTau(GainPtr ptr, float_t v);
-        internal abstract GainPtr LmWithKMax(GainPtr ptr, uint v);
-        internal abstract GainPtr LmWithInitial(GainPtr ptr, float_t[] v, ulong size);
-        internal abstract GainPtr LmWithConstraint(GainPtr ptr, EmissionConstraintPtr v);
+        internal abstract GainPtr Lm(float_t[] foci, Amplitude[] amps, ulong size, float_t eps1, float_t eps2,
+            float_t tau, uint kMax, float_t[] initial, EmissionConstraintPtr constraint);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

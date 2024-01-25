@@ -2,7 +2,6 @@
 #define USE_SINGLE
 #endif
 
-using System;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation.AudioFile
@@ -11,7 +10,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
     /// Modulation constructed from raw pcm data file
     /// <remarks>The wav data is re-sampled to the sampling frequency of Modulation.</remarks>
     /// </summary>
-    public sealed class RawPCM : Internal.ModulationWithSamplingConfig<RawPCM>
+    public sealed class RawPCM : Driver.Datagram.ModulationWithSamplingConfig<RawPCM>
     {
         private readonly string _filename;
         private readonly uint _sampleRate;
@@ -21,7 +20,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
         /// </summary>
         /// <param name="filename">Path to raw pcm file</param>
         /// <param name="sampleRate">Sampling rate of raw pcm data</param>
-        public RawPCM(string filename, uint sampleRate)
+        public RawPCM(string filename, uint sampleRate) : base(SamplingConfiguration.FromFrequency(4e3))
         {
             _filename = filename;
             _sampleRate = sampleRate;
@@ -34,10 +33,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    var ptr = NativeMethodsModulationAudioFile.AUTDModulationRawPCM(fp, _sampleRate).Validate();
-                    if (Config != null)
-                        ptr = NativeMethodsModulationAudioFile.AUTDModulationRawPCMWithSamplingConfig(ptr, Config.Value.Internal);
-                    return ptr;
+                    return NativeMethodsModulationAudioFile.AUTDModulationRawPCM(fp, _sampleRate, Config.Internal).Validate();
                 }
             }
         }

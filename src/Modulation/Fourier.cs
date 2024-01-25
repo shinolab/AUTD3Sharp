@@ -7,7 +7,7 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Multi-frequency sine wave modulation
     /// </summary>
-    public sealed class Fourier : Internal.Modulation
+    public sealed class Fourier : Driver.Datagram.Modulation
     {
         private readonly List<Sine> _components;
 

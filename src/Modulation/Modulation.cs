@@ -5,13 +5,10 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Base class for custom modulation
     /// </summary>
-    public abstract class Modulation : Internal.Modulation
+    public abstract class Modulation : Driver.Datagram.ModulationWithSamplingConfig<Modulation>
     {
-        private readonly SamplingConfiguration _config;
-
-        protected Modulation(SamplingConfiguration config)
+        protected Modulation(SamplingConfiguration config) : base(config)
         {
-            _config = config;
         }
 
         internal sealed override ModulationPtr ModulationPtr()
@@ -20,7 +17,7 @@ namespace AUTD3Sharp.Modulation
             unsafe
             {
                 fixed (EmitIntensity* ptr = &data[0])
-                    return NativeMethodsBase.AUTDModulationCustom(_config.Internal, (byte*)ptr, (ulong)data.Length);
+                    return NativeMethodsBase.AUTDModulationCustom(Config.Internal, (byte*)ptr, (ulong)data.Length);
             }
         }
 

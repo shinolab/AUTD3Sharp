@@ -4,72 +4,52 @@
 
 using AUTD3Sharp.NativeMethods;
 
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 namespace AUTD3Sharp.Gain.Holo
 {
     /// <summary>
     /// Amplitude constraint
     /// </summary>
-    public interface IAmplitudeConstraint
+    public struct EmissionConstraint
     {
-        internal EmissionConstraintPtr Ptr();
-    }
+        internal EmissionConstraintPtr Ptr;
 
-    /// <summary>
-    /// Do nothing (this is equivalent to `Clamp(0, 1)`)
-    /// </summary>
-    public sealed class DontCare : IAmplitudeConstraint
-    {
-        EmissionConstraintPtr IAmplitudeConstraint.Ptr() => NativeMethodsGainHolo.AUTDGainHoloConstraintDotCare();
-    }
-
-    /// <summary>
-    /// Normalize the value by dividing the maximum value
-    /// </summary>
-    public sealed class Normalize : IAmplitudeConstraint
-    {
-        EmissionConstraintPtr IAmplitudeConstraint.Ptr() => NativeMethodsGainHolo.AUTDGainHoloConstraintNormalize();
-    }
-
-    /// <summary>
-    /// Set all amplitudes to the specified value
-    /// </summary>
-    public sealed class Uniform : IAmplitudeConstraint
-    {
-
-        internal readonly EmitIntensity Value;
-
-        public Uniform(byte value)
+        private EmissionConstraint(EmissionConstraintPtr ptr)
         {
-            Value = new EmitIntensity(value);
-        }
-        public Uniform(EmitIntensity value)
-        {
-            Value = value;
+            Ptr = ptr;
         }
 
-        EmissionConstraintPtr IAmplitudeConstraint.Ptr() => NativeMethodsGainHolo.AUTDGainHoloConstraintUniform(Value.Value);
-    }
+        /// <summary>
+        /// Do nothing (this is equivalent to `Clamp(EmitIntensity.Min, EmitIntensity.Max)`)
+        /// </summary>
+        public static EmissionConstraint DontCare() =>
+            new EmissionConstraint(NativeMethodsGainHolo.AUTDGainHoloConstraintDotCare());
 
-    /// <summary>
-    /// Clamp all amplitudes to the specified range
-    /// </summary>
-    public sealed class Clamp : IAmplitudeConstraint
-    {
-        internal readonly EmitIntensity Min;
-        internal readonly EmitIntensity Max;
+        /// <summary>
+        /// Normalize the value by dividing the maximum value
+        /// </summary>
+        public static EmissionConstraint Normalize() =>
+            new EmissionConstraint(NativeMethodsGainHolo.AUTDGainHoloConstraintNormalize());
 
-        public Clamp(EmitIntensity min, EmitIntensity max)
-        {
-            Min = min;
-            Max = max;
-        }
+        /// <summary>
+        /// Set all amplitudes to the specified value
+        /// </summary>
+        public static EmissionConstraint Uniform(EmitIntensity value) =>
+            new EmissionConstraint(NativeMethodsGainHolo.AUTDGainHoloConstraintUniform(value.Value));
 
-        EmissionConstraintPtr IAmplitudeConstraint.Ptr() => NativeMethodsGainHolo.AUTDGainHoloConstraintClamp(Min.Value, Max.Value);
+        /// <summary>
+        /// Set all amplitudes to the specified value
+        /// </summary>
+        public static EmissionConstraint Uniform(byte value) => Uniform(new EmitIntensity(value));
+
+        /// <summary>
+        /// Clamp all amplitudes to the specified range
+        /// </summary>
+        public static EmissionConstraint Clamp(EmitIntensity min, EmitIntensity max) =>
+            new EmissionConstraint(NativeMethodsGainHolo.AUTDGainHoloConstraintClamp(min.Value, max.Value));
+
+        /// <summary>
+        /// Clamp all amplitudes to the specified range
+        /// </summary>
+        public static EmissionConstraint Clamp(byte min, byte max) => Clamp(new EmitIntensity(min), new EmitIntensity(max));
     }
 }

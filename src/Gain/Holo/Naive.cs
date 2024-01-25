@@ -1,7 +1,4 @@
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain.Holo
@@ -14,36 +11,15 @@ namespace AUTD3Sharp.Gain.Holo
         where TB : Backend
     {
         private readonly TB _backend;
-        private IAmplitudeConstraint? _constraint;
 
 
-        public Naive(TB backend)
+        public Naive(TB backend) : base(EmissionConstraint.DontCare())
         {
             _backend = backend;
-
         }
 
-        /// <summary>
-        /// Set amplitude constraint
-        /// </summary>
-        /// <param name="constraint"></param>
-        /// <returns></returns>
-        public Naive<TB> WithConstraint(IAmplitudeConstraint constraint)
-        {
-            _constraint = constraint;
-            return this;
-        }
-
-        internal override GainPtr GainPtr(Geometry geometry)
-        {
-            var ptr = _backend.Naive(Foci.ToArray(), Amps.ToArray(),
-                (ulong)Amps.Count);
-            if (_constraint != null) ptr = _backend.NaiveWithConstraint(ptr, _constraint.Ptr());
-            return ptr;
-        }
+        internal override GainPtr GainPtr(Geometry geometry) =>
+            _backend.Naive(Foci.ToArray(), Amps.ToArray(),
+                (ulong)Amps.Count, Constraint.Ptr);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

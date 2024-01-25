@@ -6,6 +6,7 @@
 #nullable enable
 #endif
 
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2018_3_OR_NEWER
@@ -15,26 +16,18 @@ using Vector3 = UnityEngine.Vector3;
 using Vector3 = AUTD3Sharp.Utils.Vector3d;
 #endif
 
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 namespace AUTD3Sharp.Gain
 {
     /// <summary>
     /// Gain to produce a plane wave
     /// </summary>
-    public sealed class Plane : Internal.Gain
+    public sealed class Plane : Driver.Datagram.Gain
     {
-        private readonly Vector3 _dir;
-        private EmitIntensity? _intensity;
-
         public Plane(Vector3 dir)
         {
-            _dir = dir;
-            _intensity = null;
+            Dir = dir;
+            Intensity = EmitIntensity.Max;
+            Phase = new Phase(0);
         }
 
         /// <summary>
@@ -45,7 +38,7 @@ namespace AUTD3Sharp.Gain
 
         public Plane WithIntensity(byte intensity)
         {
-            _intensity = new EmitIntensity(intensity);
+            Intensity = new EmitIntensity(intensity);
             return this;
         }
         /// <summary>
@@ -55,17 +48,21 @@ namespace AUTD3Sharp.Gain
         /// <returns></returns>
         public Plane WithIntensity(EmitIntensity intensity)
         {
-            _intensity = intensity;
+            Intensity = intensity;
             return this;
         }
 
-        internal override GainPtr GainPtr(Geometry geometry)
+        public Plane WithPhase(Phase phase)
         {
-            var ptr = NativeMethodsBase.AUTDGainPlane(_dir.x, _dir.y, _dir.z);
-            if (_intensity != null)
-                ptr = NativeMethodsBase.AUTDGainPlaneWithIntensity(ptr, _intensity.Value.Value);
-            return ptr;
+            Phase = phase;
+            return this;
         }
+
+        public Vector3 Dir { get; }
+        public Phase Phase { get; private set; }
+        public EmitIntensity Intensity { get; private set; }
+
+        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainPlane(Dir.x, Dir.y, Dir.z, Intensity.Value, Phase.Value);
     }
 }
 

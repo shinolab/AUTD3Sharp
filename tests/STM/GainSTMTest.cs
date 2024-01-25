@@ -1,5 +1,3 @@
-using AUTD3Sharp.STM;
-
 namespace tests.STM;
 
 public class GainSTMTest

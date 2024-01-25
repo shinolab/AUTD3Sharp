@@ -91,7 +91,7 @@ public class SineTest
                 119,
                 124};
 
-        Assert.True(await autd.SendAsync(new Sine(150).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Math.PI / 2.0)));
+        Assert.True(await autd.SendAsync(new Sine(150).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Phase.FromRad(Math.PI / 2.0))));
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx);
@@ -100,7 +100,7 @@ public class SineTest
         }
 
 
-        Assert.True(await autd.SendAsync(new Sine(150).WithIntensity(127).WithOffset(63).WithPhase(Math.PI / 2.0)));
+        Assert.True(await autd.SendAsync(new Sine(150).WithIntensity(127).WithOffset(63).WithPhase(Phase.FromRad(Math.PI / 2.0))));
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx);
@@ -128,9 +128,7 @@ public class SineTest
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx);
-#pragma warning disable IDE0230
             var modExpect = new byte[] { 127, 156, 184, 209, 229, 244, 252, 254, 249, 237, 219, 197, 170, 142, 112, 84, 57, 35, 17, 5, 0, 2, 10, 25, 45, 70, 98 };
-#pragma warning restore IDE0230
             Assert.Equal(modExpect, mod);
         }
 

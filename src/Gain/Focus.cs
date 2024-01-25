@@ -6,35 +6,26 @@
 #nullable enable
 #endif
 
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2018_3_OR_NEWER
-using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 #else
 using Vector3 = AUTD3Sharp.Utils.Vector3d;
 #endif
 
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 namespace AUTD3Sharp.Gain
 {
     /// <summary>
-    /// Gain to produce single focal point
+    /// Gain to produce single focal pos
     /// </summary>
-    public sealed class Focus : Internal.Gain
+    public sealed class Focus : Driver.Datagram.Gain
     {
-        private readonly Vector3 _point;
-        private EmitIntensity? _intensity;
-
-        public Focus(Vector3 point)
+        public Focus(Vector3 pos)
         {
-            _point = point;
-            _intensity = null;
+            Pos = pos;
+            Intensity = EmitIntensity.Max;
         }
 
         /// <summary>
@@ -44,7 +35,7 @@ namespace AUTD3Sharp.Gain
         /// <returns></returns>
         public Focus WithIntensity(byte intensity)
         {
-            _intensity = new EmitIntensity(intensity);
+            Intensity = new EmitIntensity(intensity);
             return this;
         }
 
@@ -55,17 +46,15 @@ namespace AUTD3Sharp.Gain
         /// <returns></returns>
         public Focus WithIntensity(EmitIntensity intensity)
         {
-            _intensity = intensity;
+            Intensity = intensity;
             return this;
         }
 
-        internal override GainPtr GainPtr(Geometry geometry)
-        {
-            var ptr = NativeMethodsBase.AUTDGainFocus(_point.x, _point.y, _point.z);
-            if (_intensity != null)
-                ptr = NativeMethodsBase.AUTDGainFocusWithIntensity(ptr, _intensity.Value.Value);
-            return ptr;
-        }
+        public Vector3 Pos { get; }
+
+        public EmitIntensity Intensity { get; private set; }
+
+        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainFocus(Pos.x, Pos.y, Pos.z, Intensity.Value);
     }
 }
 

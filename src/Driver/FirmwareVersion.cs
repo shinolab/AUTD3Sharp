@@ -1,12 +1,7 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using AUTD3Sharp.NativeMethods;
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
-namespace AUTD3Sharp
+namespace AUTD3Sharp.Driver
 {
     public readonly struct FirmwareInfo
     {
@@ -34,7 +29,3 @@ namespace AUTD3Sharp
         public override string ToString() => Info;
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

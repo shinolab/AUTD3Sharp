@@ -6,38 +6,26 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Driver.Geometry;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif
 
-#if UNITY_2018_3_OR_NEWER
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
-#else
-using Vector3 = AUTD3Sharp.Utils.Vector3d;
-#endif
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 namespace AUTD3Sharp.Gain
 {
-    public sealed class Group : Internal.Gain
+    public sealed class Group : Driver.Datagram.Gain
     {
         private readonly Func<Device, Transducer, object?> _f;
-        private readonly Dictionary<object, Internal.Gain> _map;
+        private readonly Dictionary<object, Driver.Datagram.Gain> _map;
 
         public Group(Func<Device, Transducer, object?> f)
         {
             _f = f;
-            _map = new Dictionary<object, Internal.Gain>();
+            _map = new Dictionary<object, Driver.Datagram.Gain>();
         }
 
-        public Group Set(object key, Internal.Gain gain)
+        public Group Set(object key, Driver.Datagram.Gain gain)
         {
             _map[key] = gain;
             return this;

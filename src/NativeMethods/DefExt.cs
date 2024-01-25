@@ -12,20 +12,20 @@ namespace AUTD3Sharp
     {
         PhaseIntensityFull = 0,
         PhaseFull = 1,
-        PhaseHalf = 2,
+        PhaseHalf = 2
     }
 
     public enum TimerStrategy : byte
     {
         Sleep = 0,
         BusyWait = 1,
-        NativeTimer = 2,
+        NativeTimer = 2
     }
 
     public enum SyncMode : byte
     {
         FreeRun = 0,
-        DC = 1,
+        DC = 1
     }
 
     namespace NativeMethods
@@ -116,38 +116,7 @@ namespace AUTD3Sharp
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        public struct STMPropsPtr
-        {
-            public IntPtr Item1;
-        }
-
-
-        [StructLayout(LayoutKind.Sequential)]
         public struct CachePtr
-        {
-            public IntPtr Item1;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct FirmwareInfoListPtr
-        {
-            public IntPtr Item1;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct GainCalcDrivesMapPtr
-        {
-            public IntPtr Item1;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct GroupGainMapPtr
-        {
-            public IntPtr Item1;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct GroupKVMapPtr
         {
             public IntPtr Item1;
         }
@@ -156,14 +125,6 @@ namespace AUTD3Sharp
         public struct ResultI32
         {
             public int result;
-            public uint err_len;
-            public IntPtr err;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct ResultGainCalcDrivesMap
-        {
-            public GainCalcDrivesMapPtr result;
             public uint err_len;
             public IntPtr err;
         }
@@ -302,17 +263,6 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static CachePtr Validate(this ResultCache res)
-            {
-                if (res.result.Item1 != IntPtr.Zero) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsDef.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-
             public static DatagramPtr Validate(this ResultDatagram res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
@@ -356,6 +306,17 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
             public static PyPlotConfigPtr Validate(this ResultPyPlotConfig res)
+            {
+                if (res.result.Item1 != IntPtr.Zero) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsDef.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            public static ModulationCalcPtr Validate(this ResultModulationCalc res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];

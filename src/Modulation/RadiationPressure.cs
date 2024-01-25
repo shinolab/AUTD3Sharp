@@ -1,26 +1,16 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-using Math = UnityEngine.Mathf;
-#endif
-
 using AUTD3Sharp.NativeMethods;
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
 
 namespace AUTD3Sharp.Modulation
 {
     /// <summary>
     /// Modulation for modulating radiation pressure
     /// </summary>
-    public sealed class RadiationPressure : Internal.Modulation
+    public sealed class RadiationPressure<TM> : Driver.Datagram.Modulation
+    where TM : Driver.Datagram.Modulation
     {
-        private readonly Internal.Modulation _m;
+        private readonly TM _m;
 
-        public RadiationPressure(Internal.Modulation m)
+        public RadiationPressure(TM m)
         {
             _m = m;
         }
@@ -33,9 +23,10 @@ namespace AUTD3Sharp.Modulation
 
     public static class RadiationPressureModulationExtensions
     {
-        public static RadiationPressure WithRadiationPressure(this Internal.Modulation s)
+        public static RadiationPressure<TM> WithRadiationPressure<TM>(this TM s)
+        where TM : Driver.Datagram.Modulation
         {
-            return new RadiationPressure(s);
+            return new RadiationPressure<TM>(s);
         }
     }
 }

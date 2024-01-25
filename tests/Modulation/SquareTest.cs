@@ -47,9 +47,7 @@ public class SquareTest
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx);
-#pragma warning disable IDE0230
             var modExpect = new byte[] { 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-#pragma warning restore IDE0230
             Assert.Equal(modExpect, mod);
         }
 

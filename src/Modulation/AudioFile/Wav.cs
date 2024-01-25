@@ -1,8 +1,3 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
-using System;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation.AudioFile
@@ -11,7 +6,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
     /// Modulation constructed from wav file
     /// <remarks>The wav data is re-sampled to the sampling frequency of Modulation.</remarks>
     /// </summary>
-    public sealed class Wav : Internal.ModulationWithSamplingConfig<Wav>
+    public sealed class Wav : Driver.Datagram.ModulationWithSamplingConfig<Wav>
     {
         private readonly string _filename;
 
@@ -19,7 +14,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
         /// Constructor
         /// </summary>
         /// <param name="filename">Path to wav file</param>
-        public Wav(string filename)
+        public Wav(string filename) : base(SamplingConfiguration.FromFrequency(4e3))
         {
             _filename = filename;
         }
@@ -31,10 +26,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    var ptr = NativeMethodsModulationAudioFile.AUTDModulationWav(fp).Validate();
-                    if (Config != null)
-                        ptr = NativeMethodsModulationAudioFile.AUTDModulationRawPCMWithSamplingConfig(ptr, Config.Value.Internal);
-                    return ptr;
+                    return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, Config.Internal).Validate();
                 }
             }
         }

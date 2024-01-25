@@ -1,6 +1,3 @@
-
-using System.Net;
-
 namespace tests.Link;
 
 public class NopTest

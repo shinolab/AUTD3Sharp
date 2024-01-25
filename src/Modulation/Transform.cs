@@ -6,21 +6,17 @@ using System;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
-
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
 namespace AUTD3Sharp.Modulation
 {
-    public class Transform : Internal.Modulation
-    {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public delegate byte ModTransformDelegate(IntPtr context, uint i, byte d);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public delegate byte ModTransformDelegate(IntPtr context, uint i, byte d);
 
-        private readonly Internal.Modulation _m;
+    public class Transform<TM> : Driver.Datagram.Modulation
+    where TM : Driver.Datagram.Modulation
+    {
+        private readonly TM _m;
         private readonly ModTransformDelegate _f;
 
-        public Transform(Internal.Modulation m, Func<int, EmitIntensity, EmitIntensity> f)
+        public Transform(TM m, Func<int, EmitIntensity, EmitIntensity> f)
         {
             _m = m;
             _f = (context, i, d) => f((int)i, new EmitIntensity(d)).Value;
@@ -34,13 +30,10 @@ namespace AUTD3Sharp.Modulation
 
     public static class TransformModulationExtensions
     {
-        public static Transform WithTransform(this Internal.Modulation s, Func<int, EmitIntensity, EmitIntensity> f)
+        public static Transform<TM> WithTransform<TM>(this TM s, Func<int, EmitIntensity, EmitIntensity> f)
+        where TM : Driver.Datagram.Modulation
         {
-            return new Transform(s, f);
+            return new Transform<TM>(s, f);
         }
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

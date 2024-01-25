@@ -1,4 +1,4 @@
-using AUTD3Sharp.Internal;
+using AUTD3Sharp.Driver;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Link

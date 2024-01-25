@@ -2,10 +2,7 @@
 #define USE_SINGLE
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 #if USE_SINGLE
@@ -24,30 +21,22 @@ namespace AUTD3Sharp.Gain.Holo
     /// </remarks>
     public sealed class Greedy : Holo<Greedy>
     {
-        private uint? _phaseDiv;
-        private IAmplitudeConstraint? _constraint;
+        public Greedy() : base(EmissionConstraint.Uniform(EmitIntensity.Max))
+        {
+        }
 
         /// <summary>
         /// Parameter. See the paper for details.
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public Greedy WithPhaseDiv(uint value)
+        public Greedy WithPhaseDiv(byte value)
         {
-            _phaseDiv = value;
+            PhaseDiv = value;
             return this;
         }
 
-        /// <summary>
-        /// Set amplitude constraint
-        /// </summary>
-        /// <param name="constraint"></param>
-        /// <returns></returns>
-        public Greedy WithConstraint(IAmplitudeConstraint constraint)
-        {
-            _constraint = constraint;
-            return this;
-        }
+        public byte PhaseDiv { get; private set; }
 
         internal override GainPtr GainPtr(Geometry geometry)
         {
@@ -56,18 +45,9 @@ namespace AUTD3Sharp.Gain.Holo
                 fixed (float_t* foci = &Foci.ToArray()[0])
                 fixed (Amplitude* amps = &Amps.ToArray()[0])
                 {
-                    var ptr = NativeMethodsGainHolo.AUTDGainHoloGreedy(foci, (float_t*)amps, (ulong)Amps.Count);
-                    if (_phaseDiv.HasValue)
-                        ptr = NativeMethodsGainHolo.AUTDGainHoloGreedyWithPhaseDiv(ptr, _phaseDiv.Value);
-                    if (_constraint != null)
-                        ptr = NativeMethodsGainHolo.AUTDGainHoloGreedyWithConstraint(ptr, _constraint.Ptr());
-                    return ptr;
+                    return NativeMethodsGainHolo.AUTDGainHoloGreedy(foci, (float_t*)amps, (ulong)Amps.Count, PhaseDiv, Constraint.Ptr);
                 }
             }
         }
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

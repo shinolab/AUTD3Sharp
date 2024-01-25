@@ -2,14 +2,10 @@
 #define USE_SINGLE
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2018_3_OR_NEWER
-using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 #else
 using Vector3 = AUTD3Sharp.Utils.Vector3d;
@@ -26,19 +22,14 @@ namespace AUTD3Sharp.Gain
     /// <summary>
     /// Gain to produce a Bessel beam
     /// </summary>
-    public sealed class Bessel : Internal.Gain
+    public sealed class Bessel : Driver.Datagram.Gain
     {
-        private readonly Vector3 _point;
-        private readonly Vector3 _dir;
-        private readonly float_t _thetaZ;
-        private EmitIntensity? _intensity;
-
-        public Bessel(Vector3 point, Vector3 dir, float_t thetaZ)
+        public Bessel(Vector3 pos, Vector3 dir, float_t theta)
         {
-            _point = point;
-            _dir = dir;
-            _thetaZ = thetaZ;
-            _intensity = null;
+            Pos = pos;
+            Dir = dir;
+            Theta = theta;
+            Intensity = EmitIntensity.Max;
         }
 
         /// <summary>
@@ -48,7 +39,7 @@ namespace AUTD3Sharp.Gain
         /// <returns></returns>
         public Bessel WithIntensity(byte intensity)
         {
-            _intensity = new EmitIntensity(intensity);
+            Intensity = new EmitIntensity(intensity);
             return this;
         }
 
@@ -59,20 +50,18 @@ namespace AUTD3Sharp.Gain
         /// <returns></returns>
         public Bessel WithIntensity(EmitIntensity intensity)
         {
-            _intensity = intensity;
+            Intensity = intensity;
             return this;
         }
 
-        internal override GainPtr GainPtr(Geometry geometry)
-        {
-            var ptr = NativeMethodsBase.AUTDGainBessel(_point.x, _point.y, _point.z, _dir.x, _dir.y, _dir.z, _thetaZ);
-            if (_intensity != null)
-                ptr = NativeMethodsBase.AUTDGainBesselWithIntensity(ptr, _intensity.Value.Value);
-            return ptr;
-        }
+        public Vector3 Pos { get; }
+
+        public Vector3 Dir { get; }
+
+        public float_t Theta { get; }
+
+        public EmitIntensity Intensity { get; private set; }
+
+        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainBessel(Pos.x, Pos.y, Pos.z, Dir.x, Dir.y, Dir.z, Theta, Intensity.Value);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

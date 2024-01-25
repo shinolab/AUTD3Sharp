@@ -2,21 +2,17 @@
 #define USE_SINGLE
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
 using System;
 using System.Runtime.InteropServices;
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
-
 
 namespace AUTD3Sharp.Gain
 {
     /// <summary>
     /// Gain to set amp and phase uniformly
     /// </summary>
-    public sealed class TransducerTest : Internal.Gain
+    public sealed class TransducerTest : Driver.Datagram.Gain
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public unsafe delegate void TransducerTestDelegate(ContextPtr context, GeometryPtr geometryPtr, uint devIdx, byte trIdx, DriveRaw* raw);
 
@@ -43,7 +39,3 @@ namespace AUTD3Sharp.Gain
         }
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

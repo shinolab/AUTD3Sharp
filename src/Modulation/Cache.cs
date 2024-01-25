@@ -13,66 +13,65 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Modulation to cache the result of calculation
     /// </summary>
-    public class Cache : Internal.Modulation, IEnumerable<EmitIntensity>, IDisposable
+    public class Cache<TM> : Driver.Datagram.Modulation, IEnumerable<EmitIntensity>
+    where TM : Driver.Datagram.Modulation
     {
-        private bool _isDisposed;
+        private readonly TM _m;
+        private EmitIntensity[] _cache;
+        private SamplingConfiguration? _samplingConfig;
 
-        private CachePtr _cache;
-        private readonly EmitIntensity[] _buffer;
-
-        public Cache(Internal.Modulation m)
+        public Cache(TM m)
         {
+            _m = m;
+            _cache = Array.Empty<EmitIntensity>();
+            _samplingConfig = null;
+        }
+
+        public ReadOnlySpan<EmitIntensity> Calc()
+        {
+            if (_cache.Length != 0) return Buffer;
+            var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr());
+            var res = ptr.Validate();
+            _cache = new EmitIntensity[ptr.result_len];
+            _samplingConfig = SamplingConfiguration.FromFrequencyDivision(ptr.freq_div);
             unsafe
             {
-                _cache = NativeMethodsBase.AUTDModulationWithCache(m.ModulationPtr()).Validate();
-                _buffer = new EmitIntensity[NativeMethodsBase.AUTDModulationCacheGetBufferLen(_cache)];
-                fixed (EmitIntensity* p = &_buffer[0])
-                    NativeMethodsBase.AUTDModulationCacheGetBuffer(_cache, (byte*)p);
+                fixed (EmitIntensity* pBuf = &_cache[0])
+                    NativeMethodsBase.AUTDModulationCalcGetResult(res, (byte*)pBuf);
             }
-        }
-
-
-        [ExcludeFromCodeCoverage]
-        ~Cache()
-        {
-            Dispose();
-        }
-
-        public void Dispose()
-        {
-            if (_isDisposed) return;
-
-            if (_cache.Item1 != IntPtr.Zero) NativeMethodsBase.AUTDModulationCacheDelete(_cache);
-            _cache.Item1 = IntPtr.Zero;
-
-            _isDisposed = true;
-            GC.SuppressFinalize(this);
+            return Buffer;
         }
 
         internal override ModulationPtr ModulationPtr()
         {
-            return NativeMethodsBase.AUTDModulationCacheIntoModulation(_cache);
+            Calc();
+            unsafe
+            {
+                fixed (EmitIntensity* pBuf = &_cache[0])
+                    return NativeMethodsBase.AUTDModulationCustom(_samplingConfig!.Value.Internal, (byte*)pBuf, (ulong)_cache.Length);
+
+            }
         }
 
-        public EmitIntensity this[int index] => _buffer[index];
+        public EmitIntensity this[int index] => _cache[index];
 
-        public ReadOnlyCollection<EmitIntensity> Buffer => Array.AsReadOnly(_buffer);
+        public ReadOnlySpan<EmitIntensity> Buffer => new ReadOnlySpan<EmitIntensity>(_cache);
 
         public IEnumerator<EmitIntensity> GetEnumerator()
         {
-            foreach (var e in _buffer)
+            foreach (var e in _cache)
                 yield return e;
         }
-
 
         [ExcludeFromCodeCoverage] System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
     public static class CacheModulationExtensions
     {
-        public static Cache WithCache(this Internal.Modulation s)
+        public static Cache<TM> WithCache<TM>(this TM s)
+        where TM : Driver.Datagram.Modulation
         {
-            return new Cache(s);
+            return new Cache<TM>(s);
         }
     }
 }

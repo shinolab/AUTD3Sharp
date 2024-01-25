@@ -5,10 +5,6 @@
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
 #if USE_SINGLE
 using float_t = System.Single;
 #else
@@ -37,6 +33,7 @@ namespace AUTD3Sharp.Gain.Holo
             internal UnitPascal() { }
             public static Amplitude operator *(float_t a, UnitPascal _) => NewPascal(a);
         }
+
         public class UnitSPL
         {
             internal UnitSPL() { }
@@ -46,7 +43,9 @@ namespace AUTD3Sharp.Gain.Holo
         public static class Units
         {
             public static UnitPascal Pascal { get; } = new UnitPascal();
+#pragma warning disable IDE1006
             public static UnitSPL dB { get; } = new UnitSPL();
+#pragma warning restore IDE1006
         }
     }
 }

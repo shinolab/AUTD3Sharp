@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain
@@ -12,12 +13,13 @@ namespace AUTD3Sharp.Gain
     /// <summary>
     /// Gain to cache the result of calculation
     /// </summary>
-    public sealed class Cache : Internal.Gain
+    public sealed class Cache<TG> : Driver.Datagram.Gain
+    where TG : Driver.Datagram.Gain
     {
-        private readonly Internal.Gain _g;
+        private readonly TG _g;
         private readonly Dictionary<int, Drive[]> _cache;
 
-        public Cache(Internal.Gain g)
+        public Cache(TG g)
         {
             _g = g;
             _cache = new Dictionary<int, Drive[]>();
@@ -62,9 +64,10 @@ namespace AUTD3Sharp.Gain
 
     public static class CacheGainExtensions
     {
-        public static Cache WithCache(this Internal.Gain s)
+        public static Cache<TG> WithCache<TG>(this TG s)
+        where TG : Driver.Datagram.Gain
         {
-            return new Cache(s);
+            return new Cache<TG>(s);
         }
     }
 }

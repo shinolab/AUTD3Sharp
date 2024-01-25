@@ -9,7 +9,7 @@ module FlagTest =
         printfn "press any key to run fan..."
         System.Console.ReadKey true |> ignore;
 
-        (new ConfigureForceFan(fun dev -> true), new ConfigureReadsFPGAInfo(fun dev -> true)) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (new ConfigureForceFan(fun dev -> true), new ConfigureReadsFPGAState(fun dev -> true)) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 
         let mutable fin = false;
         let th : Task =
@@ -17,7 +17,7 @@ module FlagTest =
                 let prompts = [|'-'; '/'; '|'; '\\'|]
                 let mutable promptsIdx = 0;
                 while not fin do
-                    let states = autd.FPGAInfoAsync() |> Async.AwaitTask |> Async.RunSynchronously
+                    let states = autd.FPGAStateAsync() |> Async.AwaitTask |> Async.RunSynchronously
                     printfn "%c FPGA Status..." prompts.[promptsIdx / 1000 % prompts.Length]
                     printfn "%s" (String.Join("\n", states))
                     printf "\x1b[%dA" (states.Length + 1)
@@ -31,5 +31,5 @@ module FlagTest =
         fin <- true;
         th.Wait();
         
-        (new ConfigureForceFan(fun dev -> false), new ConfigureReadsFPGAInfo(fun dev -> false)) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (new ConfigureForceFan(fun dev -> false), new ConfigureReadsFPGAState(fun dev -> false)) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 

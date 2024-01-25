@@ -1,3 +1,5 @@
+using AUTD3Sharp.Driver.Geometry;
+
 namespace tests.Gain;
 
 public class CacheTest

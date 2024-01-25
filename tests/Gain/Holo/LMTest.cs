@@ -18,8 +18,8 @@ public class LMTest
             .WithEps2(1e-3)
             .WithTau(1e-3)
             .WithKMax(5)
-            .WithInitial(new[] { 1.0 })
-            .WithConstraint(new AUTD3Sharp.Gain.Holo.Uniform(0x80));
+            .WithInitial([1.0])
+            .WithConstraint(EmissionConstraint.Uniform(0x80));
 
         Assert.True(await autd.SendAsync(g));
 

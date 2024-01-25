@@ -2,10 +2,8 @@
 #define USE_SINGLE
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
+using System;
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 #if USE_SINGLE
@@ -29,17 +27,16 @@ namespace AUTD3Sharp.Gain.Holo
         where TB : Backend
     {
         private readonly TB _backend;
-        private float_t? _eps1;
-        private float_t? _eps2;
-        private float_t? _tau;
-        private uint? _kMax;
-        private float_t[]? _initial;
+        private float_t[] _initial;
 
-        private IAmplitudeConstraint? _constraint;
-
-        public LM(TB backend)
+        public LM(TB backend) : base(EmissionConstraint.DontCare())
         {
             _backend = backend;
+            Eps1 = 1e-8;
+            Eps2 = 1e-8;
+            Tau = 1e-3;
+            KMax = 5;
+            _initial = Array.Empty<float_t>();
         }
 
         /// <summary>
@@ -49,7 +46,7 @@ namespace AUTD3Sharp.Gain.Holo
         /// <returns></returns>
         public LM<TB> WithEps1(float_t value)
         {
-            _eps1 = value;
+            Eps1 = value;
             return this;
         }
 
@@ -60,7 +57,7 @@ namespace AUTD3Sharp.Gain.Holo
         /// <returns></returns>
         public LM<TB> WithEps2(float_t value)
         {
-            _eps2 = value;
+            Eps2 = value;
             return this;
         }
 
@@ -71,7 +68,7 @@ namespace AUTD3Sharp.Gain.Holo
         /// <returns></returns>
         public LM<TB> WithTau(float_t value)
         {
-            _tau = value;
+            Tau = value;
             return this;
         }
 
@@ -82,18 +79,7 @@ namespace AUTD3Sharp.Gain.Holo
         /// <returns></returns>
         public LM<TB> WithKMax(uint value)
         {
-            _kMax = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Set amplitude constraint
-        /// </summary>
-        /// <param name="constraint"></param>
-        /// <returns></returns>
-        public LM<TB> WithConstraint(IAmplitudeConstraint constraint)
-        {
-            _constraint = constraint;
+            KMax = value;
             return this;
         }
 
@@ -108,22 +94,18 @@ namespace AUTD3Sharp.Gain.Holo
             return this;
         }
 
-        internal override GainPtr GainPtr(Geometry geometry)
-        {
-            var ptr = _backend.Lm(Foci.ToArray(), Amps.ToArray(),
-                (ulong)Amps.Count);
-            if (_eps1.HasValue) ptr = _backend.LmWithEps1(ptr, _eps1.Value);
-            if (_eps2.HasValue) ptr = _backend.LmWithEps2(ptr, _eps2.Value);
-            if (_tau.HasValue) ptr = _backend.LmWithTau(ptr, _tau.Value);
-            if (_kMax.HasValue) ptr = _backend.LmWithKMax(ptr, _kMax.Value);
-            if (_initial != null)
-                ptr = _backend.LmWithInitial(ptr, _initial, (ulong)_initial.Length);
-            if (_constraint != null) ptr = _backend.LmWithConstraint(ptr, _constraint.Ptr());
-            return ptr;
-        }
+        public float_t Eps1 { get; private set; }
+
+        public float_t Eps2 { get; private set; }
+
+        public float_t Tau { get; private set; }
+
+        public uint KMax { get; private set; }
+
+        public ReadOnlySpan<float_t> Initial => new ReadOnlySpan<float_t>(_initial);
+
+        internal override GainPtr GainPtr(Geometry geometry) =>
+            _backend.Lm(Foci.ToArray(), Amps.ToArray(),
+                (ulong)Amps.Count, Eps1, Eps2, Tau, KMax, _initial, Constraint.Ptr);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

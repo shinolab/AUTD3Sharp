@@ -20,11 +20,12 @@ public class CacheTest
     }
 
     [Fact]
-    public async Task CacheBuffer()
+    public void CacheBuffer()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var m = new Static().WithCache();
+        Assert.Equal(0, m.Buffer.Length);
 
-        using var m = new Static().WithCache();
+        m.Calc();
         Assert.Equal(new EmitIntensity(0xFF), m[0]);
         Assert.Equal(new EmitIntensity(0xFF), m[1]);
         var buffer = m.Buffer;
@@ -38,19 +39,14 @@ public class CacheTest
     }
 
 
-    public class ForCacheTest : AUTD3Sharp.Modulation.Modulation
+    public class ForCacheTest() : AUTD3Sharp.Modulation.Modulation(SamplingConfiguration.FromFrequencyDivision(5120))
     {
         internal int CalcCnt;
-
-        public ForCacheTest() : base(SamplingConfiguration.FromFrequencyDivision(5120))
-        {
-            CalcCnt = 0;
-        }
 
         public override EmitIntensity[] Calc()
         {
             CalcCnt++;
-            return new[] { EmitIntensity.Max, EmitIntensity.Max };
+            return [EmitIntensity.Max, EmitIntensity.Max];
         }
     }
 
@@ -86,8 +82,7 @@ public class CacheTest
 
         var mc = new ForCacheTest().WithCache();
         {
-            var mc2 = mc;
-            Assert.True(await autd.SendAsync(mc2));
+            Assert.True(await autd.SendAsync(mc));
         }
 
         Assert.True(await autd.SendAsync(mc));

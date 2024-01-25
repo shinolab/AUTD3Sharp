@@ -2,35 +2,23 @@
 #define USE_SINGLE
 #endif
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
 using AUTD3Sharp.NativeMethods;
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
 
 namespace AUTD3Sharp.Modulation
 {
     /// <summary>
     /// Without modulation
     /// </summary>
-    public sealed class Static : Internal.Modulation
+    public sealed class Static : Driver.Datagram.Modulation
     {
-        private EmitIntensity? _intensity;
-
         public Static()
         {
-            _intensity = null;
+            Intensity = EmitIntensity.Max;
         }
 
         private Static(EmitIntensity intensity)
         {
-            _intensity = intensity;
+            Intensity = intensity;
         }
 
         /// <summary>
@@ -53,15 +41,8 @@ namespace AUTD3Sharp.Modulation
             return new Static(intensity);
         }
 
-        internal override ModulationPtr ModulationPtr()
-        {
-            if (_intensity != null)
-                return NativeMethodsBase.AUTDModulationStaticWithIntensity(_intensity.Value.Value);
-            else return NativeMethodsBase.AUTDModulationStatic();
-        }
+        public EmitIntensity Intensity { get; }
+
+        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity.Value);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

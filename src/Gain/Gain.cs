@@ -5,15 +5,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
-
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
 
 namespace AUTD3Sharp.Gain
 {
-    public abstract class Gain : Internal.Gain
+    public abstract class Gain : Driver.Datagram.Gain
     {
         internal override GainPtr GainPtr(Geometry geometry)
         {
@@ -35,7 +32,3 @@ namespace AUTD3Sharp.Gain
         }
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

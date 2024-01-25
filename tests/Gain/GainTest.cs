@@ -1,26 +1,19 @@
+using AUTD3Sharp.Driver.Geometry;
+
 namespace tests.Gain;
 
 public class GainTest
 {
-    public class MyUniform : AUTD3Sharp.Gain.Gain
+    public class MyUniform(EmitIntensity intensity, Phase phase, bool[] check) : AUTD3Sharp.Gain.Gain
     {
-        private readonly EmitIntensity _intensity;
-        private readonly Phase _phase;
-        public bool[] Check;
-
-        public MyUniform(EmitIntensity intensity, Phase phase, bool[] check)
-        {
-            _intensity = intensity;
-            _phase = phase;
-            Check = check;
-        }
+        public bool[] Check = check;
 
         public override Dictionary<int, Drive[]> Calc(Geometry geometry)
         {
             return Transform(geometry, (dev, _) =>
             {
                 Check[dev.Idx] = true;
-                return new Drive { Phase = _phase, Intensity = _intensity };
+                return new Drive { Phase = phase, Intensity = intensity };
             });
         }
     }

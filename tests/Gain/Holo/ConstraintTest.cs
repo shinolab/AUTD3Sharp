@@ -14,7 +14,7 @@ public class ConstraintTest
         var g = new Naive<NalgebraBackend>(backend)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
-            .WithConstraint(new AUTD3Sharp.Gain.Holo.Uniform(0x80));
+            .WithConstraint(EmissionConstraint.Uniform(0x80));
 
         Assert.True(await autd.SendAsync(g));
 
@@ -35,7 +35,7 @@ public class ConstraintTest
         var g = new Naive<NalgebraBackend>(backend)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
-            .WithConstraint(new Normalize());
+            .WithConstraint(EmissionConstraint.Normalize());
 
         Assert.True(await autd.SendAsync(g));
 
@@ -56,7 +56,7 @@ public class ConstraintTest
         var g = new Naive<NalgebraBackend>(backend)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
-            .WithConstraint(new Clamp(new EmitIntensity(67), new EmitIntensity(85)));
+            .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(67), new EmitIntensity(85)));
 
         Assert.True(await autd.SendAsync(g));
 
@@ -78,7 +78,7 @@ public class ConstraintTest
         var g = new Naive<NalgebraBackend>(backend)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
-            .WithConstraint(new DontCare());
+            .WithConstraint(EmissionConstraint.DontCare());
 
         Assert.True(await autd.SendAsync(g));
 

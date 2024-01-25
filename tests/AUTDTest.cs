@@ -1,3 +1,5 @@
+using AUTD3Sharp.Driver;
+
 namespace tests;
 
 public class AUTDTest
@@ -125,7 +127,7 @@ public class AUTDTest
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(AUTD3Sharp.STM.GainSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddGain(new Null()).AddGain(new Null())));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(GainSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddGain(new Null()).AddGain(new Null())));
 
         Assert.True(await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(10, 40).WithStrictMode(false)));
         foreach (var dev in autd.Geometry)
@@ -136,7 +138,7 @@ public class AUTDTest
         }
         Assert.True(await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
 
-        Assert.True(await autd.SendAsync(AUTD3Sharp.STM.GainSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddGain(new Null()).AddGain(new Null())));
+        Assert.True(await autd.SendAsync(GainSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddGain(new Null()).AddGain(new Null())));
     }
 
 
@@ -162,17 +164,17 @@ public class AUTDTest
     }
 
     [Fact]
-    public async Task TestFPGAInfo()
+    public async Task TestFPGAState()
     {
         using var autd = await CreateController();
 
-        Assert.True(await autd.SendAsync(new ConfigureReadsFPGAInfo(_ => true)));
+        Assert.True(await autd.SendAsync(new ConfigureReadsFPGAState(_ => true)));
 
         {
-            var infos = await autd.FPGAInfoAsync();
+            var infos = await autd.FPGAStateAsync();
             foreach (var info in infos)
             {
-                Assert.False(info.IsThermalAssert);
+                Assert.Null(info);
             }
         }
 
@@ -181,11 +183,11 @@ public class AUTDTest
             autd.Link.Update(0);
             autd.Link.Update(1);
 
-            var infos = await autd.FPGAInfoAsync();
-            Assert.True(infos[0].IsThermalAssert);
-            Assert.False(infos[1].IsThermalAssert);
-            Assert.Equal("Thermal assert = True", infos[0].ToString());
-            Assert.Equal("Thermal assert = False", infos[1].ToString());
+            var infos = await autd.FPGAStateAsync();
+            Assert.True(infos[0]!.IsThermalAssert);
+            Assert.False(infos[1]!.IsThermalAssert);
+            Assert.Equal("Thermal assert = True", infos[0]!.ToString());
+            Assert.Equal("Thermal assert = False", infos[1]!.ToString());
         }
 
         {
@@ -194,29 +196,29 @@ public class AUTDTest
             autd.Link.Update(0);
             autd.Link.Update(1);
 
-            var infos = await autd.FPGAInfoAsync();
-            Assert.False(infos[0].IsThermalAssert);
-            Assert.True(infos[1].IsThermalAssert);
+            var infos = await autd.FPGAStateAsync();
+            Assert.False(infos[0]!.IsThermalAssert);
+            Assert.True(infos[1]!.IsThermalAssert);
         }
 
         {
             autd.Link.BreakDown();
-            await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.FPGAInfoAsync());
+            await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.FPGAStateAsync());
         }
     }
 
 
     [Fact]
-    public void TestFPGAInfoSync()
+    public void TestFPGAStateSync()
     {
         var autd = CreateControllerSync();
 
-        Assert.True(autd.Send(new ConfigureReadsFPGAInfo(_ => true)));
+        Assert.True(autd.Send(new ConfigureReadsFPGAState(_ => true)));
 
         {
-            var infos = autd.FPGAInfo();
+            var infos = autd.FPGAState();
             foreach (var info in infos)
-                Assert.False(info.IsThermalAssert);
+                Assert.Null(info);
         }
 
         {
@@ -224,9 +226,9 @@ public class AUTDTest
             autd.Link.Update(0);
             autd.Link.Update(1);
 
-            var infos = autd.FPGAInfo();
-            Assert.True(infos[0].IsThermalAssert);
-            Assert.False(infos[1].IsThermalAssert);
+            var infos = autd.FPGAState();
+            Assert.True(infos[0]!.IsThermalAssert);
+            Assert.False(infos[1]!.IsThermalAssert);
         }
 
         {
@@ -235,14 +237,14 @@ public class AUTDTest
             autd.Link.Update(0);
             autd.Link.Update(1);
 
-            var infos = autd.FPGAInfo();
-            Assert.False(infos[0].IsThermalAssert);
-            Assert.True(infos[1].IsThermalAssert);
+            var infos = autd.FPGAState();
+            Assert.False(infos[0]!.IsThermalAssert);
+            Assert.True(infos[1]!.IsThermalAssert);
         }
 
         {
             autd.Link.BreakDown();
-            Assert.Throws<AUTDException>(() => _ = autd.FPGAInfo());
+            Assert.Throws<AUTDException>(() => _ = autd.FPGAState());
         }
     }
 
@@ -251,13 +253,13 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v5.0.0", FirmwareInfo.LatestVersion);
+        Assert.Equal("v5.1.1", FirmwareInfo.LatestVersion);
 
         {
             foreach (var (info, i) in (await autd.FirmwareInfoListAsync()).Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v5.0.0, FPGA = v5.0.0 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v5.0.0, FPGA = v5.0.0 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v5.1.1, FPGA = v5.1.1 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v5.1.1, FPGA = v5.1.1 [Emulator]");
             }
         }
 
@@ -273,7 +275,7 @@ public class AUTDTest
         var autd = CreateControllerSync();
 
         foreach (var (info, i) in autd.FirmwareInfoList().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v5.0.0, FPGA = v5.0.0 [Emulator]");
+            Assert.Equal(info.Info, $"{i}: CPU = v5.1.1, FPGA = v5.1.1 [Emulator]");
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareInfoList().Last());
@@ -332,13 +334,10 @@ public class AUTDTest
                 .OpenWithAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
             await autd.SendAsync(new Null());
-            Assert.Equal(0ul, autd.Link.LastTimeoutNs());
 
             await autd.SendAsync(new Null(), TimeSpan.FromMicroseconds(1));
-            Assert.Equal(1000ul, autd.Link.LastTimeoutNs());
 
             await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-            Assert.Equal(2000ul, autd.Link.LastTimeoutNs());
         }
 
         {
@@ -346,13 +345,10 @@ public class AUTDTest
                 .OpenWithAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(10)));
 
             await autd.SendAsync(new Null());
-            Assert.Equal(10000ul, autd.Link.LastTimeoutNs());
 
             await autd.SendAsync(new Null(), TimeSpan.FromMicroseconds(1));
-            Assert.Equal(1000ul, autd.Link.LastTimeoutNs());
 
             await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-            Assert.Equal(2000ul, autd.Link.LastTimeoutNs());
         }
     }
 
@@ -364,13 +360,10 @@ public class AUTDTest
                 .OpenWith(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
             autd.Send(new Null());
-            Assert.Equal(0ul, autd.Link.LastTimeoutNs());
 
             autd.Send(new Null(), TimeSpan.FromMicroseconds(1));
-            Assert.Equal(1000ul, autd.Link.LastTimeoutNs());
 
             autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-            Assert.Equal(2000ul, autd.Link.LastTimeoutNs());
         }
 
         {
@@ -378,13 +371,10 @@ public class AUTDTest
                 .OpenWith(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(10)));
 
             autd.Send(new Null());
-            Assert.Equal(10000ul, autd.Link.LastTimeoutNs());
 
             autd.Send(new Null(), TimeSpan.FromMicroseconds(1));
-            Assert.Equal(1000ul, autd.Link.LastTimeoutNs());
 
             autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-            Assert.Equal(2000ul, autd.Link.LastTimeoutNs());
         }
     }
 
@@ -625,9 +615,6 @@ public class AUTDTest
              .Set("0", (new Static(), new Null()), TimeSpan.FromSeconds(10))
              .Set("1", new Null(), TimeSpan.FromSeconds(5))
              .SendAsync();
-        {
-            Assert.Equal(10ul * 1000ul * 1000ul * 1000ul, autd.Link.LastTimeoutNs());
-        }
     }
 
     [Fact]
@@ -714,7 +701,7 @@ public class AUTDTest
     [Fact]
     public async Task TestConfigForceFan()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = await CreateController();
         foreach (var dev in autd.Geometry)
             Assert.False(autd.Link.IsForceFan(dev.Idx));
 

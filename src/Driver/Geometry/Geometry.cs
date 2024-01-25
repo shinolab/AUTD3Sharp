@@ -1,13 +1,6 @@
-
 #if UNITY_2018_3_OR_NEWER
 #define USE_SINGLE
 #endif
-
-using System.Collections.Generic;
-using System.Linq;
-using System.Diagnostics.CodeAnalysis;
-using AUTD3Sharp.NativeMethods;
-
 
 #if UNITY_2018_3_OR_NEWER
 using UnityEngine;
@@ -22,7 +15,12 @@ using float_t = System.Single;
 using float_t = System.Double;
 #endif
 
-namespace AUTD3Sharp
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using AUTD3Sharp.NativeMethods;
+
+namespace AUTD3Sharp.Driver.Geometry
 {
     public sealed class Geometry : IEnumerable<Device>
     {

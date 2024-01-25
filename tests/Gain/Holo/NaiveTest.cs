@@ -14,7 +14,7 @@ public class NaiveTest
         var g = new Naive<NalgebraBackend>(backend)
             .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
             .AddFociFromIter(new double[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3d(x, 0, 150), 5e3 * Pascal)))
-            .WithConstraint(new AUTD3Sharp.Gain.Holo.Uniform(0x80));
+            .WithConstraint(EmissionConstraint.Uniform(0x80));
 
         Assert.True(await autd.SendAsync(g));
 

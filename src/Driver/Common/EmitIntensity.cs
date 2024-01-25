@@ -2,9 +2,6 @@
 #define USE_SINGLE
 #endif
 
-using System;
-using AUTD3Sharp.NativeMethods;
-
 #if USE_SINGLE
 using float_t = System.Single;
 #else
@@ -12,6 +9,7 @@ using float_t = System.Double;
 #endif
 
 using System.Runtime.InteropServices;
+using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp
 {

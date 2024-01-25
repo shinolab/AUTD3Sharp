@@ -1,6 +1,6 @@
-using AUTD3Sharp.Internal;
 using AUTD3Sharp.NativeMethods;
 using System;
+using AUTD3Sharp.Driver;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -59,11 +59,6 @@ namespace AUTD3Sharp.Link
         public bool IsForceFan(int idx)
         {
             return NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(_ptr, (uint)idx);
-        }
-
-        public ulong LastTimeoutNs()
-        {
-            return NativeMethodsBase.AUTDLinkAuditLastTimeoutNs(_ptr);
         }
 
         public void BreakDown()

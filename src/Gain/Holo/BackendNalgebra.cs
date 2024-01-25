@@ -6,10 +6,6 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.NativeMethods;
 
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
 #if USE_SINGLE
 using float_t = System.Single;
 #else
@@ -35,149 +31,65 @@ namespace AUTD3Sharp.Gain.Holo
             Ptr.Item1 = IntPtr.Zero;
         }
 
-        internal override GainPtr Sdp(float_t[] foci, Amplitude[] amps, ulong size)
+        internal override GainPtr Sdp(float_t[] foci, Amplitude[] amps, ulong size, float_t alpha, uint repeat, float_t lambda, EmissionConstraintPtr constraint)
         {
             unsafe
             {
                 fixed (float_t* pf = &foci[0])
                 fixed (Amplitude* pa = &amps[0])
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloSDP(Ptr, pf, (float_t*)pa, size);
+                    return NativeMethodsGainHolo.AUTDGainHoloSDP(Ptr, pf, (float_t*)pa, size, alpha, lambda, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr SdpWithAlpha(GainPtr ptr, float_t v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloSDPWithAlpha(ptr, v);
-        }
-
-        internal override GainPtr SdpWithRepeat(GainPtr ptr, uint v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloSDPWithRepeat(ptr, v);
-        }
-
-        internal override GainPtr SdpWithLambda(GainPtr ptr, float_t v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloSDPWithLambda(ptr, v);
-        }
-
-        internal override GainPtr SdpWithConstraint(GainPtr ptr, EmissionConstraintPtr v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloSDPWithConstraint(ptr, v);
-        }
-
-        internal override GainPtr Gs(float_t[] foci, Amplitude[] amps, ulong size)
+        internal override GainPtr Gs(float_t[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint)
         {
             unsafe
             {
                 fixed (float_t* pf = &foci[0])
                 fixed (Amplitude* pa = &amps[0])
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloGS(Ptr, pf, (float_t*)pa, size);
+                    return NativeMethodsGainHolo.AUTDGainHoloGS(Ptr, pf, (float_t*)pa, size, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr GsWithRepeat(GainPtr ptr, uint v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloGSWithRepeat(ptr, v);
-        }
-
-        internal override GainPtr GsWithConstraint(GainPtr ptr, EmissionConstraintPtr v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloGSWithConstraint(ptr, v);
-        }
-
-        internal override GainPtr Gspat(float_t[] foci, Amplitude[] amps, ulong size)
+        internal override GainPtr Gspat(float_t[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint)
         {
             unsafe
             {
                 fixed (float_t* pf = &foci[0])
                 fixed (Amplitude* pa = &amps[0])
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloGSPAT(Ptr, pf, (float_t*)pa, size);
+                    return NativeMethodsGainHolo.AUTDGainHoloGSPAT(Ptr, pf, (float_t*)pa, size, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr GspatWithRepeat(GainPtr ptr, uint v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloGSPATWithRepeat(ptr, v);
-        }
-
-        internal override GainPtr GspatWithConstraint(GainPtr ptr, EmissionConstraintPtr v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloGSPATWithConstraint(ptr, v);
-        }
-
-        internal override GainPtr Naive(float_t[] foci, Amplitude[] amps, ulong size)
+        internal override GainPtr Naive(float_t[] foci, Amplitude[] amps, ulong size, EmissionConstraintPtr constraint)
         {
             unsafe
             {
                 fixed (float_t* pf = &foci[0])
                 fixed (Amplitude* pa = &amps[0])
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloNaive(Ptr, pf, (float_t*)pa, size);
+                    return NativeMethodsGainHolo.AUTDGainHoloNaive(Ptr, pf, (float_t*)pa, size, constraint);
                 }
             }
         }
 
-        internal override GainPtr NaiveWithConstraint(GainPtr ptr, EmissionConstraintPtr v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloNaiveWithConstraint(ptr, v);
-        }
-
-        internal override GainPtr Lm(float_t[] foci, Amplitude[] amps, ulong size)
+        internal override GainPtr Lm(float_t[] foci, Amplitude[] amps, ulong size, float_t eps1, float_t eps2, float_t tau, uint kMax, float_t[] initial, EmissionConstraintPtr constraint)
         {
             unsafe
             {
                 fixed (float_t* pf = &foci[0])
                 fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pInitial = &initial[0])
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloLM(Ptr, pf, (float_t*)pa, size);
+                    return NativeMethodsGainHolo.AUTDGainHoloLM(Ptr, pf, (float_t*)pa, size, eps1, eps2, tau, kMax, pInitial, (ulong)initial.Length, constraint);
                 }
             }
-        }
-
-        internal override GainPtr LmWithEps1(GainPtr ptr, float_t v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloLMWithEps1(ptr, v);
-        }
-
-        internal override GainPtr LmWithEps2(GainPtr ptr, float_t v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloLMWithEps2(ptr, v);
-        }
-
-        internal override GainPtr LmWithTau(GainPtr ptr, float_t v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloLMWithTau(ptr, v);
-        }
-
-        internal override GainPtr LmWithKMax(GainPtr ptr, uint v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloLMWithKMax(ptr, v);
-        }
-
-        internal override GainPtr LmWithInitial(GainPtr ptr, float_t[] v, ulong size)
-        {
-            unsafe
-            {
-                fixed (float_t* p = &v[0])
-                {
-                    return NativeMethodsGainHolo.AUTDGainHoloLMWithInitial(ptr, p, size);
-                }
-            }
-        }
-
-        internal override GainPtr LmWithConstraint(GainPtr ptr, EmissionConstraintPtr v)
-        {
-            return NativeMethodsGainHolo.AUTDGainHoloLMWithConstraint(ptr, v);
         }
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

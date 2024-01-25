@@ -16,13 +16,13 @@ public class Vector3dTest
     [Fact]
     public void Constructor_WithArrayArgument_SetsPropertiesCorrectly()
     {
-        var vector = new Vector3d(new double[] { 1, 2, 3 });
+        var vector = new Vector3d([1, 2, 3]);
 
         Assert.Equal(1, vector.x);
         Assert.Equal(2, vector.y);
         Assert.Equal(3, vector.z);
 
-        Assert.Throws<InvalidCastException>(() => new Vector3d(new double[] { }));
+        Assert.Throws<InvalidCastException>(() => new Vector3d([]));
     }
 
     [Fact]
@@ -75,7 +75,7 @@ public class Vector3dTest
     {
         var vector = new Vector3d(1, 2, 3);
 
-        var enumerator = vector.GetEnumerator();
+        using var enumerator = vector.GetEnumerator();
 
         Assert.True(enumerator.MoveNext());
         Assert.Equal(1, enumerator.Current);
@@ -192,7 +192,7 @@ public class Vector3dTest
 
         var result = vector.ToArray();
 
-        Assert.Equal(new double[] { 1, 2, 3 }, result);
+        Assert.Equal([1, 2, 3], result);
     }
 
     [Fact]

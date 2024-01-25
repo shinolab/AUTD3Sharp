@@ -1,9 +1,8 @@
-
-using AUTD3Sharp.Internal;
 using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
+using AUTD3Sharp.Driver;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -157,7 +156,7 @@ namespace AUTD3Sharp.Link
             return new SOEMBuilder();
         }
 
-        private static EtherCATAdapter GetAdapter(IntPtr handle, uint i)
+        private static EtherCATAdapter GetAdapter(EthernetAdaptersPtr handle, uint i)
         {
             unsafe
             {

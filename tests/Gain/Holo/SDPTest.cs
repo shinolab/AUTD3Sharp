@@ -17,7 +17,7 @@ public class SDPTest
             .WithAlpha(1e-3)
             .WithLambda(0.9)
             .WithRepeat(10)
-            .WithConstraint(new AUTD3Sharp.Gain.Holo.Uniform(0x80));
+            .WithConstraint(EmissionConstraint.Uniform(0x80));
 
         Assert.True(await autd.SendAsync(g));
 
