@@ -98,7 +98,7 @@ namespace AUTD3Sharp.Link
     public sealed class PlotConfig : IPlotConfig
     {
         public (uint, uint) FigSize { get; set; } = (960, 640);
-        public float_t CbarSize { get; set; } = 0.15;
+        public float_t CbarSize { get; set; } = (float_t)0.15;
         public uint FontSize { get; set; } = 24;
         public uint LabelAreaSize { get; set; } = 80;
         public uint Margin { get; set; } = 10;

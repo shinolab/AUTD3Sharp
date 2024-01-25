@@ -32,9 +32,9 @@ namespace AUTD3Sharp.Gain.Holo
         public LM(TB backend) : base(EmissionConstraint.DontCare())
         {
             _backend = backend;
-            Eps1 = 1e-8;
-            Eps2 = 1e-8;
-            Tau = 1e-3;
+            Eps1 = (float_t)1e-8;
+            Eps2 = (float_t)1e-8;
+            Tau = (float_t)1e-3;
             KMax = 5;
             _initial = Array.Empty<float_t>();
         }

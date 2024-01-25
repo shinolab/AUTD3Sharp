@@ -17,12 +17,12 @@ namespace AUTD3Sharp.Modulation
     /// </summary>
     public sealed class Square : Driver.Datagram.ModulationWithSamplingConfig<Square>
     {
-        public Square(float_t freq) : base(SamplingConfiguration.FromFrequency(4e3))
+        public Square(float_t freq) : base(SamplingConfiguration.FromFrequency(4000))
         {
             Freq = freq;
             Low = EmitIntensity.Min;
             High = EmitIntensity.Max;
-            Duty = 0.5;
+            Duty = (float_t)0.5;
             Mode = SamplingMode.ExactFrequency;
         }
 

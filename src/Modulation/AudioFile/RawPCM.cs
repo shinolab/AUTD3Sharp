@@ -20,7 +20,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
         /// </summary>
         /// <param name="filename">Path to raw pcm file</param>
         /// <param name="sampleRate">Sampling rate of raw pcm data</param>
-        public RawPCM(string filename, uint sampleRate) : base(SamplingConfiguration.FromFrequency(4e3))
+        public RawPCM(string filename, uint sampleRate) : base(SamplingConfiguration.FromFrequency(4000))
         {
             _filename = filename;
             _sampleRate = sampleRate;

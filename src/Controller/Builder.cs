@@ -64,3 +64,7 @@ namespace AUTD3Sharp
         }
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

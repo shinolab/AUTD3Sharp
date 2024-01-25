@@ -14,7 +14,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
         /// Constructor
         /// </summary>
         /// <param name="filename">Path to wav file</param>
-        public Wav(string filename) : base(SamplingConfiguration.FromFrequency(4e3))
+        public Wav(string filename) : base(SamplingConfiguration.FromFrequency(4000))
         {
             _filename = filename;
         }

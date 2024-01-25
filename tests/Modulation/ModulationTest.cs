@@ -2,7 +2,7 @@ namespace tests.Modulation;
 
 public class ModulationTest
 {
-    public class Burst() : AUTD3Sharp.Modulation.Modulation(SamplingConfiguration.FromFrequency(4e3))
+    public class Burst() : AUTD3Sharp.Modulation.Modulation(SamplingConfiguration.FromFrequency(4000))
     {
         public override EmitIntensity[] Calc()
         {

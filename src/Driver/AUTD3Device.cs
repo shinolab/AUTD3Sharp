@@ -6,9 +6,9 @@ using System;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2018_3_OR_NEWER
-using UnityEngine;
 using Vector3 = UnityEngine.Vector3;
 using Quaternion = UnityEngine.Quaternion;
+using Math = UnityEngine.Mathf;
 #else
 using Vector3 = AUTD3Sharp.Utils.Vector3d;
 using Quaternion = AUTD3Sharp.Utils.Quaterniond;

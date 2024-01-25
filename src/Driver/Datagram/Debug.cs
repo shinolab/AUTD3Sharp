@@ -1,3 +1,7 @@
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Driver.Geometry;
@@ -27,3 +31,7 @@ namespace AUTD3Sharp
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramConfigureDebugOutputIdx(Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, geometry.Ptr);
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif
