@@ -26,7 +26,7 @@ namespace AUTD3Sharp.Gain.Holo
         public SDP(TB backend) : base(EmissionConstraint.DontCare())
         {
             _backend = backend;
-            Alpha = (float_t)1e-3f;
+            Alpha = (float_t)1e-3;
             Lambda = (float_t)0.9;
             Repeat = 100;
         }

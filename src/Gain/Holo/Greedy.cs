@@ -23,6 +23,7 @@ namespace AUTD3Sharp.Gain.Holo
     {
         public Greedy() : base(EmissionConstraint.Uniform(EmitIntensity.Max))
         {
+            PhaseDiv = 16;
         }
 
         /// <summary>
@@ -42,8 +43,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* foci = &Foci.ToArray()[0])
-                fixed (Amplitude* amps = &Amps.ToArray()[0])
+                fixed (float_t* foci = Foci.ToArray())
+                fixed (Amplitude* amps = Amps.ToArray())
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloGreedy(foci, (float_t*)amps, (ulong)Amps.Count, PhaseDiv, Constraint.Ptr);
                 }

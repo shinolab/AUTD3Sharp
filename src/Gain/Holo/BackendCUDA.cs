@@ -40,8 +40,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDASDP(Ptr, pf, (float_t*)pa, size, alpha, lambda, repeat, constraint);
                 }
@@ -52,8 +52,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDAGS(Ptr, pf, (float_t*)pa, size, repeat, constraint);
                 }
@@ -64,8 +64,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDAGSPAT(Ptr, pf, (float_t*)pa, size, repeat, constraint);
                 }
@@ -76,8 +76,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDANaive(Ptr, pf, (float_t*)pa, size, constraint);
                 }
@@ -88,9 +88,9 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
-                fixed (float_t* pInitial = &initial[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
+                fixed (float_t* pInitial = initial)
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDALM(Ptr, pf, (float_t*)pa, size, eps1, eps2, tau, kMax, constraint, pInitial, (ulong)initial.Length);
                 }

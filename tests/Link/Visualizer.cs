@@ -4,7 +4,6 @@ namespace tests.Link;
 
 public class VisualizerTest
 {
-
     private static void VisualizerTestWith(Controller<Visualizer> autd, IPlotConfig config)
     {
         var center = autd.Geometry.Center + new Vector3d(0, 0, 150);

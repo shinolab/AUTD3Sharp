@@ -106,20 +106,19 @@ namespace AUTD3Sharp.Link
         public CMap Cmap { get; set; } = CMap.Jet;
         public string Fname { get; set; } = "";
 
-        public ConfigPtr Ptr()
+        public PlotConfigPtr RawPtr()
         {
             var bytes = System.Text.Encoding.UTF8.GetBytes(Fname);
             unsafe
             {
                 fixed (byte* p = &bytes[0])
-                    return new ConfigPtr { Item1 = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfig(FigSize.Item1, FigSize.Item2, CbarSize, FontSize, LabelAreaSize, Margin, TicksStep, Cmap, p).Validate().Item1 };
+                    return NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfig(FigSize.Item1, FigSize.Item2, CbarSize, FontSize, LabelAreaSize, Margin, TicksStep, Cmap, p).Validate();
             }
         }
 
-        public Backend Backend()
-        {
-            return NativeMethods.Backend.Plotters;
-        }
+        public ConfigPtr Ptr() => new ConfigPtr { Item1 = RawPtr().Item1 };
+
+        public Backend Backend() => NativeMethods.Backend.Plotters;
     }
 
     public sealed class PyPlotConfig : IPlotConfig
@@ -133,9 +132,9 @@ namespace AUTD3Sharp.Link
         public float_t TicksStep { get; set; } = 10;
         public string Cmap { get; set; } = "jet";
         public bool Show { get; set; } = false;
-        public string Fname { get; set; } = "";
+        public string Fname { get; set; } = "fig.png";
 
-        public ConfigPtr Ptr()
+        public PyPlotConfigPtr RawPtr()
         {
             var cbarPosition = System.Text.Encoding.UTF8.GetBytes(CbarPosition);
             var cbarSizeBytes = System.Text.Encoding.UTF8.GetBytes(CbarSize);
@@ -149,21 +148,20 @@ namespace AUTD3Sharp.Link
                 fixed (byte* pCbarPad = &cbarPadBytes[0])
                 fixed (byte* pCmap = &cmapBytes[0])
                 fixed (byte* pFname = &fnameBytes[0])
-                    return new ConfigPtr { Item1 = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfig(FigSize.Item1, FigSize.Item2, Dpi, pCbarPosition, pCbarSize, pCbarPad, FontSize, TicksStep, pCmap, Show, pFname).Validate().Item1 };
+                    return NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfig(FigSize.Item1, FigSize.Item2, Dpi, pCbarPosition, pCbarSize, pCbarPad, FontSize, TicksStep, pCmap, Show, pFname).Validate();
             }
         }
 
-        public Backend Backend()
-        {
-            return NativeMethods.Backend.Python;
-        }
+        public ConfigPtr Ptr() => new ConfigPtr { Item1 = RawPtr().Item1 };
+
+        public Backend Backend() => NativeMethods.Backend.Python;
     }
 
     public sealed class NullPlotConfig : IPlotConfig
     {
         public ConfigPtr Ptr()
         {
-            return new ConfigPtr { Item1 = NativeMethodsLinkVisualizer.AUTDLinkVisualizerNullPlotConfigDefault().Item1 };
+            return new ConfigPtr { Item1 = NativeMethodsLinkVisualizer.AUTDLinkVisualizerNullPlotConfig().Item1 };
         }
 
         public Backend Backend()

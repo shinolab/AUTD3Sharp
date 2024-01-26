@@ -54,4 +54,13 @@ public class SquareTest
         await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.SendAsync(new Square(100.1).WithMode(SamplingMode.ExactFrequency)));
         Assert.True(await autd.SendAsync(new Square(100.1).WithMode(SamplingMode.SizeOptimized)));
     }
+
+    [Fact]
+    public void SquareDefault()
+    {
+#pragma warning disable CS8602, CS8605
+        var m = new Square(0);
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSquareIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Square).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m, new object[] { })));
+#pragma warning restore CS8602, CS8605
+    }
 }

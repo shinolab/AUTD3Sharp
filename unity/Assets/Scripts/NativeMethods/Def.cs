@@ -57,10 +57,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ulong AUTDSamplingConfigPeriod(SamplingConfigurationRaw config);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigEq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDSamplingConfigEq(SamplingConfigurationRaw a, SamplingConfigurationRaw b);
-
 
     }
 

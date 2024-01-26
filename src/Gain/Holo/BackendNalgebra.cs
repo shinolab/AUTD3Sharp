@@ -35,8 +35,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloSDP(Ptr, pf, (float_t*)pa, size, alpha, lambda, repeat, constraint);
                 }
@@ -47,8 +47,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloGS(Ptr, pf, (float_t*)pa, size, repeat, constraint);
                 }
@@ -59,8 +59,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloGSPAT(Ptr, pf, (float_t*)pa, size, repeat, constraint);
                 }
@@ -71,8 +71,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloNaive(Ptr, pf, (float_t*)pa, size, constraint);
                 }
@@ -83,9 +83,9 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
-                fixed (float_t* pInitial = &initial[0])
+                fixed (float_t* pf = foci)
+                fixed (Amplitude* pa = amps)
+                fixed (float_t* pInitial = initial)
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloLM(Ptr, pf, (float_t*)pa, size, eps1, eps2, tau, kMax, pInitial, (ulong)initial.Length, constraint);
                 }

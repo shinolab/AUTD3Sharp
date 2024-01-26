@@ -50,22 +50,44 @@ public class ConstraintTest
     [Fact]
     public async Task Clamp()
     {
-        var autd = await AUTDTest.CreateController();
-
-        var backend = new NalgebraBackend();
-        var g = new Naive<NalgebraBackend>(backend)
-            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
-            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
-            .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(67), new EmitIntensity(85)));
-
-        Assert.True(await autd.SendAsync(g));
-
-        foreach (var dev in autd.Geometry)
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
-            Assert.All(intensities, d => Assert.True(67 <= d));
-            Assert.All(intensities, d => Assert.True(d <= 85));
-            Assert.Contains(phases, p => p != 0);
+            var autd = await AUTDTest.CreateController();
+
+            var backend = new NalgebraBackend();
+            var g = new Naive<NalgebraBackend>(backend)
+                .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
+                .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
+                .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(67), new EmitIntensity(85)));
+
+            Assert.True(await autd.SendAsync(g));
+
+            foreach (var dev in autd.Geometry)
+            {
+                var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+                Assert.All(intensities, d => Assert.True(67 <= d));
+                Assert.All(intensities, d => Assert.True(d <= 85));
+                Assert.Contains(phases, p => p != 0);
+            }
+        }
+
+        {
+            var autd = await AUTDTest.CreateController();
+
+            var backend = new NalgebraBackend();
+            var g = new Naive<NalgebraBackend>(backend)
+                .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
+                .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
+                .WithConstraint(EmissionConstraint.Clamp(10, 20));
+
+            Assert.True(await autd.SendAsync(g));
+
+            foreach (var dev in autd.Geometry)
+            {
+                var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+                Assert.All(intensities, d => Assert.True(10 <= d));
+                Assert.All(intensities, d => Assert.True(d <= 20));
+                Assert.Contains(phases, p => p != 0);
+            }
         }
     }
 

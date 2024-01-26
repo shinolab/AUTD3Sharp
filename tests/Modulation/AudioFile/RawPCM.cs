@@ -106,4 +106,13 @@ public class RawPCMTest
             Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx));
         }
     }
+
+    [Fact]
+    public void RawPCMDefault()
+    {
+#pragma warning disable CS8602, CS8605
+        var m = new RawPCM(" ", 0);
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsModulationAudioFile.AUTDModulationRawPCMIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(RawPCM).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m, new object[] { })));
+#pragma warning restore CS8602, CS8605
+    }
 }

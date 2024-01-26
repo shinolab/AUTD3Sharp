@@ -106,4 +106,13 @@ public class WavTest
             Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx));
         }
     }
+
+    [Fact]
+    public void WavDefault()
+    {
+#pragma warning disable CS8602, CS8605
+        var m = new Wav(" ");
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsModulationAudioFile.AUTDModulationWavIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Wav).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m, new object[] { })));
+#pragma warning restore CS8602, CS8605
+    }
 }

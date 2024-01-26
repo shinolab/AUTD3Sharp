@@ -26,4 +26,15 @@ public class GSTest
             Assert.Contains(phases, p => p != 0);
         }
     }
+
+    [Fact]
+    public async Task GSDefault()
+    {
+#pragma warning disable CS8602, CS8605
+        var autd = await AUTDTest.CreateController();
+        var backend = new NalgebraBackend();
+        var g = new GS<NalgebraBackend>(backend);
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGSIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(GS<NalgebraBackend>).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g, new object[] { autd.Geometry })));
+#pragma warning restore CS8602, CS8605
+    }
 }

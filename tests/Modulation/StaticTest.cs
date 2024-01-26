@@ -29,4 +29,13 @@ public class StaticTest
             Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx));
         }
     }
+
+    [Fact]
+    public void StaticDefault()
+    {
+#pragma warning disable CS8602, CS8605
+        var m = new Static();
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationStaticIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Static).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m, new object[] { })));
+#pragma warning restore CS8602, CS8605
+    }
 }

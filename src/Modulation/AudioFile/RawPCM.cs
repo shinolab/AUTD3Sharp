@@ -31,7 +31,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             var filenameBytes = System.Text.Encoding.ASCII.GetBytes(_filename);
             unsafe
             {
-                fixed (byte* fp = &filenameBytes[0])
+                fixed (byte* fp = filenameBytes)
                 {
                     return NativeMethodsModulationAudioFile.AUTDModulationRawPCM(fp, _sampleRate, Config.Internal).Validate();
                 }

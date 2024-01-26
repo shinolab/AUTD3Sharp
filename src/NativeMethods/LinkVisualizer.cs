@@ -52,8 +52,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerT4010A1Null", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkBuilderPtr AUTDLinkVisualizerT4010A1Null([MarshalAs(UnmanagedType.U1)] bool use_gpu, int gpu_idx);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerNullPlotConfigDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern NullPlotConfigPtr AUTDLinkVisualizerNullPlotConfigDefault();
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerNullPlotConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern NullPlotConfigPtr AUTDLinkVisualizerNullPlotConfig();
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerSpherePlotters", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkBuilderPtr AUTDLinkVisualizerSpherePlotters([MarshalAs(UnmanagedType.U1)] bool use_gpu, int gpu_idx);
@@ -64,29 +64,9 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultPlotConfig AUTDLinkVisualizerPlotConfig(uint width, uint height, double cbar_size, uint font_size, uint label_area_size, uint margin, double ticks_step, CMap cmap, byte* fname);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigDefaultFigSizeWidth", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPlotConfigDefaultFigSizeWidth();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigDefaultFigSizeHeight", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPlotConfigDefaultFigSizeHeight();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigDefaultCBarSize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern double AUTDLinkVisualizerPlotConfigDefaultCBarSize();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigDefaultFontSize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPlotConfigDefaultFontSize();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigDefaultLabelAreaSize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPlotConfigDefaultLabelAreaSize();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigDefaultMargin", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPlotConfigDefaultMargin();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigDefaultTicksStep", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern double AUTDLinkVisualizerPlotConfigDefaultTicksStep();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigDefaultCMap", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern CMap AUTDLinkVisualizerPlotConfigDefaultCMap();
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool AUTDLinkVisualizerPlotConfigIsDefault(PlotConfigPtr config);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerSpherePython", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkBuilderPtr AUTDLinkVisualizerSpherePython([MarshalAs(UnmanagedType.U1)] bool use_gpu, int gpu_idx);
@@ -97,36 +77,9 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultPyPlotConfig AUTDLinkVisualizerPyPlotConfig(int width, int height, int dpi, byte* cbar_position, byte* cbar_size, byte* cbar_pad, int fontsize, double ticks_step, byte* cmap, [MarshalAs(UnmanagedType.U1)] bool show, byte* fname);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultFigSizeWidth", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int AUTDLinkVisualizerPyPlotConfigDefaultFigSizeWidth();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultFigSizeHeight", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int AUTDLinkVisualizerPyPlotConfigDefaultFigSizeHeight();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultDPI", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int AUTDLinkVisualizerPyPlotConfigDefaultDPI();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultCBarPosition", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPyPlotConfigDefaultCBarPosition(byte* cbar);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultCBarSize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPyPlotConfigDefaultCBarSize(byte* cbar);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultCBarPad", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPyPlotConfigDefaultCBarPad(byte* cbar);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultFontSize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern int AUTDLinkVisualizerPyPlotConfigDefaultFontSize();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultTicksStep", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern double AUTDLinkVisualizerPyPlotConfigDefaultTicksStep();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultCMap", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPyPlotConfigDefaultCMap(byte* cmap);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigDefaultShow", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDLinkVisualizerPyPlotConfigDefaultShow();
+        public static extern bool AUTDLinkVisualizerPyPlotConfigIsDefault(PyPlotConfigPtr config);
 
 
     }

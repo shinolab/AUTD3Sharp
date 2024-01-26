@@ -28,4 +28,15 @@ public class SDPTest
             Assert.Contains(phases, p => p != 0);
         }
     }
+
+    [Fact]
+    public async Task SDPDefault()
+    {
+#pragma warning disable CS8602, CS8605
+        var autd = await AUTDTest.CreateController();
+        var backend = new NalgebraBackend();
+        var g = new SDP<NalgebraBackend>(backend);
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainSDPIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(SDP<NalgebraBackend>).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g, new object[] { autd.Geometry })));
+#pragma warning restore CS8602, CS8605
+    }
 }

@@ -23,4 +23,14 @@ public class BesselTest
             Assert.Contains(phases, p => p != 0);
         }
     }
+
+    [Fact]
+    public async Task BesselDefault()
+    {
+#pragma warning disable CS8602, CS8605
+        var autd = await AUTDTest.CreateController();
+        var g = new Bessel(Vector3d.zero, Vector3d.zero, 0);
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainBesselIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(Bessel).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g, new object[] { autd.Geometry })));
+#pragma warning restore CS8602, CS8605
+    }
 }
