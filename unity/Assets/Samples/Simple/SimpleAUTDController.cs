@@ -1,5 +1,7 @@
 ﻿using System;
 using AUTD3Sharp;
+using AUTD3Sharp.Link;
+using AUTD3Sharp.NativeMethods;
 using UnityEngine;
 
 #if UNITY_2020_2_OR_NEWER
@@ -15,26 +17,6 @@ public class SimpleAUTDController : MonoBehaviour
 
     private static bool _isPlaying = true;
 
-    private static void OnLost(string msg)
-    {
-        Debug.LogError(msg);
-#if UNITY_EDITOR
-        _isPlaying = false;  // UnityEditor.EditorApplication.isPlaying can be set only from the main thread
-#elif UNITY_STANDALONE
-        UnityEngine.Application.Quit();
-#endif
-    }
-
-    private static void LogOutput(string msg)
-    {
-        Debug.Log(msg);
-    }
-
-    private static void LogFlush()
-    {
-    }
-
-    private readonly AUTD3Sharp.Link.SOEM.OnErrCallbackDelegate _onLost = new(OnLost);
 
     private async void Awake()
     {
@@ -42,7 +24,28 @@ public class SimpleAUTDController : MonoBehaviour
         {
             _autd = await new ControllerBuilder()
                 .AddDevice(new AUTD3(gameObject.transform.position).WithRotation(gameObject.transform.rotation))
-                .OpenWithAsync(AUTD3Sharp.Link.SOEM.Builder().WithOnLost(_onLost));
+                .OpenWithAsync(SOEM.Builder()
+                    .WithErrHandler((slave, status, msg) =>
+                    {
+                        switch (status)
+                        {
+                            case Status.Error:
+                                Debug.LogError($"Error [{slave}]: {msg}");
+                                break;
+                            case Status.Lost:
+                                Debug.LogError($"Lost [{slave}]: {msg}");
+                                // You can also wait for the link to recover, without exiting
+#if UNITY_EDITOR
+                                UnityEditor.EditorApplication.isPlaying = false;
+#elif UNITY_STANDALONE
+                                UnityEngine.Application.Quit();
+#endif
+                                break;
+                            case Status.StateChanged:
+                                Debug.LogError($"StateChanged [{slave}]: {msg}");
+                                break;
+                        };
+                    }));
         }
         catch (Exception)
         {

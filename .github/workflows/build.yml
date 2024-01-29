@@ -17,8 +17,8 @@ jobs:
     outputs:
       status: ${{ steps.changed-files.outputs.modified_files }}
     steps:
-      - uses: actions/checkout@v3
-      - uses: tj-actions/changed-files@v40
+      - uses: actions/checkout@v4
+      - uses: tj-actions/changed-files@v42
         id: changed-files
         with:
           files: |
@@ -39,7 +39,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
         if: needs.check.outputs.status
         uses: ./.github/actions/setup-build
@@ -72,7 +72,7 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Setup
         if: needs.check.outputs.status
         uses: ./.github/actions/setup-build

@@ -217,12 +217,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDControllerGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultI32 AUTDControllerGroup(ControllerPtr cnt, int* map, GroupKVMapPtr kv_map);
 
-        [DllImport(__DllName, EntryPoint = "debug_0", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern byte debug_0(IntPtr _ptr, GeometryPtr _geometry, uint _idx);
-
-        [DllImport(__DllName, EntryPoint = "debug_1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern byte debug_1(IntPtr _ptr, GeometryPtr _geometry, uint idx);
-
         [DllImport(__DllName, EntryPoint = "AUTDLinkAudit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkAuditBuilderPtr AUTDLinkAudit();
 

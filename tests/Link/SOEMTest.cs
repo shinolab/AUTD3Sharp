@@ -3,18 +3,11 @@ using Xunit.Abstractions;
 
 namespace tests.Link;
 
-public class SOEMTest(ITestOutputHelper testOutputHelper)
+public class SOEMTest()
 {
     [Fact, Trait("require", "soem")]
     public async Task TestSOEM()
     {
-        var onLost = new SOEM.OnErrCallbackDelegate(msg =>
-        {
-            testOutputHelper.WriteLine(msg);
-            Environment.Exit(-1);
-        });
-        var onErr = new SOEM.OnErrCallbackDelegate(testOutputHelper.WriteLine);
-
         await Assert.ThrowsAsync<AUTDException>(async () => _ = await new ControllerBuilder()
              .AddDevice(new AUTD3(Vector3d.zero))
              .OpenWithAsync(SOEM.Builder()
@@ -22,8 +15,7 @@ public class SOEMTest(ITestOutputHelper testOutputHelper)
                  .WithBufSize(32)
                  .WithSendCycle(2)
                  .WithSync0Cycle(2)
-                 .WithOnLost(onLost)
-                 .WithOnErr(onErr)
+                 .WithErrHandler((slave, status, msg) => { })
                  .WithTimerStrategy(TimerStrategy.Sleep)
                  .WithSyncMode(SyncMode.FreeRun)
                  .WithStateCheckInterval(TimeSpan.FromMilliseconds(100))

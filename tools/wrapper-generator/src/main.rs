@@ -39,6 +39,7 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(
         let path = path?;
         Ok(acc.input_extern_file(path))
     })?
+    .always_included_types(["Status"])
     .csharp_dll_name(dll_name)
     .csharp_class_name(format!("NativeMethods{}", class_name))
     .csharp_namespace("AUTD3Sharp.NativeMethods")

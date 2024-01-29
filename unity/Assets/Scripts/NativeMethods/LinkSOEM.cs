@@ -52,11 +52,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithStateCheckInterval", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithStateCheckInterval(LinkSOEMBuilderPtr soem, uint interval_ms);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithOnLost", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithOnLost(LinkSOEMBuilderPtr soem, IntPtr on_lost_func);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithOnErr", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithOnErr(LinkSOEMBuilderPtr soem, IntPtr on_err_func);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithErrHandler", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithErrHandler(LinkSOEMBuilderPtr soem, IntPtr handler);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithTimeout(LinkSOEMBuilderPtr soem, ulong timeout_ns);
@@ -107,6 +104,13 @@ namespace AUTD3Sharp.NativeMethods
     {
         FreeRun = 0,
         DC = 1,
+    }
+
+    public enum Status : byte
+    {
+        Error = 0,
+        StateChanged = 1,
+        Lost = 2,
     }
 
 

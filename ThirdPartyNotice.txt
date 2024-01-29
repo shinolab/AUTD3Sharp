@@ -70,35 +70,35 @@ atomic-polyfill 1.0.3 (Apache-2.0 OR MIT)
 https://github.com/embassy-rs/atomic-polyfill
 ---------------------------------------------------------
 
-autd3 21.0.1 (MIT)
+autd3 21.1.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-backend-cuda 21.0.0 (MIT)
+autd3-backend-cuda 21.1.0 (MIT)
 https://github.com/shinolab/autd3-backend-cuda
 ---------------------------------------------------------
 
-autd3-derive 21.0.1 (MIT)
+autd3-derive 21.1.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 21.0.1 (MIT)
+autd3-driver 21.1.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 21.0.1 (MIT)
+autd3-firmware-emulator 21.1.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 21.0.1 (MIT)
+autd3-gain-holo 21.1.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 21.0.1 (MIT)
+autd3-link-simulator 21.1.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 21.0.1
+autd3-link-soem 21.1.0
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -164,7 +164,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 21.0.1
+autd3-link-twincat 21.1.0
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -216,44 +216,44 @@ SOFTWARE.
 
 ---------------------------------------------------------
 
-autd3-link-visualizer 21.0.1 (MIT)
+autd3-link-visualizer 21.1.0 (MIT)
 https://github.com/shinolab/autd3-link-visualizer
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 21.0.1 (MIT)
+autd3-modulation-audio-file 21.1.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 21.0.1 (MIT)
+autd3-protobuf 21.1.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 21.0.1 (MIT)
+autd3capi 21.1.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-backend-cuda 21.0.1 (MIT)
+autd3capi-backend-cuda 21.1.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-def 21.0.1 (MIT)
+autd3capi-def 21.1.0 (MIT)
 https://github.com/shinolab/autd3
 ---------------------------------------------------------
 
-autd3capi-gain-holo 21.0.1 (MIT)
+autd3capi-gain-holo 21.1.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-simulator 21.0.1 (MIT)
+autd3capi-link-simulator 21.1.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-soem 21.0.1 (MIT)
+autd3capi-link-soem 21.1.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-twincat 21.0.1 (MIT)
+autd3capi-link-twincat 21.1.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-visualizer 21.0.1 (MIT)
+autd3capi-link-visualizer 21.1.0 (MIT)
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 21.0.1 (MIT)
+autd3capi-modulation-audio-file 21.1.0 (MIT)
 ---------------------------------------------------------
 
 autocfg 1.1.0 (Apache-2.0 OR MIT)
@@ -1014,15 +1014,15 @@ semver 1.0.21 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/semver
 ---------------------------------------------------------
 
-serde 1.0.195 (Apache-2.0 OR MIT)
+serde 1.0.196 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/serde
 ---------------------------------------------------------
 
-serde_derive 1.0.195 (Apache-2.0 OR MIT)
+serde_derive 1.0.196 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/serde
 ---------------------------------------------------------
 
-serde_json 1.0.111 (Apache-2.0 OR MIT)
+serde_json 1.0.112 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/json
 ---------------------------------------------------------
 
@@ -1354,7 +1354,7 @@ windows_x86_64_msvc 0.52.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-winnow 0.5.34 (MIT)
+winnow 0.5.35 (MIT)
 https://github.com/winnow-rs/winnow
 ---------------------------------------------------------
 

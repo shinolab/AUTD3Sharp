@@ -16,15 +16,25 @@ namespace AUTD3Sharp.Link
     /// </summary>
     public sealed class SOEM
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)] public delegate void OnErrCallbackDelegate(string str);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        private delegate void ErrHandlerDelegate(uint slave, byte status, string str);
+
+        private readonly ErrHandlerDelegate? _errHandler;
+
+        private SOEM(ErrHandlerDelegate? errHandler)
+        {
+            _errHandler = errHandler;
+        }
 
         public sealed class SOEMBuilder : ILinkBuilder<SOEM>
         {
             private LinkSOEMBuilderPtr _ptr;
+            private ErrHandlerDelegate? _errHandler;
 
             internal SOEMBuilder()
             {
                 _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEM();
+                _errHandler = null;
             }
 
             /// <summary>
@@ -101,25 +111,14 @@ namespace AUTD3Sharp.Link
             }
 
             /// <summary>
-            /// Set callback function when the link is lost
-            /// </summary>
-            /// <param name="onLost"></param>
-            /// <returns></returns>
-            public SOEMBuilder WithOnLost(OnErrCallbackDelegate onLost)
-            {
-                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithOnLost(_ptr, Marshal.GetFunctionPointerForDelegate(onLost));
-                return this;
-            }
-
-
-            /// <summary>
             /// Set callback function when some error occurs
             /// </summary>
-            /// <param name="onLost"></param>
+            /// <param name="handler"></param>
             /// <returns></returns>
-            public SOEMBuilder WithOnErr(OnErrCallbackDelegate onLost)
+            public SOEMBuilder WithErrHandler(Action<int, Status, string> handler)
             {
-                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithOnErr(_ptr, Marshal.GetFunctionPointerForDelegate(onLost));
+                _errHandler = (uint slave, byte status, string msg) => handler((int)slave, (Status)status, msg);
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithErrHandler(_ptr, Marshal.GetFunctionPointerForDelegate(_errHandler));
                 return this;
             }
 
@@ -147,7 +146,7 @@ namespace AUTD3Sharp.Link
 
             SOEM ILinkBuilder<SOEM>.ResolveLink(LinkPtr ptr)
             {
-                return new SOEM();
+                return new SOEM(_errHandler);
             }
         }
 
