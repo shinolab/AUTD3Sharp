@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Link
     public sealed class SOEM
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        private delegate void ErrHandlerDelegate(uint slave, byte status, string str);
+        private delegate void ErrHandlerDelegate(IntPtr context, uint slave, byte status, string str);
 
         private readonly ErrHandlerDelegate? _errHandler;
 
@@ -117,8 +117,8 @@ namespace AUTD3Sharp.Link
             /// <returns></returns>
             public SOEMBuilder WithErrHandler(Action<int, Status, string> handler)
             {
-                _errHandler = (uint slave, byte status, string msg) => handler((int)slave, (Status)status, msg);
-                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithErrHandler(_ptr, Marshal.GetFunctionPointerForDelegate(_errHandler));
+                _errHandler = (IntPtr _context, uint slave, byte status, string msg) => handler((int)slave, (Status)status, msg);
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithErrHandler(_ptr, Marshal.GetFunctionPointerForDelegate(_errHandler), IntPtr.Zero);
                 return this;
             }
 

@@ -53,7 +53,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithStateCheckInterval(LinkSOEMBuilderPtr soem, uint interval_ms);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithErrHandler", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithErrHandler(LinkSOEMBuilderPtr soem, IntPtr handler);
+        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithErrHandler(LinkSOEMBuilderPtr soem, IntPtr handler, IntPtr context);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithTimeout(LinkSOEMBuilderPtr soem, ulong timeout_ns);
