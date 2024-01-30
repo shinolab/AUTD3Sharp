@@ -385,7 +385,7 @@ def copy_dll_unity(config: Config):
         version = re.search(r'"version": "(.*)"', content).group(1)
         version_tokens = version.split(".")
         version_tokens[2] = version_tokens[2].split("-")[0]
-        version = ".".join(version_tokens)
+        version = ".".join(version_tokens[:3])
 
     if not should_update_dll_unity(config, version):
         return
