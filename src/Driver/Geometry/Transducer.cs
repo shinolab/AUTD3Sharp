@@ -62,7 +62,7 @@ namespace AUTD3Sharp.Driver.Geometry
             {
                 unsafe
                 {
-                    var rot = stackalloc float_t[3];
+                    var rot = stackalloc float_t[4];
                     NativeMethodsBase.AUTDTransducerRotation(Ptr, rot);
                     return new Quaternion(rot[1], rot[2], rot[3], rot[0]);
                 }
