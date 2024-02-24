@@ -4,14 +4,16 @@
 
 using System;
 using System.Runtime.InteropServices;
+using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
-namespace AUTD3Sharp.Modulation
+namespace AUTD3Sharp.Driver.Datagram.Modulation
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public delegate byte ModTransformDelegate(IntPtr context, uint i, byte d);
 
-    public class Transform<TM> : Driver.Datagram.Modulation
-    where TM : Driver.Datagram.Modulation
+    [Modulation(ConfigNoChange = true, NoTransform = true)]
+    public sealed partial class Transform<TM> : Modulation
+    where TM : Modulation
     {
         private readonly TM _m;
         private readonly ModTransformDelegate _f;
@@ -25,15 +27,6 @@ namespace AUTD3Sharp.Modulation
         internal override ModulationPtr ModulationPtr()
         {
             return NativeMethodsBase.AUTDModulationWithTransform(_m.ModulationPtr(), Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, LoopBehavior.Internal);
-        }
-    }
-
-    public static class TransformModulationExtensions
-    {
-        public static Transform<TM> WithTransform<TM>(this TM s, Func<int, EmitIntensity, EmitIntensity> f)
-        where TM : Driver.Datagram.Modulation
-        {
-            return new Transform<TM>(s, f);
         }
     }
 }

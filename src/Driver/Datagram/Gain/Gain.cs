@@ -1,7 +1,7 @@
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
-namespace AUTD3Sharp.Driver.Datagram
+namespace AUTD3Sharp.Driver.Datagram.Gain
 {
     [ComVisible(false)]
     public abstract class Gain : IDatagram

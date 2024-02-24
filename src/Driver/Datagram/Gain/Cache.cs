@@ -8,13 +8,13 @@ using System.Linq;
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
-namespace AUTD3Sharp.Gain
+namespace AUTD3Sharp.Driver.Datagram.Gain
 {
     /// <summary>
     /// Gain to cache the result of calculation
     /// </summary>
-    public sealed class Cache<TG> : Driver.Datagram.Gain
-    where TG : Driver.Datagram.Gain
+    public sealed class Cache<TG> : Gain
+    where TG : Gain
     {
         private readonly TG _g;
         private readonly Dictionary<int, Drive[]> _cache;
@@ -30,7 +30,7 @@ namespace AUTD3Sharp.Gain
             return new ReadOnlyDictionary<int, Drive[]>(_cache);
         }
 
-        private void Init(Geometry geometry)
+        private void Init(Geometry.Geometry geometry)
         {
             var deviceIndices = geometry.Devices().Select(d => d.Idx).ToArray();
             if (_cache.Count == deviceIndices.Length && deviceIndices.All(i => _cache.ContainsKey(i))) return;
@@ -48,7 +48,7 @@ namespace AUTD3Sharp.Gain
             NativeMethodsBase.AUTDGainCalcFreeResult(res);
         }
 
-        internal override GainPtr GainPtr(Geometry geometry)
+        internal override GainPtr GainPtr(Geometry.Geometry geometry)
         {
             Init(geometry);
             return geometry.Devices().Aggregate(NativeMethodsBase.AUTDGainCustom(), (acc, dev) =>
@@ -59,15 +59,6 @@ namespace AUTD3Sharp.Gain
                         return NativeMethodsBase.AUTDGainCustomSet(acc, (uint)dev.Idx, (DriveRaw*)p, (uint)_cache[dev.Idx].Length);
                 }
             });
-        }
-    }
-
-    public static class CacheGainExtensions
-    {
-        public static Cache<TG> WithCache<TG>(this TG s)
-        where TG : Driver.Datagram.Gain
-        {
-            return new Cache<TG>(s);
         }
     }
 }

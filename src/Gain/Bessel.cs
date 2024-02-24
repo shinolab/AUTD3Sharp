@@ -4,6 +4,7 @@
 
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 #if UNITY_2018_3_OR_NEWER
 using Vector3 = UnityEngine.Vector3;
@@ -22,7 +23,8 @@ namespace AUTD3Sharp.Gain
     /// <summary>
     /// Gain to produce a Bessel beam
     /// </summary>
-    public sealed class Bessel : Driver.Datagram.Gain
+    [Gain]
+    public sealed partial class Bessel : Driver.Datagram.Gain.Gain
     {
         public Bessel(Vector3 pos, Vector3 dir, float_t theta)
         {

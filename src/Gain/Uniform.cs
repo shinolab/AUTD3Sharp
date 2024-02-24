@@ -3,6 +3,7 @@
 #endif
 
 using AUTD3Sharp.Driver.Geometry;
+using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain
@@ -10,7 +11,9 @@ namespace AUTD3Sharp.Gain
     /// <summary>
     /// Gain to set amp and phase uniformly
     /// </summary>
-    public sealed class Uniform : Driver.Datagram.Gain
+    /// 
+    [Gain]
+    public sealed partial class Uniform : Driver.Datagram.Gain.Gain
     {
         public Uniform(byte intensity)
         {

@@ -2,6 +2,18 @@ using AUTD3Sharp.Driver.Geometry;
 
 namespace tests.Gain;
 
+[Gain]
+partial class ForCacheTestGain : AUTD3Sharp.Gain.Gain
+{
+    internal int CalcCnt;
+
+    public override Dictionary<int, Drive[]> Calc(Geometry geometry)
+    {
+        CalcCnt++;
+        return Transform(geometry, (_, _) => new Drive { Phase = new Phase(0x90), Intensity = new EmitIntensity(0x80) });
+    }
+}
+
 public class CacheTest
 {
     [Fact]
@@ -19,23 +31,12 @@ public class CacheTest
         }
     }
 
-    public class ForCacheTest : AUTD3Sharp.Gain.Gain
-    {
-        internal int CalcCnt;
-
-        public override Dictionary<int, Drive[]> Calc(Geometry geometry)
-        {
-            CalcCnt++;
-            return Transform(geometry, (_, _) => new Drive { Phase = new Phase(0x90), Intensity = new EmitIntensity(0x80) });
-        }
-    }
-
     [Fact]
     public async Task CacheCheckOnce()
     {
         var autd = await AUTDTest.CreateController();
         {
-            var g = new ForCacheTest();
+            var g = new ForCacheTestGain();
             Assert.True(await autd.SendAsync(g));
             Assert.Equal(1, g.CalcCnt);
             Assert.True(await autd.SendAsync(g));
@@ -43,7 +44,7 @@ public class CacheTest
         }
 
         {
-            var g = new ForCacheTest();
+            var g = new ForCacheTestGain();
             var gc = g.WithCache();
             Assert.True(await autd.SendAsync(gc));
             Assert.Equal(1, g.CalcCnt);
@@ -58,7 +59,7 @@ public class CacheTest
         var autd = await AUTDTest.CreateController();
         autd.Geometry[0].Enable = false;
 
-        var g = new ForCacheTest();
+        var g = new ForCacheTestGain();
         var gc = g.WithCache();
         Assert.True(await autd.SendAsync(gc));
 

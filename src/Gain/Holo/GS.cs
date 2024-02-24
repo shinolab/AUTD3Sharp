@@ -1,5 +1,6 @@
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -8,8 +9,9 @@ namespace AUTD3Sharp.Gain.Holo
     /// </summary>
     /// <remarks>Asier Marzo and Bruce W Drinkwater. Holographic acoustic tweezers.Proceedings of theNational Academy of Sciences, 116(1):84–89, 2019.</remarks>
     /// <typeparam name="TB">Backend</typeparam>
-    public sealed class GS<TB> : Holo<GS<TB>>
-        where TB : Backend
+    [Gain]
+    public sealed partial class GS<TB> : Holo<GS<TB>>
+            where TB : Backend
     {
         private readonly TB _backend;
 

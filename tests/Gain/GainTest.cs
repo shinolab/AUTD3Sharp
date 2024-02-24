@@ -2,22 +2,23 @@ using AUTD3Sharp.Driver.Geometry;
 
 namespace tests.Gain;
 
+[Gain]
+public partial class MyUniform(EmitIntensity intensity, Phase phase, bool[] check) : AUTD3Sharp.Gain.Gain
+{
+    public bool[] Check = check;
+
+    public override Dictionary<int, Drive[]> Calc(Geometry geometry)
+    {
+        return Transform(geometry, (dev, _) =>
+        {
+            Check[dev.Idx] = true;
+            return new Drive { Phase = phase, Intensity = intensity };
+        });
+    }
+}
+
 public class GainTest
 {
-    public class MyUniform(EmitIntensity intensity, Phase phase, bool[] check) : AUTD3Sharp.Gain.Gain
-    {
-        public bool[] Check = check;
-
-        public override Dictionary<int, Drive[]> Calc(Geometry geometry)
-        {
-            return Transform(geometry, (dev, _) =>
-            {
-                Check[dev.Idx] = true;
-                return new Drive { Phase = phase, Intensity = intensity };
-            });
-        }
-    }
-
     [Fact]
     public async Task Gain()
     {

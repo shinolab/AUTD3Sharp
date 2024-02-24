@@ -8,6 +8,7 @@
 
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 #if UNITY_2018_3_OR_NEWER
 using Vector3 = UnityEngine.Vector3;
@@ -20,7 +21,8 @@ namespace AUTD3Sharp.Gain
     /// <summary>
     /// Gain to produce single focal pos
     /// </summary>
-    public sealed class Focus : Driver.Datagram.Gain
+    [Gain]
+    public sealed partial class Focus : Driver.Datagram.Gain.Gain
     {
         public Focus(Vector3 pos)
         {

@@ -2,6 +2,7 @@
 #define USE_SINGLE
 #endif
 
+using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
 #if USE_SINGLE
@@ -15,15 +16,17 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Square wave modulation
     /// </summary>
-    public sealed class Square : Driver.Datagram.ModulationWithSamplingConfig<Square>
+    [Modulation]
+    public sealed partial class Square : Driver.Datagram.Modulation.Modulation
     {
-        public Square(float_t freq) : base(SamplingConfiguration.FromFrequency(4000))
+        public Square(float_t freq)
         {
             Freq = freq;
             Low = EmitIntensity.Min;
             High = EmitIntensity.Max;
             Duty = (float_t)0.5;
             Mode = SamplingMode.ExactFrequency;
+            Config = SamplingConfiguration.FromFrequency(4000);
         }
 
         /// <summary>

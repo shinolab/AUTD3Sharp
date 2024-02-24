@@ -19,7 +19,7 @@ using float_t = System.Double;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    public abstract class Holo<TH> : Driver.Datagram.Gain
+    public abstract class Holo<TH> : Driver.Datagram.Gain.Gain
         where TH : Holo<TH>
     {
         protected readonly List<float_t> Foci = new List<float_t>();

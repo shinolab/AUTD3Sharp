@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
-using AUTD3Sharp.Driver.Geometry;
+using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
@@ -9,7 +8,8 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Multi-frequency sine wave modulation
     /// </summary>
-    public sealed class Fourier : Driver.Datagram.Modulation
+    [Modulation(ConfigNoChange = true)]
+    public sealed partial class Fourier : Driver.Datagram.Modulation.Modulation
     {
         private readonly List<Sine> _components;
 
@@ -37,11 +37,11 @@ namespace AUTD3Sharp.Modulation
 
         internal override ModulationPtr ModulationPtr()
         {
-            var components = _components.Select(m => m. ModulationPtr()).ToArray();
+            var components = _components.Select(m => m.ModulationPtr()).ToArray();
             unsafe
             {
                 fixed (ModulationPtr* p = &components[0])
-                    return NativeMethodsBase.AUTDModulationFourier(p,(uint)components.Length, LoopBehavior.Internal);
+                    return NativeMethodsBase.AUTDModulationFourier(p, (uint)components.Length, LoopBehavior.Internal);
             }
         }
     }

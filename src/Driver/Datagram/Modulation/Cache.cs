@@ -4,28 +4,28 @@
 
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
+using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
-namespace AUTD3Sharp.Modulation
+namespace AUTD3Sharp.Driver.Datagram.Modulation
 {
     /// <summary>
     /// Modulation to cache the result of calculation
     /// </summary>
-    public class Cache<TM> : Driver.Datagram.Modulation, IEnumerable<EmitIntensity>
-    where TM : Driver.Datagram.Modulation
+    [Modulation(NoCache = true, ConfigNoChange = true, NoTransform = true, NoRadiationPressure = true)]
+    public sealed partial class Cache<TM> : Modulation, IEnumerable<EmitIntensity>
+    where TM : Modulation
     {
         private readonly TM _m;
         private EmitIntensity[] _cache;
-        private SamplingConfiguration? _samplingConfig;
 
         public Cache(TM m)
         {
             _m = m;
             _cache = Array.Empty<EmitIntensity>();
-            _samplingConfig = null;
             LoopBehavior = m.LoopBehavior;
+            Config = m.Config;
         }
 
         public ReadOnlySpan<EmitIntensity> Calc()
@@ -34,7 +34,6 @@ namespace AUTD3Sharp.Modulation
             var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr());
             var res = ptr.Validate();
             _cache = new EmitIntensity[ptr.result_len];
-            _samplingConfig = SamplingConfiguration.FromFrequencyDivision(ptr.freq_div);
             unsafe
             {
                 fixed (EmitIntensity* pBuf = &_cache[0])
@@ -49,7 +48,7 @@ namespace AUTD3Sharp.Modulation
             unsafe
             {
                 fixed (EmitIntensity* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationCustom(_samplingConfig!.Value.Internal, (byte*)pBuf, (ulong)_cache.Length, LoopBehavior.Internal);
+                    return NativeMethodsBase.AUTDModulationCustom(Config.Internal, (byte*)pBuf, (ulong)_cache.Length, LoopBehavior.Internal);
             }
         }
 
@@ -64,14 +63,5 @@ namespace AUTD3Sharp.Modulation
         }
 
         [ExcludeFromCodeCoverage] System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
-    }
-
-    public static class CacheModulationExtensions
-    {
-        public static Cache<TM> WithCache<TM>(this TM s)
-        where TM : Driver.Datagram.Modulation
-        {
-            return new Cache<TM>(s);
-        }
     }
 }

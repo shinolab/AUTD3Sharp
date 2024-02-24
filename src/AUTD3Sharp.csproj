@@ -13,19 +13,25 @@
     <TargetsForTfmSpecificBuildOutput>$(TargetsForTfmSpecificBuildOutput);GetNativeLibraryFiles</TargetsForTfmSpecificBuildOutput>
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Nullable>enable</Nullable>
+
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
   </PropertyGroup>
 
-  <PropertyGroup>
-      <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-      <PackageReadmeFile>README.md</PackageReadmeFile>
-      <Nullable>enable</Nullable>
-  </PropertyGroup>
 
   <ItemGroup>
       <None Include="LICENSE.txt" Pack="true" PackagePath="LICENSE.txt" />
-  </ItemGroup>
-  <ItemGroup>
       <None Include="../README.md" Pack="true" PackagePath="README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\derive\AUTD3Sharp.Derive.csproj"/>
+    <ProjectReference Include="..\derive\AUTD3Sharp.Derive.csproj">
+      <OutputItemType>Analyzer</OutputItemType>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
 
   <Target Name="SetNuspecProperties" BeforeTargets="GenerateNuspec">

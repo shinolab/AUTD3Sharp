@@ -1,5 +1,21 @@
 namespace tests.Modulation;
 
+[Modulation]
+public partial class ForCacheTest : AUTD3Sharp.Modulation.Modulation
+{
+    internal int CalcCnt;
+
+    public ForCacheTest() : base(SamplingConfiguration.FromFrequencyDivision(5120))
+    {
+    }
+
+    public override EmitIntensity[] Calc()
+    {
+        CalcCnt++;
+        return [EmitIntensity.Max, EmitIntensity.Max];
+    }
+}
+
 public class CacheTest
 {
     [Fact]
@@ -38,18 +54,6 @@ public class CacheTest
         }
     }
 
-
-    public class ForCacheTest() : AUTD3Sharp.Modulation.Modulation(SamplingConfiguration.FromFrequencyDivision(5120))
-    {
-        internal int CalcCnt;
-
-        public override EmitIntensity[] Calc()
-        {
-            CalcCnt++;
-            return [EmitIntensity.Max, EmitIntensity.Max];
-        }
-    }
-
     [Fact]
     public async Task CacheCheckOnce()
     {
@@ -72,8 +76,6 @@ public class CacheTest
             Assert.Equal(1, m.CalcCnt);
         }
     }
-
-
 
     [Fact]
     public async Task CacheCheckFree()

@@ -4,10 +4,10 @@ using System.Linq;
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
-namespace AUTD3Sharp.Gain
+namespace AUTD3Sharp.Driver.Datagram.Gain
 {
-    public sealed class Transform<TG> : Driver.Datagram.Gain
-    where TG : Driver.Datagram.Gain
+    public sealed class Transform<TG> : Driver.Datagram.Gain.Gain
+    where TG : Driver.Datagram.Gain.Gain
     {
         private readonly TG _g;
         private readonly Func<Device, Transducer, Drive, Drive> _f;
@@ -18,7 +18,7 @@ namespace AUTD3Sharp.Gain
             _f = f;
         }
 
-        internal override GainPtr GainPtr(Geometry geometry)
+        internal override GainPtr GainPtr(Geometry.Geometry geometry)
         {
             var res = NativeMethodsBase.AUTDGainCalc(_g.GainPtr(geometry), geometry.Ptr).Validate();
             var drives = new Dictionary<int, Drive[]>();
@@ -44,15 +44,6 @@ namespace AUTD3Sharp.Gain
                         fixed (Drive* p = &drives[dev.Idx][0]) return NativeMethodsBase.AUTDGainCustomSet(acc, (uint)dev.Idx, (DriveRaw*)p, (uint)drives[dev.Idx].Length);
                     }
                 });
-        }
-    }
-
-    public static class TransformGainExtensions
-    {
-        public static Transform<TG> WithTransform<TG>(this TG s, Func<Device, Transducer, Drive, Drive> f)
-        where TG : Driver.Datagram.Gain
-        {
-            return new Transform<TG>(s, f);
         }
     }
 }

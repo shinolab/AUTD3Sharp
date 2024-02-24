@@ -1,5 +1,6 @@
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -8,8 +9,9 @@ namespace AUTD3Sharp.Gain.Holo
     /// </summary>
     /// <remarks>Diego Martinez Plasencia et al. "GS-pat: high-speed multi-point sound-fields for phased arrays of transducers," ACMTrans-actions on Graphics (TOG), 39(4):138–1, 2020.</remarks>
     /// <typeparam name="TB">Backend</typeparam>
-    public sealed class GSPAT<TB> : Holo<GSPAT<TB>>
-        where TB : Backend
+    [Gain]
+    public sealed partial class GSPAT<TB> : Holo<GSPAT<TB>>
+            where TB : Backend
     {
         private readonly TB _backend;
 

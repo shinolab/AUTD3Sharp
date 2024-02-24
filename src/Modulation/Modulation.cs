@@ -5,13 +5,14 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Base class for custom modulation
     /// </summary>
-    public abstract class Modulation : Driver.Datagram.ModulationWithSamplingConfig<Modulation>
+    public abstract class Modulation : Driver.Datagram.Modulation.Modulation
     {
-        protected Modulation(SamplingConfiguration config) : base(config)
+        protected Modulation(SamplingConfiguration config) : base()
         {
+            Config = config;
         }
 
-        internal sealed override ModulationPtr ModulationPtr()
+        internal override ModulationPtr ModulationPtr()
         {
             var data = Calc();
             unsafe

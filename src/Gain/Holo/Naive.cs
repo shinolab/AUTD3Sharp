@@ -1,5 +1,6 @@
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -7,8 +8,9 @@ namespace AUTD3Sharp.Gain.Holo
     /// Gain to produce multiple foci with naive linear synthesis
     /// </summary>
     /// <typeparam name="TB">Backend</typeparam>
-    public sealed class Naive<TB> : Holo<Naive<TB>>
-        where TB : Backend
+    [Gain]
+    public sealed partial class Naive<TB> : Holo<Naive<TB>>
+          where TB : Backend
     {
         private readonly TB _backend;
 

@@ -4,6 +4,7 @@
 
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 #if USE_SINGLE
 using float_t = System.Single;
@@ -18,8 +19,9 @@ namespace AUTD3Sharp.Gain.Holo
     /// </summary>
     /// <remarks>Inoue, Seki, Yasutoshi Makino, and Hiroyuki Shinoda. "Active touch perception produced by airborne ultrasonic haptic hologram." 2015 IEEE World Haptics Conference (WHC). IEEE, 2015.</remarks>
     /// <typeparam name="TB">Backend</typeparam>
-    public sealed class SDP<TB> : Holo<SDP<TB>>
-        where TB : Backend
+    [Gain]
+    public sealed partial class SDP<TB> : Holo<SDP<TB>>
+           where TB : Backend
     {
         private readonly TB _backend;
 

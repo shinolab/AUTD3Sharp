@@ -3,6 +3,7 @@
 #endif
 
 using System;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Driver.Geometry;
@@ -10,7 +11,8 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain
 {
-    public abstract class Gain : Driver.Datagram.Gain
+    [ComVisible(false)]
+    public abstract class Gain : AUTD3Sharp.Driver.Datagram.Gain.Gain
     {
         internal override GainPtr GainPtr(Geometry geometry)
         {

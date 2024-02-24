@@ -2,6 +2,7 @@
 #define USE_SINGLE
 #endif
 
+using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
 #if USE_SINGLE
@@ -15,20 +16,22 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Sine wave modulation
     /// </summary>
-    public sealed class Sine : Driver.Datagram.ModulationWithSamplingConfig<Sine>
+    [Modulation]
+    public sealed partial class Sine : Driver.Datagram.Modulation.Modulation
     {
         /// <summary>
         /// Constructor
         /// </summary>
         /// <param name="freq">Frequency of sine wave</param>
         /// <remarks>The sine wave is defined as `amp / 2 * sin(2π * freq * t) + offset`, where `t` is time, and `amp = EmitIntensity.Max`, `offset = EmitIntensity.Max/2` by default.</remarks>
-        public Sine(float_t freq) : base(SamplingConfiguration.FromFrequency(4000))
+        public Sine(float_t freq) : base()
         {
             Freq = freq;
             Intensity = EmitIntensity.Max;
             Offset = EmitIntensity.Max / 2;
             Phase = new Phase(0);
             Mode = SamplingMode.ExactFrequency;
+            Config = SamplingConfiguration.FromFrequency(4000);
         }
 
         /// <summary>

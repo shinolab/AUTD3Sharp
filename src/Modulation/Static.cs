@@ -2,6 +2,7 @@
 #define USE_SINGLE
 #endif
 
+using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
@@ -9,7 +10,8 @@ namespace AUTD3Sharp.Modulation
     /// <summary>
     /// Without modulation
     /// </summary>
-    public sealed class Static : Driver.Datagram.Modulation
+    [Modulation(ConfigNoChange = true)]
+    public sealed partial class Static : Driver.Datagram.Modulation.Modulation
     {
         public Static()
         {

@@ -8,6 +8,7 @@
 
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 #if UNITY_2018_3_OR_NEWER
 using UnityEngine;
@@ -21,7 +22,8 @@ namespace AUTD3Sharp.Gain
     /// <summary>
     /// Gain to produce a plane wave
     /// </summary>
-    public sealed class Plane : Driver.Datagram.Gain
+    [Gain]
+    public sealed partial class Plane : Driver.Datagram.Gain.Gain
     {
         public Plane(Vector3 dir)
         {

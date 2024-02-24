@@ -4,6 +4,7 @@
 
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 #if USE_SINGLE
 using float_t = System.Single;
@@ -19,7 +20,8 @@ namespace AUTD3Sharp.Gain.Holo
     /// <remarks>
     /// Shun Suzuki, Masahiro Fujiwara, Yasutoshi Makino, and Hiroyuki Shinoda, “Radiation Pressure Field Reconstruction for Ultrasound Midair Haptics by Greedy Algorithm with Brute-Force Search,” in IEEE Transactions on Haptics, doi: 10.1109/TOH.2021.3076489
     /// </remarks>
-    public sealed class Greedy : Holo<Greedy>
+    [Gain]
+    public sealed partial class Greedy : Holo<Greedy>
     {
         public Greedy() : base(EmissionConstraint.Uniform(EmitIntensity.Max))
         {

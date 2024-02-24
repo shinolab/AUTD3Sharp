@@ -5,6 +5,7 @@
 using System;
 using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Derive;
 
 #if USE_SINGLE
 using float_t = System.Single;
@@ -23,7 +24,8 @@ namespace AUTD3Sharp.Gain.Holo
     /// <para>K.Madsen, H.Nielsen, and O.Tingleff, “Methods for non-linear least squares problems (2nd ed.),” 2004.</para> 
     /// </remarks>
     /// <typeparam name="TB">Backend</typeparam>
-    public sealed class LM<TB> : Holo<LM<TB>>
+    [Gain]
+    public sealed partial class LM<TB> : Holo<LM<TB>>
         where TB : Backend
     {
         private readonly TB _backend;
