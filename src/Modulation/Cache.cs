@@ -25,6 +25,7 @@ namespace AUTD3Sharp.Modulation
             _m = m;
             _cache = Array.Empty<EmitIntensity>();
             _samplingConfig = null;
+            LoopBehavior = m.LoopBehavior;
         }
 
         public ReadOnlySpan<EmitIntensity> Calc()
@@ -48,8 +49,7 @@ namespace AUTD3Sharp.Modulation
             unsafe
             {
                 fixed (EmitIntensity* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationCustom(_samplingConfig!.Value.Internal, (byte*)pBuf, (ulong)_cache.Length);
-
+                    return NativeMethodsBase.AUTDModulationCustom(_samplingConfig!.Value.Internal, (byte*)pBuf, (ulong)_cache.Length, LoopBehavior.Internal);
             }
         }
 

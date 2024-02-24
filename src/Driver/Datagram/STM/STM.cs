@@ -22,25 +22,17 @@ namespace AUTD3Sharp.Driver.Datagram.STM
         private readonly float_t? _freq;
         private readonly TimeSpan? _period;
         private readonly SamplingConfiguration? _samplingConfig;
-        protected int StartIdxV;
-        protected int FinishIdxV;
 
         protected STM(float_t? freq, TimeSpan? period, SamplingConfiguration? config)
         {
             _freq = freq;
             _period = period;
             _samplingConfig = config;
-            StartIdxV = -1;
-            FinishIdxV = -1;
         }
 
         DatagramPtr IDatagram.Ptr(Geometry.Geometry geometry) => STMPtr(geometry);
 
         internal abstract DatagramPtr STMPtr(Geometry.Geometry geometry);
-
-        public ushort? StartIdx => StartIdxV == -1 ? null : (ushort?)StartIdxV;
-
-        public ushort? FinishIdx => FinishIdxV == -1 ? null : (ushort?)FinishIdxV;
 
         internal STMPropsPtr Props()
         {
@@ -52,8 +44,6 @@ namespace AUTD3Sharp.Driver.Datagram.STM
                                                                           1000));
             if (_samplingConfig != null)
                 ptr = NativeMethodsBase.AUTDSTMPropsFromSamplingConfig(_samplingConfig.Value.Internal);
-            ptr = NativeMethodsBase.AUTDSTMPropsWithStartIdx(ptr, StartIdxV);
-            ptr = NativeMethodsBase.AUTDSTMPropsWithFinishIdx(ptr, FinishIdxV);
             return ptr;
         }
 

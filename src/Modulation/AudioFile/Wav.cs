@@ -26,7 +26,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = filenameBytes)
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, Config.Internal).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, Config.Internal, LoopBehavior.Internal).Validate();
                 }
             }
         }

@@ -10,7 +10,7 @@ public class SOEMTest()
     {
         await Assert.ThrowsAsync<AUTDException>(async () => _ = await new ControllerBuilder()
              .AddDevice(new AUTD3(Vector3d.zero))
-             .OpenWithAsync(SOEM.Builder()
+             .OpenAsync(SOEM.Builder()
                  .WithIfname("ifname")
                  .WithBufSize(32)
                  .WithSendCycle(2)

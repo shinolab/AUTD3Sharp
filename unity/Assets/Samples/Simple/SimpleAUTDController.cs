@@ -24,7 +24,7 @@ public class SimpleAUTDController : MonoBehaviour
         {
             _autd = await new ControllerBuilder()
                 .AddDevice(new AUTD3(gameObject.transform.position).WithRotation(gameObject.transform.rotation))
-                .OpenWithAsync(SOEM.Builder()
+                .OpenAsync(SOEM.Builder()
                     .WithErrHandler((slave, status, msg) =>
                     {
                         switch (status)

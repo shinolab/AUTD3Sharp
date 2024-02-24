@@ -5,17 +5,17 @@ public class CacheTest
     [Fact]
     public async Task Cache()
     {
-        var autd1 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
-        var autd2 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var autd1 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd2 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
         Assert.True(await autd1.SendAsync(new Sine(150)));
         Assert.True(await autd2.SendAsync(new Sine(150).WithCache()));
         foreach (var dev in autd2.Geometry)
         {
-            var modExpect = autd1.Link.Modulation(dev.Idx);
-            var mod = autd2.Link.Modulation(dev.Idx);
+            var modExpect = autd1.Link.Modulation(dev.Idx, Segment.S0);
+            var mod = autd2.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(autd1.Link.ModulationFrequencyDivision(dev.Idx), autd2.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(autd1.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0), autd2.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
         }
     }
 
@@ -53,7 +53,7 @@ public class CacheTest
     [Fact]
     public async Task CacheCheckOnce()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
         {
             var m = new ForCacheTest();
@@ -78,7 +78,7 @@ public class CacheTest
     [Fact]
     public async Task CacheCheckFree()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
         var mc = new ForCacheTest().WithCache();
         {

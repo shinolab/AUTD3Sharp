@@ -30,6 +30,7 @@ namespace AUTD3Sharp.Gain
             Dir = dir;
             Theta = theta;
             Intensity = EmitIntensity.Max;
+            PhaseOffset = new Phase(0);
         }
 
         /// <summary>
@@ -62,6 +63,8 @@ namespace AUTD3Sharp.Gain
 
         public EmitIntensity Intensity { get; private set; }
 
-        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainBessel(Pos.x, Pos.y, Pos.z, Dir.x, Dir.y, Dir.z, Theta, Intensity.Value);
+        public Phase PhaseOffset { get; private set; }
+
+        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainBessel(Pos.x, Pos.y, Pos.z, Dir.x, Dir.y, Dir.z, Theta, Intensity.Value, PhaseOffset.Value);
     }
 }

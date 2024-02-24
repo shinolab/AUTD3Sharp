@@ -106,13 +106,6 @@ namespace AUTD3Sharp.NativeMethods
         DC = 1,
     }
 
-    public enum Status : byte
-    {
-        Error = 0,
-        StateChanged = 1,
-        Lost = 2,
-    }
-
 
 }
     

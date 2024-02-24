@@ -7,12 +7,12 @@ public class WavTest
     [Fact]
     public async Task Wav()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(new Wav("sin150.wav")));
         foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx);
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             var modExpect = new byte[] {
                 128,
                 157,
@@ -95,7 +95,7 @@ public class WavTest
                 71,
                 99};
             Assert.Equal(modExpect, mod);
-            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
         }
 
         var m = new Wav("sin150.wav").WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240));
@@ -103,7 +103,7 @@ public class WavTest
         Assert.True(await autd.SendAsync(m));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
         }
     }
 

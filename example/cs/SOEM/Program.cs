@@ -6,7 +6,7 @@ using Samples;
 
 using var autd = await new ControllerBuilder().
     AddDevice(new AUTD3(Vector3d.zero))
-    .OpenWithAsync(SOEM.Builder()
+    .OpenAsync(SOEM.Builder()
         .WithErrHandler((slave, status, msg) =>
         {
             switch (status)

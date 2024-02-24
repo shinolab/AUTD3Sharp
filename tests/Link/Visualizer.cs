@@ -13,7 +13,7 @@ public class VisualizerTest
 
         autd.Send(m, g);
 
-        autd.Link.PlotPhase(config, autd.Geometry);
+        autd.Link.PlotPhase(config, autd.Geometry, Segment.S0, 0);
         autd.Link.PlotField(
             config,
             new PlotRange
@@ -26,7 +26,9 @@ public class VisualizerTest
                 ZEnd = center[2],
                 Resolution = 1
             },
-            autd.Geometry
+            autd.Geometry,
+            Segment.S0,
+            0
         );
         autd.Link.PlotField(
             config,
@@ -40,20 +42,22 @@ public class VisualizerTest
                  ZEnd = center[2],
                  Resolution = 1
              },
-            autd.Geometry
+            autd.Geometry,
+            Segment.S0,
+            0
         );
-        autd.Link.PlotModulation(config);
+        autd.Link.PlotModulation(config, Segment.S0);
 
-        var intensities = autd.Link.Intensities();
+        var intensities = autd.Link.Intensities(Segment.S0, 0);
         Assert.Equal(Enumerable.Range(0, autd.Geometry.NumTransducers).Select(_ => (byte)0x80).ToArray(), intensities);
-        var phases = autd.Link.Phases();
+        var phases = autd.Link.Phases(Segment.S0, 0);
         Assert.Equal(Enumerable.Range(0, autd.Geometry.NumTransducers).Select(_ => (byte)0x81).ToArray(), phases);
-        var mod = autd.Link.Modulation();
+        var mod = autd.Link.Modulation(Segment.S0);
         Assert.Equal([0x82, 0x82], mod);
 
         var points = new[] { center };
-        autd.Link.CalcField(points, autd.Geometry);
-        autd.Link.CalcField(Enumerable.Range(0, 1).Select(_ => center), autd.Geometry);
+        autd.Link.CalcField(points, autd.Geometry, Segment.S0, 0);
+        autd.Link.CalcField(Enumerable.Range(0, 1).Select(_ => center), autd.Geometry, Segment.S0, 0);
 
         autd.Close();
     }
@@ -84,7 +88,7 @@ public class VisualizerTest
     public void TestPlotters()
     {
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Builder().WithBackend<PlottersBackend>().WithDirectivity<Sphere>());
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Builder().WithBackend<PlottersBackend>().WithDirectivity<Sphere>());
             VisualizerTestWith(
                    autd,
                    new PlotConfig
@@ -94,7 +98,7 @@ public class VisualizerTest
                );
         }
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Plotters().WithDirectivity<T4010A1>());
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Plotters().WithDirectivity<T4010A1>());
             VisualizerTestWith(
                    autd,
                    new PlotConfig
@@ -116,7 +120,7 @@ public class VisualizerTest
     public void TestPython()
     {
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Builder().WithBackend<PythonBackend>().WithDirectivity<Sphere>());
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Builder().WithBackend<PythonBackend>().WithDirectivity<Sphere>());
             VisualizerTestWith(
                    autd,
                    new PyPlotConfig()
@@ -126,7 +130,7 @@ public class VisualizerTest
                );
         }
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Python().WithDirectivity<T4010A1>());
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Python().WithDirectivity<T4010A1>());
             VisualizerTestWith(
                    autd,
                    new PyPlotConfig
@@ -151,14 +155,14 @@ public class VisualizerTest
     public void TestNull()
     {
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Builder().WithBackend<NullBackend>().WithDirectivity<Sphere>());
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Builder().WithBackend<NullBackend>().WithDirectivity<Sphere>());
             VisualizerTestWith(
                     autd,
                     new NullPlotConfig()
                 );
         }
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Null().WithDirectivity<T4010A1>());
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Null().WithDirectivity<T4010A1>());
             VisualizerTestWith(
                    autd,
                    new NullPlotConfig()
@@ -171,8 +175,8 @@ public class VisualizerTest
     public void TestInvalidPlotConfig()
     {
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Builder().WithBackend<PlottersBackend>().WithDirectivity<Sphere>());
-            Assert.Throws<AUTDException>(() => autd.Link.PlotPhase(new NullPlotConfig(), autd.Geometry));
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Builder().WithBackend<PlottersBackend>().WithDirectivity<Sphere>());
+            Assert.Throws<AUTDException>(() => autd.Link.PlotPhase(new NullPlotConfig(), autd.Geometry, Segment.S0, 0));
             Assert.Throws<AUTDException>(() => autd.Link.PlotField(
             new PyPlotConfig(),
             new PlotRange
@@ -185,18 +189,20 @@ public class VisualizerTest
                 ZEnd = 0,
                 Resolution = 1
             },
-            autd.Geometry
+            autd.Geometry,
+            Segment.S0,
+            0
         ));
         }
 
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Builder().WithBackend<PythonBackend>().WithDirectivity<Sphere>());
-            Assert.Throws<AUTDException>(() => autd.Link.PlotModulation(new NullPlotConfig()));
-            Assert.Throws<AUTDException>(() => autd.Link.PlotPhase(new PlotConfig(), autd.Geometry));
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Builder().WithBackend<PythonBackend>().WithDirectivity<Sphere>());
+            Assert.Throws<AUTDException>(() => autd.Link.PlotModulation(new NullPlotConfig(), Segment.S0));
+            Assert.Throws<AUTDException>(() => autd.Link.PlotPhase(new PlotConfig(), autd.Geometry, Segment.S0, 0));
         }
 
         {
-            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Visualizer.Builder().WithBackend<NullBackend>().WithDirectivity<Sphere>());
+            using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Builder().WithBackend<NullBackend>().WithDirectivity<Sphere>());
             Assert.Throws<AUTDException>(() => autd.Link.PlotField(
             new PlotConfig(),
             new PlotRange
@@ -209,9 +215,11 @@ public class VisualizerTest
                 ZEnd = 0,
                 Resolution = 1
             },
-            autd.Geometry
+            autd.Geometry,
+            Segment.S0,
+            0
         ));
-            Assert.Throws<AUTDException>(() => autd.Link.PlotModulation(new PyPlotConfig()));
+            Assert.Throws<AUTDException>(() => autd.Link.PlotModulation(new PyPlotConfig(), Segment.S0));
         }
     }
 }

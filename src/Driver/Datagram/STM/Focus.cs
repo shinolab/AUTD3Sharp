@@ -98,18 +98,6 @@ namespace AUTD3Sharp
             return iter.Aggregate(this, (stm, point) => stm.AddFocus(point.Item1, point.Item2));
         }
 
-        public FocusSTM WithStartIdx(ushort? startIdx)
-        {
-            StartIdxV = startIdx ?? -1;
-            return this;
-        }
-
-        public FocusSTM WithFinishIdx(ushort? finishIdx)
-        {
-            FinishIdxV = finishIdx ?? -1;
-            return this;
-        }
-
         public float_t Frequency => FreqFromSize(_intensities.Count);
         public TimeSpan Period => PeriodFromSize(_intensities.Count);
         public SamplingConfiguration SamplingConfiguration => SamplingConfigFromSize(_intensities.Count);
@@ -122,8 +110,12 @@ namespace AUTD3Sharp
             {
                 fixed (float_t* pp = &points[0])
                 fixed (EmitIntensity* ps = &intensities[0])
-                    return NativeMethodsBase.AUTDSTMFocus(Props(), pp, (byte*)ps, (ulong)_intensities.Count)
+                {
+                    var rawPtr = NativeMethodsBase.AUTDSTMFocus(Props(), pp, (byte*)ps, (ulong)_intensities.Count)
                         .Validate();
+                    return NativeMethodsBase.AUTDSTMFocusIntoDatagram(rawPtr);
+                }
+
             }
         }
     }

@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Modulation
             unsafe
             {
                 fixed (EmitIntensity* ptr = &data[0])
-                    return NativeMethodsBase.AUTDModulationCustom(Config.Internal, (byte*)ptr, (ulong)data.Length);
+                    return NativeMethodsBase.AUTDModulationCustom(Config.Internal, (byte*)ptr, (ulong)data.Length, LoopBehavior.Internal);
             }
         }
 

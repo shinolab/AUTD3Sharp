@@ -28,7 +28,7 @@ public class GainTest
 
         foreach (var dev in autd.Geometry)
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }
@@ -47,12 +47,12 @@ public class GainTest
         Assert.True(check[1]);
 
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, phases) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }

@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Modulation
 
         internal override ModulationPtr ModulationPtr()
         {
-            return NativeMethodsBase.AUTDModulationWithRadiationPressure(_m.ModulationPtr());
+            return NativeMethodsBase.AUTDModulationWithRadiationPressure(_m.ModulationPtr(), LoopBehavior.Internal);
         }
     }
 

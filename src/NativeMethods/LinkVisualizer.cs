@@ -26,25 +26,25 @@ namespace AUTD3Sharp.NativeMethods
         public static extern void AUTDLinkVisualizerPlotRangeObservePoints(PlotRangePtr range, double* points);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPhasesOf", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerPhasesOf(LinkPtr visualizer, Backend backend, Directivity directivity, uint idx, byte* buf);
+        public static extern uint AUTDLinkVisualizerPhasesOf(LinkPtr visualizer, Backend backend, Directivity directivity, Segment segment, uint idx, byte* buf);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerIntensitiesOf", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerIntensitiesOf(LinkPtr visualizer, Backend backend, Directivity directivity, uint idx, byte* buf);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerIntensities", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern uint AUTDLinkVisualizerIntensities(LinkPtr visualizer, Backend backend, Directivity directivity, Segment segment, uint idx, byte* buf);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerModulation", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDLinkVisualizerModulation(LinkPtr visualizer, Backend backend, Directivity directivity, byte* buf);
+        public static extern uint AUTDLinkVisualizerModulation(LinkPtr visualizer, Backend backend, Directivity directivity, Segment segment, byte* buf);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerCalcFieldOf", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkVisualizerCalcFieldOf(LinkPtr visualizer, Backend backend, Directivity directivity, double* points, uint points_len, GeometryPtr geometry, uint idx, double* buf);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerCalcField", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultI32 AUTDLinkVisualizerCalcField(LinkPtr visualizer, Backend backend, Directivity directivity, double* points, uint points_len, GeometryPtr geometry, Segment segment, uint idx, double* buf);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotFieldOf", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkVisualizerPlotFieldOf(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, PlotRangePtr range, GeometryPtr geometry, uint idx);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotField", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultI32 AUTDLinkVisualizerPlotField(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, PlotRangePtr range, GeometryPtr geometry, Segment segment, uint idx);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotPhaseOf", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkVisualizerPlotPhaseOf(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, GeometryPtr geometry, uint idx);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotPhase", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultI32 AUTDLinkVisualizerPlotPhase(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, GeometryPtr geometry, Segment segment, uint idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotModulation", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkVisualizerPlotModulation(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config);
+        public static extern ResultI32 AUTDLinkVisualizerPlotModulation(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, Segment segment);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerSphereNull", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkBuilderPtr AUTDLinkVisualizerSphereNull([MarshalAs(UnmanagedType.U1)] bool use_gpu, int gpu_idx);

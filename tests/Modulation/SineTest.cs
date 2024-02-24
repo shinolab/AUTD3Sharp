@@ -7,105 +7,27 @@ public class SineTest
     [Fact]
     public async Task Sine()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
-        var modExpect = new byte[] {
-                126,
-                124,
-                119,
-                111,
-                100,
-                87,
-                73,
-                58,
-                44,
-                30,
-                18,
-                9,
-                3,
-                0,
-                1,
-                5,
-                12,
-                22,
-                34,
-                48,
-                63,
-                78,
-                92,
-                104,
-                114,
-                121,
-                125,
-                126,
-                123,
-                117,
-                108,
-                96,
-                82,
-                68,
-                53,
-                39,
-                26,
-                15,
-                7,
-                2,
-                0,
-                2,
-                7,
-                15,
-                26,
-                39,
-                53,
-                68,
-                82,
-                96,
-                108,
-                117,
-                123,
-                126,
-                125,
-                121,
-                114,
-                104,
-                92,
-                78,
-                63,
-                48,
-                34,
-                22,
-                12,
-                5,
-                1,
-                0,
-                3,
-                9,
-                18,
-                30,
-                44,
-                58,
-                73,
-                87,
-                100,
-                111,
-                119,
-                124};
+        var modExpect = new byte[] {127, 125, 120, 111, 100, 87, 73, 58, 43, 30, 18, 9, 3, 0, 0, 4, 12, 22, 34, 48, 63, 78, 92,  104, 114, 122, 126,
+                                    126, 123, 117, 108, 96,  83, 68, 53, 39, 26, 15, 6, 1, 0, 1, 6, 15, 26, 39, 53, 68, 83, 96,  108, 117, 123, 126,
+                                    126, 122, 114, 104, 92,  78, 63, 48, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 43, 58, 73, 87, 100, 111, 120, 125};
 
         Assert.True(await autd.SendAsync(new Sine(150).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Phase.FromRad(Math.PI / 2.0))));
         foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx);
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
         }
 
 
         Assert.True(await autd.SendAsync(new Sine(150).WithIntensity(127).WithOffset(63).WithPhase(Phase.FromRad(Math.PI / 2.0))));
         foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx);
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
         }
 
         var m = new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240));
@@ -114,7 +36,7 @@ public class SineTest
         Assert.True(await autd.SendAsync(m));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
         }
     }
 
@@ -122,13 +44,14 @@ public class SineTest
     [Fact]
     public async Task SineMode()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(new Sine(150).WithMode(SamplingMode.SizeOptimized)));
         foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx);
-            var modExpect = new byte[] { 127, 156, 184, 209, 229, 244, 252, 254, 249, 237, 219, 197, 170, 142, 112, 84, 57, 35, 17, 5, 0, 2, 10, 25, 45, 70, 98 };
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+            var modExpect = new byte[] { 127, 156, 184, 209, 229, 244, 253, 254, 249, 237, 220, 197, 171, 142,
+                                    112, 83,  57,  34,  17,  5,   0,   1,   10,  25,  45,  70,  98 };
             Assert.Equal(modExpect, mod);
         }
 

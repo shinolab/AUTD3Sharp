@@ -28,7 +28,7 @@ namespace AUTD3Sharp.Gain
                     var dev = new Device((int)devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx));
                     var tr = new Transducer(trIdx, dev.Ptr);
                     var d = f(dev, tr) ?? nullDrive;
-                    raw->Phase = d.Phase.Value;
+                    raw->phase = d.Phase.Value;
                     raw->intensity = d.Intensity.Value;
                 };
             }

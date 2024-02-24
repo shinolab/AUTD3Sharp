@@ -39,7 +39,30 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(
         let path = path?;
         Ok(acc.input_extern_file(path))
     })?
-    .always_included_types(["Status"])
+    .always_included_types([
+        "Drive",
+        "ControllerPtr",
+        "GeometryPtr",
+        "DevicePtr",
+        "TransducerPtr",
+        "LinkBuilderPtr",
+        "LinkPtr",
+        "DatagramPtr",
+        "GainPtr",
+        "ModulationPtr",
+        "CachePtr",
+        "ResultI32",
+        "ResultModulation",
+        "ResultController",
+        "ResultBackend",
+        "ResultDatagram",
+        "ResultFocusSTM",
+        "FocusSTMPtr",
+        "ResultGainCalcDrivesMap",
+        "GainCalcDrivesMapPtr",
+        "ResultGainSTM",
+        "GainSTMPtr",
+    ])
     .csharp_dll_name(dll_name)
     .csharp_class_name(format!("NativeMethods{}", class_name))
     .csharp_namespace("AUTD3Sharp.NativeMethods")
@@ -53,8 +76,20 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(
     let content = content.replace("ConstPtr", "IntPtr");
     let content = content.replace("void*", "IntPtr");
     let content = content.replace("SamplingConfiguration", "SamplingConfigurationRaw");
-
+    let content = content.replace("LoopBehavior", "LoopBehaviorRaw");
+    let content = content.replace("AUTDLoopBehaviorRaw", "AUTDLoopBehavior");
+    let content = content.replace("struct Drive", "struct DriveRaw");
     let content = content.replace("Drive*", "DriveRaw*");
+
+    let content = content.replace(
+        r#"
+    public enum SamplingMode : byte
+    {
+        ExactFrequency = 0,
+        SizeOptimized = 1,
+    }"#,
+        "",
+    );
 
     let content = if use_single {
         let re = regex::Regex::new(r"public const float (.*) = (.*);").unwrap();

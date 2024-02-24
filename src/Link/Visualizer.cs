@@ -263,58 +263,48 @@ namespace AUTD3Sharp.Link
         private Backend _backend;
         private Directivity _directivity;
 
-        public byte[] PhasesOf(int idx)
+        public byte[] Phases(Segment segment, int idx)
         {
             unsafe
             {
-                var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity,
+                var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity, segment,
                     (uint)idx, null);
                 var buf = new byte[size];
                 fixed (byte* p = &buf[0])
-                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity,
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity, segment,
                     (uint)idx, p);
                 return buf;
             }
         }
 
-        public byte[] Phases()
-        {
-            return PhasesOf(0);
-        }
-
-        public byte[] IntensitiesOf(int idx)
+        public byte[] Intensities(Segment segment,int idx)
         {
             unsafe
             {
-                var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensitiesOf(_ptr, _backend, _directivity,
+                var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensities(_ptr, _backend, _directivity, segment,
                     (uint)idx, null);
                 var buf = new byte[size];
                 fixed (byte* p = &buf[0])
-                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensitiesOf(_ptr, _backend, _directivity,
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensities(_ptr, _backend, _directivity, segment,
                     (uint)idx, p);
                 return buf;
             }
         }
 
-        public byte[] Intensities()
-        {
-            return IntensitiesOf(0);
-        }
-
-        public byte[] Modulation()
+        public byte[] Modulation(Segment segment)
         {
             unsafe
             {
-                var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerModulation(_ptr, _backend, _directivity,
+                var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerModulation(_ptr, _backend, _directivity, segment,
                     null);
                 var buf = new byte[size];
                 fixed (byte* p = &buf[0])
-                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerModulation(_ptr, _backend, _directivity, p);
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerModulation(_ptr, _backend, _directivity, segment, p);
                 return buf;
             }
         }
 
-        public System.Numerics.Complex[] CalcFieldOf(IEnumerable<Vector3> pointsIter, Geometry geometry, int idx)
+        public System.Numerics.Complex[] CalcField(IEnumerable<Vector3> pointsIter, Geometry geometry, Segment segment, int idx)
         {
             var points = pointsIter as Vector3[] ?? pointsIter.ToArray();
             var pointsLen = points.Length;
@@ -324,43 +314,29 @@ namespace AUTD3Sharp.Link
             {
                 fixed (float_t* pp = &pointsPtr[0])
                 fixed (float_t* bp = &buf[0])
-                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerCalcFieldOf(_ptr, _backend, _directivity,
-                        pp, (uint)pointsLen, geometry.Ptr, (uint)idx, bp);
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerCalcField(_ptr, _backend, _directivity, 
+                        pp, (uint)pointsLen, geometry.Ptr, segment, (uint)idx, bp);
             }
             return Enumerable.Range(0, pointsLen).Select(i => new System.Numerics.Complex(buf[2 * i], buf[2 * i + 1])).ToArray();
         }
 
-        public System.Numerics.Complex[] CalcField(IEnumerable<Vector3> pointsIter, Geometry geometry)
-        {
-            return CalcFieldOf(pointsIter, geometry, 0);
-        }
-
-        public void PlotFieldOf(IPlotConfig config, PlotRange range, Geometry geometry, int idx)
+        public void PlotField(IPlotConfig config, PlotRange range, Geometry geometry, Segment segment,int idx)
         {
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
-            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotFieldOf(_ptr, _backend, _directivity, config.Ptr(), range.Ptr, geometry.Ptr, (uint)idx).Validate();
+            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotField(_ptr, _backend, _directivity, config.Ptr(), range.Ptr, geometry.Ptr, segment, (uint)idx).Validate();
         }
 
-        public void PlotField(IPlotConfig config, PlotRange range, Geometry geometry)
-        {
-            PlotFieldOf(config, range, geometry, 0);
-        }
-
-        public void PlotPhaseOf(IPlotConfig config, Geometry geometry, int idx)
+        public void PlotPhase(IPlotConfig config, Geometry geometry, Segment segment,int idx)
         {
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
-            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotPhaseOf(_ptr, _backend, _directivity, config.Ptr(), geometry.Ptr, (uint)idx).Validate();
+            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotPhase(_ptr, _backend, _directivity, config.Ptr(), geometry.Ptr, segment, (uint)idx).Validate();
         }
 
-        public void PlotPhase(IPlotConfig config, Geometry geometry)
-        {
-            PlotPhaseOf(config, geometry, 0);
-        }
 
-        public void PlotModulation(IPlotConfig config)
+        public void PlotModulation(IPlotConfig config, Segment segment)
         {
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
-            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotModulation(_ptr, _backend, _directivity, config.Ptr()).Validate();
+            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotModulation(_ptr, _backend, _directivity, config.Ptr(), segment).Validate();
         }
     }
 }

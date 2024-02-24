@@ -43,6 +43,6 @@ namespace AUTD3Sharp.Modulation
 
         public EmitIntensity Intensity { get; }
 
-        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity.Value);
+        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity.Value, LoopBehavior.Internal);
     }
 }

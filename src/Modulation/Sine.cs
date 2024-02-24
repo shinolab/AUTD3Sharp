@@ -111,6 +111,6 @@ namespace AUTD3Sharp.Modulation
         public static Fourier operator +(Sine a, Sine b)
             => new Fourier(a).AddComponent(b);
 
-        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSine(Freq, Config.Internal, Intensity.Value, Offset.Value, Phase.Value, Mode);
+        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSine(Freq, Config.Internal, Intensity.Value, Offset.Value, Phase.Value, Mode, LoopBehavior.Internal);
     }
 }

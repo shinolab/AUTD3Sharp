@@ -79,18 +79,6 @@ namespace AUTD3Sharp
             return iter.Aggregate(this, (stm, gain) => stm.AddGain(gain));
         }
 
-        public GainSTM WithStartIdx(ushort? startIdx)
-        {
-            StartIdxV = startIdx ?? -1;
-            return this;
-        }
-
-        public GainSTM WithFinishIdx(ushort? finishIdx)
-        {
-            FinishIdxV = finishIdx ?? -1;
-            return this;
-        }
-
         public GainSTM WithMode(GainSTMMode mode)
         {
             _mode = mode;
@@ -108,7 +96,10 @@ namespace AUTD3Sharp
             unsafe
             {
                 fixed (GainPtr* gp = &gains[0])
-                    return NativeMethodsBase.AUTDSTMGain(Props(), gp, (uint)gains.Length, _mode).Validate();
+                {
+                    var rawPtr =  NativeMethodsBase.AUTDSTMGain(Props(), gp, (uint)gains.Length, _mode).Validate();
+                    return NativeMethodsBase.AUTDSTMGainIntoDatagram(rawPtr);
+                }
             }
         }
     }

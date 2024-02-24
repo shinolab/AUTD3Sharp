@@ -6,12 +6,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        return await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenWith(Audit.Builder());
+        return new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Audit.Builder());
     }
 
     [Fact]
@@ -171,17 +171,7 @@ public class AUTDTest
         Assert.True(await autd.SendAsync(new ConfigureReadsFPGAState(_ => true)));
 
         {
-            var infos = await autd.FPGAStateAsync();
-            foreach (var info in infos)
-            {
-                Assert.Null(info);
-            }
-        }
-
-        {
             autd.Link.AssertThermalSensor(0);
-            autd.Link.Update(0);
-            autd.Link.Update(1);
 
             var infos = await autd.FPGAStateAsync();
             Assert.True(infos[0]!.IsThermalAssert);
@@ -193,8 +183,6 @@ public class AUTDTest
         {
             autd.Link.DeassertThermalSensor(0);
             autd.Link.AssertThermalSensor(1);
-            autd.Link.Update(0);
-            autd.Link.Update(1);
 
             var infos = await autd.FPGAStateAsync();
             Assert.False(infos[0]!.IsThermalAssert);
@@ -216,15 +204,7 @@ public class AUTDTest
         Assert.True(autd.Send(new ConfigureReadsFPGAState(_ => true)));
 
         {
-            var infos = autd.FPGAState();
-            foreach (var info in infos)
-                Assert.Null(info);
-        }
-
-        {
             autd.Link.AssertThermalSensor(0);
-            autd.Link.Update(0);
-            autd.Link.Update(1);
 
             var infos = autd.FPGAState();
             Assert.True(infos[0]!.IsThermalAssert);
@@ -234,8 +214,6 @@ public class AUTDTest
         {
             autd.Link.DeassertThermalSensor(0);
             autd.Link.AssertThermalSensor(1);
-            autd.Link.Update(0);
-            autd.Link.Update(1);
 
             var infos = autd.FPGAState();
             Assert.False(infos[0]!.IsThermalAssert);
@@ -253,13 +231,13 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v5.1.1", FirmwareInfo.LatestVersion);
+        Assert.Equal("v6.0.0", FirmwareInfo.LatestVersion);
 
         {
             foreach (var (info, i) in (await autd.FirmwareInfoListAsync()).Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v5.1.1, FPGA = v5.1.1 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v5.1.1, FPGA = v5.1.1 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v6.0.0, FPGA = v6.0.0 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v6.0.0, FPGA = v6.0.0 [Emulator]");
             }
         }
 
@@ -275,7 +253,7 @@ public class AUTDTest
         var autd = CreateControllerSync();
 
         foreach (var (info, i) in autd.FirmwareInfoList().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v5.1.1, FPGA = v5.1.1 [Emulator]");
+            Assert.Equal(info.Info, $"{i}: CPU = v6.0.0, FPGA = v6.0.0 [Emulator]");
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareInfoList().Last());
@@ -331,7 +309,7 @@ public class AUTDTest
     {
         {
             var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
-                .OpenWithAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
+                .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
             await autd.SendAsync(new Null());
 
@@ -342,7 +320,7 @@ public class AUTDTest
 
         {
             var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
-                .OpenWithAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(10)));
+                .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(10)));
 
             await autd.SendAsync(new Null());
 
@@ -357,7 +335,7 @@ public class AUTDTest
     {
         {
             var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
-                .OpenWith(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
+                .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
             autd.Send(new Null());
 
@@ -368,7 +346,7 @@ public class AUTDTest
 
         {
             var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
-                .OpenWith(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(10)));
+                .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(10)));
 
             autd.Send(new Null());
 
@@ -385,14 +363,14 @@ public class AUTDTest
 
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
         Assert.True(await autd.SendAsync(new Static()));
 
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
 
@@ -410,14 +388,14 @@ public class AUTDTest
 
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
         Assert.True(autd.Send(new Static()));
 
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
 
@@ -435,18 +413,18 @@ public class AUTDTest
 
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         Assert.True(await autd.SendAsync(new Static(), new Uniform(EmitIntensity.Max)));
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
@@ -465,18 +443,18 @@ public class AUTDTest
 
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         Assert.True(autd.Send(new Static(), new Uniform(EmitIntensity.Max)));
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
@@ -498,17 +476,17 @@ public class AUTDTest
              .Set("1", new Sine(150), new Uniform(EmitIntensity.Max))
              .SendAsync();
         {
-            var m = autd.Link.Modulation(0);
+            var m = autd.Link.Modulation(0, Segment.S0);
             Assert.Equal(2, m.Length);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var m = autd.Link.Modulation(1);
+            var m = autd.Link.Modulation(1, Segment.S0);
             Assert.Equal(80, m.Length);
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, phases) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
@@ -518,12 +496,12 @@ public class AUTDTest
              .Set("0", new Uniform(EmitIntensity.Max))
              .SendAsync();
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, _) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
         }
 
@@ -533,12 +511,12 @@ public class AUTDTest
             _ => null
         }).Set("0", new Uniform(EmitIntensity.Max)).SendAsync();
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, _) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
         }
 
@@ -561,17 +539,17 @@ public class AUTDTest
              .Set("1", new Sine(150), new Uniform(EmitIntensity.Max))
              .Send();
         {
-            var m = autd.Link.Modulation(0);
+            var m = autd.Link.Modulation(0, Segment.S0);
             Assert.Equal(2, m.Length);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var m = autd.Link.Modulation(1);
+            var m = autd.Link.Modulation(1, Segment.S0);
             Assert.Equal(80, m.Length);
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, phases) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
@@ -581,12 +559,12 @@ public class AUTDTest
             .Set("0", new Uniform(EmitIntensity.Max))
             .Send();
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, _) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
         }
 
@@ -596,12 +574,12 @@ public class AUTDTest
            _ => null
        }).Set("0", new Uniform(EmitIntensity.Max)).Send();
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, _) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, _) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
         }
     }
@@ -636,12 +614,12 @@ public class AUTDTest
         Assert.True(check[1]);
 
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, phases) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }
@@ -654,9 +632,9 @@ public class AUTDTest
         Assert.True(await autd.SendAsync(new Uniform(EmitIntensity.Max).WithPhase(new Phase(0x90))));
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }
@@ -664,9 +642,9 @@ public class AUTDTest
         Assert.True(await autd.SendAsync(new Clear()));
         foreach (var dev in autd.Geometry)
         {
-            var m = autd.Link.Modulation(dev.Idx);
+            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
@@ -676,26 +654,9 @@ public class AUTDTest
     public async Task TestSynchronize()
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
-            .OpenWithAsync(Audit.Builder());
+            .OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(new Synchronize()));
-    }
-
-    [Fact]
-    public async Task TestConfigureModDelay()
-    {
-        using var autd = await CreateController();
-
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.All(autd.Link.ModDelays(dev.Idx), d => Assert.Equal(0, d));
-        }
-
-        Assert.True(await autd.SendAsync(new ConfigureModDelay((_, _) => 1)));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.All(autd.Link.ModDelays(dev.Idx), d => Assert.Equal(1, d));
-        }
     }
 
     [Fact]

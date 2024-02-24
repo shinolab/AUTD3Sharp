@@ -6,7 +6,7 @@ open Samples
 
 let autd = (new ControllerBuilder())
             .AddDevice(new AUTD3(Vector3d.zero))
-            .OpenWithAsync(SOEM.Builder().WithErrHandler(
+            .OpenAsync(SOEM.Builder().WithErrHandler(
                 fun (slave:int) (status:Status) (msg:string) -> 
                     match status with
                         | Status.Error -> eprintfn $"Error [{slave}]: {msg}"

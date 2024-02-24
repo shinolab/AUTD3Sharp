@@ -103,6 +103,6 @@ namespace AUTD3Sharp.Modulation
 
         public SamplingMode Mode { get; private set; }
 
-        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSquare(Freq, Config.Internal, Low.Value, High.Value, Duty, Mode);
+        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSquare(Freq, Config.Internal, Low.Value, High.Value, Duty, Mode, LoopBehavior.Internal);
     }
 }

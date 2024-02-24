@@ -34,9 +34,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDANaive", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainHoloCUDANaive(BackendPtr backend, double* points, double* amps, ulong size, EmissionConstraintPtr constraint);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDAGreedy", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloCUDAGreedy(double* points, double* amps, ulong size, byte div, EmissionConstraintPtr constraint);
-
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDALM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainHoloCUDALM(BackendPtr backend, double* points, double* amps, ulong size, double eps_1, double eps_2, double tau, uint k_max, EmissionConstraintPtr constraint, double* initial_ptr, ulong initial_len);
 

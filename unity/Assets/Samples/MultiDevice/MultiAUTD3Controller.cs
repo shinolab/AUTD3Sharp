@@ -21,7 +21,7 @@ public class MultiAUTD3Controller : MonoBehaviour
 
         try
         {
-            _autd = await builder.OpenWithAsync(AUTD3Sharp.Link.Simulator.Builder(8080));
+            _autd = await builder.OpenAsync(AUTD3Sharp.Link.Simulator.Builder(8080));
         }
         catch (Exception)
         {

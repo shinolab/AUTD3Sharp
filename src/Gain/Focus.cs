@@ -54,7 +54,9 @@ namespace AUTD3Sharp.Gain
 
         public EmitIntensity Intensity { get; private set; }
 
-        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainFocus(Pos.x, Pos.y, Pos.z, Intensity.Value);
+        public Phase PhaseOffset { get; private set; }
+
+        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainFocus(Pos.x, Pos.y, Pos.z, Intensity.Value, PhaseOffset.Value);
     }
 }
 

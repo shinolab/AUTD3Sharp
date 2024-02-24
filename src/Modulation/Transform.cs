@@ -24,7 +24,7 @@ namespace AUTD3Sharp.Modulation
 
         internal override ModulationPtr ModulationPtr()
         {
-            return NativeMethodsBase.AUTDModulationWithTransform(_m.ModulationPtr(), Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero);
+            return NativeMethodsBase.AUTDModulationWithTransform(_m.ModulationPtr(), Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, LoopBehavior.Internal);
         }
     }
 

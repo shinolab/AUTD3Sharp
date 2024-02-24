@@ -5,28 +5,28 @@ public class StaticTest
     [Fact]
     public async Task Static()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(AUTD3Sharp.Modulation.Static.WithIntensity(new EmitIntensity(32))));
         foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx);
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
 #pragma warning disable IDE0230
             var modExpect = new byte[] { 32, 32 };
 #pragma warning restore IDE0230
             Assert.Equal(modExpect, mod);
-            Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
         }
 
         Assert.True(await autd.SendAsync(AUTD3Sharp.Modulation.Static.WithIntensity(32)));
         foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx);
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
 #pragma warning disable IDE0230
             var modExpect = new byte[] { 32, 32 };
 #pragma warning restore IDE0230
             Assert.Equal(modExpect, mod);
-            Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx));
+            Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
         }
     }
 

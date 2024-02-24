@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
+using AUTD3Sharp.Driver.Geometry;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
@@ -35,7 +37,12 @@ namespace AUTD3Sharp.Modulation
 
         internal override ModulationPtr ModulationPtr()
         {
-            return _components.Skip(1).Aggregate(NativeMethodsBase.AUTDModulationFourier(_components[0].ModulationPtr()), (current, sine) => NativeMethodsBase.AUTDModulationFourierAddComponent(current, sine.ModulationPtr()));
+            var components = _components.Select(m => m. ModulationPtr()).ToArray();
+            unsafe
+            {
+                fixed (ModulationPtr* p = &components[0])
+                    return NativeMethodsBase.AUTDModulationFourier(p,(uint)components.Length, LoopBehavior.Internal);
+            }
         }
     }
 }

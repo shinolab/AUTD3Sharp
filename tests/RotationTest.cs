@@ -52,7 +52,7 @@ public class RotationTest
 
         async Task<Controller<Audit>> Open(Quaterniond q) =>
             await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero).WithRotation(q))
-                .OpenWithAsync(Audit.Builder());
+                .OpenAsync(Audit.Builder());
 
         void AssertNearVec3(Vector3d expected, Vector3d x)
         {

@@ -187,7 +187,7 @@ def copy_dll(config: Config):
     if not should_update_dll(config, version):
         return
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-x64.zip"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-x64-dll.zip"
     with open("tmp.zip", mode="wb") as f:
         f.write(requests.get(url).content)
     shutil.unpack_archive("tmp.zip", ".")
@@ -197,7 +197,7 @@ def copy_dll(config: Config):
         shutil.copy(dll, "tests")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-universal.tar.gz"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-universal-shared.tar.gz"
     with open("tmp.tar.gz", mode="wb") as f:
         f.write(requests.get(url).content)
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
@@ -208,7 +208,7 @@ def copy_dll(config: Config):
         shutil.copy(dll, "tests")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-linux-x64.tar.gz"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-linux-x64-shared.tar.gz"
     with open("tmp.tar.gz", mode="wb") as f:
         f.write(requests.get(url).content)
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
@@ -390,7 +390,7 @@ def copy_dll_unity(config: Config):
     if not should_update_dll_unity(config, version):
         return
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-unity-x64.zip"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-unity-x64-dll.zip"
     with open("tmp.zip", mode="wb") as f:
         f.write(requests.get(url).content)
     shutil.unpack_archive("tmp.zip", ".")
@@ -399,7 +399,7 @@ def copy_dll_unity(config: Config):
         shutil.copy(dll, "unity/Assets/Plugins/x86_64")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-unity-universal.tar.gz"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-unity-universal-shared.tar.gz"
     with open("tmp.tar.gz", mode="wb") as f:
         f.write(requests.get(url).content)
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
@@ -410,7 +410,7 @@ def copy_dll_unity(config: Config):
         shutil.copy(dll, "unity/Assets/Plugins/aarch64")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-linux-unity-x64.tar.gz"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-linux-unity-x64-shared.tar.gz"
     with open("tmp.tar.gz", mode="wb") as f:
         f.write(requests.get(url).content)
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
@@ -560,14 +560,16 @@ def util_update_ver(args):
                 f.write(content)
 
 
+def util_gen_wrapper(_):
+    fetch_submodule()
+    generate_wrapper()
+
+
 def command_help(args):
     print(parser.parse_args([args.command, "--help"]))
 
 
 if __name__ == "__main__":
-    fetch_submodule()
-    generate_wrapper()
-
     with working_dir(os.path.dirname(os.path.abspath(__file__))):
         parser = argparse.ArgumentParser(description="autd3 library build script")
         subparsers = parser.add_subparsers()
@@ -666,6 +668,12 @@ if __name__ == "__main__":
         )
         parser_util_upver.add_argument("version", help="version")
         parser_util_upver.set_defaults(handler=util_update_ver)
+
+        # util update version
+        parser_util_gen_wrap = subparsers_util.add_parser(
+            "gen_wrap", help="see `util gen_wrap -h`"
+        )
+        parser_util_gen_wrap.set_defaults(handler=util_gen_wrapper)
 
         # help
         parser_help = subparsers.add_parser("help", help="see `help -h`")

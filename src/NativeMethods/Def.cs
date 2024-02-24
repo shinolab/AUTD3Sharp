@@ -36,6 +36,15 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDPhaseToRad", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern double AUTDPhaseToRad(byte value);
 
+        [DllImport(__DllName, EntryPoint = "AUTDLoopBehaviorInfinite", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LoopBehaviorRaw AUTDLoopBehaviorInfinite();
+
+        [DllImport(__DllName, EntryPoint = "AUTDLoopBehaviorFinite", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LoopBehaviorRaw AUTDLoopBehaviorFinite(uint v);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLoopBehaviorOnce", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LoopBehaviorRaw AUTDLoopBehaviorOnce();
+
         [DllImport(__DllName, EntryPoint = "AUTDGetErr", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDGetErr(IntPtr src, byte* dst);
 
@@ -61,6 +70,59 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct DriveRaw
+    {
+        public byte phase;
+        public byte intensity;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct LoopBehaviorRaw
+    {
+        public uint rep;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultI32
+    {
+        public int result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultModulation
+    {
+        public ModulationPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultDatagram
+    {
+        public DatagramPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultFocusSTM
+    {
+        public FocusSTMPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultGainSTM
+    {
+        public GainSTMPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct SamplingConfigurationRaw
     {
         public uint div;
@@ -72,6 +134,80 @@ namespace AUTD3Sharp.NativeMethods
         public SamplingConfigurationRaw result;
         public uint err_len;
         public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ControllerPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultController
+    {
+        public ControllerPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct LinkBuilderPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct LinkPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct DatagramPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct GainPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct GeometryPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct DevicePtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct TransducerPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ModulationPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct FocusSTMPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct GainSTMPtr
+    {
+        public IntPtr Item1;
     }
 
 

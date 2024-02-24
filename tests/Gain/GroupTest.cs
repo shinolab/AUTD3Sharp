@@ -16,7 +16,7 @@ public class GroupTest
         }).Set("uniform", new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))).Set("null", new Null())));
         foreach (var dev in autd.Geometry)
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             foreach (var tr in dev)
             {
                 if (tr.Position.x < cx)
@@ -39,7 +39,7 @@ public class GroupTest
         }).Set("uniform", new Uniform(new EmitIntensity(0x81)).WithPhase(new Phase(0x91)))));
         foreach (var dev in autd.Geometry)
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             foreach (var tr in dev)
             {
                 if (tr.Position.x > cx)
@@ -103,12 +103,12 @@ public class GroupTest
         Assert.True(check[1]);
 
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(0, 0);
+            var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(1, 0);
+            var (intensities, phases) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }

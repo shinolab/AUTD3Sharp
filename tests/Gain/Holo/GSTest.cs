@@ -8,7 +8,7 @@ public class GSTest
     [Fact]
     public async Task GS()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenWithAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new GS<NalgebraBackend>(backend)
@@ -21,7 +21,7 @@ public class GSTest
 
         foreach (var dev in autd.Geometry)
         {
-            var (intensities, phases) = autd.Link.IntensitiesAndPhases(dev.Idx, 0);
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.Contains(phases, p => p != 0);
         }

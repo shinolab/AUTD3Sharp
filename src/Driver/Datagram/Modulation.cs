@@ -12,6 +12,8 @@ namespace AUTD3Sharp.Driver.Datagram
 
         internal abstract ModulationPtr ModulationPtr();
 
+        public LoopBehavior LoopBehavior { get; protected set; } = LoopBehavior.Infinite;
+
         public int Length => NativeMethodsBase.AUTDModulationSize(ModulationPtr()).Validate();
     }
 

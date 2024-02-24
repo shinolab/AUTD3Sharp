@@ -28,6 +28,10 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintClamp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern EmissionConstraintPtr AUTDGainHoloConstraintClamp(byte min_v, byte max_v);
 
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintEq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool AUTDGainHoloConstraintEq(EmissionConstraintPtr a, EmissionConstraintPtr b);
+
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloGreedy", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainHoloGreedy(float* points, float* amps, ulong size, byte div, EmissionConstraintPtr constraint);
 
@@ -95,6 +99,14 @@ namespace AUTD3Sharp.NativeMethods
     public unsafe partial struct BackendPtr
     {
         public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultBackend
+    {
+        public BackendPtr result;
+        public uint err_len;
+        public IntPtr err;
     }
 
 

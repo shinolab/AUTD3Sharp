@@ -33,7 +33,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = filenameBytes)
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationRawPCM(fp, _sampleRate, Config.Internal).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationRawPCM(fp, _sampleRate, Config.Internal, LoopBehavior.Internal).Validate();
                 }
             }
         }
