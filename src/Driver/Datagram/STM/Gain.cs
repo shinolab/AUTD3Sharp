@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram.STM;
+using AUTD3Sharp.Driver.Datagram;
 
 using AUTD3Sharp.NativeMethods;
 
@@ -32,7 +33,7 @@ namespace AUTD3Sharp
     /// <item>The maximum number of sampling Gain is 2048.</item>
     /// <item>The sampling frequency is <see cref="AUTD3.FPGAClkFreq">AUTD3.FPGAClkFreq</see>/N, where `N` is a 32-bit unsigned integer and must be at 4096.</item>
     /// </list></remarks>
-    public sealed class GainSTM : STM
+    public sealed class GainSTM : STM, IDatagramS<GainSTMPtr>
     {
         private readonly List<Driver.Datagram.Gain.IGain> _gains;
         private GainSTMMode _mode;
@@ -85,6 +86,12 @@ namespace AUTD3Sharp
             return this;
         }
 
+        public GainSTM WithLoopBehavior(LoopBehavior loopBehavior)
+        {
+            LoopBehavior = loopBehavior;
+            return this;
+        }
+
         public float_t Frequency => FreqFromSize(_gains.Count);
         public TimeSpan Period => PeriodFromSize(_gains.Count);
         public SamplingConfiguration SamplingConfiguration => SamplingConfigFromSize(_gains.Count);
@@ -92,16 +99,38 @@ namespace AUTD3Sharp
 
         internal override DatagramPtr STMPtr(Geometry geometry)
         {
+            return NativeMethodsBase.AUTDSTMGainIntoDatagram(((IDatagramS<GainSTMPtr>)this).RawPtr(geometry));
+        }
+
+        DatagramPtr IDatagramS<GainSTMPtr>.IntoSegment(GainSTMPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDSTMGainIntoDatagramWithSegment(p, segment, updateSegment);
+        GainSTMPtr IDatagramS<GainSTMPtr>.RawPtr(Geometry geometry)
+        {
             var gains = _gains.Select(g => g.GainPtr(geometry)).ToArray();
             unsafe
             {
                 fixed (GainPtr* gp = &gains[0])
                 {
-                    var rawPtr = NativeMethodsBase.AUTDSTMGain(Props(), gp, (uint)gains.Length, _mode).Validate();
-                    return NativeMethodsBase.AUTDSTMGainIntoDatagram(rawPtr);
+                    return NativeMethodsBase.AUTDSTMGain(Props(), gp, (uint)gains.Length, _mode).Validate();
                 }
             }
         }
+
+        public DatagramWithSegment<GainSTM, GainSTMPtr> WithSegment(Segment segment, bool updateSegment)
+        {
+            return new DatagramWithSegment<GainSTM, GainSTMPtr>(this, segment, updateSegment);
+        }
+    }
+
+    public sealed class ChangeGainSTMSegment : IDatagram
+    {
+        private readonly Segment _segment;
+
+        public ChangeGainSTMSegment(Segment segment)
+        {
+            _segment = segment;
+        }
+
+        DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDDatagramChangeGainSTMSegment(_segment);
     }
 }
 

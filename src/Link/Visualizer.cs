@@ -263,43 +263,43 @@ namespace AUTD3Sharp.Link
         private Backend _backend;
         private Directivity _directivity;
 
-        public byte[] Phases(Segment segment, int idx)
+        public Phase[] Phases(Segment segment, int idx)
         {
             unsafe
             {
                 var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity, segment,
                     (uint)idx, null);
-                var buf = new byte[size];
-                fixed (byte* p = &buf[0])
+                var buf = new Phase[size];
+                fixed (Phase* p = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity, segment,
-                    (uint)idx, p);
+                    (uint)idx, (byte*)p);
                 return buf;
             }
         }
 
-        public byte[] Intensities(Segment segment, int idx)
+        public EmitIntensity[] Intensities(Segment segment, int idx)
         {
             unsafe
             {
                 var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensities(_ptr, _backend, _directivity, segment,
                     (uint)idx, null);
-                var buf = new byte[size];
-                fixed (byte* p = &buf[0])
+                var buf = new EmitIntensity[size];
+                fixed (EmitIntensity* p = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensities(_ptr, _backend, _directivity, segment,
-                    (uint)idx, p);
+                    (uint)idx, (byte*)p);
                 return buf;
             }
         }
 
-        public byte[] Modulation(Segment segment)
+        public EmitIntensity[] Modulation(Segment segment)
         {
             unsafe
             {
                 var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerModulation(_ptr, _backend, _directivity, segment,
                     null);
-                var buf = new byte[size];
-                fixed (byte* p = &buf[0])
-                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerModulation(_ptr, _backend, _directivity, segment, p);
+                var buf = new EmitIntensity[size];
+                fixed (EmitIntensity* p = &buf[0])
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerModulation(_ptr, _backend, _directivity, segment, (byte*)p);
                 return buf;
             }
         }

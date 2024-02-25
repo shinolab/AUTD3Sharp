@@ -2,6 +2,7 @@
 #define USE_SINGLE
 #endif
 
+using System;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain.Holo
@@ -9,7 +10,7 @@ namespace AUTD3Sharp.Gain.Holo
     /// <summary>
     /// Amplitude constraint
     /// </summary>
-    public struct EmissionConstraint
+    public struct EmissionConstraint : IEquatable<EmissionConstraint>
     {
         internal EmissionConstraintPtr Ptr;
 
@@ -51,5 +52,12 @@ namespace AUTD3Sharp.Gain.Holo
         /// Clamp all amplitudes to the specified range
         /// </summary>
         public static EmissionConstraint Clamp(byte min, byte max) => Clamp(new EmitIntensity(min), new EmitIntensity(max));
+
+        public override bool Equals(object? obj) => obj is EmissionConstraint other && this.Equals(other);
+        public bool Equals(EmissionConstraint other) => NativeMethodsGainHolo.AUTDGainHoloConstraintEq(Ptr, other.Ptr);
+        public override int GetHashCode() => Ptr.GetHashCode();
+        public static bool operator ==(EmissionConstraint lhs, EmissionConstraint rhs) => lhs.Equals(rhs);
+        public static bool operator !=(EmissionConstraint lhs, EmissionConstraint rhs) => !(lhs == rhs);
+
     }
 }

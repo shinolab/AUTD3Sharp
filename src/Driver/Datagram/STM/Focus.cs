@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram.STM;
+using AUTD3Sharp.Driver.Datagram;
 
 using AUTD3Sharp.NativeMethods;
 
@@ -39,7 +40,7 @@ namespace AUTD3Sharp
     /// <item>The maximum number of sampling points is 65536.</item>
     /// <item>The sampling frequency is <see cref="AUTD3.FPGAClkFreq">AUTD3.FPGAClkFreq</see>/N, where `N` is a 32-bit unsigned integer and must be at 4096.</item>
     /// </list></remarks>
-    public sealed class FocusSTM : STM
+    public sealed class FocusSTM : STM, IDatagramS<FocusSTMPtr>
     {
         private readonly List<float_t> _points;
         private readonly List<EmitIntensity> _intensities;
@@ -104,6 +105,18 @@ namespace AUTD3Sharp
 
         internal override DatagramPtr STMPtr(Geometry geometry)
         {
+            return NativeMethodsBase.AUTDSTMFocusIntoDatagram(((IDatagramS<FocusSTMPtr>)this).RawPtr(geometry));
+        }
+
+        public FocusSTM WithLoopBehavior(LoopBehavior loopBehavior)
+        {
+            LoopBehavior = loopBehavior;
+            return this;
+        }
+
+        DatagramPtr IDatagramS<FocusSTMPtr>.IntoSegment(FocusSTMPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDSTMFocusIntoDatagramWithSegment(p, segment, updateSegment);
+        FocusSTMPtr IDatagramS<FocusSTMPtr>.RawPtr(Geometry geometry)
+        {
             var points = _points.ToArray();
             var intensities = _intensities.ToArray();
             unsafe
@@ -111,13 +124,29 @@ namespace AUTD3Sharp
                 fixed (float_t* pp = &points[0])
                 fixed (EmitIntensity* ps = &intensities[0])
                 {
-                    var rawPtr = NativeMethodsBase.AUTDSTMFocus(Props(), pp, (byte*)ps, (ulong)_intensities.Count)
+                    return NativeMethodsBase.AUTDSTMFocus(Props(), pp, (byte*)ps, (ulong)_intensities.Count)
                         .Validate();
-                    return NativeMethodsBase.AUTDSTMFocusIntoDatagram(rawPtr);
                 }
 
             }
         }
+
+        public DatagramWithSegment<FocusSTM, FocusSTMPtr> WithSegment(Segment segment, bool updateSegment)
+        {
+            return new DatagramWithSegment<FocusSTM, FocusSTMPtr>(this, segment, updateSegment);
+        }
+    }
+
+    public sealed class ChangeFocusSTMSegment : IDatagram
+    {
+        private readonly Segment _segment;
+
+        public ChangeFocusSTMSegment(Segment segment)
+        {
+            _segment = segment;
+        }
+
+        DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDDatagramChangeFocusSTMSegment(_segment);
     }
 }
 

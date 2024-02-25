@@ -299,8 +299,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSoundSpeed", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDLinkAuditFpgaSoundSpeed(LinkPtr audit, Segment segment, uint idx);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaStmLoopBehaviorRaw", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LoopBehaviorRaw AUTDLinkAuditFpgaStmLoopBehaviorRaw(LinkPtr audit, Segment segment, uint idx);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaStmLoopBehavior", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LoopBehaviorRaw AUTDLinkAuditFpgaStmLoopBehavior(LinkPtr audit, Segment segment, uint idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulationFrequencyDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDLinkAuditFpgaModulationFrequencyDivision(LinkPtr audit, Segment segment, uint idx);
@@ -311,8 +311,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulation", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDLinkAuditFpgaModulation(LinkPtr audit, Segment segment, uint idx, byte* data);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulationLoopBehaviorRaw", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LoopBehaviorRaw AUTDLinkAuditFpgaModulationLoopBehaviorRaw(LinkPtr audit, Segment segment, uint idx);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulationLoopBehavior", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LoopBehaviorRaw AUTDLinkAuditFpgaModulationLoopBehavior(LinkPtr audit, Segment segment, uint idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaDrives", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDLinkAuditFpgaDrives(LinkPtr audit, Segment segment, uint idx, uint stm_idx, byte* intensities, byte* phases);
@@ -413,8 +413,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDSTMPropsFromSamplingConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern STMPropsPtr AUTDSTMPropsFromSamplingConfig(SamplingConfigurationRaw config);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSTMPropsWithLoopBehaviorRaw", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern STMPropsPtr AUTDSTMPropsWithLoopBehaviorRaw(STMPropsPtr props, LoopBehaviorRaw loop_behavior);
+        [DllImport(__DllName, EntryPoint = "AUTDSTMPropsWithLoopBehavior", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern STMPropsPtr AUTDSTMPropsWithLoopBehavior(STMPropsPtr props, LoopBehaviorRaw loop_behavior);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMPropsFrequency", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern double AUTDSTMPropsFrequency(STMPropsPtr props, ulong size);

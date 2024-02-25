@@ -46,6 +46,10 @@ namespace AUTD3Sharp.Link
             return new AuditBuilder();
         }
 
+        public TimeSpan Timeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0);
+
+        public TimeSpan LastTimeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditLastTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0);
+
         public void Down()
         {
             NativeMethodsBase.AUTDLinkAuditDown(_ptr);
@@ -106,6 +110,18 @@ namespace AUTD3Sharp.Link
             NativeMethodsBase.AUTDLinkAuditFpgaDeassertThermalSensor(_ptr, (uint)idx);
         }
 
+        public byte[] PhaseFilter(int idx)
+        {
+            var n = (int)NativeMethodsBase.AUTDLinkAuditCpuNumTransducers(_ptr, (uint)idx);
+            var buf = new byte[n];
+            unsafe
+            {
+                fixed (byte* p = &buf[0])
+                    NativeMethodsBase.AUTDLinkAuditFpgaPhaseFilter(_ptr, (uint)idx, p);
+            }
+            return buf;
+        }
+
         public byte[] Modulation(int idx, Segment segment)
         {
             var n = (int)NativeMethodsBase.AUTDLinkAuditFpgaModulationCycle(_ptr, segment, (uint)idx);
@@ -120,7 +136,17 @@ namespace AUTD3Sharp.Link
 
         public uint ModulationFrequencyDivision(int idx, Segment segment)
         {
-            return NativeMethodsBase.AUTDLinkAuditFpgaModulationFrequencyDivision(_ptr, segment,(uint)idx);
+            return NativeMethodsBase.AUTDLinkAuditFpgaModulationFrequencyDivision(_ptr, segment, (uint)idx);
+        }
+
+        public LoopBehavior ModulationLoopBehavior(int idx, Segment segment)
+        {
+            return new LoopBehavior(NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopBehavior(_ptr, segment, (uint)idx));
+        }
+
+        public Segment CurrentModulationSegment(int idx)
+        {
+            return NativeMethodsBase.AUTDLinkAuditFpgaCurrentModSegment(_ptr, (uint)idx);
         }
 
         public (byte[], byte[]) Drives(int idx, Segment segment, int stmIdx)
@@ -133,7 +159,7 @@ namespace AUTD3Sharp.Link
                 fixed (byte* pd = &intensities[0])
                 fixed (byte* pp = &phases[0])
                 {
-                    NativeMethodsBase.AUTDLinkAuditFpgaDrives(_ptr, segment,(uint)idx, (uint)stmIdx, pd, pp);
+                    NativeMethodsBase.AUTDLinkAuditFpgaDrives(_ptr, segment, (uint)idx, (uint)stmIdx, pd, pp);
                 }
             }
             return (intensities, phases);
@@ -141,17 +167,32 @@ namespace AUTD3Sharp.Link
 
         public uint StmCycle(int idx, Segment segment)
         {
-            return NativeMethodsBase.AUTDLinkAuditFpgaStmCycle(_ptr, segment,(uint)idx);
+            return NativeMethodsBase.AUTDLinkAuditFpgaStmCycle(_ptr, segment, (uint)idx);
         }
 
         public bool IsStmGainMode(int idx, Segment segment)
         {
-            return NativeMethodsBase.AUTDLinkAuditFpgaIsStmGainMode(_ptr, segment,(uint)idx);
+            return NativeMethodsBase.AUTDLinkAuditFpgaIsStmGainMode(_ptr, segment, (uint)idx);
         }
 
         public uint StmFrequencyDivision(int idx, Segment segment)
         {
-            return NativeMethodsBase.AUTDLinkAuditFpgaStmFrequencyDivision(_ptr, segment,(uint)idx);
+            return NativeMethodsBase.AUTDLinkAuditFpgaStmFrequencyDivision(_ptr, segment, (uint)idx);
+        }
+
+        public uint StmSoundSpeed(int idx, Segment segment)
+        {
+            return NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(_ptr, segment, (uint)idx);
+        }
+
+        public LoopBehavior StmLoopBehavior(int idx, Segment segment)
+        {
+            return new LoopBehavior(NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(_ptr, segment, (uint)idx));
+        }
+
+        public Segment CurrentStmSegment(int idx)
+        {
+            return NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(_ptr, (uint)idx);
         }
     }
 }

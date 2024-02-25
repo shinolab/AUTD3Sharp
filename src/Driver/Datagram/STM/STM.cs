@@ -23,6 +23,8 @@ namespace AUTD3Sharp.Driver.Datagram.STM
         private readonly TimeSpan? _period;
         private readonly SamplingConfiguration? _samplingConfig;
 
+        public LoopBehavior LoopBehavior { get; protected set; } = LoopBehavior.Infinite;
+
         protected STM(float_t? freq, TimeSpan? period, SamplingConfiguration? config)
         {
             _freq = freq;
@@ -44,6 +46,7 @@ namespace AUTD3Sharp.Driver.Datagram.STM
                                                                           1000));
             if (_samplingConfig != null)
                 ptr = NativeMethodsBase.AUTDSTMPropsFromSamplingConfig(_samplingConfig.Value.Internal);
+            ptr = NativeMethodsBase.AUTDSTMPropsWithLoopBehavior(ptr, LoopBehavior.Internal);
             return ptr;
         }
 

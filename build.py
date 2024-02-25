@@ -322,7 +322,43 @@ def cs_test(args):
         subprocess.run(command).check_returncode()
 
 
+def check_if_all_native_methods_called():
+    defined_methods = set()
+    pattern = re.compile("\\s*public static extern .* (AUTD.*?)\\(.*")
+    for file in glob.glob("src/NativeMethods/*.cs"):
+        with open(file, "r") as f:
+            for line in f.readlines():
+                result = pattern.match(line)
+                if result:
+                    defined_methods.add(result.group(1))
+
+    used_methods = set()
+    pattern = re.compile("NativeMethods.*?\\.(AUTD.*?)\\(")
+    for file in (
+        list(
+            set(glob_norm("src/**/*.cs", recursive=True))
+            - set(glob_norm("src/NativeMethods/*.cs", recursive=True))
+        )
+        + list(set(glob_norm("tests/**/*.cs", recursive=True)))
+        + ["src/NativeMethods/DefExt.cs"]
+    ):
+        with open(file, encoding="utf-8", mode="r") as f:
+            for line in f.readlines():
+                result = pattern.findall(line)
+                if result:
+                    for group in result:
+                        used_methods.add(group)
+    unused_methods = defined_methods.difference(used_methods)
+    if len(unused_methods) > 0:
+        err("Following native methods are defined but not used.")
+        for method in unused_methods:
+            print(f"\t{method}")
+        sys.exit(-1)
+
+
 def cs_cov(args):
+    check_if_all_native_methods_called()
+
     config = Config(args)
 
     copy_dll(config)

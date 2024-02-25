@@ -49,11 +49,11 @@ public class VisualizerTest
         autd.Link.PlotModulation(config, Segment.S0);
 
         var intensities = autd.Link.Intensities(Segment.S0, 0);
-        Assert.Equal(Enumerable.Range(0, autd.Geometry.NumTransducers).Select(_ => (byte)0x80).ToArray(), intensities);
+        Assert.Equal(Enumerable.Range(0, autd.Geometry.NumTransducers).Select(_ => new EmitIntensity(0x80)).ToArray(), intensities);
         var phases = autd.Link.Phases(Segment.S0, 0);
-        Assert.Equal(Enumerable.Range(0, autd.Geometry.NumTransducers).Select(_ => (byte)0x81).ToArray(), phases);
+        Assert.Equal(Enumerable.Range(0, autd.Geometry.NumTransducers).Select(_ => new Phase(0x81)).ToArray(), phases);
         var mod = autd.Link.Modulation(Segment.S0);
-        Assert.Equal([0x82, 0x82], mod);
+        Assert.Equal([new EmitIntensity(0x82), new EmitIntensity(0x82)], mod);
 
         var points = new[] { center };
         autd.Link.CalcField(points, autd.Geometry, Segment.S0, 0);
@@ -87,6 +87,11 @@ public class VisualizerTest
     [Fact]
     public void TestPlotters()
     {
+        var config = new PlotConfig()
+        {
+            Fname = "test.png"
+        };
+        NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotConfigIsDefault(config.RawPtr());
         {
             using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Builder().WithBackend<PlottersBackend>().WithDirectivity<Sphere>());
             VisualizerTestWith(
@@ -119,6 +124,11 @@ public class VisualizerTest
     [Fact]
     public void TestPython()
     {
+        var config = new PyPlotConfig()
+        {
+            Fname = "test.png",
+        };
+        NativeMethodsLinkVisualizer.AUTDLinkVisualizerPyPlotConfigIsDefault(config.RawPtr());
         {
             using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Visualizer.Builder().WithBackend<PythonBackend>().WithDirectivity<Sphere>());
             VisualizerTestWith(

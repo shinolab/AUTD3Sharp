@@ -85,10 +85,16 @@ using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 {{ns}} {
-    public partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Gain.IGain, IDatagram
+    public partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Gain.IGain, IDatagramS<GainPtr>, IDatagram
     {
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDGainIntoDatagram(((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GainPtr(geometry));
+        DatagramPtr IDatagramS<GainPtr>.IntoSegment(GainPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(p, segment, updateSegment);
+        GainPtr IDatagramS<GainPtr>.RawPtr(Geometry geometry) => GainPtr(geometry);
         GainPtr AUTD3Sharp.Driver.Datagram.Gain.IGain.GainPtr(Geometry geometry) => GainPtr(geometry);
+        public DatagramWithSegment<{{typeName}}, GainPtr> WithSegment(Segment segment, bool updateSegment)
+        {
+            return new DatagramWithSegment<{{typeName}}, GainPtr>(this, segment, updateSegment);
+        }
 {{customCode}}
 {{cacheCode}}
 {{transformCode}}

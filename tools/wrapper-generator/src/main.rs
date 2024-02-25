@@ -78,6 +78,18 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(
     let content = content.replace("SamplingConfiguration", "SamplingConfigurationRaw");
     let content = content.replace("LoopBehavior", "LoopBehaviorRaw");
     let content = content.replace("AUTDLoopBehaviorRaw", "AUTDLoopBehavior");
+    let content = content.replace(
+        "AUTDLinkAuditFpgaModulationLoopBehaviorRaw",
+        "AUTDLinkAuditFpgaModulationLoopBehavior",
+    );
+    let content = content.replace(
+        "AUTDLinkAuditFpgaStmLoopBehaviorRaw",
+        "AUTDLinkAuditFpgaStmLoopBehavior",
+    );
+    let content = content.replace(
+        "AUTDSTMPropsWithLoopBehaviorRaw",
+        "AUTDSTMPropsWithLoopBehavior",
+    );
     let content = content.replace("struct Drive", "struct DriveRaw");
     let content = content.replace("Drive*", "DriveRaw*");
 

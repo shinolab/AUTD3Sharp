@@ -100,10 +100,16 @@ using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 {{ns}} {
-    partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagram
+    partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagramS<ModulationPtr>, IDatagram
     {
         DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
+        DatagramPtr IDatagramS<ModulationPtr>.IntoSegment(ModulationPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(p, segment, updateSegment);
+        ModulationPtr IDatagramS<ModulationPtr>.RawPtr(Geometry _) => ModulationPtr();
         ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr() => ModulationPtr();
+        public DatagramWithSegment<{{typeName}}, ModulationPtr> WithSegment(Segment segment, bool updateSegment)
+        {
+            return new DatagramWithSegment<{{typeName}}, ModulationPtr>(this, segment, updateSegment);
+        }
 
         private SamplingConfiguration _config = SamplingConfiguration.FromFrequency(4000);
 

@@ -10,4 +10,16 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
         public SamplingConfiguration InternalSamplingConfiguration();
         public LoopBehavior InternalLoopBehavior();
     }
+
+    public sealed class ChangeModulationSegment : IDatagram
+    {
+        private readonly Segment _segment;
+
+        public ChangeModulationSegment(Segment segment)
+        {
+            _segment = segment;
+        }
+
+        DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDDatagramChangeModulationSegment(_segment);
+    }
 }

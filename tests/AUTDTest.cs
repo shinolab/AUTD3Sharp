@@ -1,4 +1,6 @@
 using AUTD3Sharp.Driver;
+using AUTD3Sharp.Driver.Datagram;
+using AUTD3Sharp.NativeMethods;
 
 namespace tests;
 
@@ -18,6 +20,8 @@ public class AUTDTest
     public async Task TestSilencerFixedCompletionSteps()
     {
         using var autd = await CreateController();
+
+        Assert.True(NativeMethodsBase.AUTDDatagramSilencerFixedCompletionStepsIsDefault(((IDatagram)ConfigureSilencer.Default()).Ptr(autd.Geometry)));
 
         foreach (var dev in autd.Geometry)
         {
