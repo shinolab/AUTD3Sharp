@@ -2,6 +2,10 @@
 #define USE_SINGLE
 #endif
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 using System;
 using AUTD3Sharp.NativeMethods;
 
@@ -61,3 +65,7 @@ namespace AUTD3Sharp.Gain.Holo
 
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

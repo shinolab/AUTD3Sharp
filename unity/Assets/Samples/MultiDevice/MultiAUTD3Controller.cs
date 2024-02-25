@@ -13,7 +13,7 @@ public class MultiAUTD3Controller : MonoBehaviour
     public GameObject? Target = null;
     private Vector3 _oldPosition;
 
-    async void Awake()
+    void Awake()
     {
         var builder = new ControllerBuilder();
         foreach (var obj in FindObjectsOfType<AUTD3Device>(false).OrderBy(obj => obj.ID))
@@ -21,7 +21,7 @@ public class MultiAUTD3Controller : MonoBehaviour
 
         try
         {
-            _autd = await builder.OpenAsync(AUTD3Sharp.Link.Simulator.Builder(8080));
+            _autd = builder.Open(AUTD3Sharp.Link.Simulator.Builder(8080));
         }
         catch (Exception)
         {
@@ -33,18 +33,18 @@ public class MultiAUTD3Controller : MonoBehaviour
 #endif
         }
 
-        await _autd!.SendAsync(new AUTD3Sharp.Modulation.Sine(150)); // 150 Hz
+        _autd!.Send(new AUTD3Sharp.Modulation.Sine(150)); // 150 Hz
 
         if (Target == null) return;
-        await _autd!.SendAsync(new AUTD3Sharp.Gain.Focus(Target.transform.position));
+        _autd!.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));
         _oldPosition = Target.transform.position;
     }
 
-    private async void Update()
+    private void Update()
     {
         if (Target == null || Target.transform.position == _oldPosition) return;
         if (_autd == null) return;
-        await _autd.SendAsync(new AUTD3Sharp.Gain.Focus(Target.transform.position));
+        _autd.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));
         _oldPosition = Target.transform.position;
     }
 

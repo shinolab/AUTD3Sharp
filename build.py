@@ -499,9 +499,11 @@ def copy_dll_unity(config: Config):
 
 
 def unity_build(args):
+    cs_build(args)
+
     config = Config(args)
 
-    ignore = shutil.ignore_patterns("NativeMethods")
+    ignore = shutil.ignore_patterns("NativeMethods", ".vs", "bin", "obj")
     shutil.copytree(
         "src",
         "unity/Assets/Scripts",
@@ -512,6 +514,7 @@ def unity_build(args):
     rm_f("unity/Assets/Scripts/AUTD3Sharp.nuspec")
     rm_f("unity/Assets/Scripts/LICENSE.txt")
     rm_f("unity/Assets/Scripts/.gitignore")
+    rmtree_f("unity/Assets/Scripts/.vs")
     rmtree_f("unity/Assets/Scripts/obj")
     rmtree_f("unity/Assets/Scripts/bin")
     rmtree_f("unity/Assets/Scripts/native")
@@ -520,6 +523,21 @@ def unity_build(args):
         "src/NativeMethods/DefExt.cs",
         "unity/Assets/Scripts/NativeMethods/DefExt.cs",
     )
+
+    shutil.copy(
+        "derive/GainAttribute.cs",
+        "unity/Assets/Scripts/Derive/",
+    )
+    shutil.copy(
+        "derive/ModulationAttribute.cs",
+        "unity/Assets/Scripts/Derive/",
+    )
+    configDir = config.release and "Release" or "Debug"
+    for derive in glob.glob(
+        f"src/obj/{configDir}/netstandard2.1/generated/AUTD3Sharp.Derive/**/*.cs",
+        recursive=True,
+    ):
+        shutil.copy(derive, "unity/Assets/Scripts/Derive/")
 
     copy_dll_unity(config)
 

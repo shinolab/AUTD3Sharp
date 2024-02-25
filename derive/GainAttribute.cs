@@ -1,8 +1,12 @@
-﻿namespace AUTD3Sharp.Derive;
+﻿using System;
 
-[AttributeUsage(AttributeTargets.Class)]
-public sealed class GainAttribute : Attribute
+namespace AUTD3Sharp.Derive
 {
-    public bool NoCache { get; set; } = false;
-    public bool NoTransform { get; set; } = false;
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public sealed class GainAttribute : Attribute
+    {
+        public bool NoCache { get; set; } = false;
+        public bool NoTransform { get; set; } = false;
+    }
 }

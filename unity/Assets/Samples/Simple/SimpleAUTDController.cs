@@ -17,14 +17,13 @@ public class SimpleAUTDController : MonoBehaviour
 
     private static bool _isPlaying = true;
 
-
-    private async void Awake()
+    private void Awake()
     {
         try
         {
-            _autd = await new ControllerBuilder()
+            _autd = new ControllerBuilder()
                 .AddDevice(new AUTD3(gameObject.transform.position).WithRotation(gameObject.transform.rotation))
-                .OpenAsync(SOEM.Builder()
+                .Open(SOEM.Builder()
                     .WithErrHandler((slave, status, msg) =>
                     {
                         switch (status)
@@ -57,14 +56,14 @@ public class SimpleAUTDController : MonoBehaviour
 #endif
         }
 
-        await _autd!.SendAsync(new AUTD3Sharp.Modulation.Sine(150)); // 150 Hz
+        _autd!.Send(new AUTD3Sharp.Modulation.Sine(150)); // 150 Hz
 
         if (Target == null) return;
-        await _autd!.SendAsync(new AUTD3Sharp.Gain.Focus(Target.transform.position));
+        _autd!.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));
         _oldPosition = Target.transform.position;
     }
 
-    private async void Update()
+    private void Update()
     {
 #if UNITY_EDITOR
         if (!_isPlaying)
@@ -76,7 +75,7 @@ public class SimpleAUTDController : MonoBehaviour
         if (_autd == null) return;
 
         if (Target == null || Target.transform.position == _oldPosition) return;
-        await _autd.SendAsync(new AUTD3Sharp.Gain.Focus(Target.transform.position));
+        _autd.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));
         _oldPosition = Target.transform.position;
     }
 
