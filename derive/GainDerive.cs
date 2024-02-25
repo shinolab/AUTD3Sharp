@@ -80,6 +80,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
 #nullable enable
 
 using System;
+using AUTD3Sharp;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 

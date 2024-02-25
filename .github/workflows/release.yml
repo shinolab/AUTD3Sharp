@@ -46,5 +46,8 @@ jobs:
     - name: Build with dotnet and publish to NuGet
       run: |
         python3 build.py cs build --release
+        cd derive/bin/Release
+        dotnet nuget push autd3sharp.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate --no-symbols
+        cd ....
         cd src/bin/Release
         dotnet nuget push autd3sharp.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate --no-symbols
