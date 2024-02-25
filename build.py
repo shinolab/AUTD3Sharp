@@ -357,8 +357,6 @@ def check_if_all_native_methods_called():
 
 
 def cs_cov(args):
-    check_if_all_native_methods_called()
-
     config = Config(args)
 
     copy_dll(config)
@@ -367,6 +365,8 @@ def cs_cov(args):
         command = ["dotnet", "build"]
         command.append("-c:Release")
         subprocess.run(command).check_returncode()
+
+    check_if_all_native_methods_called()
 
     with working_dir("tests"):
         command = [
