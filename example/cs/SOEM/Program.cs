@@ -1,7 +1,6 @@
 ﻿using AUTD3Sharp;
 using AUTD3Sharp.Link;
 using AUTD3Sharp.Utils;
-using AUTD3Sharp.NativeMethods;
 using Samples;
 
 using var autd = await new ControllerBuilder().

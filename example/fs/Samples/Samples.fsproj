@@ -13,7 +13,6 @@
     <Compile Include="Transtest.fs" />
     <Compile Include="Plane.fs" />
     <Compile Include="Flag.fs" />
-    <Compile Include="Custom.fs" />
     <Compile Include="STMTest.fs" />
     <Compile Include="GainHoloTest.fs" />
     <Compile Include="BesselBeam.fs" />

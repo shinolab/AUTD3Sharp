@@ -1,7 +1,6 @@
 ﻿open AUTD3Sharp.Utils
 open AUTD3Sharp
 open AUTD3Sharp.Link
-open AUTD3Sharp.NativeMethods
 open Samples
 
 let autd = (new ControllerBuilder())

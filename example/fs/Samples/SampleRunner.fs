@@ -13,7 +13,6 @@ module SampleRunner =
                 (STMTest.FocusSTMTest, "FocusSTM test");
                 (STMTest.GainSTMTest, "GainSTM test");
                 (GainHoloTest.Test, "Multiple foci test");
-                (CustomTest.Test, "Custom Gain & Modulation test");
                 (FlagTest.Test, "Flag test");
                 (TransTest.Test, "TransducerTest test");
                 (GroupByTransducerTest.Test, "Group (by Transducer) test")];
