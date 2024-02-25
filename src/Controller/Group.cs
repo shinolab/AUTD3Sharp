@@ -12,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AUTD3Sharp.Driver.Datagram;
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp

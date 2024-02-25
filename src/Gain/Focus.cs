@@ -6,7 +6,7 @@
 #nullable enable
 #endif
 
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -22,7 +22,7 @@ namespace AUTD3Sharp.Gain
     /// Gain to produce single focal pos
     /// </summary>
     [Gain]
-    public sealed partial class Focus : Driver.Datagram.Gain.Gain
+    public sealed partial class Focus
     {
         public Focus(Vector3 pos)
         {
@@ -58,7 +58,7 @@ namespace AUTD3Sharp.Gain
 
         public Phase PhaseOffset { get; private set; }
 
-        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainFocus(Pos.x, Pos.y, Pos.z, Intensity.Value, PhaseOffset.Value);
+        private GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainFocus(Pos.x, Pos.y, Pos.z, Intensity.Value, PhaseOffset.Value);
     }
 }
 

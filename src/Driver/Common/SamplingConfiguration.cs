@@ -15,9 +15,9 @@ namespace AUTD3Sharp
 {
     public readonly struct SamplingConfiguration
     {
-        internal SamplingConfigurationRaw Internal { get; }
+        public SamplingConfigurationRaw Internal { get; }
 
-        internal SamplingConfiguration(SamplingConfigurationRaw @internal)
+        public SamplingConfiguration(SamplingConfigurationRaw @internal)
         {
             Internal = @internal;
         }

@@ -7,8 +7,8 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
     /// Modulation for modulating radiation pressure
     /// </summary>
     [Modulation(ConfigNoChange = true, NoTransform = true, NoRadiationPressure = true)]
-    public sealed partial class RadiationPressure<TM> : Modulation
-    where TM : Modulation
+    public sealed partial class RadiationPressure<TM>
+    where TM : AUTD3Sharp.Driver.Datagram.Modulation.IModulation
     {
         private readonly TM _m;
 
@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             _m = m;
         }
 
-        internal override ModulationPtr ModulationPtr()
+        private ModulationPtr ModulationPtr()
         {
             return NativeMethodsBase.AUTDModulationWithRadiationPressure(_m.ModulationPtr(), LoopBehavior.Internal);
         }

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Driver;
-using AUTD3Sharp.Driver.Geometry;
+
 
 using AUTD3Sharp.NativeMethods;
 
@@ -277,7 +277,7 @@ namespace AUTD3Sharp.Link
             }
         }
 
-        public byte[] Intensities(Segment segment,int idx)
+        public byte[] Intensities(Segment segment, int idx)
         {
             unsafe
             {
@@ -314,19 +314,19 @@ namespace AUTD3Sharp.Link
             {
                 fixed (float_t* pp = &pointsPtr[0])
                 fixed (float_t* bp = &buf[0])
-                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerCalcField(_ptr, _backend, _directivity, 
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerCalcField(_ptr, _backend, _directivity,
                         pp, (uint)pointsLen, geometry.Ptr, segment, (uint)idx, bp);
             }
             return Enumerable.Range(0, pointsLen).Select(i => new System.Numerics.Complex(buf[2 * i], buf[2 * i + 1])).ToArray();
         }
 
-        public void PlotField(IPlotConfig config, PlotRange range, Geometry geometry, Segment segment,int idx)
+        public void PlotField(IPlotConfig config, PlotRange range, Geometry geometry, Segment segment, int idx)
         {
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
             NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotField(_ptr, _backend, _directivity, config.Ptr(), range.Ptr, geometry.Ptr, segment, (uint)idx).Validate();
         }
 
-        public void PlotPhase(IPlotConfig config, Geometry geometry, Segment segment,int idx)
+        public void PlotPhase(IPlotConfig config, Geometry geometry, Segment segment, int idx)
         {
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
             NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotPhase(_ptr, _backend, _directivity, config.Ptr(), geometry.Ptr, segment, (uint)idx).Validate();

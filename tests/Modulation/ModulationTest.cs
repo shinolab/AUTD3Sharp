@@ -1,13 +1,13 @@
 namespace tests.Modulation;
 
 [Modulation]
-public partial class Burst : AUTD3Sharp.Modulation.Modulation
+public partial class Burst
 {
-    public Burst() : base(SamplingConfiguration.FromFrequency(4000))
+    public Burst()
     {
     }
 
-    public override EmitIntensity[] Calc()
+    private EmitIntensity[] Calc()
     {
         var buf = new EmitIntensity[10];
         buf[0] = EmitIntensity.Max;

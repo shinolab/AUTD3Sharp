@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
     /// <remarks>The wav data is re-sampled to the sampling frequency of Modulation.</remarks>
     /// </summary>
     [Modulation]
-    public sealed partial class Wav : Driver.Datagram.Modulation.Modulation
+    public sealed partial class Wav
     {
         private readonly string _filename;
 
@@ -19,17 +19,16 @@ namespace AUTD3Sharp.Modulation.AudioFile
         public Wav(string filename)
         {
             _filename = filename;
-            Config = SamplingConfiguration.FromFrequency(4000);
         }
 
-        internal override ModulationPtr ModulationPtr()
+        private ModulationPtr ModulationPtr()
         {
             var filenameBytes = System.Text.Encoding.UTF8.GetBytes(_filename);
             unsafe
             {
                 fixed (byte* fp = filenameBytes)
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, Config.Internal, LoopBehavior.Internal).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, _config.Internal, LoopBehavior.Internal).Validate();
                 }
             }
         }

@@ -20,7 +20,7 @@ using float_t = System.Single;
 using float_t = System.Double;
 #endif
 
-namespace AUTD3Sharp.Driver.Geometry
+namespace AUTD3Sharp
 {
     public sealed class Transducer
     {

@@ -1,13 +1,13 @@
-using AUTD3Sharp.Driver.Geometry;
+
 
 namespace tests.Gain;
 
 [Gain]
-public partial class MyUniform(EmitIntensity intensity, Phase phase, bool[] check) : AUTD3Sharp.Gain.Gain
+public partial class MyUniform(EmitIntensity intensity, Phase phase, bool[] check)
 {
     public bool[] Check = check;
 
-    public override Dictionary<int, Drive[]> Calc(Geometry geometry)
+    Dictionary<int, Drive[]> Calc(Geometry geometry)
     {
         return Transform(geometry, (dev, _) =>
         {

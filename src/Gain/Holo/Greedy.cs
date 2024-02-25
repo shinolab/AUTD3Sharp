@@ -2,7 +2,7 @@
 #define USE_SINGLE
 #endif
 
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -41,7 +41,7 @@ namespace AUTD3Sharp.Gain.Holo
 
         public byte PhaseDiv { get; private set; }
 
-        internal override GainPtr GainPtr(Geometry geometry)
+        private GainPtr GainPtr(Geometry geometry)
         {
             unsafe
             {

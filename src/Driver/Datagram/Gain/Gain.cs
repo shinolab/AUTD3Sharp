@@ -1,13 +1,12 @@
 using System.Runtime.InteropServices;
+
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Driver.Datagram.Gain
 {
     [ComVisible(false)]
-    public abstract class Gain : IDatagram
+    public interface IGain
     {
-        DatagramPtr IDatagram.Ptr(Geometry.Geometry geometry) => NativeMethodsBase.AUTDGainIntoDatagram(GainPtr(geometry));
-
-        internal abstract GainPtr GainPtr(Geometry.Geometry geometry);
+        public GainPtr GainPtr(Geometry geometry);
     }
 }

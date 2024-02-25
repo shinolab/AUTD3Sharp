@@ -1,15 +1,15 @@
 namespace tests.Modulation;
 
 [Modulation]
-public partial class ForCacheTest : AUTD3Sharp.Modulation.Modulation
+public partial class ForCacheTest
 {
     internal int CalcCnt;
 
-    public ForCacheTest() : base(SamplingConfiguration.FromFrequencyDivision(5120))
+    public ForCacheTest()
     {
     }
 
-    public override EmitIntensity[] Calc()
+    private EmitIntensity[] Calc()
     {
         CalcCnt++;
         return [EmitIntensity.Max, EmitIntensity.Max];
@@ -41,7 +41,7 @@ public class CacheTest
         var m = new Static().WithCache();
         Assert.Equal(0, m.Buffer.Length);
 
-        m.Calc();
+        m.Init();
         Assert.Equal(new EmitIntensity(0xFF), m[0]);
         Assert.Equal(new EmitIntensity(0xFF), m[1]);
         var buffer = m.Buffer;

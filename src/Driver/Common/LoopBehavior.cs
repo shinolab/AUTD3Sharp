@@ -15,7 +15,7 @@ namespace AUTD3Sharp
 {
     public readonly struct LoopBehavior
     {
-        internal LoopBehaviorRaw Internal { get; }
+        public LoopBehaviorRaw Internal { get; }
 
         internal LoopBehavior(LoopBehaviorRaw @internal)
         {

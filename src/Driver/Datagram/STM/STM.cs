@@ -30,9 +30,9 @@ namespace AUTD3Sharp.Driver.Datagram.STM
             _samplingConfig = config;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry.Geometry geometry) => STMPtr(geometry);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => STMPtr(geometry);
 
-        internal abstract DatagramPtr STMPtr(Geometry.Geometry geometry);
+        internal abstract DatagramPtr STMPtr(Geometry geometry);
 
         internal STMPropsPtr Props()
         {

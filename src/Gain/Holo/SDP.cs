@@ -2,7 +2,7 @@
 #define USE_SINGLE
 #endif
 
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -73,7 +73,7 @@ namespace AUTD3Sharp.Gain.Holo
 
         public uint Repeat { get; private set; }
 
-        internal override GainPtr GainPtr(Geometry geometry) =>
+        private GainPtr GainPtr(Geometry geometry) =>
             _backend.Sdp(Foci.ToArray(), Amps.ToArray(),
                 (ulong)Amps.Count, Alpha, Repeat, Lambda, Constraint.Ptr);
     }

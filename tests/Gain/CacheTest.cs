@@ -1,13 +1,11 @@
-using AUTD3Sharp.Driver.Geometry;
-
 namespace tests.Gain;
 
 [Gain]
-partial class ForCacheTestGain : AUTD3Sharp.Gain.Gain
+partial class ForCacheTestGain
 {
     internal int CalcCnt;
 
-    public override Dictionary<int, Drive[]> Calc(Geometry geometry)
+    Dictionary<int, Drive[]> Calc(Geometry geometry)
     {
         CalcCnt++;
         return Transform(geometry, (_, _) => new Drive { Phase = new Phase(0x90), Intensity = new EmitIntensity(0x80) });

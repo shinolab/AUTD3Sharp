@@ -11,7 +11,7 @@ namespace AUTD3Sharp.Modulation
     /// Without modulation
     /// </summary>
     [Modulation(ConfigNoChange = true)]
-    public sealed partial class Static : Driver.Datagram.Modulation.Modulation
+    public sealed partial class Static
     {
         public Static()
         {
@@ -45,6 +45,6 @@ namespace AUTD3Sharp.Modulation
 
         public EmitIntensity Intensity { get; }
 
-        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity.Value, LoopBehavior.Internal);
+        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity.Value, LoopBehavior.Internal);
     }
 }

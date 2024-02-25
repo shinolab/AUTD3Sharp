@@ -2,7 +2,7 @@
 #define USE_SINGLE
 #endif
 
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -24,7 +24,7 @@ namespace AUTD3Sharp.Gain
     /// Gain to produce a Bessel beam
     /// </summary>
     [Gain]
-    public sealed partial class Bessel : Driver.Datagram.Gain.Gain
+    public sealed partial class Bessel
     {
         public Bessel(Vector3 pos, Vector3 dir, float_t theta)
         {
@@ -67,6 +67,6 @@ namespace AUTD3Sharp.Gain
 
         public Phase PhaseOffset { get; private set; }
 
-        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainBessel(Pos.x, Pos.y, Pos.z, Dir.x, Dir.y, Dir.z, Theta, Intensity.Value, PhaseOffset.Value);
+        private GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainBessel(Pos.x, Pos.y, Pos.z, Dir.x, Dir.y, Dir.z, Theta, Intensity.Value, PhaseOffset.Value);
     }
 }

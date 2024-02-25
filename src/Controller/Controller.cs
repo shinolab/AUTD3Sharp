@@ -15,7 +15,7 @@ using AUTD3Sharp.Driver;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Driver.FPGA.Defined;
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Driver.Geometry;
+
 
 namespace AUTD3Sharp
 {

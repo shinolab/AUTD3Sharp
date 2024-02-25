@@ -20,7 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using AUTD3Sharp.NativeMethods;
 
-namespace AUTD3Sharp.Driver.Geometry
+namespace AUTD3Sharp
 {
     public sealed class Geometry : IEnumerable<Device>
     {

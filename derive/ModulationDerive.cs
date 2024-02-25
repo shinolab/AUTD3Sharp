@@ -28,7 +28,24 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
         var noTransform = namedArguments.Any(arg => arg.Key == "NoTransform" && (bool)(arg.Value.Value ?? false));
         var configNoChange = namedArguments.Any(arg => arg.Key == "ConfigNoChange" && (bool)(arg.Value.Value ?? false));
 
+        var isCustom = typeSymbol.GetMembers("Calc").Length != 0;
+
         var ns = typeSymbol.ContainingNamespace.IsGlobalNamespace ? "" : $"namespace {typeSymbol.ContainingNamespace}";
+
+        var customCode = isCustom ?
+            $$"""
+
+        private ModulationPtr ModulationPtr()
+        {
+            var data = Calc();
+            unsafe
+            {
+                fixed (EmitIntensity* ptr = &data[0])
+                    return NativeMethodsBase.AUTDModulationCustom(_config.Internal, (byte*)ptr, (ulong)data.Length, LoopBehavior.Internal);
+            }
+        }
+
+""" : "";
 
         var cacheCode = noCache ? "" :
             $$"""
@@ -64,7 +81,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
               
         public {{typeName}} WithSamplingConfig(SamplingConfiguration config)
         {
-            Config = config;
+            _config = config;
             return this;
         }
 
@@ -79,14 +96,25 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
 #nullable enable
 
 using System;
+using AUTD3Sharp.Driver.Datagram;
+using AUTD3Sharp.NativeMethods;
 
 {{ns}} {
-    partial class {{typeName}}
+    partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagram
     {
-{{cacheCode}}
-{{configCode}}
-{{radiationPressureCode}}
-{{transformCode}}
+        DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
+        ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr() => ModulationPtr();
+
+        private SamplingConfiguration _config = SamplingConfiguration.FromFrequency(4000);
+
+        public SamplingConfiguration SamplingConfiguration => new SamplingConfiguration(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
+
+        public LoopBehavior LoopBehavior { get; private set; } = LoopBehavior.Infinite;
+
+        public int Length => NativeMethodsBase.AUTDModulationSize(ModulationPtr()).Validate();
+
+        SamplingConfiguration AUTD3Sharp.Driver.Datagram.Modulation.IModulation.InternalSamplingConfiguration() => _config;
+        LoopBehavior AUTD3Sharp.Driver.Datagram.Modulation.IModulation.InternalLoopBehavior() => LoopBehavior; 
 
         /// <summary>
         /// Set loop behavior
@@ -98,6 +126,12 @@ using System;
             LoopBehavior = loopBehavior;
             return this;
         }
+
+{{customCode}}
+{{cacheCode}}
+{{configCode}}
+{{radiationPressureCode}}
+{{transformCode}}
     }
 }
 """;

@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Modulation
     /// Square wave modulation
     /// </summary>
     [Modulation]
-    public sealed partial class Square : Driver.Datagram.Modulation.Modulation
+    public sealed partial class Square
     {
         public Square(float_t freq)
         {
@@ -26,7 +26,6 @@ namespace AUTD3Sharp.Modulation
             High = EmitIntensity.Max;
             Duty = (float_t)0.5;
             Mode = SamplingMode.ExactFrequency;
-            Config = SamplingConfiguration.FromFrequency(4000);
         }
 
         /// <summary>
@@ -106,6 +105,6 @@ namespace AUTD3Sharp.Modulation
 
         public SamplingMode Mode { get; private set; }
 
-        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSquare(Freq, Config.Internal, Low.Value, High.Value, Duty, Mode, LoopBehavior.Internal);
+        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSquare(Freq, _config.Internal, Low.Value, High.Value, Duty, Mode, LoopBehavior.Internal);
     }
 }

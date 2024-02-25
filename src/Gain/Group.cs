@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.Derive;
 
 #if UNITY_2020_2_OR_NEWER
@@ -16,24 +16,24 @@ using AUTD3Sharp.Derive;
 namespace AUTD3Sharp.Gain
 {
     [Gain]
-    public sealed partial class Group : Driver.Datagram.Gain.Gain
+    public sealed partial class Group
     {
         private readonly Func<Device, Transducer, object?> _f;
-        private readonly Dictionary<object, Driver.Datagram.Gain.Gain> _map;
+        private readonly Dictionary<object, Driver.Datagram.Gain.IGain> _map;
 
         public Group(Func<Device, Transducer, object?> f)
         {
             _f = f;
-            _map = new Dictionary<object, Driver.Datagram.Gain.Gain>();
+            _map = new Dictionary<object, Driver.Datagram.Gain.IGain>();
         }
 
-        public Group Set(object key, Driver.Datagram.Gain.Gain gain)
+        public Group Set(object key, Driver.Datagram.Gain.IGain gain)
         {
             _map[key] = gain;
             return this;
         }
 
-        internal override GainPtr GainPtr(Geometry geometry)
+        private GainPtr GainPtr(Geometry geometry)
         {
             var keymap = new Dictionary<object, int>();
             var deviceIndices = geometry.Devices().Select(dev => (uint)dev.Idx).ToArray();

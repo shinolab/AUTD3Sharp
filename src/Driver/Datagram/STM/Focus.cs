@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram.STM;
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER

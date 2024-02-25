@@ -2,7 +2,7 @@
 #define USE_SINGLE
 #endif
 
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
@@ -13,7 +13,7 @@ namespace AUTD3Sharp.Gain
     /// </summary>
     /// 
     [Gain]
-    public sealed partial class Uniform : Driver.Datagram.Gain.Gain
+    public sealed partial class Uniform
     {
         public Uniform(byte intensity)
         {
@@ -41,6 +41,6 @@ namespace AUTD3Sharp.Gain
         public EmitIntensity Intensity { get; }
         public Phase Phase { get; private set; }
 
-        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainUniform(Intensity.Value, Phase.Value);
+        private GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainUniform(Intensity.Value, Phase.Value);
     }
 }

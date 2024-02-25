@@ -6,7 +6,7 @@
 #nullable enable
 #endif
 
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -23,7 +23,7 @@ namespace AUTD3Sharp.Gain
     /// Gain to produce a plane wave
     /// </summary>
     [Gain]
-    public sealed partial class Plane : Driver.Datagram.Gain.Gain
+    public sealed partial class Plane
     {
         public Plane(Vector3 dir)
         {
@@ -64,7 +64,7 @@ namespace AUTD3Sharp.Gain
         public Phase Phase { get; private set; }
         public EmitIntensity Intensity { get; private set; }
 
-        internal override GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainPlane(Dir.x, Dir.y, Dir.z, Intensity.Value, Phase.Value);
+        private GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainPlane(Dir.x, Dir.y, Dir.z, Intensity.Value, Phase.Value);
     }
 }
 

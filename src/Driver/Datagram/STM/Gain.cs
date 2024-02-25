@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram.STM;
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -34,13 +34,13 @@ namespace AUTD3Sharp
     /// </list></remarks>
     public sealed class GainSTM : STM
     {
-        private readonly List<Driver.Datagram.Gain.Gain> _gains;
+        private readonly List<Driver.Datagram.Gain.IGain> _gains;
         private GainSTMMode _mode;
 
         private GainSTM(float_t? freq, TimeSpan? period, SamplingConfiguration? config) : base(
             freq, period, config)
         {
-            _gains = new List<Driver.Datagram.Gain.Gain>();
+            _gains = new List<Driver.Datagram.Gain.IGain>();
             _mode = GainSTMMode.PhaseIntensityFull;
         }
 
@@ -64,7 +64,7 @@ namespace AUTD3Sharp
         /// </summary>
         /// <param name="gain">Gain</param>
         /// <returns></returns>
-        public GainSTM AddGain(Driver.Datagram.Gain.Gain gain)
+        public GainSTM AddGain(Driver.Datagram.Gain.IGain gain)
         {
             _gains.Add(gain);
             return this;
@@ -74,7 +74,7 @@ namespace AUTD3Sharp
         /// Add Gains
         /// </summary>
         /// <param name="iter">Enumerable of Gains</param>
-        public GainSTM AddGainsFromIter(IEnumerable<Driver.Datagram.Gain.Gain> iter)
+        public GainSTM AddGainsFromIter(IEnumerable<Driver.Datagram.Gain.IGain> iter)
         {
             return iter.Aggregate(this, (stm, gain) => stm.AddGain(gain));
         }

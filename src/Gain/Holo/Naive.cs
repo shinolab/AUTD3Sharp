@@ -1,4 +1,4 @@
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -20,7 +20,7 @@ namespace AUTD3Sharp.Gain.Holo
             _backend = backend;
         }
 
-        internal override GainPtr GainPtr(Geometry geometry) =>
+        private GainPtr GainPtr(Geometry geometry) =>
             _backend.Naive(Foci.ToArray(), Amps.ToArray(),
                 (ulong)Amps.Count, Constraint.Ptr);
     }

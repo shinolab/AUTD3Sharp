@@ -4,7 +4,7 @@
 
 using System;
 using System.Runtime.InteropServices;
-using AUTD3Sharp.Driver.Geometry;
+
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
@@ -15,7 +15,7 @@ namespace AUTD3Sharp.Gain
     /// </summary>
 
     [Gain]
-    public sealed partial class TransducerTest : Driver.Datagram.Gain.Gain
+    public sealed partial class TransducerTest
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public unsafe delegate void TransducerTestDelegate(ContextPtr context, GeometryPtr geometryPtr, uint devIdx, byte trIdx, DriveRaw* raw);
 
@@ -36,7 +36,7 @@ namespace AUTD3Sharp.Gain
                 };
             }
         }
-        internal override GainPtr GainPtr(Geometry geometry)
+        private GainPtr GainPtr(Geometry geometry)
         {
             return NativeMethodsBase.AUTDGainTransducerTest(Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, geometry.Ptr);
         }

@@ -14,8 +14,8 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
     /// Modulation to cache the result of calculation
     /// </summary>
     [Modulation(NoCache = true, ConfigNoChange = true, NoTransform = true, NoRadiationPressure = true)]
-    public sealed partial class Cache<TM> : Modulation, IEnumerable<EmitIntensity>
-    where TM : Modulation
+    public sealed partial class Cache<TM> : IEnumerable<EmitIntensity>
+    where TM : AUTD3Sharp.Driver.Datagram.Modulation.IModulation
     {
         private readonly TM _m;
         private EmitIntensity[] _cache;
@@ -24,11 +24,11 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
         {
             _m = m;
             _cache = Array.Empty<EmitIntensity>();
-            LoopBehavior = m.LoopBehavior;
-            Config = m.Config;
+            LoopBehavior = m.InternalLoopBehavior();
+            _config = m.InternalSamplingConfiguration();
         }
 
-        public ReadOnlySpan<EmitIntensity> Calc()
+        public ReadOnlySpan<EmitIntensity> Init()
         {
             if (_cache.Length != 0) return Buffer;
             var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr());
@@ -42,13 +42,13 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             return Buffer;
         }
 
-        internal override ModulationPtr ModulationPtr()
+        private ModulationPtr ModulationPtr()
         {
-            Calc();
+            Init();
             unsafe
             {
                 fixed (EmitIntensity* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationCustom(Config.Internal, (byte*)pBuf, (ulong)_cache.Length, LoopBehavior.Internal);
+                    return NativeMethodsBase.AUTDModulationCustom(_config.Internal, (byte*)pBuf, (ulong)_cache.Length, LoopBehavior.Internal);
             }
         }
 

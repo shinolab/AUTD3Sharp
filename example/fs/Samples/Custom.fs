@@ -3,7 +3,7 @@
 open AUTD3Sharp
 open AUTD3Sharp.Gain
 open AUTD3Sharp.Utils
-open AUTD3Sharp.Driver.Geometry
+open AUTD3Sharp.Geometry
 open AUTD3Sharp.Modulation
 
 module CustomTest =

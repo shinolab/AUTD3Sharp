@@ -9,7 +9,7 @@ namespace AUTD3Sharp.Modulation
     /// Multi-frequency sine wave modulation
     /// </summary>
     [Modulation(ConfigNoChange = true)]
-    public sealed partial class Fourier : Driver.Datagram.Modulation.Modulation
+    public sealed partial class Fourier
     {
         private readonly List<Sine> _components;
 
@@ -35,9 +35,9 @@ namespace AUTD3Sharp.Modulation
         public static Fourier operator +(Fourier a, Sine b)
             => a.AddComponent(b);
 
-        internal override ModulationPtr ModulationPtr()
+        private ModulationPtr ModulationPtr()
         {
-            var components = _components.Select(m => m.ModulationPtr()).ToArray();
+            var components = _components.Select(m => ((AUTD3Sharp.Driver.Datagram.Modulation.IModulation)m).ModulationPtr()).ToArray();
             unsafe
             {
                 fixed (ModulationPtr* p = &components[0])

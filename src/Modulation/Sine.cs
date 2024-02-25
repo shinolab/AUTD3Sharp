@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Modulation
     /// Sine wave modulation
     /// </summary>
     [Modulation]
-    public sealed partial class Sine : Driver.Datagram.Modulation.Modulation
+    public sealed partial class Sine
     {
         /// <summary>
         /// Constructor
@@ -31,7 +31,6 @@ namespace AUTD3Sharp.Modulation
             Offset = EmitIntensity.Max / 2;
             Phase = new Phase(0);
             Mode = SamplingMode.ExactFrequency;
-            Config = SamplingConfiguration.FromFrequency(4000);
         }
 
         /// <summary>
@@ -114,6 +113,6 @@ namespace AUTD3Sharp.Modulation
         public static Fourier operator +(Sine a, Sine b)
             => new Fourier(a).AddComponent(b);
 
-        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSine(Freq, Config.Internal, Intensity.Value, Offset.Value, Phase.Value, Mode, LoopBehavior.Internal);
+        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSine(Freq, _config.Internal, Intensity.Value, Offset.Value, Phase.Value, Mode, LoopBehavior.Internal);
     }
 }
