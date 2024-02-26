@@ -13,7 +13,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
 
     [Modulation(ConfigNoChange = true, NoTransform = true)]
     public sealed partial class Transform<TM>
-    where TM : AUTD3Sharp.Driver.Datagram.Modulation.IModulation
+    where TM : IModulation
     {
         private readonly TM _m;
         private readonly ModTransformDelegate _f;

@@ -4,7 +4,6 @@
 #endif
 
 using System;
-using System.Runtime.InteropServices;
 
 namespace AUTD3Sharp
 {
@@ -31,20 +30,20 @@ namespace AUTD3Sharp
     public enum SamplingMode : byte
     {
         ExactFrequency = 0,
-        SizeOptimized = 1,
+        SizeOptimized = 1
     }
 
     public enum Segment : byte
     {
         S0 = 0,
-        S1 = 1,
+        S1 = 1
     }
 
     public enum Status : byte
     {
         Error = 0,
         StateChanged = 1,
-        Lost = 2,
+        Lost = 2
     }
 
     namespace NativeMethods

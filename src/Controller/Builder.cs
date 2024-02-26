@@ -8,7 +8,6 @@
 #endif
 
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using AUTD3Sharp.Driver;
 

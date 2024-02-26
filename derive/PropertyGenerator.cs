@@ -1,22 +1,21 @@
-using System.Linq;
-using System.Text;
 using Microsoft.CodeAnalysis;
 
 namespace AUTD3Sharp.Derive;
 
 [Generator(LanguageNames.CSharp)]
-public partial class PropertyGenerator : IIncrementalGenerator
+public class PropertyGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
         var source = context.SyntaxProvider.ForAttributeWithMetadataName(
             "AUTD3Sharp.Derive.BuilderAttribute",
-            static (node, token) => true,
-            static (context, token) => context);
+            static (_, _) => true,
+            static (context, _) => context);
 
         context.RegisterSourceOutput(source, Emit);
     }
-    static void Emit(SourceProductionContext context, GeneratorAttributeSyntaxContext source)
+
+    private static void Emit(SourceProductionContext context, GeneratorAttributeSyntaxContext source)
     {
         var typeSymbol = (INamedTypeSymbol)source.TargetSymbol;
         var typeName = typeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);

@@ -117,7 +117,7 @@ namespace AUTD3Sharp.Link
             /// <returns></returns>
             public SOEMBuilder WithErrHandler(Action<int, Status, string> handler)
             {
-                _errHandler = (IntPtr _context, uint slave, byte status, string msg) => handler((int)slave, (Status)status, msg);
+                _errHandler = (_, slave, status, msg) => handler((int)slave, (Status)status, msg);
                 _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithErrHandler(_ptr, Marshal.GetFunctionPointerForDelegate(_errHandler), IntPtr.Zero);
                 return this;
             }

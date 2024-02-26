@@ -1,13 +1,3 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 using System;
 using AUTD3Sharp.NativeMethods;
 

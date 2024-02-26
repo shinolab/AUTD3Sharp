@@ -43,7 +43,7 @@ namespace AUTD3Sharp.Gain.Holo
         [Property]
         public uint Repeat { get; private set; }
 
-        private GainPtr GainPtr(Geometry geometry) =>
+        private GainPtr GainPtr(Geometry _) =>
             _backend.Sdp(Foci.ToArray(), Amps.ToArray(),
                 (ulong)Amps.Count, Alpha, Repeat, Lambda, Constraint.Ptr);
     }

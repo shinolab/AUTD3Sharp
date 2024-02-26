@@ -57,9 +57,9 @@ namespace AUTD3Sharp.Gain.Holo
         /// </summary>
         public static EmissionConstraint Clamp(byte min, byte max) => Clamp(new EmitIntensity(min), new EmitIntensity(max));
 
-        public override bool Equals(object? obj) => obj is EmissionConstraint other && this.Equals(other);
-        public bool Equals(EmissionConstraint other) => NativeMethodsGainHolo.AUTDGainHoloConstraintEq(Ptr, other.Ptr);
-        public override int GetHashCode() => Ptr.GetHashCode();
+        public override bool Equals(object? obj) => obj is EmissionConstraint other && Equals(other);
+        public readonly bool Equals(EmissionConstraint other) => NativeMethodsGainHolo.AUTDGainHoloConstraintEq(Ptr, other.Ptr);
+        public readonly override int GetHashCode() => Ptr.GetHashCode();
         public static bool operator ==(EmissionConstraint lhs, EmissionConstraint rhs) => lhs.Equals(rhs);
         public static bool operator !=(EmissionConstraint lhs, EmissionConstraint rhs) => !(lhs == rhs);
 

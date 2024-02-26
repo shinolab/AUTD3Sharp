@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
     /// </summary>
     [Modulation(ConfigNoChange = true, NoTransform = true, NoRadiationPressure = true)]
     public sealed partial class RadiationPressure<TM>
-    where TM : AUTD3Sharp.Driver.Datagram.Modulation.IModulation
+    where TM : IModulation
     {
         private readonly TM _m;
 

@@ -10,6 +10,6 @@ namespace AUTD3Sharp.Gain
     [Gain]
     public sealed partial class Null
     {
-        private GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainNull();
+        private static GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainNull();
     }
 }

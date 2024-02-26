@@ -18,7 +18,7 @@ namespace AUTD3Sharp
             _f = (context, geometryPtr, devIdx, trIdx) =>
             {
                 var devPtr = NativeMethodsBase.AUTDDevice(geometryPtr, devIdx);
-                return f(new Device((int)devIdx, devPtr), new Transducer((int)trIdx, devPtr)).Value;
+                return f(new Device((int)devIdx, devPtr), new Transducer(trIdx, devPtr)).Value;
             };
         }
 

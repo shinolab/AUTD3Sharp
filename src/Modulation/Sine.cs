@@ -25,7 +25,7 @@ namespace AUTD3Sharp.Modulation
         /// </summary>
         /// <param name="freq">Frequency of sine wave</param>
         /// <remarks>The sine wave is defined as `amp / 2 * sin(2π * freq * t) + offset`, where `t` is time, and `amp = EmitIntensity.Max`, `offset = EmitIntensity.Max/2` by default.</remarks>
-        public Sine(float_t freq) : base()
+        public Sine(float_t freq)
         {
             Freq = freq;
             Intensity = EmitIntensity.Max;

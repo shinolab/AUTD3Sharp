@@ -9,7 +9,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
 {
     [Gain(NoTransform = true)]
     public sealed partial class Transform<TG>
-    where TG : AUTD3Sharp.Driver.Datagram.Gain.IGain
+    where TG : IGain
     {
         private readonly TG _g;
         private readonly Func<Device, Transducer, Drive, Drive> _f;

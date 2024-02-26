@@ -33,6 +33,6 @@ namespace AUTD3Sharp.Gain
         [Property]
         public Phase Phase { get; private set; }
 
-        private GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainUniform(Intensity.Value, Phase.Value);
+        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainUniform(Intensity.Value, Phase.Value);
     }
 }

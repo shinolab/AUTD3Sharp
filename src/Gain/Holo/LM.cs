@@ -62,7 +62,7 @@ namespace AUTD3Sharp.Gain.Holo
 
         public ReadOnlySpan<float_t> Initial => new ReadOnlySpan<float_t>(_initial);
 
-        private GainPtr GainPtr(Geometry geometry) =>
+        private GainPtr GainPtr(Geometry _) =>
             _backend.Lm(Foci.ToArray(), Amps.ToArray(),
                 (ulong)Amps.Count, Eps1, Eps2, Tau, KMax, _initial, Constraint.Ptr);
     }

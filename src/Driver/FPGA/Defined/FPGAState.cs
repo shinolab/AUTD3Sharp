@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Driver.FPGA.Defined
         public Segment CurrentModSegment => (_info & (1 << 1)) switch
         {
             0 => Segment.S0,
-            _ => Segment.S1,
+            _ => Segment.S1
         };
 
         public Segment? CurrentGainSegment
@@ -29,7 +29,7 @@ namespace AUTD3Sharp.Driver.FPGA.Defined
                     return (_info & (1 << 2)) switch
                     {
                         0 => Segment.S0,
-                        _ => Segment.S1,
+                        _ => Segment.S1
                     };
                 }
             }
@@ -44,7 +44,7 @@ namespace AUTD3Sharp.Driver.FPGA.Defined
                     return (_info & (1 << 2)) switch
                     {
                         0 => Segment.S0,
-                        _ => Segment.S1,
+                        _ => Segment.S1
                     };
                 }
             }

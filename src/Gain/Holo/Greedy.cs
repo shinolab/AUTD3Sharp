@@ -32,7 +32,7 @@ namespace AUTD3Sharp.Gain.Holo
         [Property]
         public byte PhaseDiv { get; private set; }
 
-        private GainPtr GainPtr(Geometry geometry)
+        private GainPtr GainPtr(Geometry _)
         {
             unsafe
             {

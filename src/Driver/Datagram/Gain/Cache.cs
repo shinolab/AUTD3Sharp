@@ -16,7 +16,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
     /// </summary>
     [Gain(NoCache = true, NoTransform = true)]
     public sealed partial class Cache<TG>
-    where TG : AUTD3Sharp.Driver.Datagram.Gain.IGain
+    where TG : IGain
     {
         private readonly TG _g;
         private readonly Dictionary<int, Drive[]> _cache;
