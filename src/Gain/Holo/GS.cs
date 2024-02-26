@@ -10,6 +10,7 @@ namespace AUTD3Sharp.Gain.Holo
     /// <remarks>Asier Marzo and Bruce W Drinkwater. Holographic acoustic tweezers.Proceedings of theNational Academy of Sciences, 116(1):84–89, 2019.</remarks>
     /// <typeparam name="TB">Backend</typeparam>
     [Gain]
+    [Builder]
     public sealed partial class GS<TB> : Holo<GS<TB>>
             where TB : Backend
     {
@@ -21,18 +22,7 @@ namespace AUTD3Sharp.Gain.Holo
             Repeat = 100;
         }
 
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public GS<TB> WithRepeat(uint value)
-        {
-            Repeat = value;
-            return this;
-        }
-
-        public uint Repeat { get; private set; }
+        [Property] public uint Repeat { get; private set; }
 
         private GainPtr GainPtr(Geometry geometry)
         {

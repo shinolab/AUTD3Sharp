@@ -17,6 +17,7 @@ namespace AUTD3Sharp.Modulation
     /// Square wave modulation
     /// </summary>
     [Modulation]
+    [Builder]
     public sealed partial class Square
     {
         public Square(float_t freq)
@@ -28,81 +29,20 @@ namespace AUTD3Sharp.Modulation
             Mode = SamplingMode.ExactFrequency;
         }
 
-        /// <summary>
-        /// Set low level amplitude
-        /// </summary>
-        /// <param name="low">low level intensity</param>
-        /// <returns></returns>
-        public Square WithLow(byte low)
-        {
-            Low = new EmitIntensity(low);
-            return this;
-        }
-
-        /// <summary>
-        /// Set low level amplitude
-        /// </summary>
-        /// <param name="low">low level intensity</param>
-        /// <returns></returns>
-        public Square WithLow(EmitIntensity low)
-        {
-            Low = low;
-            return this;
-        }
-
-        /// <summary>
-        /// Set high level amplitude
-        /// </summary>
-        /// <param name="high">high level intensity</param>
-        /// <returns></returns>
-        public Square WithHigh(byte high)
-        {
-            High = new EmitIntensity(high);
-            return this;
-        }
-
-        /// <summary>
-        /// Set high level amplitude
-        /// </summary>
-        /// <param name="high">high level intensity</param>
-        /// <returns></returns>
-        public Square WithHigh(EmitIntensity high)
-        {
-            High = high;
-            return this;
-        }
-
-        /// <summary>
-        /// Set duty ratio
-        /// </summary>
-        /// <remarks>Duty ratio is defined as `Th / (Th + Tl)`, where `Th` is high level duration, and `Tl` is low level duration.</remarks>
-        /// <param name="duty">normalized amplitude (0.0 - 1.0)</param>
-        /// <returns></returns>
-        public Square WithDuty(float_t duty)
-        {
-            Duty = duty;
-            return this;
-        }
-
-        /// <summary>
-        /// Set sampling mode
-        /// </summary>
-        /// <param name="mode">sampling mode</param>
-        /// <returns></returns>
-        public Square WithMode(SamplingMode mode)
-        {
-            Mode = mode;
-            return this;
-        }
-
         public float_t Freq { get; }
 
+        [Property(EmitIntensity = true)]
         public EmitIntensity Low { get; private set; }
 
+        [Property(EmitIntensity = true)]
         public EmitIntensity High { get; private set; }
+
+        [Property]
 
         public float_t Duty { get; private set; }
 
+
+        [Property]
         public SamplingMode Mode { get; private set; }
 
         private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSquare(Freq, _config.Internal, Low.Value, High.Value, Duty, Mode, LoopBehavior.Internal);

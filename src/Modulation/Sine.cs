@@ -17,6 +17,7 @@ namespace AUTD3Sharp.Modulation
     /// Sine wave modulation
     /// </summary>
     [Modulation]
+    [Builder]
     public sealed partial class Sine
     {
         /// <summary>
@@ -33,82 +34,22 @@ namespace AUTD3Sharp.Modulation
             Mode = SamplingMode.ExactFrequency;
         }
 
-        /// <summary>
-        /// Set intensity
-        /// </summary>
-        /// <param name="intensity">Intensity</param>
-        /// <returns></returns>
-        public Sine WithIntensity(EmitIntensity intensity)
-        {
-            Intensity = intensity;
-            return this;
-        }
-
-        /// <summary>
-        /// Set intensity
-        /// </summary>
-        /// <param name="intensity">Intensity</param>
-        /// <returns></returns>
-        public Sine WithIntensity(byte intensity)
-        {
-            Intensity = new EmitIntensity(intensity);
-            return this;
-        }
-
-        /// <summary>
-        /// Set offset
-        /// </summary>
-        /// <param name="offset">Offset of the sine wave</param>
-        /// <returns></returns>
-        public Sine WithOffset(byte offset)
-        {
-            Offset = new EmitIntensity(offset);
-            return this;
-        }
-
-        /// <summary>
-        /// Set offset
-        /// </summary>
-        /// <param name="offset">Offset of the sine wave</param>
-        /// <returns></returns>
-        public Sine WithOffset(EmitIntensity offset)
-        {
-            Offset = offset;
-            return this;
-        }
-
-        /// <summary>
-        /// Set phase
-        /// </summary>
-        /// <param name="phase"> phase</param>
-        /// <returns></returns>
-        public Sine WithPhase(Phase phase)
-        {
-            Phase = phase;
-            return this;
-        }
-
-        /// <summary>
-        /// Set sampling mode
-        /// </summary>
-        /// <param name="mode">sampling mode</param>
-        /// <returns></returns>
-        public Sine WithMode(SamplingMode mode)
-        {
-            Mode = mode;
-            return this;
-        }
-
         public float_t Freq { get; }
 
+        [Property(EmitIntensity = true)]
         public EmitIntensity Intensity { get; private set; }
 
+
+        [Property(EmitIntensity = true)]
         public EmitIntensity Offset { get; private set; }
+
+        [Property]
 
         public Phase Phase { get; private set; }
 
-        public SamplingMode Mode { get; private set; }
+        [Property]
 
+        public SamplingMode Mode { get; private set; }
 
         public static Fourier operator +(Sine a, Sine b)
             => new Fourier(a).AddComponent(b);

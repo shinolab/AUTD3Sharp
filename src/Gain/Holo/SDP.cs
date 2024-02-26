@@ -20,6 +20,7 @@ namespace AUTD3Sharp.Gain.Holo
     /// <remarks>Inoue, Seki, Yasutoshi Makino, and Hiroyuki Shinoda. "Active touch perception produced by airborne ultrasonic haptic hologram." 2015 IEEE World Haptics Conference (WHC). IEEE, 2015.</remarks>
     /// <typeparam name="TB">Backend</typeparam>
     [Gain]
+    [Builder]
     public sealed partial class SDP<TB> : Holo<SDP<TB>>
            where TB : Backend
     {
@@ -33,44 +34,13 @@ namespace AUTD3Sharp.Gain.Holo
             Repeat = 100;
         }
 
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public SDP<TB> WithAlpha(float_t value)
-        {
-            Alpha = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public SDP<TB> WithLambda(float_t value)
-        {
-            Lambda = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public SDP<TB> WithRepeat(uint value)
-        {
-            Repeat = value;
-            return this;
-        }
-
-
+        [Property]
         public float_t Alpha { get; private set; }
 
+        [Property]
         public float_t Lambda { get; private set; }
 
+        [Property]
         public uint Repeat { get; private set; }
 
         private GainPtr GainPtr(Geometry geometry) =>

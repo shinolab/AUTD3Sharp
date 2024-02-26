@@ -13,6 +13,7 @@ namespace AUTD3Sharp.Gain
     /// </summary>
     /// 
     [Gain]
+    [Builder]
     public sealed partial class Uniform
     {
         public Uniform(byte intensity)
@@ -27,18 +28,9 @@ namespace AUTD3Sharp.Gain
             Phase = new Phase(0);
         }
 
-        /// <summary>
-        /// Set phase
-        /// </summary>
-        /// <param name="phase">phase</param>
-        /// <returns></returns>
-        public Uniform WithPhase(Phase phase)
-        {
-            Phase = phase;
-            return this;
-        }
-
         public EmitIntensity Intensity { get; }
+
+        [Property]
         public Phase Phase { get; private set; }
 
         private GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainUniform(Intensity.Value, Phase.Value);

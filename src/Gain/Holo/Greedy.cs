@@ -21,6 +21,7 @@ namespace AUTD3Sharp.Gain.Holo
     /// Shun Suzuki, Masahiro Fujiwara, Yasutoshi Makino, and Hiroyuki Shinoda, “Radiation Pressure Field Reconstruction for Ultrasound Midair Haptics by Greedy Algorithm with Brute-Force Search,” in IEEE Transactions on Haptics, doi: 10.1109/TOH.2021.3076489
     /// </remarks>
     [Gain]
+    [Builder]
     public sealed partial class Greedy : Holo<Greedy>
     {
         public Greedy() : base(EmissionConstraint.Uniform(EmitIntensity.Max))
@@ -28,17 +29,7 @@ namespace AUTD3Sharp.Gain.Holo
             PhaseDiv = 16;
         }
 
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public Greedy WithPhaseDiv(byte value)
-        {
-            PhaseDiv = value;
-            return this;
-        }
-
+        [Property]
         public byte PhaseDiv { get; private set; }
 
         private GainPtr GainPtr(Geometry geometry)

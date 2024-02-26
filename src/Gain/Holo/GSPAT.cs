@@ -10,6 +10,7 @@ namespace AUTD3Sharp.Gain.Holo
     /// <remarks>Diego Martinez Plasencia et al. "GS-pat: high-speed multi-point sound-fields for phased arrays of transducers," ACMTrans-actions on Graphics (TOG), 39(4):138–1, 2020.</remarks>
     /// <typeparam name="TB">Backend</typeparam>
     [Gain]
+    [Builder]
     public sealed partial class GSPAT<TB> : Holo<GSPAT<TB>>
             where TB : Backend
     {
@@ -21,16 +22,7 @@ namespace AUTD3Sharp.Gain.Holo
             Repeat = 100;
         }
 
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public GSPAT<TB> WithRepeat(uint value)
-        {
-            Repeat = value;
-            return this;
-        }
+        [Property]
 
         public uint Repeat { get; private set; }
 

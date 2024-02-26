@@ -25,6 +25,7 @@ namespace AUTD3Sharp.Gain.Holo
     /// </remarks>
     /// <typeparam name="TB">Backend</typeparam>
     [Gain]
+    [Builder]
     public sealed partial class LM<TB> : Holo<LM<TB>>
         where TB : Backend
     {
@@ -41,67 +42,22 @@ namespace AUTD3Sharp.Gain.Holo
             _initial = Array.Empty<float_t>();
         }
 
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public LM<TB> WithEps1(float_t value)
-        {
-            Eps1 = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public LM<TB> WithEps2(float_t value)
-        {
-            Eps2 = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public LM<TB> WithTau(float_t value)
-        {
-            Tau = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public LM<TB> WithKMax(uint value)
-        {
-            KMax = value;
-            return this;
-        }
-
-        /// <summary>
-        /// Parameter. See the paper for details.
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
         public LM<TB> WithInitial(float_t[] value)
         {
             _initial = value;
             return this;
         }
 
+        [Property]
         public float_t Eps1 { get; private set; }
 
+        [Property]
         public float_t Eps2 { get; private set; }
 
+        [Property]
         public float_t Tau { get; private set; }
 
+        [Property]
         public uint KMax { get; private set; }
 
         public ReadOnlySpan<float_t> Initial => new ReadOnlySpan<float_t>(_initial);

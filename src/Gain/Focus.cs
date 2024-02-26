@@ -22,40 +22,22 @@ namespace AUTD3Sharp.Gain
     /// Gain to produce single focal pos
     /// </summary>
     [Gain]
+    [Builder]
     public sealed partial class Focus
     {
         public Focus(Vector3 pos)
         {
             Pos = pos;
             Intensity = EmitIntensity.Max;
-        }
-
-        /// <summary>
-        /// Set amplitude
-        /// </summary>
-        /// <param name="intensity">Emission intensity</param>
-        /// <returns></returns>
-        public Focus WithIntensity(byte intensity)
-        {
-            Intensity = new EmitIntensity(intensity);
-            return this;
-        }
-
-        /// <summary>
-        /// Set amplitude
-        /// </summary>
-        /// <param name="intensity">Emission intensity</param>
-        /// <returns></returns>
-        public Focus WithIntensity(EmitIntensity intensity)
-        {
-            Intensity = intensity;
-            return this;
+            PhaseOffset = new Phase(0);
         }
 
         public Vector3 Pos { get; }
 
+        [Property(EmitIntensity = true)]
         public EmitIntensity Intensity { get; private set; }
 
+        [Property]
         public Phase PhaseOffset { get; private set; }
 
         private GainPtr GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainFocus(Pos.x, Pos.y, Pos.z, Intensity.Value, PhaseOffset.Value);

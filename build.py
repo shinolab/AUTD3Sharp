@@ -532,6 +532,10 @@ def unity_build(args):
         "derive/ModulationAttribute.cs",
         "unity/Assets/Scripts/Derive/",
     )
+    shutil.copy(
+        "derive/PropertyAttribute.cs",
+        "unity/Assets/Scripts/Derive/",
+    )
     configDir = config.release and "Release" or "Debug"
     for derive in glob.glob(
         f"src/obj/{configDir}/netstandard2.1/generated/AUTD3Sharp.Derive/**/*.cs",
@@ -628,6 +632,29 @@ def util_update_ver(args):
                 flags=re.MULTILINE,
             )
         with open("src/AUTD3Sharp.csproj", "w") as f:
+            f.write(content)
+
+        with open("derive/AUTD3Sharp.Derive.csproj", encoding="UTF-8", mode="r") as f:
+            content = f.read()
+            content = re.sub(
+                r"<Version>(.*)</Version>",
+                f"<Version>{version}</Version>",
+                content,
+                flags=re.MULTILINE,
+            )
+        with open("derive/AUTD3Sharp.Derive.csproj", encoding="UTF-8", mode="w") as f:
+            f.write(content)
+
+        with open("src/AUTD3Sharp.nuspec", "r") as f:
+            content = f.read()
+            content = re.sub(
+                r'"AUTD3Sharp\.Derive" version="(.*)"',
+                f'"AUTD3Sharp.Derive" version="{version}"',
+                content,
+                flags=re.MULTILINE,
+            )
+            print(content)
+        with open("src/AUTD3Sharp.nuspec", "w") as f:
             f.write(content)
 
         with working_dir("unity"):
