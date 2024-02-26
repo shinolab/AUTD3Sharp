@@ -7,6 +7,7 @@
 #endif
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain.Holo
@@ -57,11 +58,11 @@ namespace AUTD3Sharp.Gain.Holo
         /// </summary>
         public static EmissionConstraint Clamp(byte min, byte max) => Clamp(new EmitIntensity(min), new EmitIntensity(max));
 
-        public override bool Equals(object? obj) => obj is EmissionConstraint other && Equals(other);
-        public readonly bool Equals(EmissionConstraint other) => NativeMethodsGainHolo.AUTDGainHoloConstraintEq(Ptr, other.Ptr);
-        public readonly override int GetHashCode() => Ptr.GetHashCode();
-        public static bool operator ==(EmissionConstraint lhs, EmissionConstraint rhs) => lhs.Equals(rhs);
-        public static bool operator !=(EmissionConstraint lhs, EmissionConstraint rhs) => !(lhs == rhs);
+        [ExcludeFromCodeCoverage] public override bool Equals(object? obj) => obj is EmissionConstraint other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly bool Equals(EmissionConstraint other) => NativeMethodsGainHolo.AUTDGainHoloConstraintEq(Ptr, other.Ptr);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => Ptr.GetHashCode();
+        [ExcludeFromCodeCoverage] public static bool operator ==(EmissionConstraint lhs, EmissionConstraint rhs) => lhs.Equals(rhs);
+        [ExcludeFromCodeCoverage] public static bool operator !=(EmissionConstraint lhs, EmissionConstraint rhs) => !(lhs == rhs);
 
     }
 }

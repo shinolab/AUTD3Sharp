@@ -1,4 +1,4 @@
-namespace tests.Modulation;
+namespace tests.Driver.Datagram.Modulation;
 
 public class RadiationPressureTest
 {
@@ -7,7 +7,12 @@ public class RadiationPressureTest
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(new Sine(150).WithRadiationPressure()));
+        var m = new Sine(150);
+        var mr = m.WithRadiationPressure().WithLoopBehavior(LoopBehavior.Once);
+        Assert.Equal(m.SamplingConfiguration, mr.SamplingConfiguration);
+        Assert.Equal(m.Length, mr.Length);
+        Assert.Equal(LoopBehavior.Once, mr.LoopBehavior);
+        Assert.True(await autd.SendAsync(mr));
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

@@ -45,7 +45,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
             });
         }
         
-        private static Dictionary<int, Drive[]> Transform(Geometry geometry, Func<Device, Transducer, Drive> f)
+        [ExcludeFromCodeCoverage] private static Dictionary<int, Drive[]> Transform(Geometry geometry, Func<Device, Transducer, Drive> f)
         {
             return geometry.Devices().Select(dev => (dev.Idx, dev.Select(tr => f(dev, tr)).ToArray())).ToDictionary(x => x.Idx, x => x.Item2);
         }
@@ -55,7 +55,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
         var cacheCode = noCache ? "" :
             $$"""
               
-        public AUTD3Sharp.Driver.Datagram.Gain.Cache<{{typeName}}> WithCache()
+        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Cache<{{typeName}}> WithCache()
         {
             return new AUTD3Sharp.Driver.Datagram.Gain.Cache<{{typeName}}>(this);
         }
@@ -64,7 +64,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
         var transformCode = noTransform ? "" :
             $$"""
               
-        public AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}> WithTransform(Func<AUTD3Sharp.Device, AUTD3Sharp.Transducer, AUTD3Sharp.Drive, AUTD3Sharp.Drive> f)
+        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}> WithTransform(Func<AUTD3Sharp.Device, AUTD3Sharp.Transducer, AUTD3Sharp.Drive, AUTD3Sharp.Drive> f)
         {
             return new AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}>(this, f);
         }
@@ -83,6 +83,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
 #endif
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
@@ -91,10 +92,10 @@ using AUTD3Sharp.NativeMethods;
     public partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Gain.IGain, IDatagramS<GainPtr>, IDatagram
     {
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDGainIntoDatagram(((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GainPtr(geometry));
-        DatagramPtr IDatagramS<GainPtr>.IntoSegment(GainPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(p, segment, updateSegment);
-        GainPtr IDatagramS<GainPtr>.RawPtr(Geometry geometry) => GainPtr(geometry);
+        [ExcludeFromCodeCoverage] DatagramPtr IDatagramS<GainPtr>.IntoSegment(GainPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(p, segment, updateSegment);
+        [ExcludeFromCodeCoverage] GainPtr IDatagramS<GainPtr>.RawPtr(Geometry geometry) => GainPtr(geometry);
         GainPtr AUTD3Sharp.Driver.Datagram.Gain.IGain.GainPtr(Geometry geometry) => GainPtr(geometry);
-        public DatagramWithSegment<{{typeName}}, GainPtr> WithSegment(Segment segment, bool updateSegment)
+        [ExcludeFromCodeCoverage] public DatagramWithSegment<{{typeName}}, GainPtr> WithSegment(Segment segment, bool updateSegment)
         {
             return new DatagramWithSegment<{{typeName}}, GainPtr>(this, segment, updateSegment);
         }

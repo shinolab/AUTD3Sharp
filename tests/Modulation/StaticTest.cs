@@ -7,27 +7,42 @@ public class StaticTest
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(AUTD3Sharp.Modulation.Static.WithIntensity(new EmitIntensity(32))));
-        foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+            var m = new AUTD3Sharp.Modulation.Static();
+            Assert.Equal(0xFFFFFFFFu, m.SamplingConfiguration.FrequencyDivision);
+            Assert.Equal(2, m.Length);
+            Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
+            Assert.True(await autd.SendAsync(m));
+            foreach (var dev in autd.Geometry)
+            {
+                var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
 #pragma warning disable IDE0230
-            var modExpect = new byte[] { 32, 32 };
+                var modExpect = new byte[] { 0xFF, 0xFF };
 #pragma warning restore IDE0230
-            Assert.Equal(modExpect, mod);
-            Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(modExpect, mod);
+                Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+                Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            }
         }
 
-        Assert.True(await autd.SendAsync(AUTD3Sharp.Modulation.Static.WithIntensity(32)));
-        foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+            var m = AUTD3Sharp.Modulation.Static.WithIntensity(new EmitIntensity(32)).WithLoopBehavior(LoopBehavior.Once);
+            Assert.Equal(0xFFFFFFFFu, m.SamplingConfiguration.FrequencyDivision);
+            Assert.Equal(2, m.Length);
+            Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
+            Assert.True(await autd.SendAsync(m));
+            foreach (var dev in autd.Geometry)
+            {
+                var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
 #pragma warning disable IDE0230
-            var modExpect = new byte[] { 32, 32 };
+                var modExpect = new byte[] { 32, 32 };
 #pragma warning restore IDE0230
-            Assert.Equal(modExpect, mod);
-            Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(modExpect, mod);
+                Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+                Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            }
         }
+
     }
 
     [Fact]

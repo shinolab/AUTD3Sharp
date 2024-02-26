@@ -1,4 +1,4 @@
-namespace tests.Modulation;
+namespace tests.Driver.Datagram.Modulation;
 
 [Modulation]
 public partial class ForCacheTest
@@ -24,8 +24,13 @@ public class CacheTest
         var autd1 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
         var autd2 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
-        Assert.True(await autd1.SendAsync(new Sine(150)));
-        Assert.True(await autd2.SendAsync(new Sine(150).WithCache()));
+        var m = new Sine(150);
+        var mc = m.WithCache().WithLoopBehavior(LoopBehavior.Once);
+        Assert.Equal(m.SamplingConfiguration, mc.SamplingConfiguration);
+        Assert.Equal(m.Length, mc.Length);
+        Assert.Equal(LoopBehavior.Once, mc.LoopBehavior);
+        Assert.True(await autd1.SendAsync(m));
+        Assert.True(await autd2.SendAsync(mc));
         foreach (var dev in autd2.Geometry)
         {
             var modExpect = autd1.Link.Modulation(dev.Idx, Segment.S0);

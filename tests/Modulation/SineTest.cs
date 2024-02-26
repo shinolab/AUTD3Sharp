@@ -9,34 +9,34 @@ public class SineTest
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
-        var modExpect = new byte[] {127, 125, 120, 111, 100, 87, 73, 58, 43, 30, 18, 9, 3, 0, 0, 4, 12, 22, 34, 48, 63, 78, 92,  104, 114, 122, 126,
+
+        {
+            var m = new Sine(150).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Phase.FromRad(Math.PI / 2.0));
+            Assert.True(await autd.SendAsync(m));
+            Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
+            foreach (var dev in autd.Geometry)
+            {
+                var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+                var modExpect = new byte[] {127, 125, 120, 111, 100, 87, 73, 58, 43, 30, 18, 9, 3, 0, 0, 4, 12, 22, 34, 48, 63, 78, 92,  104, 114, 122, 126,
                                     126, 123, 117, 108, 96,  83, 68, 53, 39, 26, 15, 6, 1, 0, 1, 6, 15, 26, 39, 53, 68, 83, 96,  108, 117, 123, 126,
                                     126, 122, 114, 104, 92,  78, 63, 48, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 43, 58, 73, 87, 100, 111, 120, 125};
-
-        Assert.True(await autd.SendAsync(new Sine(150).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Phase.FromRad(Math.PI / 2.0))));
-        foreach (var dev in autd.Geometry)
-        {
-            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
-            Assert.Equal(modExpect, mod);
-            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(modExpect, mod);
+                Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+                Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            }
         }
 
-
-        Assert.True(await autd.SendAsync(new Sine(150).WithIntensity(127).WithOffset(63).WithPhase(Phase.FromRad(Math.PI / 2.0))));
-        foreach (var dev in autd.Geometry)
         {
-            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
-            Assert.Equal(modExpect, mod);
-            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
-        }
-
-        var m = new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240));
-        Assert.Equal(40, m.Length);
-        Assert.Equal(SamplingConfiguration.FromFrequencyDivision(10240), m.SamplingConfiguration);
-        Assert.True(await autd.SendAsync(m));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            var m = new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240)).WithLoopBehavior(LoopBehavior.Once);
+            Assert.Equal(40, m.Length);
+            Assert.Equal(SamplingConfiguration.FromFrequencyDivision(10240), m.SamplingConfiguration);
+            Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
+            Assert.True(await autd.SendAsync(m));
+            foreach (var dev in autd.Geometry)
+            {
+                Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+                Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            }
         }
     }
 

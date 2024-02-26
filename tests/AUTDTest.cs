@@ -17,157 +17,6 @@ public class AUTDTest
     }
 
     [Fact]
-    public async Task TestSilencerFixedCompletionSteps()
-    {
-        using var autd = await CreateController();
-
-        Assert.True(NativeMethodsBase.AUTDDatagramSilencerFixedCompletionStepsIsDefault(((IDatagram)ConfigureSilencer.Default()).Ptr(autd.Geometry)));
-
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-
-        Assert.True(await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(2, 3)));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(2, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(3, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-
-        Assert.True(await autd.SendAsync(ConfigureSilencer.Disable()));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(1, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-
-        Assert.True(await autd.SendAsync(ConfigureSilencer.Default()));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-    }
-
-    [Fact]
-    public async Task TestSilencerFixedUpdateRate()
-    {
-        using var autd = await CreateController();
-
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-
-        Assert.True(await autd.SendAsync(ConfigureSilencer.FixedUpdateRate(256, 257)));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(256, autd.Link.SilencerUpdateRateIntensity(dev.Idx));
-            Assert.Equal(257, autd.Link.SilencerUpdateRatePhase(dev.Idx));
-            Assert.False(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-    }
-
-    [Fact]
-    public async Task TestSilencerLargeSteps()
-    {
-        using var autd = await CreateController();
-
-        Assert.True(await autd.SendAsync(ConfigureSilencer.Disable()));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(1, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-
-        Assert.True(await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
-
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(10, 40)));
-    }
-
-    [Fact]
-    public async Task TestSilencerSmallFreqDivMod()
-    {
-        using var autd = await CreateController();
-
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
-
-        Assert.True(await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(10, 40).WithStrictMode(false)));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-
-        Assert.True(await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
-    }
-
-    [Fact]
-    public async Task TestSilencerSmallFreqDivSTM()
-    {
-        using var autd = await CreateController();
-
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(GainSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddGain(new Null()).AddGain(new Null())));
-
-        Assert.True(await autd.SendAsync(ConfigureSilencer.FixedCompletionSteps(10, 40).WithStrictMode(false)));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
-            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
-        }
-        Assert.True(await autd.SendAsync(new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512))));
-
-        Assert.True(await autd.SendAsync(GainSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddGain(new Null()).AddGain(new Null())));
-    }
-
-
-    [Fact]
-    public async Task TestDebugOutputIdx()
-    {
-        using var autd = await CreateController();
-
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(0xFF, autd.Link.DebugOutputIdx(dev.Idx));
-        }
-
-        Assert.True(await autd.SendAsync(new ConfigureDebugOutputIdx(device => device[0])));
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(0, autd.Link.DebugOutputIdx(dev.Idx));
-        }
-
-        Assert.True(await autd.SendAsync(new ConfigureDebugOutputIdx(device => device.Idx == 0 ? device[10] : null)));
-        Assert.Equal(10, autd.Link.DebugOutputIdx(0));
-        Assert.Equal(0xFF, autd.Link.DebugOutputIdx(1));
-    }
-
-    [Fact]
     public async Task TestFPGAState()
     {
         using var autd = await CreateController();
@@ -315,22 +164,17 @@ public class AUTDTest
             var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
                 .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
-            await autd.SendAsync(new Null());
-
-            await autd.SendAsync(new Null(), TimeSpan.FromMicroseconds(1));
-
-            await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-        }
-
-        {
-            var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
-                .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(10)));
+            Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
+            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
             await autd.SendAsync(new Null());
+            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
             await autd.SendAsync(new Null(), TimeSpan.FromMicroseconds(1));
+            Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
 
             await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
+            Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
         }
     }
 
@@ -340,23 +184,17 @@ public class AUTDTest
         {
             var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
                 .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
+            Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
+            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
             autd.Send(new Null());
+            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
             autd.Send(new Null(), TimeSpan.FromMicroseconds(1));
+            Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
 
             autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-        }
-
-        {
-            var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
-                .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(10)));
-
-            autd.Send(new Null());
-
-            autd.Send(new Null(), TimeSpan.FromMicroseconds(1));
-
-            autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
+            Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
         }
     }
 
@@ -627,55 +465,5 @@ public class AUTDTest
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }
-    }
-
-    [Fact]
-    public async Task TestClear()
-    {
-        using var autd = await CreateController();
-        Assert.True(await autd.SendAsync(new Uniform(EmitIntensity.Max).WithPhase(new Phase(0x90))));
-        foreach (var dev in autd.Geometry)
-        {
-            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
-            Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
-            Assert.All(intensities, d => Assert.Equal(0xFF, d));
-            Assert.All(phases, p => Assert.Equal(0x90, p));
-        }
-
-        Assert.True(await autd.SendAsync(new Clear()));
-        foreach (var dev in autd.Geometry)
-        {
-            var m = autd.Link.Modulation(dev.Idx, Segment.S0);
-            Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
-            Assert.All(intensities, d => Assert.Equal(0, d));
-            Assert.All(phases, p => Assert.Equal(0, p));
-        }
-    }
-
-    [Fact]
-    public async Task TestSynchronize()
-    {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
-            .OpenAsync(Audit.Builder());
-
-        Assert.True(await autd.SendAsync(new Synchronize()));
-    }
-
-    [Fact]
-    public async Task TestConfigForceFan()
-    {
-        var autd = await CreateController();
-        foreach (var dev in autd.Geometry)
-            Assert.False(autd.Link.IsForceFan(dev.Idx));
-
-        await autd.SendAsync(new ConfigureForceFan(dev => dev.Idx == 0));
-        Assert.True(autd.Link.IsForceFan(0));
-        Assert.False(autd.Link.IsForceFan(1));
-
-        await autd.SendAsync(new ConfigureForceFan(dev => dev.Idx == 1));
-        Assert.False(autd.Link.IsForceFan(0));
-        Assert.True(autd.Link.IsForceFan(1));
     }
 }

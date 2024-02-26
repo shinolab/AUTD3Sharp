@@ -7,15 +7,11 @@ public class FocusTest
     {
         var autd = await AUTDTest.CreateController();
 
-        Assert.True(await autd.SendAsync(new Focus(autd.Geometry.Center).WithIntensity(0x80)));
-        foreach (var dev in autd.Geometry)
-        {
-            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
-            Assert.All(intensities, d => Assert.Equal(0x80, d));
-            Assert.Contains(phases, p => p != 0);
-        }
-
-        Assert.True(await autd.SendAsync(new Focus(autd.Geometry.Center).WithIntensity(new EmitIntensity(0x81))));
+        var g = new Focus(autd.Geometry.Center).WithIntensity(new EmitIntensity(0x81)).WithPhaseOffset(new Phase(0x80));
+        Assert.Equal(autd.Geometry.Center, g.Pos);
+        Assert.Equal(0x81, g.Intensity.Value);
+        Assert.Equal(0x80, g.PhaseOffset.Value);
+        Assert.True(await autd.SendAsync(g));
         foreach (var dev in autd.Geometry)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);

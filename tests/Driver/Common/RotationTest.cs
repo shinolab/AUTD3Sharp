@@ -1,4 +1,4 @@
-namespace tests;
+namespace tests.Driver.Common;
 
 using static Angle.Units;
 

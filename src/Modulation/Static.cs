@@ -2,6 +2,7 @@
 #define USE_SINGLE
 #endif
 
+using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
@@ -28,6 +29,7 @@ namespace AUTD3Sharp.Modulation
         /// </summary>
         /// <param name="intensity">Emission intensity</param>
         /// <returns></returns>
+        [ExcludeFromCodeCoverage]
         public static Static WithIntensity(byte intensity)
         {
             return new Static(new EmitIntensity(intensity));

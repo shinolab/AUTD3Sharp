@@ -20,7 +20,11 @@ public class LMTest
             .WithKMax(5)
             .WithInitial([1.0])
             .WithConstraint(EmissionConstraint.Uniform(0x80));
-
+        Assert.Equal(1e-3, g.Eps1);
+        Assert.Equal(1e-3, g.Eps2);
+        Assert.Equal(1e-3, g.Tau);
+        Assert.Equal(5u, g.KMax);
+        Assert.Equal([1.0], g.Initial.ToArray());
         Assert.True(await autd.SendAsync(g));
 
         foreach (var dev in autd.Geometry)

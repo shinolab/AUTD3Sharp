@@ -9,11 +9,7 @@ public class RawPCMTest
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(new RawPCM("sin150.dat", 4000)));
-        foreach (var dev in autd.Geometry)
-        {
-            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
-            var modExpect = new byte[] {
+        var modExpect = new byte[] {
                 157,
                 185,
                 210,
@@ -94,16 +90,32 @@ public class RawPCMTest
                 70,
                 98,
                 128};
-            Assert.Equal(modExpect, mod);
-            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+
+        {
+            var m = new RawPCM("sin150.dat", 4000);
+            Assert.Equal(5120u, m.SamplingConfiguration.FrequencyDivision);
+            Assert.Equal(modExpect.Length, m.Length);
+            Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
+            Assert.True(await autd.SendAsync(m));
+            foreach (var dev in autd.Geometry)
+            {
+                var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+                Assert.Equal(modExpect, mod);
+                Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+                Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            }
         }
 
-        var m = new RawPCM("sin150.dat", 4000).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240));
-        Assert.Equal(SamplingConfiguration.FromFrequencyDivision(10240), m.SamplingConfiguration);
-        Assert.True(await autd.SendAsync(m));
-        foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            var m = new RawPCM("sin150.dat", 4000).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240)).WithLoopBehavior(LoopBehavior.Once);
+            Assert.Equal(10240u, m.SamplingConfiguration.FrequencyDivision);
+            Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
+            Assert.True(await autd.SendAsync(m));
+            foreach (var dev in autd.Geometry)
+            {
+                Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+                Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            }
         }
     }
 

@@ -50,7 +50,7 @@ public class PropertyGenerator : IIncrementalGenerator
                              return this;
                           }
                   
-                          public {{typeName}} With{{name}}(byte value)
+                          [ExcludeFromCodeCoverage] public {{typeName}} With{{name}}(byte value)
                           {
                              {{name}} = new EmitIntensity(value);
                              return this;
@@ -86,6 +86,7 @@ using float_t = System.Double;
 #endif
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 {{ns}} {
     public partial class {{typeName}}

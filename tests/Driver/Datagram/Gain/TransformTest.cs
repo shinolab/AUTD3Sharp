@@ -1,4 +1,4 @@
-namespace tests.Gain;
+namespace tests.Driver.Datagram.Gain;
 
 public class TransformTest
 {

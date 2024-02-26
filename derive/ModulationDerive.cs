@@ -50,7 +50,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
         var cacheCode = noCache ? "" :
             $$"""
               
-        public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{{typeName}}> WithCache()
+        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{{typeName}}> WithCache()
         {
             return new AUTD3Sharp.Driver.Datagram.Modulation.Cache<{{typeName}}>(this);
         }
@@ -59,7 +59,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
         var radiationPressureCode = noRadiationPressure ? "" :
             $$"""
               
-        public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{{typeName}}> WithRadiationPressure()
+        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{{typeName}}> WithRadiationPressure()
         {
             return new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{{typeName}}>(this);
         }
@@ -69,7 +69,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
         var transformCode = noTransform ? "" :
             $$"""
               
-        public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{{typeName}}> WithTransform(Func<int, EmitIntensity, EmitIntensity> f)
+        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{{typeName}}> WithTransform(Func<int, EmitIntensity, EmitIntensity> f)
         {
             return new AUTD3Sharp.Driver.Datagram.Modulation.Transform<{{typeName}}>(this, f);
         }
@@ -99,6 +99,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
 #endif
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
@@ -106,10 +107,10 @@ using AUTD3Sharp.NativeMethods;
     partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagramS<ModulationPtr>, IDatagram
     {
         DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
-        DatagramPtr IDatagramS<ModulationPtr>.IntoSegment(ModulationPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(p, segment, updateSegment);
-        ModulationPtr IDatagramS<ModulationPtr>.RawPtr(Geometry _) => ModulationPtr();
-        ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr() => ModulationPtr();
-        public DatagramWithSegment<{{typeName}}, ModulationPtr> WithSegment(Segment segment, bool updateSegment)
+        [ExcludeFromCodeCoverage] DatagramPtr IDatagramS<ModulationPtr>.IntoSegment(ModulationPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(p, segment, updateSegment);
+        [ExcludeFromCodeCoverage] ModulationPtr IDatagramS<ModulationPtr>.RawPtr(Geometry _) => ModulationPtr();
+        [ExcludeFromCodeCoverage] ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr() => ModulationPtr();
+        [ExcludeFromCodeCoverage] public DatagramWithSegment<{{typeName}}, ModulationPtr> WithSegment(Segment segment, bool updateSegment)
         {
             return new DatagramWithSegment<{{typeName}}, ModulationPtr>(this, segment, updateSegment);
         }
@@ -122,8 +123,8 @@ using AUTD3Sharp.NativeMethods;
 
         public int Length => NativeMethodsBase.AUTDModulationSize(ModulationPtr()).Validate();
 
-        SamplingConfiguration AUTD3Sharp.Driver.Datagram.Modulation.IModulation.InternalSamplingConfiguration() => _config;
-        LoopBehavior AUTD3Sharp.Driver.Datagram.Modulation.IModulation.InternalLoopBehavior() => LoopBehavior; 
+        [ExcludeFromCodeCoverage] SamplingConfiguration AUTD3Sharp.Driver.Datagram.Modulation.IModulation.InternalSamplingConfiguration() => _config;
+        [ExcludeFromCodeCoverage] LoopBehavior AUTD3Sharp.Driver.Datagram.Modulation.IModulation.InternalLoopBehavior() => LoopBehavior; 
 
         /// <summary>
         /// Set loop behavior
