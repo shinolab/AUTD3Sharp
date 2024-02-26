@@ -25,7 +25,7 @@ public class MultiAUTD3Controller : MonoBehaviour
         }
         catch (Exception)
         {
-            Debug.LogError("Before running this sample, open simulator from \"AUTD -> Simulator -> Run\" in menu bar.");
+            Debug.LogError("Before running this sample, install autd3-server (https://github.com/shinolab/autd3-server) and run simulator with unity option.");
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_STANDALONE
