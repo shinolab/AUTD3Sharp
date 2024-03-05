@@ -11,9 +11,7 @@ import shutil
 import subprocess
 import sys
 import tarfile
-
-import requests
-from packaging import version
+import urllib.request
 
 
 def fetch_submodule():
@@ -71,10 +69,7 @@ def onexc(func, path, exeption):
 
 def rmtree_f(path):
     try:
-        if version.parse(platform.python_version()) >= version.parse("3.12"):
-            shutil.rmtree(path, onexc=onexc)
-        else:
-            shutil.rmtree(path, onerror=onexc)
+        shutil.rmtree(path, onerror=onexc)
     except FileNotFoundError:
         pass
 
@@ -188,8 +183,7 @@ def copy_dll(config: Config):
         return
 
     url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-x64-dll.zip"
-    with open("tmp.zip", mode="wb") as f:
-        f.write(requests.get(url).content)
+    urllib.request.urlretrieve(url, "tmp.zip")
     shutil.unpack_archive("tmp.zip", ".")
     rm_f("tmp.zip")
     for dll in glob.glob("bin/*.dll"):
@@ -198,8 +192,7 @@ def copy_dll(config: Config):
     rmtree_f("bin")
 
     url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-universal-shared.tar.gz"
-    with open("tmp.tar.gz", mode="wb") as f:
-        f.write(requests.get(url).content)
+    urllib.request.urlretrieve(url, "tmp.tar.gz")
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
@@ -209,8 +202,7 @@ def copy_dll(config: Config):
     rmtree_f("bin")
 
     url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-linux-x64-shared.tar.gz"
-    with open("tmp.tar.gz", mode="wb") as f:
-        f.write(requests.get(url).content)
+    urllib.request.urlretrieve(url, "tmp.tar.gz")
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
@@ -456,8 +448,7 @@ def copy_dll_unity(config: Config):
         return
 
     url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-unity-x64-dll.zip"
-    with open("tmp.zip", mode="wb") as f:
-        f.write(requests.get(url).content)
+    urllib.request.urlretrieve(url, "tmp.zip")
     shutil.unpack_archive("tmp.zip", ".")
     rm_f("tmp.zip")
     for dll in glob.glob("bin/*.dll"):
@@ -465,8 +456,7 @@ def copy_dll_unity(config: Config):
     rmtree_f("bin")
 
     url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-unity-universal-shared.tar.gz"
-    with open("tmp.tar.gz", mode="wb") as f:
-        f.write(requests.get(url).content)
+    urllib.request.urlretrieve(url, "tmp.tar.gz")
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
@@ -476,8 +466,7 @@ def copy_dll_unity(config: Config):
     rmtree_f("bin")
 
     url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-linux-unity-x64-shared.tar.gz"
-    with open("tmp.tar.gz", mode="wb") as f:
-        f.write(requests.get(url).content)
+    urllib.request.urlretrieve(url, "tmp.tar.gz")
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")

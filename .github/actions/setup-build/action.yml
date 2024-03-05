@@ -16,11 +16,6 @@ runs:
       with:
         python-version: 3.12
 
-    - name: Install packaging
-      shell: bash
-      run: |
-        python3 -m pip install -U packaging requests
-
     - name: Setup .NET Core
       if: needs.check.outputs.status
       uses: actions/setup-dotnet@v4
