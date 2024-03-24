@@ -8,12 +8,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        return await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero)).Open(Audit.Builder());
+        return new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero)).Open(Audit.Builder());
     }
 
     [Fact]
@@ -161,14 +161,14 @@ public class AUTDTest
     public async Task TestSendTimeout()
     {
         {
-            var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
+            var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero))
                 .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
             Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
             Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
             await autd.SendAsync(new Null());
-            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
+            Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
 
             await autd.SendAsync(new Null(), TimeSpan.FromMicroseconds(1));
             Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
@@ -182,13 +182,13 @@ public class AUTDTest
     public void TestSendTimeoutSync()
     {
         {
-            var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).AddDevice(new AUTD3(Vector3d.zero))
+            var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero))
                 .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
             Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
             Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
             autd.Send(new Null());
-            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
+            Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
 
             autd.Send(new Null(), TimeSpan.FromMicroseconds(1));
             Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());

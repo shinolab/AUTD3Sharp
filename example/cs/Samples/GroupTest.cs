@@ -35,12 +35,12 @@ internal static class GroupByTransducerTest
         var config = ConfigureSilencer.Default();
         await autd.SendAsync(config);
 
-        var cx = autd.Geometry.Center.x;
+        var cx = autd.Geometry.Center.X;
         var g1 = new Focus(autd.Geometry.Center + new Vector3d(0, 0, 150));
         var g2 = new Null();
 
         var g = new Group(
-            (_, tr) => tr.Position.x < cx ? "focus" : "null"
+            (_, tr) => tr.Position.X < cx ? "focus" : "null"
             ).Set("focus", g1).Set("null", g2);
 
         var m = new Sine(150);

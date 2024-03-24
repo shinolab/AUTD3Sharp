@@ -21,7 +21,7 @@ public class ModulationTest
     [Fact]
     public async Task Modulation()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(new Burst()));
         foreach (var dev in autd.Geometry)

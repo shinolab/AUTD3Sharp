@@ -7,7 +7,7 @@ public class SquareTest
     [Fact]
     public async Task Square()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         {
             var m = new Square(200).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1);
@@ -43,7 +43,7 @@ public class SquareTest
     [Fact]
     public async Task SquareMode()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(new Square(150).WithMode(SamplingMode.SizeOptimized)));
         foreach (var dev in autd.Geometry)

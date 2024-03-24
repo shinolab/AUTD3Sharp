@@ -6,11 +6,7 @@ use glob::glob;
 
 use convert_case::{Case, Casing};
 
-fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(
-    path: P1,
-    crate_path: P2,
-    use_single: bool,
-) -> Result<()> {
+fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Result<()> {
     let sub_abbr =
         |str: String| -> String { str.replace("Twincat", "TwinCAT").replace("Soem", "SOEM") };
 
@@ -72,7 +68,6 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(
     .map_err(|_| anyhow::anyhow!("failed to generate cs wrapper"))?;
 
     let content = std::fs::read_to_string(&out_file)?;
-    let content = content.replace("@float", if use_single { "float" } else { "double" });
     let content = content.replace("ConstPtr", "IntPtr");
     let content = content.replace("void*", "IntPtr");
     let content = content.replace("SamplingConfiguration", "SamplingConfigurationRaw");
@@ -103,25 +98,9 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(
         "",
     );
 
-    let content = if use_single {
-        let re = regex::Regex::new(r"public const float (.*) = (.*);").unwrap();
-        re.replace_all(&content, "public const float $1 = ${2}f;")
-            .to_string()
-    } else {
-        content
-    };
-
     std::fs::write(&out_file, content)?;
 
     Ok(())
-}
-
-pub fn gen_cs<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, dest_dir: P2) -> Result<()> {
-    generate(dest_dir, crate_path, false)
-}
-
-pub fn gen_unity<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, dest_dir: P2) -> Result<()> {
-    generate(dest_dir, crate_path, true)
 }
 
 fn main() -> Result<()> {
@@ -129,8 +108,8 @@ fn main() -> Result<()> {
     for entry in glob(&format!("{}/capi/*/Cargo.toml", home))? {
         let entry = entry?;
         let crate_path = Path::new(&entry).parent().unwrap();
-        gen_cs(&crate_path, "../../src/NativeMethods")?;
-        gen_unity(&crate_path, "../../unity/Assets/Scripts/NativeMethods")?;
+        generate(&crate_path, "../../src/NativeMethods")?;
+        generate(&crate_path, "../../unity/Assets/Scripts/NativeMethods")?;
     }
     Ok(())
 }

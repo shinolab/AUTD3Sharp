@@ -1,15 +1,5 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
-#endif
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
 #endif
 
 using System;
@@ -36,63 +26,63 @@ namespace AUTD3Sharp.Gain.Holo
             Ptr.Item1 = IntPtr.Zero;
         }
 
-        internal override GainPtr Sdp(float_t[] foci, Amplitude[] amps, ulong size, float_t alpha, uint repeat, float_t lambda, EmissionConstraintPtr constraint)
+        internal override GainPtr Sdp(double[] foci, Amplitude[] amps, ulong size, double alpha, uint repeat, double lambda, EmissionConstraintPtr constraint)
         {
             unsafe
             {
-                fixed (float_t* pf = foci)
+                fixed (double* pf = foci)
                 fixed (Amplitude* pa = amps)
                 {
-                    return NativeMethodsBackendCuda.AUTDGainHoloCUDASDP(Ptr, pf, (float_t*)pa, size, alpha, lambda, repeat, constraint);
+                    return NativeMethodsBackendCuda.AUTDGainHoloCUDASDP(Ptr, pf, (double*)pa, size, alpha, lambda, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr Gs(float_t[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint)
+        internal override GainPtr Gs(double[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint)
         {
             unsafe
             {
-                fixed (float_t* pf = foci)
+                fixed (double* pf = foci)
                 fixed (Amplitude* pa = amps)
                 {
-                    return NativeMethodsBackendCuda.AUTDGainHoloCUDAGS(Ptr, pf, (float_t*)pa, size, repeat, constraint);
+                    return NativeMethodsBackendCuda.AUTDGainHoloCUDAGS(Ptr, pf, (double*)pa, size, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr Gspat(float_t[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint)
+        internal override GainPtr Gspat(double[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint)
         {
             unsafe
             {
-                fixed (float_t* pf = foci)
+                fixed (double* pf = foci)
                 fixed (Amplitude* pa = amps)
                 {
-                    return NativeMethodsBackendCuda.AUTDGainHoloCUDAGSPAT(Ptr, pf, (float_t*)pa, size, repeat, constraint);
+                    return NativeMethodsBackendCuda.AUTDGainHoloCUDAGSPAT(Ptr, pf, (double*)pa, size, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr Naive(float_t[] foci, Amplitude[] amps, ulong size, EmissionConstraintPtr constraint)
+        internal override GainPtr Naive(double[] foci, Amplitude[] amps, ulong size, EmissionConstraintPtr constraint)
         {
             unsafe
             {
-                fixed (float_t* pf = foci)
+                fixed (double* pf = foci)
                 fixed (Amplitude* pa = amps)
                 {
-                    return NativeMethodsBackendCuda.AUTDGainHoloCUDANaive(Ptr, pf, (float_t*)pa, size, constraint);
+                    return NativeMethodsBackendCuda.AUTDGainHoloCUDANaive(Ptr, pf, (double*)pa, size, constraint);
                 }
             }
         }
 
-        internal override GainPtr Lm(float_t[] foci, Amplitude[] amps, ulong size, float_t eps1, float_t eps2, float_t tau, uint kMax, float_t[] initial, EmissionConstraintPtr constraint)
+        internal override GainPtr Lm(double[] foci, Amplitude[] amps, ulong size, double eps1, double eps2, double tau, uint kMax, double[] initial, EmissionConstraintPtr constraint)
         {
             unsafe
             {
-                fixed (float_t* pf = foci)
+                fixed (double* pf = foci)
                 fixed (Amplitude* pa = amps)
-                fixed (float_t* pInitial = initial)
+                fixed (double* pInitial = initial)
                 {
-                    return NativeMethodsBackendCuda.AUTDGainHoloCUDALM(Ptr, pf, (float_t*)pa, size, eps1, eps2, tau, kMax, constraint, pInitial, (ulong)initial.Length);
+                    return NativeMethodsBackendCuda.AUTDGainHoloCUDALM(Ptr, pf, (double*)pa, size, eps1, eps2, tau, kMax, constraint, pInitial, (ulong)initial.Length);
                 }
             }
         }

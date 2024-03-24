@@ -1,16 +1,5 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
-
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -29,16 +18,16 @@ namespace AUTD3Sharp.Gain.Holo
         public SDP(TB backend) : base(EmissionConstraint.DontCare())
         {
             _backend = backend;
-            Alpha = (float_t)1e-3;
-            Lambda = (float_t)0.9;
+            Alpha = 1e-3;
+            Lambda = 0.9;
             Repeat = 100;
         }
 
         [Property]
-        public float_t Alpha { get; private set; }
+        public double Alpha { get; private set; }
 
         [Property]
-        public float_t Lambda { get; private set; }
+        public double Lambda { get; private set; }
 
         [Property]
         public uint Repeat { get; private set; }

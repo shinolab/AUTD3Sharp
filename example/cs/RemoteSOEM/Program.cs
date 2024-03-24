@@ -5,7 +5,7 @@ using AUTD3Sharp.Link;
 using Samples;
 
 using var autd = await new ControllerBuilder()
-    .AddDevice(new AUTD3(Vector3d.zero))
+    .AddDevice(new AUTD3(Vector3d.Zero))
     .OpenAsync(RemoteSOEM.Builder(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080)));
 
 await SampleRunner.Run(autd);

@@ -1,4 +1,8 @@
-﻿using System;
+﻿#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
@@ -11,18 +15,18 @@ namespace AUTD3Sharp.Utils
         #region ctor
         public Vector3d(double x, double y, double z)
         {
-            this.x = x;
-            this.y = y;
-            this.z = z;
+            X = x;
+            Y = y;
+            Z = z;
         }
 
         public Vector3d(params double[] vector)
         {
             if (vector.Length != 3) throw new InvalidCastException();
 
-            x = vector[0];
-            y = vector[1];
-            z = vector[2];
+            X = vector[0];
+            Y = vector[1];
+            Z = vector[2];
         }
         #endregion
 
@@ -32,14 +36,12 @@ namespace AUTD3Sharp.Utils
         public static Vector3d UnitZ => new Vector3d(0, 0, 1);
         public Vector3d Normalized => this / L2Norm;
         public double L2Norm => Math.Sqrt(L2NormSquared);
-        public double L2NormSquared => x * x + y * y + z * z;
-#pragma warning disable IDE1006
-        public static Vector3d zero => new Vector3d(0, 0, 0);
+        public double L2NormSquared => X * X + Y * Y + Z * Z;
+        public static Vector3d Zero => new Vector3d(0, 0, 0);
 
-        public double x { get; }
-        public double y { get; }
-        public double z { get; }
-#pragma warning restore IDE1006
+        public double X { get; }
+        public double Y { get; }
+        public double Z { get; }
         #endregion
 
         #region indexcer
@@ -49,9 +51,9 @@ namespace AUTD3Sharp.Utils
             {
                 return index switch
                 {
-                    0 => x,
-                    1 => y,
-                    2 => z,
+                    0 => X,
+                    1 => Y,
+                    2 => Z,
                     _ => throw new ArgumentOutOfRangeException(nameof(index))
                 };
             }
@@ -59,36 +61,36 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region arithmetic
-        public static Vector3d Negate(Vector3d operand) => new Vector3d(-operand.x, -operand.y, -operand.z);
+        public static Vector3d Negate(Vector3d operand) => new Vector3d(-operand.X, -operand.Y, -operand.Z);
 
         public static Vector3d Add(Vector3d left, Vector3d right)
         {
-            var v1 = left.x + right.x;
-            var v2 = left.y + right.y;
-            var v3 = left.z + right.z;
+            var v1 = left.X + right.X;
+            var v2 = left.Y + right.Y;
+            var v3 = left.Z + right.Z;
             return new Vector3d(v1, v2, v3);
         }
         public static Vector3d Subtract(Vector3d left, Vector3d right)
         {
-            var v1 = left.x - right.x;
-            var v2 = left.y - right.y;
-            var v3 = left.z - right.z;
+            var v1 = left.X - right.X;
+            var v2 = left.Y - right.Y;
+            var v3 = left.Z - right.Z;
             return new Vector3d(v1, v2, v3);
         }
 
         public static Vector3d Divide(Vector3d left, double right)
         {
-            var v1 = left.x / right;
-            var v2 = left.y / right;
-            var v3 = left.z / right;
+            var v1 = left.X / right;
+            var v2 = left.Y / right;
+            var v3 = left.Z / right;
             return new Vector3d(v1, v2, v3);
         }
 
         public static Vector3d Multiply(Vector3d left, double right)
         {
-            var v1 = left.x * right;
-            var v2 = left.y * right;
-            var v3 = left.z * right;
+            var v1 = left.X * right;
+            var v2 = left.Y * right;
+            var v3 = left.Z * right;
             return new Vector3d(v1, v2, v3);
         }
 
@@ -101,7 +103,7 @@ namespace AUTD3Sharp.Utils
         public static Vector3d operator /(Vector3d left, double right) => Divide(left, right);
         public static bool operator ==(Vector3d left, Vector3d right) => left.Equals(right);
         public static bool operator !=(Vector3d left, Vector3d right) => !left.Equals(right);
-        public bool Equals(Vector3d other) => x.Equals(other.x) && y.Equals(other.y) && z.Equals(other.z);
+        public bool Equals(Vector3d other) => X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
         public override bool Equals(object? obj)
         {
             if (obj is Vector3d vec) return Equals(vec);
@@ -110,23 +112,32 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region public methods
-        public Vector3d Rectify() => new Vector3d(Math.Max(x, 0), Math.Max(y, 0), Math.Max(z, 0));
-        public double[] ToArray() => new[] { x, y, z };
+        public Vector3d Rectify() => new Vector3d(Math.Max(X, 0), Math.Max(Y, 0), Math.Max(Z, 0));
+        public double[] ToArray() => new[] { X, Y, Z };
         #endregion
 
         #region util
-        public override int GetHashCode() => x.GetHashCode() ^ y.GetHashCode() ^ z.GetHashCode();
+        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
         [ExcludeFromCodeCoverage] IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public string ToString(string format) => $"3D Column Vector:\n{string.Format(CultureInfo.CurrentCulture, format, x)}\n{string.Format(CultureInfo.CurrentCulture, format, y)}\n{string.Format(CultureInfo.CurrentCulture, format, z)}";
+        public string ToString(string format) => $"3D Column Vector:\n{string.Format(CultureInfo.CurrentCulture, format, X)}\n{string.Format(CultureInfo.CurrentCulture, format, Y)}\n{string.Format(CultureInfo.CurrentCulture, format, Z)}";
 
         public IEnumerator<double> GetEnumerator()
         {
-            yield return x;
-            yield return y;
-            yield return z;
+            yield return X;
+            yield return Y;
+            yield return Z;
         }
 
         public override string ToString() => ToString("{0,-20}");
         #endregion
+
+#if UNITY_2018_3_OR_NEWER
+    public static implicit operator UnityEngine.Vector3(Vector3d v) => new UnityEngine.Vector3((float)v.X, (float)v.Y, (float)v.Z);
+    public static implicit operator Vector3d(UnityEngine.Vector3 v) => new Vector3d(v.x, v.y, v.z);
+#endif
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

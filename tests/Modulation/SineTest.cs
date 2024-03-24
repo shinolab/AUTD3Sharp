@@ -7,7 +7,7 @@ public class SineTest
     [Fact]
     public async Task Sine()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
 
         {
@@ -44,7 +44,7 @@ public class SineTest
     [Fact]
     public async Task SineMode()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(new Sine(150).WithMode(SamplingMode.SizeOptimized)));
         foreach (var dev in autd.Geometry)

@@ -17,13 +17,13 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotRange", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern PlotRangePtr AUTDLinkVisualizerPlotRange(float x_min, float x_max, float y_min, float y_max, float z_min, float z_max, float resolution);
+        public static extern PlotRangePtr AUTDLinkVisualizerPlotRange(double x_min, double x_max, double y_min, double y_max, double z_min, double z_max, double resolution);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotRangeObservePointsLen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ulong AUTDLinkVisualizerPlotRangeObservePointsLen(PlotRangePtr range);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotRangeObservePoints", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDLinkVisualizerPlotRangeObservePoints(PlotRangePtr range, float* points);
+        public static extern void AUTDLinkVisualizerPlotRangeObservePoints(PlotRangePtr range, double* points);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPhasesOf", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDLinkVisualizerPhasesOf(LinkPtr visualizer, Backend backend, Directivity directivity, Segment segment, uint idx, byte* buf);
@@ -35,7 +35,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern uint AUTDLinkVisualizerModulation(LinkPtr visualizer, Backend backend, Directivity directivity, Segment segment, byte* buf);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerCalcField", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkVisualizerCalcField(LinkPtr visualizer, Backend backend, Directivity directivity, float* points, uint points_len, GeometryPtr geometry, Segment segment, uint idx, float* buf);
+        public static extern ResultI32 AUTDLinkVisualizerCalcField(LinkPtr visualizer, Backend backend, Directivity directivity, double* points, uint points_len, GeometryPtr geometry, Segment segment, uint idx, double* buf);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotField", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultI32 AUTDLinkVisualizerPlotField(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, PlotRangePtr range, GeometryPtr geometry, Segment segment, uint idx);
@@ -62,7 +62,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern LinkBuilderPtr AUTDLinkVisualizerT4010A1Plotters([MarshalAs(UnmanagedType.U1)] bool use_gpu, int gpu_idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultPlotConfig AUTDLinkVisualizerPlotConfig(uint width, uint height, float cbar_size, uint font_size, uint label_area_size, uint margin, float ticks_step, CMap cmap, byte* fname);
+        public static extern ResultPlotConfig AUTDLinkVisualizerPlotConfig(uint width, uint height, double cbar_size, uint font_size, uint label_area_size, uint margin, double ticks_step, CMap cmap, byte* fname);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotConfigIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -75,7 +75,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern LinkBuilderPtr AUTDLinkVisualizerT4010A1Python([MarshalAs(UnmanagedType.U1)] bool use_gpu, int gpu_idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultPyPlotConfig AUTDLinkVisualizerPyPlotConfig(int width, int height, int dpi, byte* cbar_position, byte* cbar_size, byte* cbar_pad, int fontsize, float ticks_step, byte* cmap, [MarshalAs(UnmanagedType.U1)] bool show, byte* fname);
+        public static extern ResultPyPlotConfig AUTDLinkVisualizerPyPlotConfig(int width, int height, int dpi, byte* cbar_position, byte* cbar_size, byte* cbar_pad, int fontsize, double ticks_step, byte* cmap, [MarshalAs(UnmanagedType.U1)] bool show, byte* fname);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPyPlotConfigIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]

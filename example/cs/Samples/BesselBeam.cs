@@ -1,4 +1,4 @@
-﻿
+﻿using System;
 using AUTD3Sharp;
 using AUTD3Sharp.Gain;
 using AUTD3Sharp.Modulation;
@@ -17,7 +17,7 @@ internal static class BesselBeamTest
 
         var start = autd.Geometry.Center;
         var dir = Vector3d.UnitZ;
-        var g = new Bessel(start, dir, 13.0 / 180.0 * AUTD3.Pi); // BesselBeam from (x, y, 0), theta = 13 deg
+        var g = new Bessel(start, dir, 13.0 / 180.0 * Math.PI); // BesselBeam from (x, y, 0), theta = 13 deg
 
         await autd.SendAsync((m, g));
     }

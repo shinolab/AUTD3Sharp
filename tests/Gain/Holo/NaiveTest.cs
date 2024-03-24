@@ -8,7 +8,7 @@ public class NaiveTest
     [Fact]
     public async Task Naive()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new Naive<NalgebraBackend>(backend)

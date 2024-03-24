@@ -8,7 +8,7 @@ public class GSPATTest
     [Fact]
     public async Task GSPAT()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new GSPAT<NalgebraBackend>(backend)

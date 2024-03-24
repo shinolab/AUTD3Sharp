@@ -1,17 +1,6 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using System;
-
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -30,37 +19,37 @@ namespace AUTD3Sharp.Gain.Holo
         where TB : Backend
     {
         private readonly TB _backend;
-        private float_t[] _initial;
+        private double[] _initial;
 
         public LM(TB backend) : base(EmissionConstraint.DontCare())
         {
             _backend = backend;
-            Eps1 = (float_t)1e-8;
-            Eps2 = (float_t)1e-8;
-            Tau = (float_t)1e-3;
+            Eps1 = 1e-8;
+            Eps2 = 1e-8;
+            Tau = 1e-3;
             KMax = 5;
-            _initial = Array.Empty<float_t>();
+            _initial = Array.Empty<double>();
         }
 
-        public LM<TB> WithInitial(float_t[] value)
+        public LM<TB> WithInitial(double[] value)
         {
             _initial = value;
             return this;
         }
 
         [Property]
-        public float_t Eps1 { get; private set; }
+        public double Eps1 { get; private set; }
 
         [Property]
-        public float_t Eps2 { get; private set; }
+        public double Eps2 { get; private set; }
 
         [Property]
-        public float_t Tau { get; private set; }
+        public double Tau { get; private set; }
 
         [Property]
         public uint KMax { get; private set; }
 
-        public ReadOnlySpan<float_t> Initial => new ReadOnlySpan<float_t>(_initial);
+        public ReadOnlySpan<double> Initial => new ReadOnlySpan<double>(_initial);
 
         private GainPtr GainPtr(Geometry _) =>
             _backend.Lm(Foci.ToArray(), Amps.ToArray(),

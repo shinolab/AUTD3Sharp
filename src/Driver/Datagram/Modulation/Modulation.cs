@@ -14,7 +14,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
 
 namespace AUTD3Sharp
 {
-    public sealed class ChangeModulationSegment : AUTD3Sharp.Driver.Datagram.IDatagram
+    public sealed class ChangeModulationSegment : Driver.Datagram.IDatagram
     {
         private readonly Segment _segment;
 
@@ -23,6 +23,6 @@ namespace AUTD3Sharp
             _segment = segment;
         }
 
-        DatagramPtr AUTD3Sharp.Driver.Datagram.IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDDatagramChangeModulationSegment(_segment);
+        DatagramPtr Driver.Datagram.IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDDatagramChangeModulationSegment(_segment);
     }
 }

@@ -1,8 +1,3 @@
-
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using System;
 
 namespace AUTD3Sharp

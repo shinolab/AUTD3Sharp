@@ -4,7 +4,7 @@ using AUTD3Sharp.Utils;
 using Samples;
 
 using var autd = await new ControllerBuilder().
-    AddDevice(new AUTD3(Vector3d.zero))
+    AddDevice(new AUTD3(Vector3d.Zero))
     .OpenAsync(SOEM.Builder()
         .WithErrHandler((slave, status, msg) =>
         {

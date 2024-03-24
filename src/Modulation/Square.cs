@@ -1,15 +1,5 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
 
 namespace AUTD3Sharp.Modulation
 {
@@ -20,16 +10,16 @@ namespace AUTD3Sharp.Modulation
     [Builder]
     public sealed partial class Square
     {
-        public Square(float_t freq)
+        public Square(double freq)
         {
             Freq = freq;
             Low = EmitIntensity.Min;
             High = EmitIntensity.Max;
-            Duty = (float_t)0.5;
+            Duty = 0.5;
             Mode = SamplingMode.ExactFrequency;
         }
 
-        public float_t Freq { get; }
+        public double Freq { get; }
 
         [Property(EmitIntensity = true)]
         public EmitIntensity Low { get; private set; }
@@ -39,7 +29,7 @@ namespace AUTD3Sharp.Modulation
 
         [Property]
 
-        public float_t Duty { get; private set; }
+        public double Duty { get; private set; }
 
 
         [Property]

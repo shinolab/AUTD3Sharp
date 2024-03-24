@@ -1,9 +1,4 @@
-﻿#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#define DIMENSION_M
-#endif
-
-#if UNITY_2020_2_OR_NEWER
+﻿#if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif
 
@@ -15,7 +10,6 @@ using AUTD3Sharp.Driver;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Driver.FPGA.Defined;
 using AUTD3Sharp.NativeMethods;
-
 
 namespace AUTD3Sharp
 {

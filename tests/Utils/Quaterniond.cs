@@ -7,21 +7,21 @@ public class QuaterniondTests
     {
         var q = new Quaterniond(1, 2, 3, 4);
 
-        Assert.Equal(1, q.x);
-        Assert.Equal(2, q.y);
-        Assert.Equal(3, q.z);
-        Assert.Equal(4, q.w);
+        Assert.Equal(1, q.W);
+        Assert.Equal(2, q.X);
+        Assert.Equal(3, q.Y);
+        Assert.Equal(4, q.Z);
     }
 
     [Fact]
     public void Construct_Identity()
     {
-        var q = Quaterniond.identity;
+        var q = Quaterniond.Identity;
 
-        Assert.Equal(0, q.x);
-        Assert.Equal(0, q.y);
-        Assert.Equal(0, q.z);
-        Assert.Equal(1, q.w);
+        Assert.Equal(1, q.W);
+        Assert.Equal(0, q.X);
+        Assert.Equal(0, q.Y);
+        Assert.Equal(0, q.Z);
     }
 
     [Fact]
@@ -40,10 +40,10 @@ public class QuaterniondTests
 
         var result = q.Normalized;
 
-        Assert.Equal(1 / 5.0, result.x);
-        Assert.Equal(2 / 5.0, result.y);
-        Assert.Equal(2 / 5.0, result.z);
-        Assert.Equal(4 / 5.0, result.w);
+        Assert.Equal(1 / 5.0, result.W);
+        Assert.Equal(2 / 5.0, result.X);
+        Assert.Equal(2 / 5.0, result.Y);
+        Assert.Equal(4 / 5.0, result.Z);
     }
 
     [Fact]
@@ -64,18 +64,6 @@ public class QuaterniondTests
         var result = q.L2NormSquared;
 
         Assert.Equal(25, result);
-    }
-
-    [Fact]
-    public void Indexer_ReturnsCorrectValues()
-    {
-        var q = new Quaterniond(1, 2, 3, 4);
-
-        Assert.Equal(1, q[0]);
-        Assert.Equal(2, q[1]);
-        Assert.Equal(3, q[2]);
-        Assert.Equal(4, q[3]);
-        Assert.Throws<ArgumentOutOfRangeException>(() => q[4]);
     }
 
     [Fact]
@@ -101,6 +89,6 @@ public class QuaterniondTests
 
         var result = q.ToString();
 
-        Assert.Equal("(4, 1, 2, 3)", result);
+        Assert.Equal("(1, 2, 3, 4)", result);
     }
 }

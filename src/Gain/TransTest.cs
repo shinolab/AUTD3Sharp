@@ -1,10 +1,5 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using System;
 using System.Runtime.InteropServices;
-
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 

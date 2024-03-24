@@ -1,23 +1,12 @@
-﻿#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#define DIMENSION_M
-#endif
-
-#if UNITY_2020_2_OR_NEWER
+﻿#if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif
 
 using System;
 using System.Threading.Tasks;
 using AUTD3Sharp.Driver;
-
+using AUTD3Sharp.Utils;
 using AUTD3Sharp.NativeMethods;
-
-#if UNITY_2018_3_OR_NEWER
-using Quaternion = UnityEngine.Quaternion;
-#else
-using Quaternion = AUTD3Sharp.Utils.Quaterniond;
-#endif
 
 namespace AUTD3Sharp
 {
@@ -32,9 +21,9 @@ namespace AUTD3Sharp
         /// <returns></returns>
         public ControllerBuilder AddDevice(AUTD3 device)
         {
-            var rot = device.Rot ?? Quaternion.identity;
-            _ptr = NativeMethodsBase.AUTDControllerBuilderAddDevice(_ptr, device.Pos.x, device.Pos.y, device.Pos.z,
-                rot.w, rot.x, rot.y, rot.z);
+            var rot = device.Rot ?? Quaterniond.Identity;
+            _ptr = NativeMethodsBase.AUTDControllerBuilderAddDevice(_ptr, device.Pos.X, device.Pos.Y, device.Pos.Z,
+                rot.W, rot.X, rot.Y, rot.Z);
             return this;
         }
 

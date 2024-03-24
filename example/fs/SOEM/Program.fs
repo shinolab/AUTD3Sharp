@@ -4,7 +4,7 @@ open AUTD3Sharp.Link
 open Samples
 
 let autd = (new ControllerBuilder())
-            .AddDevice(new AUTD3(Vector3d.zero))
+            .AddDevice(new AUTD3(Vector3d.Zero))
             .OpenAsync(SOEM.Builder().WithErrHandler(
                 fun (slave:int) (status:Status) (msg:string) -> 
                     match status with

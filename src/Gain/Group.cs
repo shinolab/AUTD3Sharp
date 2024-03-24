@@ -1,17 +1,12 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
 #endif
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.NativeMethods;
-
 using AUTD3Sharp.Derive;
-
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
 
 namespace AUTD3Sharp.Gain
 {

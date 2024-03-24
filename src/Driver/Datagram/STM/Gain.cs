@@ -1,8 +1,4 @@
-﻿#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram.STM;
@@ -12,13 +8,6 @@ using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
-#endif
-
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
 #endif
 
 namespace AUTD3Sharp
@@ -38,14 +27,14 @@ namespace AUTD3Sharp
         private readonly List<Driver.Datagram.Gain.IGain> _gains;
         private GainSTMMode _mode;
 
-        private GainSTM(float_t? freq, TimeSpan? period, SamplingConfiguration? config) : base(
+        private GainSTM(double? freq, TimeSpan? period, SamplingConfiguration? config) : base(
             freq, period, config)
         {
             _gains = new List<Driver.Datagram.Gain.IGain>();
             _mode = GainSTMMode.PhaseIntensityFull;
         }
 
-        public static GainSTM FromFreq(float_t freq)
+        public static GainSTM FromFreq(double freq)
         {
             return new GainSTM(freq, null, null);
         }
@@ -92,7 +81,7 @@ namespace AUTD3Sharp
             return this;
         }
 
-        public float_t Frequency => FreqFromSize(_gains.Count);
+        public double Frequency => FreqFromSize(_gains.Count);
         public TimeSpan Period => PeriodFromSize(_gains.Count);
         public SamplingConfiguration SamplingConfiguration => SamplingConfigFromSize(_gains.Count);
 

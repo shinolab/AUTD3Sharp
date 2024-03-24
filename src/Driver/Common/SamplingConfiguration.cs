@@ -1,13 +1,3 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 using System;
 using AUTD3Sharp.NativeMethods;
 
@@ -27,7 +17,7 @@ namespace AUTD3Sharp
             return new SamplingConfiguration(NativeMethodsDef.AUTDSamplingConfigFromFrequencyDivision(div).Validate());
         }
 
-        public static SamplingConfiguration FromFrequency(float_t f)
+        public static SamplingConfiguration FromFrequency(double f)
         {
             return new SamplingConfiguration(NativeMethodsDef.AUTDSamplingConfigFromFrequency(f).Validate());
         }
@@ -40,7 +30,7 @@ namespace AUTD3Sharp
 
         public uint FrequencyDivision => NativeMethodsDef.AUTDSamplingConfigFrequencyDivision(Internal);
 
-        public float_t Frequency => NativeMethodsDef.AUTDSamplingConfigFrequency(Internal);
+        public double Frequency => NativeMethodsDef.AUTDSamplingConfigFrequency(Internal);
 
         public TimeSpan Period => TimeSpan.FromSeconds(NativeMethodsDef.AUTDSamplingConfigPeriod(Internal) / 1000.0 / 1000.0 / 1000.0);
     }

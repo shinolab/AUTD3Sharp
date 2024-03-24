@@ -1,16 +1,5 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
-
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -36,10 +25,10 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float_t* foci = Foci.ToArray())
+                fixed (double* foci = Foci.ToArray())
                 fixed (Amplitude* amps = Amps.ToArray())
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloGreedy(foci, (float_t*)amps, (ulong)Amps.Count, PhaseDiv, Constraint.Ptr);
+                    return NativeMethodsGainHolo.AUTDGainHoloGreedy(foci, (double*)amps, (ulong)Amps.Count, PhaseDiv, Constraint.Ptr);
                 }
             }
         }

@@ -1,7 +1,3 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using System;
 using AUTD3Sharp.NativeMethods;
 
@@ -9,23 +5,17 @@ using AUTD3Sharp.NativeMethods;
 #nullable enable
 #endif
 
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 namespace AUTD3Sharp.Driver.Datagram.STM
 {
     public abstract class STM : IDatagram
     {
-        private readonly float_t? _freq;
+        private readonly double? _freq;
         private readonly TimeSpan? _period;
         private readonly SamplingConfiguration? _samplingConfig;
 
         public LoopBehavior LoopBehavior { get; protected set; } = LoopBehavior.Infinite;
 
-        protected STM(float_t? freq, TimeSpan? period, SamplingConfiguration? config)
+        protected STM(double? freq, TimeSpan? period, SamplingConfiguration? config)
         {
             _freq = freq;
             _period = period;
@@ -50,7 +40,7 @@ namespace AUTD3Sharp.Driver.Datagram.STM
             return ptr;
         }
 
-        protected float_t FreqFromSize(int size) => NativeMethodsBase.AUTDSTMPropsFrequency(Props(), (ulong)size);
+        protected double FreqFromSize(int size) => NativeMethodsBase.AUTDSTMPropsFrequency(Props(), (ulong)size);
 
         protected TimeSpan PeriodFromSize(int size) =>
             TimeSpan.FromSeconds(NativeMethodsBase.AUTDSTMPropsPeriod(Props(), (ulong)size) / 1000.0 / 1000.0 /

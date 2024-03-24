@@ -1,24 +1,8 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
-#if UNITY_2018_3_OR_NEWER
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
-#else
-using Vector3 = AUTD3Sharp.Utils.Vector3d;
-#endif
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
-
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
@@ -46,11 +30,11 @@ namespace AUTD3Sharp
         /// <summary>
         /// Get center position of all transducers
         /// </summary>
-        public Vector3 Center
+        public Vector3d Center
         {
             get
             {
-                return _devices.Aggregate(Vector3.zero, (current, device) => current + device.Center) / _devices.Count;
+                return _devices.Aggregate(Vector3d.Zero, (current, device) => current + device.Center) / _devices.Count;
             }
         }
 
@@ -65,7 +49,7 @@ namespace AUTD3Sharp
         /// Set speed of sound of enabled devices
         /// </summary>
         /// <param name="c">Speed of sound</param>
-        public void SetSoundSpeed(float_t c)
+        public void SetSoundSpeed(double c)
         {
             foreach (var dev in Devices()) dev.SoundSpeed = c;
         }
@@ -77,7 +61,7 @@ namespace AUTD3Sharp
         /// <param name="k">Ratio of specific heat</param>
         /// <param name="r">Gas constant</param>
         /// <param name="m">Molar mass</param>
-        public void SetSoundSpeedFromTemp(float_t temp, float_t k = (float_t)1.4, float_t r = (float_t)8.31446261815324, float_t m = (float_t)28.9647e-3)
+        public void SetSoundSpeedFromTemp(double temp, double k = 1.4, double r = 8.31446261815324, double m = 28.9647e-3)
         {
             foreach (var dev in Devices()) dev.SetSoundSpeedFromTemp(temp, k, r, m);
         }

@@ -1,7 +1,3 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;

@@ -1,7 +1,3 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif

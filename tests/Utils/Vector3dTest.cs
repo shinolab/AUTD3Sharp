@@ -8,9 +8,9 @@ public class Vector3dTest
     {
         var vector = new Vector3d(1, 2, 3);
 
-        Assert.Equal(1, vector.x);
-        Assert.Equal(2, vector.y);
-        Assert.Equal(3, vector.z);
+        Assert.Equal(1, vector.X);
+        Assert.Equal(2, vector.Y);
+        Assert.Equal(3, vector.Z);
     }
 
     [Fact]
@@ -18,9 +18,9 @@ public class Vector3dTest
     {
         var vector = new Vector3d([1, 2, 3]);
 
-        Assert.Equal(1, vector.x);
-        Assert.Equal(2, vector.y);
-        Assert.Equal(3, vector.z);
+        Assert.Equal(1, vector.X);
+        Assert.Equal(2, vector.Y);
+        Assert.Equal(3, vector.Z);
 
         Assert.Throws<InvalidCastException>(() => new Vector3d([]));
     }
@@ -33,9 +33,9 @@ public class Vector3dTest
 
         var result = Vector3d.Add(vector1, vector2);
 
-        Assert.Equal(5, result.x);
-        Assert.Equal(7, result.y);
-        Assert.Equal(9, result.z);
+        Assert.Equal(5, result.X);
+        Assert.Equal(7, result.Y);
+        Assert.Equal(9, result.Z);
     }
 
     [Fact]
@@ -47,17 +47,17 @@ public class Vector3dTest
         {
             var result = Vector3d.Subtract(vector1, vector2);
 
-            Assert.Equal(-3, result.x);
-            Assert.Equal(-3, result.y);
-            Assert.Equal(-3, result.z);
+            Assert.Equal(-3, result.X);
+            Assert.Equal(-3, result.Y);
+            Assert.Equal(-3, result.Z);
         }
 
         {
             var result = vector1 - vector2;
 
-            Assert.Equal(-3, result.x);
-            Assert.Equal(-3, result.y);
-            Assert.Equal(-3, result.z);
+            Assert.Equal(-3, result.X);
+            Assert.Equal(-3, result.Y);
+            Assert.Equal(-3, result.Z);
         }
     }
 
@@ -97,9 +97,9 @@ public class Vector3dTest
 
         var result = vector.Normalized;
 
-        Assert.Equal(1 / 3.0, result.x);
-        Assert.Equal(2 / 3.0, result.y);
-        Assert.Equal(2 / 3.0, result.z);
+        Assert.Equal(1 / 3.0, result.X);
+        Assert.Equal(2 / 3.0, result.Y);
+        Assert.Equal(2 / 3.0, result.Z);
     }
 
     [Fact]
@@ -140,9 +140,9 @@ public class Vector3dTest
 
         var result = Vector3d.Multiply(2, vector);
 
-        Assert.Equal(2, result.x);
-        Assert.Equal(4, result.y);
-        Assert.Equal(6, result.z);
+        Assert.Equal(2, result.X);
+        Assert.Equal(4, result.Y);
+        Assert.Equal(6, result.Z);
     }
 
     [Fact]
@@ -152,9 +152,9 @@ public class Vector3dTest
 
         var result = vector * 2;
 
-        Assert.Equal(2, result.x);
-        Assert.Equal(4, result.y);
-        Assert.Equal(6, result.z);
+        Assert.Equal(2, result.X);
+        Assert.Equal(4, result.Y);
+        Assert.Equal(6, result.Z);
     }
 
     [Fact]
@@ -180,9 +180,9 @@ public class Vector3dTest
 
         var result = vector.Rectify();
 
-        Assert.Equal(0, result.x);
-        Assert.Equal(0, result.y);
-        Assert.Equal(0, result.z);
+        Assert.Equal(0, result.X);
+        Assert.Equal(0, result.Y);
+        Assert.Equal(0, result.Z);
     }
 
     [Fact]

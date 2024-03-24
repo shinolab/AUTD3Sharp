@@ -6,8 +6,8 @@ public class GainSTMTest
     public async Task TestGainSTM()
     {
         var autd = await new ControllerBuilder()
-            .AddDevice(new AUTD3(Vector3d.zero))
-            .AddDevice(new AUTD3(Vector3d.zero))
+            .AddDevice(new AUTD3(Vector3d.Zero))
+            .AddDevice(new AUTD3(Vector3d.Zero))
             .OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(ConfigureSilencer.Disable()));
@@ -115,7 +115,7 @@ public class GainSTMTest
     public async Task TestChangeGainSTMSegment()
     {
         var autd = await new ControllerBuilder()
-         .AddDevice(new AUTD3(Vector3d.zero))
+         .AddDevice(new AUTD3(Vector3d.Zero))
          .OpenAsync(Audit.Builder());
 
         Assert.True(await autd.SendAsync(new ConfigureReadsFPGAState(_ => true)));

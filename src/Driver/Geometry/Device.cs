@@ -1,26 +1,8 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.NativeMethods;
-
-#if UNITY_2018_3_OR_NEWER
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
-using Quaternion = UnityEngine.Quaternion;
-#else
-using Vector3 = AUTD3Sharp.Utils.Vector3d;
-using Quaternion = AUTD3Sharp.Utils.Quaterniond;
-#endif
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
+using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
@@ -49,7 +31,7 @@ namespace AUTD3Sharp
         /// <summary>
         /// Speed of sound
         /// </summary>
-        public float_t SoundSpeed
+        public double SoundSpeed
         {
             get => NativeMethodsBase.AUTDDeviceGetSoundSpeed(Ptr);
             set => NativeMethodsBase.AUTDDeviceSetSoundSpeed(Ptr, value);
@@ -58,7 +40,7 @@ namespace AUTD3Sharp
         /// <summary>
         /// Attenuation coefficient
         /// </summary>
-        public float_t Attenuation
+        public double Attenuation
         {
             get => NativeMethodsBase.AUTDDeviceGetAttenuation(Ptr);
             set => NativeMethodsBase.AUTDDeviceSetAttenuation(Ptr, value);
@@ -73,32 +55,32 @@ namespace AUTD3Sharp
         /// <summary>
         /// Get center position of all transducers
         /// </summary>
-        public Vector3 Center
+        public Vector3d Center
         {
             get
             {
                 unsafe
                 {
-                    var center = stackalloc float_t[3];
+                    var center = stackalloc double[3];
                     NativeMethodsBase.AUTDDeviceCenter(Ptr, center);
-                    return new Vector3(center[0], center[1], center[2]);
+                    return new Vector3d(center[0], center[1], center[2]);
                 }
             }
         }
 
-        public void Translate(Vector3 t)
+        public void Translate(Vector3d t)
         {
-            NativeMethodsBase.AUTDDeviceTranslate(Ptr, t.x, t.y, t.z);
+            NativeMethodsBase.AUTDDeviceTranslate(Ptr, t.X, t.Y, t.Z);
         }
 
-        public void Rotate(Quaternion r)
+        public void Rotate(Quaterniond r)
         {
-            NativeMethodsBase.AUTDDeviceRotate(Ptr, r.w, r.x, r.y, r.z);
+            NativeMethodsBase.AUTDDeviceRotate(Ptr, r.W, r.X, r.Y, r.Z);
         }
 
-        public void Affine(Vector3 t, Quaternion r)
+        public void Affine(Vector3d t, Quaterniond r)
         {
-            NativeMethodsBase.AUTDDeviceAffine(Ptr, t.x, t.y, t.z, r.w, r.x, r.y, r.z);
+            NativeMethodsBase.AUTDDeviceAffine(Ptr, t.X, t.Y, t.Z, r.W, r.X, r.Y, r.Z);
         }
 
         /// <summary>
@@ -108,7 +90,7 @@ namespace AUTD3Sharp
         /// <param name="k">Ratio of specific heat</param>
         /// <param name="r">Gas constant</param>
         /// <param name="m">Molar mass</param>
-        public void SetSoundSpeedFromTemp(float_t temp, float_t k = (float_t)1.4, float_t r = (float_t)8.31446261815324, float_t m = (float_t)28.9647e-3)
+        public void SetSoundSpeedFromTemp(double temp, double k = 1.4, double r = 8.31446261815324, double m = 28.9647e-3)
         {
             NativeMethodsBase.AUTDDeviceSetSoundSpeedFromTemp(Ptr, temp, k, r, m);
         }

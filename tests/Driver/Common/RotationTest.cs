@@ -51,14 +51,14 @@ public class RotationTest
         return;
 
         async Task<Controller<Audit>> Open(Quaterniond q) =>
-            await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero).WithRotation(q))
+            await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero).WithRotation(q))
                 .OpenAsync(Audit.Builder());
 
         void AssertNearVec3(Vector3d expected, Vector3d x)
         {
-            Assert.True(Math.Abs(expected.x - x.x) < 1e-6);
-            Assert.True(Math.Abs(expected.y - x.y) < 1e-6);
-            Assert.True(Math.Abs(expected.z - x.z) < 1e-6);
+            Assert.True(Math.Abs(expected.X - x.X) < 1e-6);
+            Assert.True(Math.Abs(expected.Y - x.Y) < 1e-6);
+            Assert.True(Math.Abs(expected.Z - x.Z) < 1e-6);
         }
     }
 }

@@ -507,7 +507,6 @@ def unity_build(args):
     rmtree_f("unity/Assets/Scripts/obj")
     rmtree_f("unity/Assets/Scripts/bin")
     rmtree_f("unity/Assets/Scripts/native")
-    rmtree_f("unity/Assets/Scripts/Utils")
     shutil.copy(
         "src/NativeMethods/DefExt.cs",
         "unity/Assets/Scripts/NativeMethods/DefExt.cs",

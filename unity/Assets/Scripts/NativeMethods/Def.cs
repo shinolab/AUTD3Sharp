@@ -14,27 +14,27 @@ namespace AUTD3Sharp.NativeMethods
     {
         const string __DllName = "autd3capi_def";
 
-        public const float DEFAULT_CORRECTED_ALPHA = 0.803f;
+        public const double DEFAULT_CORRECTED_ALPHA = 0.803;
         public const uint NUM_TRANS_IN_UNIT = 249;
         public const uint NUM_TRANS_IN_X = 18;
         public const uint NUM_TRANS_IN_Y = 14;
-        public const float TRANS_SPACING_MM = 10.16f;
-        public const float DEVICE_HEIGHT_MM = 151.4f;
-        public const float DEVICE_WIDTH_MM = 192f;
+        public const double TRANS_SPACING_MM = 10.16;
+        public const double DEVICE_HEIGHT_MM = 151.4;
+        public const double DEVICE_WIDTH_MM = 192;
         public const uint FPGA_CLK_FREQ = 20480000;
-        public const float ULTRASOUND_FREQUENCY = 40000f;
+        public const double ULTRASOUND_FREQUENCY = 40000;
         public const int AUTD3_TRUE = 1;
         public const int AUTD3_FALSE = 0;
 
 
         [DllImport(__DllName, EntryPoint = "AUTDEmitIntensityWithCorrectionAlpha", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern byte AUTDEmitIntensityWithCorrectionAlpha(byte value, float alpha);
+        public static extern byte AUTDEmitIntensityWithCorrectionAlpha(byte value, double alpha);
 
         [DllImport(__DllName, EntryPoint = "AUTDPhaseFromRad", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern byte AUTDPhaseFromRad(float value);
+        public static extern byte AUTDPhaseFromRad(double value);
 
         [DllImport(__DllName, EntryPoint = "AUTDPhaseToRad", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern float AUTDPhaseToRad(byte value);
+        public static extern double AUTDPhaseToRad(byte value);
 
         [DllImport(__DllName, EntryPoint = "AUTDLoopBehaviorInfinite", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LoopBehaviorRaw AUTDLoopBehaviorInfinite();
@@ -52,7 +52,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ResultSamplingConfig AUTDSamplingConfigFromFrequencyDivision(uint div);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFrequency", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultSamplingConfig AUTDSamplingConfigFromFrequency(float f);
+        public static extern ResultSamplingConfig AUTDSamplingConfigFromFrequency(double f);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultSamplingConfig AUTDSamplingConfigFromPeriod(ulong p);
@@ -61,7 +61,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern uint AUTDSamplingConfigFrequencyDivision(SamplingConfigurationRaw config);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFrequency", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern float AUTDSamplingConfigFrequency(SamplingConfigurationRaw config);
+        public static extern double AUTDSamplingConfigFrequency(SamplingConfigurationRaw config);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ulong AUTDSamplingConfigPeriod(SamplingConfigurationRaw config);

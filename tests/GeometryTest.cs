@@ -128,9 +128,9 @@ public class GeometryTest
         foreach (var dev in autd.Geometry)
         {
             var center = dev.Center;
-            Assert.Equal(86.62522088353406, center.x);
-            Assert.Equal(66.71325301204821, center.y);
-            Assert.Equal(0.0, center.z);
+            Assert.Equal(86.62522088353406, center.X);
+            Assert.Equal(66.71325301204821, center.Y);
+            Assert.Equal(0.0, center.Z);
         }
     }
 
@@ -156,7 +156,7 @@ public class GeometryTest
         var autd = await AUTDTest.CreateController();
         foreach (var dev in autd.Geometry)
         {
-            var r = new Quaterniond(0, 0, 0.7071067811865476, 0.7071067811865476);
+            var r = new Quaterniond(0.7071067811865476, 0, 0, 0.7071067811865476);
             dev.Rotate(r);
             foreach (var tr in dev)
             {
@@ -173,15 +173,15 @@ public class GeometryTest
         {
             var originalPos = dev.Select(tr => tr.Position).ToArray();
             var t = new Vector3d(1, 2, 3);
-            var r = new Quaterniond(0, 0, 0.7071067811865476, 0.7071067811865476);
+            var r = new Quaterniond(0.7071067811865476, 0, 0, 0.7071067811865476);
             dev.Affine(t, r);
             foreach (var tr in dev)
             {
                 var op = originalPos[tr.Idx];
-                var expected = new Vector3d(-op.y, op.x, op.z) + t;
-                Assert.True(Math.Abs(expected.x - tr.Position.x) < 1e-3);
-                Assert.True(Math.Abs(expected.y - tr.Position.y) < 1e-3);
-                Assert.True(Math.Abs(expected.z - tr.Position.z) < 1e-3);
+                var expected = new Vector3d(-op.Y, op.X, op.Z) + t;
+                Assert.True(Math.Abs(expected.X - tr.Position.X) < 1e-3);
+                Assert.True(Math.Abs(expected.Y - tr.Position.Y) < 1e-3);
+                Assert.True(Math.Abs(expected.Z - tr.Position.Z) < 1e-3);
                 Assert.Equal(r, tr.Rotation);
             }
         }
@@ -221,7 +221,7 @@ public class GeometryTest
         {
             foreach (var tr in dev)
             {
-                Assert.Equal(tr.Rotation, new Quaterniond(0.0, 0.0, 0.0, 1.0));
+                Assert.Equal(tr.Rotation, new Quaterniond(1.0, 0.0, 0.0, 0.0));
             }
         }
     }

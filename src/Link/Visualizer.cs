@@ -1,29 +1,12 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Driver;
-
-
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
-#endif
-
-#if UNITY_2018_3_OR_NEWER
-using Vector3 = UnityEngine.Vector3;
-#else
-using Vector3 = AUTD3Sharp.Utils.Vector3d;
-#endif
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
 #endif
 
 namespace AUTD3Sharp.Link
@@ -65,25 +48,25 @@ namespace AUTD3Sharp.Link
 
     public struct PlotRange
     {
-        public float_t XStart { get; set; }
-        public float_t XEnd { get; set; }
-        public float_t YStart { get; set; }
-        public float_t YEnd { get; set; }
-        public float_t ZStart { get; set; }
-        public float_t ZEnd { get; set; }
-        public float_t Resolution { get; set; }
+        public double XStart { get; set; }
+        public double XEnd { get; set; }
+        public double YStart { get; set; }
+        public double YEnd { get; set; }
+        public double ZStart { get; set; }
+        public double ZEnd { get; set; }
+        public double Resolution { get; set; }
 
         internal PlotRangePtr Ptr => NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRange(XStart, XEnd, YStart, YEnd, ZStart, ZEnd, Resolution);
 
-        public Vector3[] ObservePoints()
+        public Vector3d[] ObservePoints()
         {
             var range = Ptr;
             var pointsLen = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePointsLen(range);
-            var buf = new Vector3[pointsLen];
+            var buf = new Vector3d[pointsLen];
             unsafe
             {
-                fixed (Vector3* p = &buf[0])
-                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePoints(range, (float_t*)p);
+                fixed (Vector3d* p = &buf[0])
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePoints(range, (double*)p);
             }
             return buf;
         }
@@ -98,11 +81,11 @@ namespace AUTD3Sharp.Link
     public sealed class PlotConfig : IPlotConfig
     {
         public (uint, uint) FigSize { get; set; } = (960, 640);
-        public float_t CbarSize { get; set; } = (float_t)0.15;
+        public double CbarSize { get; set; } = 0.15;
         public uint FontSize { get; set; } = 24;
         public uint LabelAreaSize { get; set; } = 80;
         public uint Margin { get; set; } = 10;
-        public float_t TicksStep { get; set; } = 10;
+        public double TicksStep { get; set; } = 10;
         public CMap Cmap { get; set; } = CMap.Jet;
         public string Fname { get; set; } = "";
 
@@ -129,7 +112,7 @@ namespace AUTD3Sharp.Link
         public string CbarSize { get; set; } = "5%";
         public string CbarPad { get; set; } = "3%";
         public int FontSize { get; set; } = 12;
-        public float_t TicksStep { get; set; } = 10;
+        public double TicksStep { get; set; } = 10;
         public string Cmap { get; set; } = "jet";
         public bool Show { get; set; } = false;
         public string Fname { get; set; } = "fig.png";
@@ -304,16 +287,16 @@ namespace AUTD3Sharp.Link
             }
         }
 
-        public System.Numerics.Complex[] CalcField(IEnumerable<Vector3> pointsIter, Geometry geometry, Segment segment, int idx)
+        public System.Numerics.Complex[] CalcField(IEnumerable<Vector3d> pointsIter, Geometry geometry, Segment segment, int idx)
         {
-            var points = pointsIter as Vector3[] ?? pointsIter.ToArray();
+            var points = pointsIter as Vector3d[] ?? pointsIter.ToArray();
             var pointsLen = points.Length;
-            var pointsPtr = points.SelectMany(v => new[] { v.x, v.y, v.z }).ToArray();
-            var buf = new float_t[pointsLen * 2];
+            var pointsPtr = points.SelectMany(v => new[] { v.X, v.Y, v.Z }).ToArray();
+            var buf = new double[pointsLen * 2];
             unsafe
             {
-                fixed (float_t* pp = &pointsPtr[0])
-                fixed (float_t* bp = &buf[0])
+                fixed (double* pp = &pointsPtr[0])
+                fixed (double* bp = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerCalcField(_ptr, _backend, _directivity,
                         pp, (uint)pointsLen, geometry.Ptr, segment, (uint)idx, bp);
             }

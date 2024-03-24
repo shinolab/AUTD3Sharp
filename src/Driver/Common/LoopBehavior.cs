@@ -1,3 +1,7 @@
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 using System;
 using AUTD3Sharp.NativeMethods;
 using System.Diagnostics.CodeAnalysis;
@@ -25,9 +29,13 @@ namespace AUTD3Sharp
         public static LoopBehavior Once => new LoopBehavior(NativeMethodsDef.AUTDLoopBehaviorOnce());
 
         [ExcludeFromCodeCoverage] public override bool Equals(object? obj) => obj is LoopBehavior other && Equals(other);
-        [ExcludeFromCodeCoverage] public readonly bool Equals(LoopBehavior other) => Internal.rep == other.Internal.rep;
-        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => Internal.GetHashCode();
+        [ExcludeFromCodeCoverage] public bool Equals(LoopBehavior other) => Internal.rep == other.Internal.rep;
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Internal.GetHashCode();
         [ExcludeFromCodeCoverage] public static bool operator ==(LoopBehavior lhs, LoopBehavior rhs) => lhs.Equals(rhs);
         [ExcludeFromCodeCoverage] public static bool operator !=(LoopBehavior lhs, LoopBehavior rhs) => !(lhs == rhs);
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

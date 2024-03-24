@@ -22,12 +22,12 @@ module GroupByTransducerTest =
     let Test<'T> (autd : Controller<'T>) = 
         (ConfigureSilencer.Default()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 
-        let cx = autd.Geometry.Center.x;
+        let cx = autd.Geometry.Center.X;
         let g1 = new Focus(autd.Geometry.Center + Vector3d(0., 0., 150.));
         let g2 = new Null();
 
         let grouping (dev: Device) (tr: Transducer) =
-            if (tr.Position.x < cx) then "focus" :> obj else "null" :> obj
+            if (tr.Position.X < cx) then "focus" :> obj else "null" :> obj
         let g = (new Group(grouping)).Set("focus", g1).Set("null", g2);
         let m = new Sine(150);
 

@@ -21,8 +21,8 @@ public class CacheTest
     [Fact]
     public async Task Cache()
     {
-        var autd1 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
-        var autd2 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd1 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
+        var autd2 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         var m = new Sine(150);
         var mc = m.WithCache().WithLoopBehavior(LoopBehavior.Once);
@@ -62,7 +62,7 @@ public class CacheTest
     [Fact]
     public async Task CacheCheckOnce()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         {
             var m = new ForCacheTest();
@@ -85,7 +85,7 @@ public class CacheTest
     [Fact]
     public async Task CacheCheckFree()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         var mc = new ForCacheTest().WithCache();
         {

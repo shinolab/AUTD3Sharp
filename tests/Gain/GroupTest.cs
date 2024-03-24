@@ -7,9 +7,9 @@ public class GroupTest
     {
         var autd = await AUTDTest.CreateController();
 
-        var cx = autd.Geometry.Center.x;
+        var cx = autd.Geometry.Center.X;
 
-        Assert.True(await autd.SendAsync(new Group((_, tr) => tr.Position.x switch
+        Assert.True(await autd.SendAsync(new Group((_, tr) => tr.Position.X switch
         {
             var x when x < cx => "uniform",
             _ => "null"
@@ -19,7 +19,7 @@ public class GroupTest
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             foreach (var tr in dev)
             {
-                if (tr.Position.x < cx)
+                if (tr.Position.X < cx)
                 {
                     Assert.Equal(0x80, intensities[tr.Idx]);
                     Assert.Equal(0x90, phases[tr.Idx]);
@@ -32,7 +32,7 @@ public class GroupTest
             }
         }
 
-        Assert.True(await autd.SendAsync(new Group((_, tr) => tr.Position.x switch
+        Assert.True(await autd.SendAsync(new Group((_, tr) => tr.Position.X switch
         {
             var x when x > cx => "uniform",
             _ => null
@@ -42,7 +42,7 @@ public class GroupTest
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             foreach (var tr in dev)
             {
-                if (tr.Position.x > cx)
+                if (tr.Position.X > cx)
                 {
                     Assert.Equal(0x81, intensities[tr.Idx]);
                     Assert.Equal(0x91, phases[tr.Idx]);

@@ -7,7 +7,7 @@ public class RawPCMTest
     [Fact]
     public async Task RawPCM()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] {
                 157,

@@ -1,15 +1,5 @@
-#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
-#endif
 
 namespace AUTD3Sharp.Modulation
 {
@@ -25,7 +15,7 @@ namespace AUTD3Sharp.Modulation
         /// </summary>
         /// <param name="freq">Frequency of sine wave</param>
         /// <remarks>The sine wave is defined as `amp / 2 * sin(2π * freq * t) + offset`, where `t` is time, and `amp = EmitIntensity.Max`, `offset = EmitIntensity.Max/2` by default.</remarks>
-        public Sine(float_t freq)
+        public Sine(double freq)
         {
             Freq = freq;
             Intensity = EmitIntensity.Max;
@@ -34,7 +24,7 @@ namespace AUTD3Sharp.Modulation
             Mode = SamplingMode.ExactFrequency;
         }
 
-        public float_t Freq { get; }
+        public double Freq { get; }
 
         [Property(EmitIntensity = true)]
         public EmitIntensity Intensity { get; private set; }

@@ -5,4 +5,4 @@ open Samples
 
 let serverAmsNetId = "your TwinCATAUTDServer AMS net id (e.g. 172.16.99.2.1.1)"
  
-(new ControllerBuilder()).AddDevice(new AUTD3(Vector3d.zero)).OpenAsync(RemoteTwinCAT.Builder serverAmsNetId) |> Async.AwaitTask |> Async.RunSynchronously |> SampleRunner.Run
+(new ControllerBuilder()).AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(RemoteTwinCAT.Builder serverAmsNetId) |> Async.AwaitTask |> Async.RunSynchronously |> SampleRunner.Run

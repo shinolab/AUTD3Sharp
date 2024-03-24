@@ -1,31 +1,13 @@
-﻿#if UNITY_2018_3_OR_NEWER
-#define USE_SINGLE
-#endif
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram.STM;
 using AUTD3Sharp.Driver.Datagram;
-
+using AUTD3Sharp.Utils;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
-#endif
-
-#if UNITY_2018_3_OR_NEWER
-using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
-#else
-using Vector3 = AUTD3Sharp.Utils.Vector3d;
-#endif
-
-
-#if USE_SINGLE
-using float_t = System.Single;
-#else
-using float_t = System.Double;
 #endif
 
 namespace AUTD3Sharp
@@ -42,16 +24,16 @@ namespace AUTD3Sharp
     /// </list></remarks>
     public sealed class FocusSTM : STM, IDatagramS<FocusSTMPtr>
     {
-        private readonly List<float_t> _points;
+        private readonly List<double> _points;
         private readonly List<EmitIntensity> _intensities;
 
-        private FocusSTM(float_t? freq, TimeSpan? period, SamplingConfiguration? config) : base(freq, period, config)
+        private FocusSTM(double? freq, TimeSpan? period, SamplingConfiguration? config) : base(freq, period, config)
         {
-            _points = new List<float_t>();
+            _points = new List<double>();
             _intensities = new List<EmitIntensity>();
         }
 
-        public static FocusSTM FromFreq(float_t freq)
+        public static FocusSTM FromFreq(double freq)
         {
             return new FocusSTM(freq, null, null);
         }
@@ -72,11 +54,11 @@ namespace AUTD3Sharp
         /// <param name="point">Focus point</param>
         /// <param name="intensity">Emission intensity</param>
         /// <returns></returns>
-        public FocusSTM AddFocus(Vector3 point, EmitIntensity? intensity = null)
+        public FocusSTM AddFocus(Vector3d point, EmitIntensity? intensity = null)
         {
-            _points.Add(point.x);
-            _points.Add(point.y);
-            _points.Add(point.z);
+            _points.Add(point.X);
+            _points.Add(point.Y);
+            _points.Add(point.Z);
             _intensities.Add(intensity ?? EmitIntensity.Max);
             return this;
         }
@@ -85,7 +67,7 @@ namespace AUTD3Sharp
         /// Add foci
         /// </summary>
         /// <param name="iter">Enumerable of foci</param>
-        public FocusSTM AddFociFromIter(IEnumerable<Vector3> iter)
+        public FocusSTM AddFociFromIter(IEnumerable<Vector3d> iter)
         {
             return iter.Aggregate(this, (stm, point) => stm.AddFocus(point));
         }
@@ -94,12 +76,12 @@ namespace AUTD3Sharp
         /// Add foci
         /// </summary>
         /// <param name="iter">Enumerable of foci and duty shifts</param>
-        public FocusSTM AddFociFromIter(IEnumerable<(Vector3, EmitIntensity)> iter)
+        public FocusSTM AddFociFromIter(IEnumerable<(Vector3d, EmitIntensity)> iter)
         {
             return iter.Aggregate(this, (stm, point) => stm.AddFocus(point.Item1, point.Item2));
         }
 
-        public float_t Frequency => FreqFromSize(_intensities.Count);
+        public double Frequency => FreqFromSize(_intensities.Count);
         public TimeSpan Period => PeriodFromSize(_intensities.Count);
         public SamplingConfiguration SamplingConfiguration => SamplingConfigFromSize(_intensities.Count);
 
@@ -121,7 +103,7 @@ namespace AUTD3Sharp
             var intensities = _intensities.ToArray();
             unsafe
             {
-                fixed (float_t* pp = &points[0])
+                fixed (double* pp = &points[0])
                 fixed (EmitIntensity* ps = &intensities[0])
                 {
                     return NativeMethodsBase.AUTDSTMFocus(Props(), pp, (byte*)ps, (ulong)_intensities.Count)
