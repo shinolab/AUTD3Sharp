@@ -151,6 +151,13 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct DebugSettings
+    {
+        public fixed byte ty[4];
+        public fixed ushort value[4];
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct LinkBuilderPtr
     {
         public IntPtr Item1;

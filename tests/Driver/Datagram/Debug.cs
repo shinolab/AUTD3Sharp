@@ -13,17 +13,29 @@ public class DebugTest
 
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(0xFF, autd.Link.DebugOutputIdx(dev.Idx));
+            Assert.Equal(new byte[] { 0x00, 0x00, 0x00, 0x00 }, autd.Link.DebugTypes(dev.Idx));
+            Assert.Equal(new ushort[] { 0x0000, 0x0000, 0x0000, 0x0000 }, autd.Link.DebugValues(dev.Idx));
         }
 
-        Assert.True(await autd.SendAsync(new ConfigureDebugOutputIdx(device => device[0])));
+        Assert.True(await autd.SendAsync(new ConfigureDebugSettings(_ => new DebugType[] { DebugType.None(), DebugType.BaseSignal(), DebugType.Thermo(), DebugType.ForceFan() })));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(0, autd.Link.DebugOutputIdx(dev.Idx));
+            Assert.Equal(new byte[] { 0x00, 0x01, 0x02, 0x03 }, autd.Link.DebugTypes(dev.Idx));
+            Assert.Equal(new ushort[] { 0x0000, 0x0000, 0x0000, 0x0000 }, autd.Link.DebugValues(dev.Idx));
         }
 
-        Assert.True(await autd.SendAsync(new ConfigureDebugOutputIdx(device => device.Idx == 0 ? device[10] : null)));
-        Assert.Equal(10, autd.Link.DebugOutputIdx(0));
-        Assert.Equal(0xFF, autd.Link.DebugOutputIdx(1));
+        Assert.True(await autd.SendAsync(new ConfigureDebugSettings(_ => new DebugType[] { DebugType.Sync(), DebugType.ModSegment(), DebugType.ModIdx(0x01), DebugType.StmSegment() })));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(new byte[] { 0x10, 0x20, 0x21, 0x50 }, autd.Link.DebugTypes(dev.Idx));
+            Assert.Equal(new ushort[] { 0x0000, 0x0000, 0x0001, 0x0000 }, autd.Link.DebugValues(dev.Idx));
+        }
+
+        Assert.True(await autd.SendAsync(new ConfigureDebugSettings(dev => new DebugType[] { DebugType.StmIdx(0x02), DebugType.IsStmMode(), DebugType.PwmOut(dev[3]), DebugType.Direct(true) })));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(new byte[] { 0x51, 0x52, 0xE0, 0xF0 }, autd.Link.DebugTypes(dev.Idx));
+            Assert.Equal(new ushort[] { 0x0002, 0x0000, 0x0003, 0x0001 }, autd.Link.DebugValues(dev.Idx));
+        }
     }
 }

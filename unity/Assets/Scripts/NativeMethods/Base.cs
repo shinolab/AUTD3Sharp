@@ -19,8 +19,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDatagramClear", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramClear();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDatagramConfigureDebugOutputIdx", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern DatagramPtr AUTDDatagramConfigureDebugOutputIdx(IntPtr f, IntPtr context, GeometryPtr geometry);
+        [DllImport(__DllName, EntryPoint = "AUTDDatagramConfigureDebugSettings", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern DatagramPtr AUTDDatagramConfigureDebugSettings(IntPtr f, IntPtr context, GeometryPtr geometry);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramConfigureForceFan", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramConfigureForceFan(IntPtr f, IntPtr context, GeometryPtr geometry);
@@ -287,8 +287,11 @@ namespace AUTD3Sharp.NativeMethods
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(LinkPtr audit, uint idx);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaDebugOutputIdx", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern byte AUTDLinkAuditFpgaDebugOutputIdx(LinkPtr audit, uint idx);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaDebugTypes", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDLinkAuditFpgaDebugTypes(LinkPtr audit, uint idx, byte* ty);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaDebugValues", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDLinkAuditFpgaDebugValues(LinkPtr audit, uint idx, ushort* value);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaStmFrequencyDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDLinkAuditFpgaStmFrequencyDivision(LinkPtr audit, Segment segment, uint idx);

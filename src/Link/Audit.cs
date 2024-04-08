@@ -95,9 +95,26 @@ namespace AUTD3Sharp.Link
             return NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (uint)idx);
         }
 
-        public byte DebugOutputIdx(int idx)
+        public byte[] DebugTypes(int idx)
         {
-            return NativeMethodsBase.AUTDLinkAuditFpgaDebugOutputIdx(_ptr, (uint)idx);
+            var ty = new byte[4];
+            unsafe
+            {
+                fixed (byte* p = &ty[0])
+                    NativeMethodsBase.AUTDLinkAuditFpgaDebugTypes(_ptr, (uint)idx, p);
+            }
+            return ty;
+        }
+
+        public ushort[] DebugValues(int idx)
+        {
+            var value = new ushort[4];
+            unsafe
+            {
+                fixed (ushort* p = &value[0])
+                    NativeMethodsBase.AUTDLinkAuditFpgaDebugValues(_ptr, (uint)idx, p);
+            }
+            return value;
         }
 
         public void AssertThermalSensor(int idx)
