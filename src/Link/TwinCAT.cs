@@ -5,9 +5,9 @@ using AUTD3Sharp.Driver;
 
 namespace AUTD3Sharp.Link
 {
-    /// <summary>
-    /// Link using TwinCAT3
-    /// </summary>
+
+
+
     public sealed class TwinCAT
     {
         public sealed class TwinCATBuilder : ILinkBuilder<TwinCAT>
@@ -42,20 +42,20 @@ namespace AUTD3Sharp.Link
         }
     }
 
-    /// <summary>
-    /// Link for remote TwinCAT3 server via <see href="https://github.com/Beckhoff/ADS">ADS</see> library
-    /// </summary>
+
+
+
     public sealed class RemoteTwinCAT
     {
         public sealed class RemoteTwinCATBuilder : ILinkBuilder<RemoteTwinCAT>
         {
             private LinkRemoteTwinCATBuilderPtr _ptr;
 
-            /// <summary>
-            /// Constructor
-            /// </summary>
-            /// <param name="serverAmsNetId">Server AMS Net ID</param>
-            /// <exception cref="AUTDException"></exception>
+
+
+
+
+
             public RemoteTwinCATBuilder(string serverAmsNetId)
             {
                 var serverAmsNetIdBytes = System.Text.Encoding.UTF8.GetBytes(serverAmsNetId);
@@ -68,11 +68,11 @@ namespace AUTD3Sharp.Link
                 }
             }
 
-            /// <summary>
-            /// Set server IP address
-            /// </summary>
-            /// <param name="serverIp"></param>
-            /// <returns></returns>
+
+
+
+
+
             public RemoteTwinCATBuilder WithServerIp(IPAddress serverIp)
             {
                 var serverIpBytes = serverIp.GetAddressBytes();
@@ -85,11 +85,11 @@ namespace AUTD3Sharp.Link
                 return this;
             }
 
-            /// <summary>
-            /// Set client AMS Net ID
-            /// </summary>
-            /// <param name="clientAmsNetId"></param>
-            /// <returns></returns>
+
+
+
+
+
             public RemoteTwinCATBuilder WithClientAmsNetId(string clientAmsNetId)
             {
                 var clientAmsNetIdBytes = System.Text.Encoding.UTF8.GetBytes(clientAmsNetId);

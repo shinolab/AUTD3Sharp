@@ -6,9 +6,6 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Driver.Datagram.Modulation
 {
-    /// <summary>
-    /// Modulation to cache the result of calculation
-    /// </summary>
     [Modulation(NoCache = true, ConfigNoChange = true, NoTransform = true, NoRadiationPressure = true)]
     public sealed partial class Cache<TM> : IEnumerable<EmitIntensity>
     where TM : IModulation
@@ -20,16 +17,16 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
         {
             _m = m;
             _cache = Array.Empty<EmitIntensity>();
-            LoopBehavior = m.InternalLoopBehavior();
-            _config = m.InternalSamplingConfiguration();
+            this.LoopBehavior = m.LoopBehavior();
+            _config = m.SamplingConfig();
         }
 
-        public ReadOnlySpan<EmitIntensity> Init()
+        public ReadOnlySpan<EmitIntensity> Init(Geometry geometry)
         {
             if (_cache.Length != 0) return Buffer;
-            var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr());
+            var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr(geometry), geometry.Ptr);
             var res = ptr.Validate();
-            _cache = new EmitIntensity[ptr.result_len];
+            _cache = new EmitIntensity[NativeMethodsBase.AUTDModulationCalcGetSize(res)];
             unsafe
             {
                 fixed (EmitIntensity* pBuf = &_cache[0])
@@ -38,13 +35,13 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             return Buffer;
         }
 
-        private ModulationPtr ModulationPtr()
+        private ModulationPtr ModulationPtr(Geometry geometry)
         {
-            Init();
+            Init(geometry);
             unsafe
             {
                 fixed (EmitIntensity* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationCustom(_config.Internal, (byte*)pBuf, (ulong)_cache.Length, LoopBehavior.Internal);
+                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)pBuf, (uint)_cache.Length);
             }
         }
 

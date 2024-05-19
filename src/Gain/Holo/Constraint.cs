@@ -2,64 +2,17 @@
 #nullable enable
 #endif
 
-using System;
-using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    /// <summary>
-    /// Amplitude constraint
-    /// </summary>
-    public struct EmissionConstraint : IEquatable<EmissionConstraint>
+    public static class EmissionConstraint
     {
-        internal EmissionConstraintPtr Ptr;
-
-        private EmissionConstraint(EmissionConstraintPtr ptr)
-        {
-            Ptr = ptr;
-        }
-
-        /// <summary>
-        /// Do nothing (this is equivalent to `Clamp(EmitIntensity.Min, EmitIntensity.Max)`)
-        /// </summary>
-        public static EmissionConstraint DontCare() =>
-            new EmissionConstraint(NativeMethodsGainHolo.AUTDGainHoloConstraintDotCare());
-
-        /// <summary>
-        /// Normalize the value by dividing the maximum value
-        /// </summary>
-        public static EmissionConstraint Normalize() =>
-            new EmissionConstraint(NativeMethodsGainHolo.AUTDGainHoloConstraintNormalize());
-
-        /// <summary>
-        /// Set all amplitudes to the specified value
-        /// </summary>
-        public static EmissionConstraint Uniform(EmitIntensity value) =>
-            new EmissionConstraint(NativeMethodsGainHolo.AUTDGainHoloConstraintUniform(value.Value));
-
-        /// <summary>
-        /// Set all amplitudes to the specified value
-        /// </summary>
-        public static EmissionConstraint Uniform(byte value) => Uniform(new EmitIntensity(value));
-
-        /// <summary>
-        /// Clamp all amplitudes to the specified range
-        /// </summary>
-        public static EmissionConstraint Clamp(EmitIntensity min, EmitIntensity max) =>
-            new EmissionConstraint(NativeMethodsGainHolo.AUTDGainHoloConstraintClamp(min.Value, max.Value));
-
-        /// <summary>
-        /// Clamp all amplitudes to the specified range
-        /// </summary>
-        public static EmissionConstraint Clamp(byte min, byte max) => Clamp(new EmitIntensity(min), new EmitIntensity(max));
-
-        [ExcludeFromCodeCoverage] public readonly override bool Equals(object? obj) => obj is EmissionConstraint other && Equals(other);
-        [ExcludeFromCodeCoverage] public readonly bool Equals(EmissionConstraint other) => NativeMethodsGainHolo.AUTDGainHoloConstraintEq(Ptr, other.Ptr);
-        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => Ptr.GetHashCode();
-        [ExcludeFromCodeCoverage] public static bool operator ==(EmissionConstraint lhs, EmissionConstraint rhs) => lhs.Equals(rhs);
-        [ExcludeFromCodeCoverage] public static bool operator !=(EmissionConstraint lhs, EmissionConstraint rhs) => !(lhs == rhs);
-
+        public static EmissionConstraintWrap DontCare => NativeMethodsGainHolo.AUTDGainHoloConstraintDotCare();
+        public static EmissionConstraintWrap Normalize => NativeMethodsGainHolo.AUTDGainHoloConstraintNormalize();
+        public static EmissionConstraintWrap Uniform(EmitIntensity value) => NativeMethodsGainHolo.AUTDGainHoloConstraintUniform(value.Value);
+        public static EmissionConstraintWrap Clamp(EmitIntensity min, EmitIntensity max) => NativeMethodsGainHolo.AUTDGainHoloConstraintClamp(min.Value, max.Value);
+        public static EmissionConstraintWrap Multiply(double value) => NativeMethodsGainHolo.AUTDGainHoloConstraintMultiply(value);
     }
 }
 

@@ -3,10 +3,10 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain
 {
-    /// <summary>
-    /// Gain to set amp and phase uniformly
-    /// </summary>
-    /// 
+
+
+
+
     [Gain]
     [Builder]
     public sealed partial class Uniform

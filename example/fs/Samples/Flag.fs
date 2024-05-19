@@ -9,7 +9,7 @@ module FlagTest =
         printfn "press any key to run fan..."
         System.Console.ReadKey true |> ignore;
 
-        (new ConfigureForceFan(fun dev -> true), new ConfigureReadsFPGAState(fun dev -> true)) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (new ForceFan(fun dev -> true), new ReadsFPGAState(fun dev -> true)) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 
         let mutable fin = false;
         let th : Task =
@@ -31,5 +31,5 @@ module FlagTest =
         fin <- true;
         th.Wait();
         
-        (new ConfigureForceFan(fun dev -> false), new ConfigureReadsFPGAState(fun dev -> false)) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (new ForceFan(fun dev -> false), new ReadsFPGAState(fun dev -> false)) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 

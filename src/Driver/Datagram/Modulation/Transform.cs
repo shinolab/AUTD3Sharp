@@ -20,9 +20,6 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             _f = (context, i, d) => f((int)i, new EmitIntensity(d)).Value;
         }
 
-        private ModulationPtr ModulationPtr()
-        {
-            return NativeMethodsBase.AUTDModulationWithTransform(_m.ModulationPtr(), Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, LoopBehavior.Internal);
-        }
+        private ModulationPtr ModulationPtr(Geometry geometry) => NativeMethodsBase.AUTDModulationWithTransform(_m.ModulationPtr(geometry), Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, LoopBehavior);
     }
 }

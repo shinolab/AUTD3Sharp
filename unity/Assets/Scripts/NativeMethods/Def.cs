@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace AUTD3Sharp.NativeMethods
 {
-    public static unsafe partial class NativeMethodsDef
+    public static unsafe partial class NativeMethodsDriver
     {
         const string __DllName = "autd3capi_def";
 
@@ -48,23 +48,23 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGetErr", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDGetErr(IntPtr src, byte* dst);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFrequencyDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultSamplingConfig AUTDSamplingConfigFromFrequencyDivision(uint div);
+        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFreqDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultSamplingConfig AUTDSamplingConfigFromFreqDivision(uint div);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFrequency", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultSamplingConfig AUTDSamplingConfigFromFrequency(double f);
+        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultSamplingConfig AUTDSamplingConfigFromFreq(double f);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultSamplingConfig AUTDSamplingConfigFromPeriod(ulong p);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFrequencyDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern uint AUTDSamplingConfigFrequencyDivision(SamplingConfigurationRaw config);
+        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFreqDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern uint AUTDSamplingConfigFreqDivision(SamplingConfigRaw config);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFrequency", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern double AUTDSamplingConfigFrequency(SamplingConfigurationRaw config);
+        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern double AUTDSamplingConfigFreq(SamplingConfigRaw config);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ulong AUTDSamplingConfigPeriod(SamplingConfigurationRaw config);
+        public static extern ulong AUTDSamplingConfigPeriod(SamplingConfigRaw config);
 
 
     }
@@ -123,7 +123,7 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct SamplingConfigurationRaw
+    public unsafe partial struct SamplingConfigRaw
     {
         public uint div;
     }
@@ -131,7 +131,7 @@ namespace AUTD3Sharp.NativeMethods
     [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct ResultSamplingConfig
     {
-        public SamplingConfigurationRaw result;
+        public SamplingConfigRaw result;
         public uint err_len;
         public IntPtr err;
     }
@@ -220,4 +220,3 @@ namespace AUTD3Sharp.NativeMethods
 
 
 }
-    

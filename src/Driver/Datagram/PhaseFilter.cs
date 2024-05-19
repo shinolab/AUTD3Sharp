@@ -1,19 +1,18 @@
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
-
 using System.Runtime.InteropServices;
 using System;
 
 namespace AUTD3Sharp
 {
-    public sealed class ConfigurePhaseFilter : IDatagram
+    public sealed class PhaseFilter : IDatagram
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate byte ConfigurePhaseFilterDelegate(IntPtr context, GeometryPtr geometryPtr, uint devIdx, byte trIdx);
+        public delegate byte PhaseFilterDelegate(IntPtr context, GeometryPtr geometryPtr, uint devIdx, byte trIdx);
 
-        private readonly ConfigurePhaseFilterDelegate _f;
+        private readonly PhaseFilterDelegate _f;
 
-        public ConfigurePhaseFilter(Func<Device, Transducer, Phase> f)
+        private PhaseFilter(Func<Device, Transducer, Phase> f)
         {
             _f = (context, geometryPtr, devIdx, trIdx) =>
             {
@@ -22,6 +21,8 @@ namespace AUTD3Sharp
             };
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramConfigurePhaseFilter(Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, geometry.Ptr);
+        public static PhaseFilter Additive(Func<Device, Transducer, Phase> f) => new PhaseFilter(f);
+
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramPhaseFilterAdditive(Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, geometry.Ptr);
     }
 }

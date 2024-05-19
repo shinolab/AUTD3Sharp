@@ -22,7 +22,7 @@ module SampleRunner =
 
 
         printfn "======== AUTD3 firmware information ========"
-        autd.FirmwareInfoListAsync() |> Async.AwaitTask |> Async.RunSynchronously |> Seq.iter (fun firm -> printfn $"{firm}")
+        autd.FirmwareVersionListAsync() |> Async.AwaitTask |> Async.RunSynchronously |> Seq.iter (fun firm -> printfn $"{firm}")
         printfn "============================================"
 
         let rec run_example () =
@@ -44,7 +44,7 @@ module SampleRunner =
 
                     printfn "finish."
 
-                    (new Null(), ConfigureSilencer.Default()) |> autd.SendAsync  |> Async.AwaitTask|> ignore;
+                    (new Null(), Silencer.Default()) |> autd.SendAsync  |> Async.AwaitTask|> ignore;
 
                     run_example()
                 | _ -> ()

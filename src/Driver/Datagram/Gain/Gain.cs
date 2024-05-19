@@ -10,18 +10,3 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
         public GainPtr GainPtr(Geometry geometry);
     }
 }
-
-namespace AUTD3Sharp
-{
-    public sealed class ChangeGainSegment : Driver.Datagram.IDatagram
-    {
-        private readonly Segment _segment;
-
-        public ChangeGainSegment(Segment segment)
-        {
-            _segment = segment;
-        }
-
-        DatagramPtr Driver.Datagram.IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDDatagramChangeGainSegment(_segment);
-    }
-}

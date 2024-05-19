@@ -191,13 +191,22 @@ def copy_dll(config: Config):
         shutil.copy(dll, "tests")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-universal-shared.tar.gz"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-arm-dll.zip"
+    urllib.request.urlretrieve(url, "tmp.zip")
+    shutil.unpack_archive("tmp.zip", ".")
+    rm_f("tmp.zip")
+    for dll in glob.glob("bin/*.dll"):
+        shutil.copy(dll, "src/native/windows/arm")
+        shutil.copy(dll, "tests")
+    rmtree_f("bin")
+
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-aarch64-shared.tar.gz"
     urllib.request.urlretrieve(url, "tmp.tar.gz")
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
     for dll in glob.glob("bin/*.dylib"):
-        shutil.copy(dll, "src/native/osx/universal")
+        shutil.copy(dll, "src/native/osx/aarch64")
         shutil.copy(dll, "tests")
     rmtree_f("bin")
 

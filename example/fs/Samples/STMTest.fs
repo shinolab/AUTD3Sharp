@@ -9,7 +9,7 @@ open System.Threading.Tasks
 
 module STMTest =
     let GainSTMTest<'T> (autd : Controller<'T>) = 
-        (ConfigureSilencer.Disable()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (Silencer.Disable()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 
         (new Static()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
         
@@ -21,11 +21,11 @@ module STMTest =
             |> List.map (fun p -> (new Focus(p)))
             |> List.fold (fun (acc: GainSTM) v -> acc.AddGain v) (GainSTM.FromFreq(1.))
 
-        printfn $"Actual frequency is {stm.Frequency}";
+        printfn $"Actual frequency is {stm.Freq}";
         (stm )|> autd.SendAsync  |> Async.AwaitTask|> ignore
 
     let FocusSTMTest<'T> (autd : Controller<'T>) = 
-        (ConfigureSilencer.Disable()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (Silencer.Disable()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 
         (new Static()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
         
@@ -36,5 +36,5 @@ module STMTest =
             |> List.map (fun theta -> (center + 30.0 * Vector3d(cos(theta), sin(theta), 0.0)))
             |> List.fold (fun (acc: FocusSTM) v -> acc.AddFocus v) (FocusSTM.FromFreq(1.))
 
-        printfn $"Actual frequency is {stm.Frequency}";
+        printfn $"Actual frequency is {stm.Freq}";
         (stm)|> autd.SendAsync  |> Async.AwaitTask|> ignore

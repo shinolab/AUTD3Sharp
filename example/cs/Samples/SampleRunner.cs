@@ -25,7 +25,7 @@ public class SampleRunner
         if (autd.Geometry.NumDevices >= 2) examples.Add((GroupByDeviceTest.Test, "Group (by Device) test"));
 
         Console.WriteLine("======== AUTD3 firmware information ========");
-        Console.WriteLine(string.Join("\n", await autd.FirmwareInfoListAsync()));
+        Console.WriteLine(string.Join("\n", await autd.FirmwareVersionListAsync()));
         Console.WriteLine("============================================");
 
         while (true)
@@ -43,7 +43,7 @@ public class SampleRunner
             Console.ReadKey(true);
 
             Console.WriteLine("finish.");
-            await autd.SendAsync(new Null(), ConfigureSilencer.Default());
+            await autd.SendAsync(new Null(), Silencer.Default());
         }
 
         await autd.CloseAsync();

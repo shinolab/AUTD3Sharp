@@ -1,4 +1,3 @@
-using System;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
 
@@ -14,14 +13,8 @@ namespace AUTD3Sharp
             Ptr = NativeMethodsBase.AUTDTransducer(ptr, (uint)trIdx);
         }
 
-        /// <summary>
-        /// Index of the transducer
-        /// </summary>
         public int Idx { get; }
 
-        /// <summary>
-        /// Position of the transducer
-        /// </summary>
         public Vector3d Position
         {
             get
@@ -35,9 +28,6 @@ namespace AUTD3Sharp
             }
         }
 
-        /// <summary>
-        /// Rotation of the transducer
-        /// </summary>
         public Quaterniond Rotation
         {
             get
@@ -51,9 +41,6 @@ namespace AUTD3Sharp
             }
         }
 
-        /// <summary>
-        /// X-direction of the transducer
-        /// </summary>
         public Vector3d XDirection
         {
             get
@@ -67,9 +54,6 @@ namespace AUTD3Sharp
             }
         }
 
-        /// <summary>
-        /// Y-direction of the transducer
-        /// </summary>
         public Vector3d YDirection
         {
             get
@@ -83,9 +67,6 @@ namespace AUTD3Sharp
             }
         }
 
-        /// <summary>
-        /// Z-direction of the transducer
-        /// </summary>
         public Vector3d ZDirection
         {
             get
@@ -98,19 +79,5 @@ namespace AUTD3Sharp
                 }
             }
         }
-
-        /// <summary>
-        /// Wavelength of the transducer
-        /// </summary>
-        /// <param name="soundSpeed">Speed of sound</param>
-        /// <returns></returns>
-        public double Wavelength(double soundSpeed) => NativeMethodsBase.AUTDTransducerWavelength(Ptr, soundSpeed);
-
-        /// <summary>
-        /// Wavenumber of the transducer
-        /// </summary>
-        /// <param name="soundSpeed">Speed of sound</param>
-        /// <returns></returns>
-        public double Wavenumber(double soundSpeed) => 2 * Math.PI / Wavelength(soundSpeed);
     }
 }

@@ -8,9 +8,9 @@ public class TransformTest
         var autd1 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
         var autd2 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
-        var m = new Sine(150);
+        var m = new Sine(150 * Hz);
         var mt = m.WithTransform((_, v) => new EmitIntensity((byte)(v.Value / 2))).WithLoopBehavior(LoopBehavior.Once);
-        Assert.Equal(m.SamplingConfiguration, mt.SamplingConfiguration);
+        Assert.Equal(m.SamplingConfig, mt.SamplingConfig);
         Assert.Equal(m.Length, mt.Length);
         Assert.Equal(LoopBehavior.Once, mt.LoopBehavior);
         Assert.True(await autd1.SendAsync(m));
@@ -21,7 +21,7 @@ public class TransformTest
             var mod = autd2.Link.Modulation(dev.Idx, Segment.S0);
 
             Assert.Equal(modExpect, mod);
-            Assert.Equal(autd1.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0), autd2.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            Assert.Equal(autd1.Link.ModulationFreqDivision(dev.Idx, Segment.S0), autd2.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
         }
     }
 }

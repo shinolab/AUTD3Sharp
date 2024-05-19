@@ -38,7 +38,7 @@
     <None Update="libautd3capi.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="libautd3capi_def.dylib">
+    <None Update="libautd3capi_driver.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="libautd3capi_gain_holo.dylib">
@@ -62,7 +62,7 @@
     <None Update="libautd3capi.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="libautd3capi_def.so">
+    <None Update="libautd3capi_driver.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="libautd3capi_gain_holo.so">
@@ -92,10 +92,10 @@
     <None Update="autd3capi.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="autd3capi_def.dll">
+    <None Update="autd3capi_driver.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="autd3capi_def.pdb">
+    <None Update="autd3capi_driver.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="autd3capi_gain_holo.dll">

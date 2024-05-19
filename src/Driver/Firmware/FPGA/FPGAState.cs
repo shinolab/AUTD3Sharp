@@ -9,9 +9,9 @@ namespace AUTD3Sharp.Driver.FPGA.Defined
             _info = info;
         }
 
-        /// <summary>
-        /// Check if thermal sensor is asserted
-        /// </summary>
+
+
+
         public bool IsThermalAssert => (_info & (1 << 0)) != 0;
 
         public Segment CurrentModSegment => (_info & (1 << 1)) switch

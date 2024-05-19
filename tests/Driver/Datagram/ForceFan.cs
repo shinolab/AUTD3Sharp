@@ -13,11 +13,11 @@ public class ForceFanTest
         foreach (var dev in autd.Geometry)
             Assert.False(autd.Link.IsForceFan(dev.Idx));
 
-        await autd.SendAsync(new ConfigureForceFan(dev => dev.Idx == 0));
+        await autd.SendAsync(new ForceFan(dev => dev.Idx == 0));
         Assert.True(autd.Link.IsForceFan(0));
         Assert.False(autd.Link.IsForceFan(1));
 
-        await autd.SendAsync(new ConfigureForceFan(dev => dev.Idx == 1));
+        await autd.SendAsync(new ForceFan(dev => dev.Idx == 1));
         Assert.False(autd.Link.IsForceFan(0));
         Assert.True(autd.Link.IsForceFan(1));
     }

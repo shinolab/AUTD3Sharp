@@ -9,7 +9,7 @@ public class SegmentTest
          .AddDevice(new AUTD3(Vector3d.Zero))
          .OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(new ConfigureReadsFPGAState(_ => true)));
+        Assert.True(await autd.SendAsync(new ReadsFPGAState(_ => true)));
 
         var infos = await autd.FPGAStateAsync();
         Assert.Equal(Segment.S0, infos[0]?.CurrentModSegment);

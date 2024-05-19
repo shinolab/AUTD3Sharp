@@ -9,7 +9,7 @@ public class StaticTest
 
         {
             var m = new AUTD3Sharp.Modulation.Static();
-            Assert.Equal(0xFFFFFFFFu, m.SamplingConfiguration.FrequencyDivision);
+            Assert.Equal(0xFFFFFFFFu, m.SamplingConfig.FreqDivision);
             Assert.Equal(2, m.Length);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             Assert.True(await autd.SendAsync(m));
@@ -21,13 +21,13 @@ public class StaticTest
 #pragma warning restore IDE0230
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
 
         {
             var m = AUTD3Sharp.Modulation.Static.WithIntensity(new EmitIntensity(32)).WithLoopBehavior(LoopBehavior.Once);
-            Assert.Equal(0xFFFFFFFFu, m.SamplingConfiguration.FrequencyDivision);
+            Assert.Equal(0xFFFFFFFFu, m.SamplingConfig.FreqDivision);
             Assert.Equal(2, m.Length);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             Assert.True(await autd.SendAsync(m));
@@ -39,7 +39,7 @@ public class StaticTest
 #pragma warning restore IDE0230
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
 

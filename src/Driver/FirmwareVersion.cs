@@ -3,7 +3,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Driver
 {
-    public readonly struct FirmwareInfo
+    public readonly struct FirmwareVersion
     {
         public string Info { get; }
 
@@ -21,7 +21,7 @@ namespace AUTD3Sharp.Driver
             }
         }
 
-        internal FirmwareInfo(string info)
+        internal FirmwareVersion(string info)
         {
             Info = info.TrimEnd('\0');
         }

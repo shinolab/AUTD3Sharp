@@ -37,6 +37,7 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
     })?
     .always_included_types([
         "Drive",
+        "LoopBehavior",
         "ControllerPtr",
         "GeometryPtr",
         "DevicePtr",
@@ -52,13 +53,15 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "ResultController",
         "ResultBackend",
         "ResultDatagram",
-        "ResultFocusSTM",
         "FocusSTMPtr",
         "ResultGainCalcDrivesMap",
         "GainCalcDrivesMapPtr",
-        "ResultGainSTM",
         "GainSTMPtr",
-        "DebugSettings",
+        "SamplingConfigWrap",
+        "DebugTypeWrap",
+        "TransitionModeWrap",
+        "GPIOIn",
+        "GPIOOut",
     ])
     .csharp_dll_name(dll_name)
     .csharp_class_name(format!("NativeMethods{}", class_name))
@@ -71,33 +74,7 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
     let content = std::fs::read_to_string(&out_file)?;
     let content = content.replace("ConstPtr", "IntPtr");
     let content = content.replace("void*", "IntPtr");
-    let content = content.replace("SamplingConfiguration", "SamplingConfigurationRaw");
-    let content = content.replace("LoopBehavior", "LoopBehaviorRaw");
-    let content = content.replace("AUTDLoopBehaviorRaw", "AUTDLoopBehavior");
-    let content = content.replace(
-        "AUTDLinkAuditFpgaModulationLoopBehaviorRaw",
-        "AUTDLinkAuditFpgaModulationLoopBehavior",
-    );
-    let content = content.replace(
-        "AUTDLinkAuditFpgaStmLoopBehaviorRaw",
-        "AUTDLinkAuditFpgaStmLoopBehavior",
-    );
-    let content = content.replace(
-        "AUTDSTMPropsWithLoopBehaviorRaw",
-        "AUTDSTMPropsWithLoopBehavior",
-    );
-    let content = content.replace("struct Drive", "struct DriveRaw");
-    let content = content.replace("Drive*", "DriveRaw*");
-
-    let content = content.replace(
-        r#"
-    public enum SamplingMode : byte
-    {
-        ExactFrequency = 0,
-        SizeOptimized = 1,
-    }"#,
-        "",
-    );
+    let content = content.replace("void @null", "byte @null");
 
     std::fs::write(&out_file, content)?;
 

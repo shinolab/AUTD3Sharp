@@ -3,9 +3,9 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Link
 {
-    /// <summary>
-    /// Link which do nothing
-    /// </summary>
+
+
+
     public class Nop
     {
         public sealed class NopBuilder : ILinkBuilder<Nop>

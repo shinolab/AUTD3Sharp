@@ -153,9 +153,9 @@ namespace AUTD3Sharp.Link
         }
     }
 
-    /// <summary>
-    /// Link for visualizing
-    /// </summary>
+
+
+
     public sealed class Visualizer
     {
         public sealed class VisualizerBuilder : ILinkBuilder<Visualizer>

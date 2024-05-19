@@ -36,7 +36,7 @@ namespace AUTD3Sharp
             var ptr1 = data1.Ptr(_controller.Geometry);
             var ptr2 = data2.Ptr(_controller.Geometry);
             _keymap[key] = _k++;
-            _kvMap = NativeMethodsBase.AUTDControllerGroupKVMapSet(_kvMap, _keymap[key], ptr1, ptr2, timeoutNs).Validate();
+            NativeMethodsBase.AUTDControllerGroupKVMapSet(_kvMap, _keymap[key], ptr1, ptr2, timeoutNs);
             return this;
         }
 
@@ -50,7 +50,7 @@ namespace AUTD3Sharp
             return Set(key, data.Item1, data.Item2, timeout);
         }
 
-        public async Task<bool> SendAsync()
+        public async Task SendAsync()
         {
             var map = _controller.Geometry.Select(dev =>
             {
@@ -59,17 +59,17 @@ namespace AUTD3Sharp
                 return k != null ? _keymap[k] : -1;
             }).ToArray();
 
-            return await Task.Run(() =>
+            await Task.Run(() =>
             {
                 unsafe
                 {
                     fixed (int* mp = &map[0])
-                        return NativeMethodsBase.AUTDControllerGroup(_controller.Ptr, mp, _kvMap).Validate() == NativeMethodsDef.AUTD3_TRUE;
+                        NativeMethodsBase.AUTDControllerGroup(_controller.Ptr, mp, _kvMap).Validate();
                 }
             });
         }
 
-        public bool Send()
+        public void Send()
         {
             var map = _controller.Geometry.Select(dev =>
             {
@@ -81,7 +81,7 @@ namespace AUTD3Sharp
             {
                 fixed (int* mp = &map[0])
                 {
-                    return NativeMethodsBase.AUTDControllerGroup(_controller.Ptr, mp, _kvMap).Validate() == NativeMethodsDef.AUTD3_TRUE;
+                    NativeMethodsBase.AUTDControllerGroup(_controller.Ptr, mp, _kvMap).Validate();
                 }
             }
         }

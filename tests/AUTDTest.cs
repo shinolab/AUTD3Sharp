@@ -21,7 +21,7 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.True(await autd.SendAsync(new ConfigureReadsFPGAState(_ => true)));
+        Assert.True(await autd.SendAsync(new ReadsFPGAState(_ => true)));
 
         {
             autd.Link.AssertThermalSensor(0);
@@ -54,7 +54,7 @@ public class AUTDTest
     {
         var autd = CreateControllerSync();
 
-        Assert.True(autd.Send(new ConfigureReadsFPGAState(_ => true)));
+        Assert.True(autd.Send(new ReadsFPGAState(_ => true)));
 
         {
             autd.Link.AssertThermalSensor(0);
@@ -80,14 +80,14 @@ public class AUTDTest
     }
 
     [Fact]
-    public async Task TestFirmwareInfoList()
+    public async Task TestFirmwareVersionList()
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v6.1.0", FirmwareInfo.LatestVersion);
+        Assert.Equal("v6.1.0", FirmwareVersion.LatestVersion);
 
         {
-            foreach (var (info, i) in (await autd.FirmwareInfoListAsync()).Select((info, i) => (info, i)))
+            foreach (var (info, i) in (await autd.FirmwareVersionListAsync()).Select((info, i) => (info, i)))
             {
                 Assert.Equal(info.Info, $"{i}: CPU = v6.1.0, FPGA = v6.1.0 [Emulator]");
                 Assert.Equal($"{info}", $"{i}: CPU = v6.1.0, FPGA = v6.1.0 [Emulator]");
@@ -96,20 +96,20 @@ public class AUTDTest
 
         {
             autd.Link.BreakDown();
-            await Assert.ThrowsAsync<AUTDException>(async () => _ = (await autd.FirmwareInfoListAsync()).Last());
+            await Assert.ThrowsAsync<AUTDException>(async () => _ = (await autd.FirmwareVersionListAsync()).Last());
         }
     }
 
     [Fact]
-    public void TestFirmwareInfoListSync()
+    public void TestFirmwareVersionListSync()
     {
         var autd = CreateControllerSync();
 
-        foreach (var (info, i) in autd.FirmwareInfoList().Select((info, i) => (info, i)))
+        foreach (var (info, i) in autd.FirmwareVersionList().Select((info, i) => (info, i)))
             Assert.Equal(info.Info, $"{i}: CPU = v6.1.0, FPGA = v6.1.0 [Emulator]");
 
         autd.Link.BreakDown();
-        Assert.Throws<AUTDException>(() => _ = autd.FirmwareInfoList().Last());
+        Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersionList().Last());
     }
 
 
@@ -315,7 +315,7 @@ public class AUTDTest
 
         await autd.Group(dev => dev.Idx.ToString())
              .Set("0", (new Static(), new Null()))
-             .Set("1", new Sine(150), new Uniform(EmitIntensity.Max))
+             .Set("1", new Sine(150 * Hz), new Uniform(EmitIntensity.Max))
              .SendAsync();
         {
             var m = autd.Link.Modulation(0, Segment.S0);
@@ -378,7 +378,7 @@ public class AUTDTest
 
         autd.Group(dev => dev.Idx.ToString())
              .Set("0", (new Static(), new Null()))
-             .Set("1", new Sine(150), new Uniform(EmitIntensity.Max))
+             .Set("1", new Sine(150 * Hz), new Uniform(EmitIntensity.Max))
              .Send();
         {
             var m = autd.Link.Modulation(0, Segment.S0);
@@ -449,7 +449,7 @@ public class AUTDTest
             check[dev.Idx] = true;
             return "0";
         })
-                 .Set("0", new Sine(150), new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90)))
+                 .Set("0", new Sine(150 * Hz), new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90)))
                  .SendAsync();
 
         Assert.False(check[0]);

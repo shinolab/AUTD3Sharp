@@ -3,23 +3,21 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
 {
-    /// <summary>
-    /// Square wave modulation
-    /// </summary>
     [Modulation]
     [Builder]
     public sealed partial class Square
     {
-        public Square(double freq)
+        private Square(ISamplingMode mode)
         {
-            Freq = freq;
             Low = EmitIntensity.Min;
             High = EmitIntensity.Max;
             Duty = 0.5;
-            Mode = SamplingMode.ExactFrequency;
+            Mode = mode;
         }
 
-        public double Freq { get; }
+        public Square(Freq<uint> freq) : this(new SamplingModeExact(freq)) {}
+        public Square(Freq<double> freq) : this(new SamplingModeExactFloat(freq)) {}
+        public static Square WithFreqNearest(Freq<double> freq) => new Square(new SamplingModeNearest(freq));
 
         [Property(EmitIntensity = true)]
         public EmitIntensity Low { get; private set; }
@@ -31,10 +29,8 @@ namespace AUTD3Sharp.Modulation
 
         public double Duty { get; private set; }
 
+        private ISamplingMode Mode { get; }
 
-        [Property]
-        public SamplingMode Mode { get; private set; }
-
-        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSquare(Freq, _config.Internal, Low.Value, High.Value, Duty, Mode, LoopBehavior.Internal);
+        private ModulationPtr ModulationPtr(Geometry _) => Mode.SquarePtr(_config, Low, High, Duty, LoopBehavior);
     }
 }

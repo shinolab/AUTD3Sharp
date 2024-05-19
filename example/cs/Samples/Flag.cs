@@ -9,7 +9,7 @@ internal static class FlagTest
         Console.WriteLine("press any key to run fan...");
         Console.ReadKey(true);
 
-        await autd.SendAsync(new ConfigureForceFan(_ => true), new ConfigureReadsFPGAState(_ => true));
+        await autd.SendAsync(new ForceFan(_ => true), new ReadsFPGAState(_ => true));
 
         var fin = false;
         Console.WriteLine("press any key stop checking FPGA status...");
@@ -31,6 +31,6 @@ internal static class FlagTest
 
         th.Wait();
 
-        await autd.SendAsync(new ConfigureForceFan(_ => false), new ConfigureReadsFPGAState(_ => false));
+        await autd.SendAsync(new ForceFan(_ => false), new ReadsFPGAState(_ => false));
     }
 }

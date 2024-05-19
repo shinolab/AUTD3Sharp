@@ -2,6 +2,7 @@
 using AUTD3Sharp.Gain;
 using AUTD3Sharp.Modulation;
 using AUTD3Sharp.Utils;
+using static AUTD3Sharp.Units;
 
 namespace Samples;
 
@@ -9,7 +10,7 @@ internal static class GroupByDeviceTest
 {
     public static async Task Test<T>(Controller<T> autd)
     {
-        var config = ConfigureSilencer.Default();
+        var config = Silencer.Default();
         await autd.SendAsync(config);
 
         await autd.Group(dev =>
@@ -22,7 +23,7 @@ internal static class GroupByDeviceTest
                 };
             })
             .Set("null", (new Static(), new Null()))
-            .Set("focus", (new Sine(150), new Focus(autd.Geometry.Center + new Vector3d(0, 0, 150))))
+            .Set("focus", (new Sine(150 * Hz), new Focus(autd.Geometry.Center + new Vector3d(0, 0, 150))))
             .SendAsync();
     }
 }
@@ -32,7 +33,7 @@ internal static class GroupByTransducerTest
 {
     public static async Task Test<T>(Controller<T> autd)
     {
-        var config = ConfigureSilencer.Default();
+        var config = Silencer.Default();
         await autd.SendAsync(config);
 
         var cx = autd.Geometry.Center.X;
@@ -43,7 +44,7 @@ internal static class GroupByTransducerTest
             (_, tr) => tr.Position.X < cx ? "focus" : "null"
             ).Set("focus", g1).Set("null", g2);
 
-        var m = new Sine(150);
+        var m = new Sine(150 * Hz);
 
         await autd.SendAsync(m, g);
     }

@@ -3,11 +3,6 @@ using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    /// <summary>
-    /// Gain to produce multiple foci by solving Semi-Definite Programming
-    /// </summary>
-    /// <remarks>Inoue, Seki, Yasutoshi Makino, and Hiroyuki Shinoda. "Active touch perception produced by airborne ultrasonic haptic hologram." 2015 IEEE World Haptics Conference (WHC). IEEE, 2015.</remarks>
-    /// <typeparam name="TB">Backend</typeparam>
     [Gain]
     [Builder]
     public sealed partial class SDP<TB> : Holo<SDP<TB>>
@@ -15,7 +10,7 @@ namespace AUTD3Sharp.Gain.Holo
     {
         private readonly TB _backend;
 
-        public SDP(TB backend) : base(EmissionConstraint.DontCare())
+        public SDP(TB backend) : base(EmissionConstraint.DontCare)
         {
             _backend = backend;
             Alpha = 1e-3;
@@ -34,6 +29,6 @@ namespace AUTD3Sharp.Gain.Holo
 
         private GainPtr GainPtr(Geometry _) =>
             _backend.Sdp(Foci.ToArray(), Amps.ToArray(),
-                (ulong)Amps.Count, Alpha, Repeat, Lambda, Constraint.Ptr);
+                (ulong)Amps.Count, Alpha, Repeat, Lambda, Constraint);
     }
 }

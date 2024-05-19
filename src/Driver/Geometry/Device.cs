@@ -18,28 +18,16 @@ namespace AUTD3Sharp
             _transducers = Enumerable.Range(0, (int)NativeMethodsBase.AUTDDeviceNumTransducers(Ptr)).Select(i => new Transducer(i, Ptr)).ToList();
         }
 
-        /// <summary>
-        /// Index of the transducer
-        /// </summary>
         public int Idx { get; }
 
-        /// <summary>
-        /// Number of transducers
-        /// </summary>
         public int NumTransducers => _transducers.Count;
 
-        /// <summary>
-        /// Speed of sound
-        /// </summary>
         public double SoundSpeed
         {
             get => NativeMethodsBase.AUTDDeviceGetSoundSpeed(Ptr);
             set => NativeMethodsBase.AUTDDeviceSetSoundSpeed(Ptr, value);
         }
 
-        /// <summary>
-        /// Attenuation coefficient
-        /// </summary>
         public double Attenuation
         {
             get => NativeMethodsBase.AUTDDeviceGetAttenuation(Ptr);
@@ -52,9 +40,6 @@ namespace AUTD3Sharp
             set => NativeMethodsBase.AUTDDeviceEnableSet(Ptr, value);
         }
 
-        /// <summary>
-        /// Get center position of all transducers
-        /// </summary>
         public Vector3d Center
         {
             get
@@ -83,17 +68,13 @@ namespace AUTD3Sharp
             NativeMethodsBase.AUTDDeviceAffine(Ptr, t.X, t.Y, t.Z, r.W, r.X, r.Y, r.Z);
         }
 
-        /// <summary>
-        /// Set the sound speed from temperature
-        /// </summary>
-        /// <param name="temp">Temperature in celsius</param>
-        /// <param name="k">Ratio of specific heat</param>
-        /// <param name="r">Gas constant</param>
-        /// <param name="m">Molar mass</param>
         public void SetSoundSpeedFromTemp(double temp, double k = 1.4, double r = 8.31446261815324, double m = 28.9647e-3)
         {
             NativeMethodsBase.AUTDDeviceSetSoundSpeedFromTemp(Ptr, temp, k, r, m);
         }
+
+        public double Wavelength => NativeMethodsBase.AUTDDeviceWavelength(Ptr);
+        public double Wavenumber => NativeMethodsBase.AUTDDeviceWavenumber(Ptr);
 
         public Transducer this[int index] => _transducers[index];
 

@@ -24,9 +24,9 @@ public class CacheTest
         var autd1 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
         var autd2 = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
-        var m = new Sine(150);
+        var m = new Sine(150 * Hz);
         var mc = m.WithCache().WithLoopBehavior(LoopBehavior.Once);
-        Assert.Equal(m.SamplingConfiguration, mc.SamplingConfiguration);
+        Assert.Equal(m.SamplingConfig, mc.SamplingConfig);
         Assert.Equal(m.Length, mc.Length);
         Assert.Equal(LoopBehavior.Once, mc.LoopBehavior);
         Assert.True(await autd1.SendAsync(m));
@@ -36,7 +36,7 @@ public class CacheTest
             var modExpect = autd1.Link.Modulation(dev.Idx, Segment.S0);
             var mod = autd2.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(autd1.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0), autd2.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            Assert.Equal(autd1.Link.ModulationFreqDivision(dev.Idx, Segment.S0), autd2.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
         }
     }
 

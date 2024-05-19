@@ -29,7 +29,7 @@ public class ModulationTest
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             var modExpect = new byte[] { 255, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
             Assert.Equal(modExpect, mod);
-            Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+            Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
         }
     }
 }

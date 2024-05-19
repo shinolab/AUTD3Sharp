@@ -1,15 +1,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp.Driver.Datagram.Gain
 {
-    /// <summary>
-    /// Gain to cache the result of calculation
-    /// </summary>
     [Gain(NoCache = true, NoTransform = true)]
     public sealed partial class Cache<TG>
     where TG : IGain
@@ -39,7 +35,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
                 unsafe
                 {
                     fixed (Drive* p = &drives[0])
-                        NativeMethodsBase.AUTDGainCalcGetResult(res, (DriveRaw*)p, (uint)dev.Idx);
+                        NativeMethodsBase.AUTDGainCalcGetResult(res, (NativeMethods.Drive*)p, (uint)dev.Idx);
                 }
                 _cache[dev.Idx] = drives;
             }
@@ -49,12 +45,12 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
         private GainPtr GainPtr(Geometry geometry)
         {
             Init(geometry);
-            return geometry.Devices().Aggregate(NativeMethodsBase.AUTDGainCustom(), (acc, dev) =>
+            return geometry.Devices().Aggregate(NativeMethodsBase.AUTDGainRaw(), (acc, dev) =>
             {
                 unsafe
                 {
                     fixed (Drive* p = &_cache[dev.Idx][0])
-                        return NativeMethodsBase.AUTDGainCustomSet(acc, (uint)dev.Idx, (DriveRaw*)p, (uint)_cache[dev.Idx].Length);
+                        return NativeMethodsBase.AUTDGainRawSet(acc, (uint)dev.Idx, (NativeMethods.Drive*)p, (uint)_cache[dev.Idx].Length);
                 }
             });
         }

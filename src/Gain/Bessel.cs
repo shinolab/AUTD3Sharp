@@ -4,9 +4,9 @@ using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp.Gain
 {
-    /// <summary>
-    /// Gain to produce a Bessel beam
-    /// </summary>
+
+
+
     [Gain]
     [Builder]
     public sealed partial class Bessel

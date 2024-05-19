@@ -1,30 +1,30 @@
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
+using static AUTD3Sharp.Units;
 
 namespace AUTD3Sharp.Modulation
 {
-    /// <summary>
-    /// Sine wave modulation
-    /// </summary>
     [Modulation]
     [Builder]
     public sealed partial class Sine
     {
-        /// <summary>
-        /// Constructor
-        /// </summary>
-        /// <param name="freq">Frequency of sine wave</param>
-        /// <remarks>The sine wave is defined as `amp / 2 * sin(2π * freq * t) + offset`, where `t` is time, and `amp = EmitIntensity.Max`, `offset = EmitIntensity.Max/2` by default.</remarks>
-        public Sine(double freq)
+        private Sine(ISamplingMode mode)
         {
-            Freq = freq;
             Intensity = EmitIntensity.Max;
             Offset = EmitIntensity.Max / 2;
-            Phase = new Phase(0);
-            Mode = SamplingMode.ExactFrequency;
+            Phase = 0 * rad;
+            Mode = mode;
         }
 
-        public double Freq { get; }
+        public Sine(Freq<uint> freq) : this(new SamplingModeExact(freq))
+        {
+        }
+
+        public Sine(Freq<double> freq) : this(new SamplingModeExactFloat(freq))
+        {
+        }
+
+        public static Sine WithFreqNearest(Freq<double> freq) => new Sine(new SamplingModeNearest(freq));
 
         [Property(EmitIntensity = true)]
         public EmitIntensity Intensity { get; private set; }
@@ -35,15 +35,13 @@ namespace AUTD3Sharp.Modulation
 
         [Property]
 
-        public Phase Phase { get; private set; }
+        public Angle Phase { get; private set; }
 
-        [Property]
-
-        public SamplingMode Mode { get; private set; }
+        internal ISamplingMode Mode { get; }
 
         public static Fourier operator +(Sine a, Sine b)
             => new Fourier(a).AddComponent(b);
 
-        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationSine(Freq, _config.Internal, Intensity.Value, Offset.Value, Phase.Value, Mode, LoopBehavior.Internal);
+        private ModulationPtr ModulationPtr(Geometry _) => Mode.SinePtr(_config, Intensity, Offset, Phase, LoopBehavior);
     }
 }

@@ -12,7 +12,7 @@ public class SquareTest
         {
             var m = new Square(200).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1);
             Assert.True(await autd.SendAsync(m));
-            Assert.Equal(5120u, m.SamplingConfiguration.FrequencyDivision);
+            Assert.Equal(5120u, m.SamplingConfig.FreqDivision);
             Assert.Equal(20, m.Length);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -23,19 +23,19 @@ public class SquareTest
 #pragma warning restore IDE0230
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
 
         {
-            var m = new Square(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240)).WithLoopBehavior(LoopBehavior.Once);
+            var m = new Square(150).WithSamplingConfig(SamplingConfig.FromFreqDivision(10240)).WithLoopBehavior(LoopBehavior.Once);
             Assert.True(await autd.SendAsync(m));
-            Assert.Equal(10240u, m.SamplingConfiguration.FrequencyDivision);
+            Assert.Equal(10240u, m.SamplingConfig.FreqDivision);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10240u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }
@@ -53,7 +53,7 @@ public class SquareTest
             Assert.Equal(modExpect, mod);
         }
 
-        await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.SendAsync(new Square(100.1).WithMode(SamplingMode.ExactFrequency)));
+        await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.SendAsync(new Square(100.1).WithMode(SamplingMode.ExactFreq)));
         Assert.True(await autd.SendAsync(new Square(100.1).WithMode(SamplingMode.SizeOptimized)));
     }
 

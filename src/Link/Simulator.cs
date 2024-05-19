@@ -2,9 +2,7 @@ using System;
 using System.Net;
 using System.Threading.Tasks;
 using AUTD3Sharp.Driver;
-
 using AUTD3Sharp.NativeMethods;
-
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -12,9 +10,6 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Link
 {
-    /// <summary>
-    /// Link for AUTD Simulator
-    /// </summary>
     public sealed class Simulator
     {
         public sealed class SimulatorBuilder : ILinkBuilder<Simulator>
@@ -26,12 +21,6 @@ namespace AUTD3Sharp.Link
                 _ptr = NativeMethodsLinkSimulator.AUTDLinkSimulator(port);
             }
 
-            /// <summary>
-            /// Set server IP address
-            /// </summary>
-            /// <param name="addr"></param>
-            /// <returns></returns>
-            /// <exception cref="AUTDException"></exception>
             public SimulatorBuilder WithServerIp(IPAddress addr)
             {
                 var addrStr = addr.ToString();
@@ -73,12 +62,12 @@ namespace AUTD3Sharp.Link
 
         public async Task<bool> UpdateGeometryAsync(Geometry geometry)
         {
-            return await Task.Run(() => NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr).Validate() == NativeMethodsDef.AUTD3_TRUE);
+            return await Task.Run(() => NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr).Validate() == NativeMethodsDriver.AUTD3_TRUE);
         }
 
         public bool UpdateGeometry(Geometry geometry)
         {
-            return NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr).Validate() == NativeMethodsDef.AUTD3_TRUE;
+            return NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr).Validate() == NativeMethodsDriver.AUTD3_TRUE;
         }
     }
 }

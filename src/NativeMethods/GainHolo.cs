@@ -17,37 +17,45 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintDotCare", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern EmissionConstraintPtr AUTDGainHoloConstraintDotCare();
+        public static extern EmissionConstraintWrap AUTDGainHoloConstraintDotCare();
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintNormalize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern EmissionConstraintPtr AUTDGainHoloConstraintNormalize();
+        public static extern EmissionConstraintWrap AUTDGainHoloConstraintNormalize();
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintUniform", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern EmissionConstraintPtr AUTDGainHoloConstraintUniform(byte intensity);
+        public static extern EmissionConstraintWrap AUTDGainHoloConstraintUniform(byte intensity);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintMultiply", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern EmissionConstraintWrap AUTDGainHoloConstraintMultiply(double v);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintClamp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern EmissionConstraintPtr AUTDGainHoloConstraintClamp(byte min_v, byte max_v);
+        public static extern EmissionConstraintWrap AUTDGainHoloConstraintClamp(byte min_v, byte max_v);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintEq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDGainHoloConstraintEq(EmissionConstraintPtr a, EmissionConstraintPtr b);
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGreedySphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloGreedySphere(double* points, double* amps, ulong size, byte div, EmissionConstraintWrap constraint);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGreedy", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloGreedy(double* points, double* amps, ulong size, byte div, EmissionConstraintPtr constraint);
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGreedyT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloGreedyT4010A1(double* points, double* amps, ulong size, byte div, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGreedyIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDGainGreedyIsDefault(GainPtr greedy);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGS", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloGS(BackendPtr backend, double* points, double* amps, ulong size, uint repeat, EmissionConstraintPtr constraint);
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloGSSphere(BackendPtr backend, double* points, double* amps, ulong size, uint repeat, EmissionConstraintWrap constraint);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGST4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloGST4010A1(BackendPtr backend, double* points, double* amps, ulong size, uint repeat, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGSIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDGainGSIsDefault(GainPtr gs);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSPAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloGSPAT(BackendPtr backend, double* points, double* amps, ulong size, uint repeat, EmissionConstraintPtr constraint);
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSPATSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloGSPATSphere(BackendPtr backend, double* points, double* amps, ulong size, uint repeat, EmissionConstraintWrap constraint);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSPATT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloGSPATT4010A1(BackendPtr backend, double* points, double* amps, ulong size, uint repeat, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGSPATIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -59,28 +67,43 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloPascalToSPL", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern double AUTDGainHoloPascalToSPL(double value);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloLM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloLM(BackendPtr backend, double* points, double* amps, ulong size, double eps_1, double eps_2, double tau, uint k_max, double* initial_ptr, ulong initial_len, EmissionConstraintPtr constraint);
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloLMSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloLMSphere(BackendPtr backend, double* points, double* amps, ulong size, double eps_1, double eps_2, double tau, uint k_max, double* initial_ptr, ulong initial_len, EmissionConstraintWrap constraint);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloLMT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloLMT4010A1(BackendPtr backend, double* points, double* amps, ulong size, double eps_1, double eps_2, double tau, uint k_max, double* initial_ptr, ulong initial_len, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainLMIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDGainLMIsDefault(GainPtr gs);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloNaive", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloNaive(BackendPtr backend, double* points, double* amps, ulong size, EmissionConstraintPtr constraint);
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloNaiveSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloNaiveSphere(BackendPtr backend, double* points, double* amps, ulong size, EmissionConstraintWrap constraint);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloNaiveT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloNaiveT4010A1(BackendPtr backend, double* points, double* amps, ulong size, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainNaiveIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDGainNaiveIsDefault(GainPtr gs);
 
-        [DllImport(__DllName, EntryPoint = "AUTDNalgebraBackend", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern BackendPtr AUTDNalgebraBackend();
+        [DllImport(__DllName, EntryPoint = "AUTDNalgebraBackendSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern BackendPtr AUTDNalgebraBackendSphere();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDeleteNalgebraBackend", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDDeleteNalgebraBackend(BackendPtr backend);
+        [DllImport(__DllName, EntryPoint = "AUTDNalgebraBackendT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern BackendPtr AUTDNalgebraBackendT4010A1();
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloSDP", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloSDP(BackendPtr backend, double* points, double* amps, ulong size, double alpha, double lambda, uint repeat, EmissionConstraintPtr constraint);
+        [DllImport(__DllName, EntryPoint = "AUTDDeleteNalgebraBackendSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDDeleteNalgebraBackendSphere(BackendPtr backend);
+
+        [DllImport(__DllName, EntryPoint = "AUTDDeleteNalgebraBackendT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDDeleteNalgebraBackendT4010A1(BackendPtr backend);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloSDPSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloSDPSphere(BackendPtr backend, double* points, double* amps, ulong size, double alpha, double lambda, uint repeat, EmissionConstraintWrap constraint);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainHoloSDPT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainHoloSDPT4010A1(BackendPtr backend, double* points, double* amps, ulong size, double alpha, double lambda, uint repeat, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainSDPIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -89,10 +112,24 @@ namespace AUTD3Sharp.NativeMethods
 
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct EmissionConstraintPtr
+    [StructLayout(LayoutKind.Explicit)]
+    public unsafe partial struct EmissionConstraintValue
     {
-        public IntPtr Item1;
+        [FieldOffset(0)]
+        public byte @null;
+        [FieldOffset(0)]
+        public byte uniform;
+        [FieldOffset(0)]
+        public double multiply;
+        [FieldOffset(0)]
+        public fixed byte clamp[2];
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct EmissionConstraintWrap
+    {
+        public EmissionConstraintTag tag;
+        public EmissionConstraintValue value;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -109,6 +146,15 @@ namespace AUTD3Sharp.NativeMethods
         public IntPtr err;
     }
 
+
+    public enum EmissionConstraintTag : byte
+    {
+        DontCare,
+        Normalize,
+        Uniform,
+        Multiply,
+        Clamp,
+    }
 
 
 }

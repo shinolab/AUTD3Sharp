@@ -29,13 +29,16 @@ namespace AUTD3Sharp.Gain.Holo
             internal UnitSPL() { }
             public static Amplitude operator *(double a, UnitSPL _) => NewSPL(a);
         }
+    }
+}
 
-        public static class Units
-        {
-            public static UnitPascal Pascal { get; } = new UnitPascal();
+namespace AUTD3Sharp
+{
+    public static partial class Units
+    {
+        public static AUTD3Sharp.Gain.Holo.Amplitude.UnitPascal Pa { get; } = new AUTD3Sharp.Gain.Holo.Amplitude.UnitPascal();
 #pragma warning disable IDE1006
-            public static UnitSPL dB { get; } = new UnitSPL();
+        public static AUTD3Sharp.Gain.Holo.Amplitude.UnitSPL dB { get; } = new AUTD3Sharp.Gain.Holo.Amplitude.UnitSPL();
 #pragma warning restore IDE1006
-        }
     }
 }

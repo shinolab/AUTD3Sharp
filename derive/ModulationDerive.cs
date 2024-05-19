@@ -35,56 +35,34 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
         var customCode = isCustom ?
             $$"""
 
-        private ModulationPtr ModulationPtr()
+        private ModulationPtr ModulationPtr(Geometry geometry)
         {
             var data = Calc();
             unsafe
             {
                 fixed (EmitIntensity* ptr = &data[0])
-                    return NativeMethodsBase.AUTDModulationCustom(_config.Internal, (byte*)ptr, (ulong)data.Length, LoopBehavior.Internal);
+                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)ptr, (ulong)data.Length);
             }
         }
 
 """ : "";
 
         var cacheCode = noCache ? "" :
-            $$"""
-              
-        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{{typeName}}> WithCache()
-        {
-            return new AUTD3Sharp.Driver.Datagram.Modulation.Cache<{{typeName}}>(this);
-        }
-
-""";
+            $"        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}> WithCache() => new AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}>(this);";
         var radiationPressureCode = noRadiationPressure ? "" :
-            $$"""
-              
-        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{{typeName}}> WithRadiationPressure()
-        {
-            return new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{{typeName}}>(this);
-        }
-
-""";
+            $"        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}> WithRadiationPressure() => new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}>(this);";
 
         var transformCode = noTransform ? "" :
-            $$"""
-              
-        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{{typeName}}> WithTransform(Func<int, EmitIntensity, EmitIntensity> f)
-        {
-            return new AUTD3Sharp.Driver.Datagram.Modulation.Transform<{{typeName}}>(this, f);
-        }
-
-""";
+            $"        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}> WithTransform(Func<int, EmitIntensity, EmitIntensity> f) => new AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}>(this, f);";
 
         var configCode = configNoChange ? "" :
             $$"""
               
-        public {{typeName}} WithSamplingConfig(SamplingConfiguration config)
+        public {{typeName}} WithSamplingConfig(SamplingConfigWrap config)
         {
             _config = config;
             return this;
         }
-
 """;
 
         var fullType = typeSymbol.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)
@@ -101,37 +79,27 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
 using System;
 using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Driver.Datagram;
+using AUTD3Sharp.Driver.Datagram.Modulation;
 using AUTD3Sharp.NativeMethods;
 
 {{ns}} {
-    partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagramS<ModulationPtr>, IDatagram
+    partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagramST<ModulationPtr>, IDatagram
     {
-        DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
-        [ExcludeFromCodeCoverage] DatagramPtr IDatagramS<ModulationPtr>.IntoSegment(ModulationPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(p, segment, updateSegment);
-        [ExcludeFromCodeCoverage] ModulationPtr IDatagramS<ModulationPtr>.RawPtr(Geometry _) => ModulationPtr();
-        [ExcludeFromCodeCoverage] ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr() => ModulationPtr();
-        [ExcludeFromCodeCoverage] public DatagramWithSegment<{{typeName}}, ModulationPtr> WithSegment(Segment segment, bool updateSegment)
-        {
-            return new DatagramWithSegment<{{typeName}}, ModulationPtr>(this, segment, updateSegment);
-        }
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr(geometry));
+        [ExcludeFromCodeCoverage] DatagramPtr IDatagramST<ModulationPtr>.IntoSegmentTransition(ModulationPtr p, Segment segment, TransitionModeWrap? transitionMode) 
+        => transitionMode.HasValue ? NativeMethodsBase.AUTDModulationIntoDatagramWithSegmentTransition(p, segment, transitionMode.Value) : NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(p, segment);
+        [ExcludeFromCodeCoverage] ModulationPtr IDatagramST<ModulationPtr>.RawPtr(Geometry geometry) => ModulationPtr(geometry);
+        [ExcludeFromCodeCoverage] ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr(Geometry geometry) => ModulationPtr(geometry);
+        [ExcludeFromCodeCoverage] public DatagramWithSegmentTransition<{{typeName}}, ModulationPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new DatagramWithSegmentTransition<{{typeName}}, ModulationPtr>(this, segment, transitionMode);
+        
+        NativeMethods.LoopBehavior IModulation.LoopBehavior() => LoopBehavior;
+        SamplingConfigWrap IModulation.SamplingConfig() => _config;
 
-        private SamplingConfiguration _config = SamplingConfiguration.FromFrequency(4000);
+        private SamplingConfigWrap _config = SamplingConfig.Division(5120);
 
-        public SamplingConfiguration SamplingConfiguration => new SamplingConfiguration(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
+        public NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
 
-        public LoopBehavior LoopBehavior { get; private set; } = LoopBehavior.Infinite;
-
-        public int Length => NativeMethodsBase.AUTDModulationSize(ModulationPtr()).Validate();
-
-        [ExcludeFromCodeCoverage] SamplingConfiguration AUTD3Sharp.Driver.Datagram.Modulation.IModulation.InternalSamplingConfiguration() => _config;
-        [ExcludeFromCodeCoverage] LoopBehavior AUTD3Sharp.Driver.Datagram.Modulation.IModulation.InternalLoopBehavior() => LoopBehavior; 
-
-        /// <summary>
-        /// Set loop behavior
-        /// </summary>
-        /// <param name="loopBehavior">loop behavior</param>
-        /// <returns></returns>
-        public {{typeName}} WithLoopBehavior(LoopBehavior loopBehavior)
+        public {{typeName}} WithLoopBehavior(NativeMethods.LoopBehavior loopBehavior)
         {
             LoopBehavior = loopBehavior;
             return this;

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -29,7 +28,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
                 var d = new Drive[dev.NumTransducers];
                 unsafe
                 {
-                    fixed (Drive* p = &d[0]) NativeMethodsBase.AUTDGainCalcGetResult(res, (DriveRaw*)p, (uint)dev.Idx);
+                    fixed (Drive* p = &d[0]) NativeMethodsBase.AUTDGainCalcGetResult(res, (NativeMethods.Drive*)p, (uint)dev.Idx);
                 }
 
                 foreach (var tr in dev)
@@ -38,12 +37,12 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
             }
 
             NativeMethodsBase.AUTDGainCalcFreeResult(res);
-            return geometry.Devices().Aggregate(NativeMethodsBase.AUTDGainCustom(),
+            return geometry.Devices().Aggregate(NativeMethodsBase.AUTDGainRaw(),
                 (acc, dev) =>
                 {
                     unsafe
                     {
-                        fixed (Drive* p = &drives[dev.Idx][0]) return NativeMethodsBase.AUTDGainCustomSet(acc, (uint)dev.Idx, (DriveRaw*)p, (uint)drives[dev.Idx].Length);
+                        fixed (Drive* p = &drives[dev.Idx][0]) return NativeMethodsBase.AUTDGainRawSet(acc, (uint)dev.Idx, (NativeMethods.Drive*)p, (uint)drives[dev.Idx].Length);
                     }
                 });
         }

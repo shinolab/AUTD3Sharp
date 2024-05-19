@@ -11,7 +11,7 @@ public class SineTest
 
 
         {
-            var m = new Sine(150).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Phase.FromRad(Math.PI / 2.0));
+            var m = new Sine(150 * Hz).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Phase.FromRad(Math.PI / 2.0));
             Assert.True(await autd.SendAsync(m));
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -22,20 +22,20 @@ public class SineTest
                                     126, 122, 114, 104, 92,  78, 63, 48, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 43, 58, 73, 87, 100, 111, 120, 125};
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
 
         {
-            var m = new Sine(150).WithSamplingConfig(SamplingConfiguration.FromFrequencyDivision(10240)).WithLoopBehavior(LoopBehavior.Once);
+            var m = new Sine(150 * Hz).WithSamplingConfig(SamplingConfig.FromFreqDivision(10240)).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(40, m.Length);
-            Assert.Equal(SamplingConfiguration.FromFrequencyDivision(10240), m.SamplingConfiguration);
+            Assert.Equal(SamplingConfig.FromFreqDivision(10240), m.SamplingConfig);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             Assert.True(await autd.SendAsync(m));
             foreach (var dev in autd.Geometry)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(10240u, autd.Link.ModulationFrequencyDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10240u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }
@@ -46,7 +46,7 @@ public class SineTest
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(new Sine(150).WithMode(SamplingMode.SizeOptimized)));
+        Assert.True(await autd.SendAsync(new Sine(150 * Hz).WithMode(SamplingMode.SizeOptimized)));
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -55,7 +55,7 @@ public class SineTest
             Assert.Equal(modExpect, mod);
         }
 
-        await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.SendAsync(new Sine(100.1).WithMode(SamplingMode.ExactFrequency)));
+        await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.SendAsync(new Sine(100.1).WithMode(SamplingMode.ExactFreq)));
         Assert.True(await autd.SendAsync(new Sine(100.1).WithMode(SamplingMode.SizeOptimized)));
     }
 

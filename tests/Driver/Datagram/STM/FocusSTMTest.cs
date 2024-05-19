@@ -7,7 +7,7 @@ public class FocusSTMTest
     {
         var autd = await AUTDTest.CreateController();
 
-        Assert.True(await autd.SendAsync(ConfigureSilencer.Disable()));
+        Assert.True(await autd.SendAsync(Silencer.Disable()));
 
         const double radius = 30.0;
         const int size = 2;
@@ -19,43 +19,20 @@ public class FocusSTMTest
 
         foreach (var dev in autd.Geometry) Assert.False(autd.Link.IsStmGainMode(dev.Idx, Segment.S0));
 
-        Assert.Equal(1, stm.Frequency);
         Assert.Equal(TimeSpan.FromMicroseconds(1000000), stm.Period);
-        Assert.Equal(2, stm.SamplingConfiguration.Frequency);
-        Assert.Equal(10240000u, stm.SamplingConfiguration.FrequencyDivision);
-        Assert.Equal(TimeSpan.FromMicroseconds(500000), stm.SamplingConfiguration.Period);
+        Assert.Equal(TimeSpan.FromMicroseconds(500000), stm.SamplingConfig.Period);
         foreach (var dev in autd.Geometry)
         {
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0 * 1024.0), autd.Link.StmSoundSpeed(dev.Idx, Segment.S0));
-            Assert.Equal(10240000u, autd.Link.StmFrequencyDivision(dev.Idx, Segment.S0));
+            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
         }
 
-        stm = FocusSTM.FromPeriod(TimeSpan.FromMicroseconds(1000000))
-                   .AddFociFromIter(Enumerable.Range(0, size).Select(i => 2 * Math.PI * i / size).Select(theta =>
-                       center + radius * new Vector3d(Math.Cos(theta), Math.Sin(theta), 0)));
-        Assert.True(await autd.SendAsync(stm));
-        Assert.Equal(LoopBehavior.Infinite, stm.LoopBehavior);
-        Assert.Equal(1, stm.Frequency);
-        Assert.Equal(TimeSpan.FromMicroseconds(1000000), stm.Period);
-        Assert.Equal(2, stm.SamplingConfiguration.Frequency);
-        Assert.Equal(10240000u, stm.SamplingConfiguration.FrequencyDivision);
-        Assert.Equal(TimeSpan.FromMicroseconds(500000), stm.SamplingConfiguration.Period);
-        foreach (var dev in autd.Geometry)
-        {
-            Assert.Equal(10240000u, autd.Link.StmFrequencyDivision(dev.Idx, Segment.S0));
-            Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
-        }
-
-        stm = FocusSTM.FromSamplingConfig(SamplingConfiguration.FromFrequencyDivision(512)).AddFocus(center).AddFocus(center).WithLoopBehavior(LoopBehavior.Once);
+        stm = FocusSTM.FromSamplingConfig(SamplingConfig.FromFreqDivision(512)).AddFocus(center).AddFocus(center).WithLoopBehavior(LoopBehavior.Once);
         Assert.True(await autd.SendAsync(stm));
         Assert.Equal(LoopBehavior.Once, stm.LoopBehavior);
-        Assert.Equal(20000.0, stm.Frequency);
-        Assert.Equal(2 * 20000.0, stm.SamplingConfiguration.Frequency);
-        Assert.Equal(512u, stm.SamplingConfiguration.FrequencyDivision);
-        Assert.Equal(TimeSpan.FromMicroseconds(25), stm.SamplingConfiguration.Period);
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(512u, autd.Link.StmFrequencyDivision(dev.Idx, Segment.S0));
+            Assert.Equal(512u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
             Assert.Equal(LoopBehavior.Once, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
@@ -82,8 +59,8 @@ public class FocusSTMTest
          .AddDevice(new AUTD3(Vector3d.Zero))
          .OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(new ConfigureReadsFPGAState(_ => true)));
-        Assert.True(await autd.SendAsync(ConfigureSilencer.Disable()));
+        Assert.True(await autd.SendAsync(new ReadsFPGAState(_ => true)));
+        Assert.True(await autd.SendAsync(Silencer.Disable()));
 
         var infos = await autd.FPGAStateAsync();
         Assert.Equal(Segment.S0, infos[0]?.CurrentGainSegment);

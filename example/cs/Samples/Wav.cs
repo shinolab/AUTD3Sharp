@@ -9,7 +9,7 @@ internal static class WavTest
 {
     public static async Task Test<T>(Controller<T> autd)
     {
-        var config = ConfigureSilencer.Default();
+        var config = Silencer.Default();
         await autd.SendAsync(config);
 
         var m = new Wav("sin150.wav");

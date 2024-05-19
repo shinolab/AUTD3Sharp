@@ -35,17 +35,17 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
               
         private GainPtr GainPtr(Geometry geometry)
         {
-            return Calc(geometry).Aggregate(NativeMethodsBase.AUTDGainCustom(), (acc, d) =>
+            return Calc(geometry).Aggregate(NativeMethodsBase.AUTDGainRaw(), (acc, d) =>
             {
                 unsafe
                 {
-                    fixed (Drive* p = &d.Value[0])
-                        return NativeMethodsBase.AUTDGainCustomSet(acc, (uint)d.Key, (DriveRaw*)p, (uint)d.Value.Length);
+                    fixed (AUTD3Sharp.Drive* p = &d.Value[0])
+                        return NativeMethodsBase.AUTDGainRawSet(acc, (uint)d.Key, (AUTD3Sharp.NativeMethods.Drive*)p, (uint)d.Value.Length);
                 }
             });
         }
         
-        [ExcludeFromCodeCoverage] private static Dictionary<int, Drive[]> Transform(Geometry geometry, Func<Device, Transducer, Drive> f)
+        [ExcludeFromCodeCoverage] private static Dictionary<int, AUTD3Sharp.Drive[]> Transform(Geometry geometry, Func<Device, Transducer, AUTD3Sharp.Drive> f)
         {
             return geometry.Devices().Select(dev => (dev.Idx, dev.Select(tr => f(dev, tr)).ToArray())).ToDictionary(x => x.Idx, x => x.Item2);
         }

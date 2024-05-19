@@ -8,7 +8,7 @@ open AUTD3Sharp.Utils
 
 module BesselBeamTest =
     let Test<'T> (autd : Controller<'T>) = 
-        (ConfigureSilencer.Default()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (Silencer.Default()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
 
         let m = new Sine 150;
 

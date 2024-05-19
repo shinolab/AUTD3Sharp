@@ -4,9 +4,6 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
 {
-    /// <summary>
-    /// Without modulation
-    /// </summary>
     [Modulation(ConfigNoChange = true)]
     public sealed partial class Static
     {
@@ -20,22 +17,12 @@ namespace AUTD3Sharp.Modulation
             Intensity = intensity;
         }
 
-        /// <summary>
-        /// Set amplitude
-        /// </summary>
-        /// <param name="intensity">Emission intensity</param>
-        /// <returns></returns>
         [ExcludeFromCodeCoverage]
         public static Static WithIntensity(byte intensity)
         {
             return new Static(new EmitIntensity(intensity));
         }
 
-        /// <summary>
-        /// Set amplitude
-        /// </summary>
-        /// <param name="intensity">Emission intensity</param>
-        /// <returns></returns>
         public static Static WithIntensity(EmitIntensity intensity)
         {
             return new Static(intensity);
@@ -43,6 +30,6 @@ namespace AUTD3Sharp.Modulation
 
         public EmitIntensity Intensity { get; }
 
-        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity.Value, LoopBehavior.Internal);
+        private ModulationPtr ModulationPtr(Geometry _) => NativeMethodsBase.AUTDModulationStatic(Intensity.Value, LoopBehavior);
     }
 }

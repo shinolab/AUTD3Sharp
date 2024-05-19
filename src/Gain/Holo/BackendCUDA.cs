@@ -8,9 +8,6 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    /// <summary>
-    /// Backend using CUDA
-    /// </summary>
     [ComVisible(false)]
     public class CUDABackend : Backend
     {
@@ -26,7 +23,7 @@ namespace AUTD3Sharp.Gain.Holo
             Ptr.Item1 = IntPtr.Zero;
         }
 
-        internal override GainPtr Sdp(double[] foci, Amplitude[] amps, ulong size, double alpha, uint repeat, double lambda, EmissionConstraintPtr constraint)
+        internal override GainPtr Sdp(double[] foci, Amplitude[] amps, ulong size, double alpha, uint repeat, double lambda, EmissionConstraintWrap constraint)
         {
             unsafe
             {
@@ -38,7 +35,7 @@ namespace AUTD3Sharp.Gain.Holo
             }
         }
 
-        internal override GainPtr Gs(double[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint)
+        internal override GainPtr Gs(double[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintWrap constraint)
         {
             unsafe
             {
@@ -50,7 +47,7 @@ namespace AUTD3Sharp.Gain.Holo
             }
         }
 
-        internal override GainPtr Gspat(double[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintPtr constraint)
+        internal override GainPtr Gspat(double[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintWrap constraint)
         {
             unsafe
             {
@@ -62,7 +59,7 @@ namespace AUTD3Sharp.Gain.Holo
             }
         }
 
-        internal override GainPtr Naive(double[] foci, Amplitude[] amps, ulong size, EmissionConstraintPtr constraint)
+        internal override GainPtr Naive(double[] foci, Amplitude[] amps, ulong size, EmissionConstraintWrap constraint)
         {
             unsafe
             {
@@ -74,7 +71,7 @@ namespace AUTD3Sharp.Gain.Holo
             }
         }
 
-        internal override GainPtr Lm(double[] foci, Amplitude[] amps, ulong size, double eps1, double eps2, double tau, uint kMax, double[] initial, EmissionConstraintPtr constraint)
+        internal override GainPtr Lm(double[] foci, Amplitude[] amps, ulong size, double eps1, double eps2, double tau, uint kMax, double[] initial, EmissionConstraintWrap constraint)
         {
             unsafe
             {
@@ -86,7 +83,6 @@ namespace AUTD3Sharp.Gain.Holo
                 }
             }
         }
-
     }
 }
 
