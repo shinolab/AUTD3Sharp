@@ -85,14 +85,12 @@ namespace AUTD3Sharp
             var intensities = _intensities.ToArray();
             unsafe
             {
-#pragma warning disable CS8509
                 var ptr = (_freq, _freqNearest, _config) switch
                 {
                     ({ } f, null, null) => NativeMethodsBase.AUTDSTMFocusFromFreq(f.Hz),
                     (null, { } f, null) => NativeMethodsBase.AUTDSTMFocusFromFreqNearest(f.Hz),
-                    (null, null, { } c) => NativeMethodsBase.AUTDSTMFocusFromSamplingConfig(c),
+                    _ => NativeMethodsBase.AUTDSTMFocusFromSamplingConfig(_config!.Value),
                 };
-#pragma warning restore CS8509 
                 ptr = NativeMethodsBase.AUTDSTMFocusWithLoopBehavior(ptr, LoopBehavior);
                 fixed (double* pp = &points[0])
                 fixed (EmitIntensity* ps = &intensities[0])

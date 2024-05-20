@@ -5,6 +5,18 @@ namespace tests.Driver.Controller;
 public class ControllerBuilderTest
 {
     [Fact]
+    public void OpenWithTimeout()
+    {
+        _ = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).Open(Audit.Builder(), TimeSpan.FromMilliseconds(1));
+    }
+
+    [Fact]
+    public async Task OpenWithTimeoutAsync()
+    {
+        _ = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder(), TimeSpan.FromMilliseconds(1));
+    }
+
+    [Fact]
     public void WithUltrasoundFreq()
     {
         var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).WithUltrasoundFreq(41000 * Hz).Open(Audit.Builder());

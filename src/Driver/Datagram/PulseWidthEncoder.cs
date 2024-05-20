@@ -29,7 +29,7 @@ namespace AUTD3Sharp
             if (_buf == null) return NativeMethodsBase.AUTDDatagramPulseWidthEncoderDefault();
             unsafe
             {
-                fixed (ushort* p = _buf)
+                fixed (ushort* p = &_buf[0])
                 {
                     return NativeMethodsBase.AUTDDatagramPulseWidthEncoder(p, (uint)_buf.Length).Validate();
                 }

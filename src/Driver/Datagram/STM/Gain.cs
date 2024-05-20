@@ -82,14 +82,12 @@ namespace AUTD3Sharp
             var gains = _gains.Select(g => g.GainPtr(geometry)).ToArray();
             unsafe
             {
-#pragma warning disable CS8509
                 var ptr = (_freq, _freqNearest, _config) switch
                 {
                     ({ } f, null, null) => NativeMethodsBase.AUTDSTMGainFromFreq(f.Hz),
                     (null, { } f, null) => NativeMethodsBase.AUTDSTMGainFromFreqNearest(f.Hz),
-                    (null, null, { } c) => NativeMethodsBase.AUTDSTMGainFromSamplingConfig(c),
+                    _ => NativeMethodsBase.AUTDSTMGainFromSamplingConfig(_config!.Value),
                 };
-#pragma warning restore CS8509
                 ptr = NativeMethodsBase.AUTDSTMGainWithLoopBehavior(ptr, LoopBehavior);
                 ptr = NativeMethodsBase.AUTDSTMGainWithMode(ptr, _mode);
                 fixed (GainPtr* gp = &gains[0])

@@ -3,6 +3,7 @@
 #endif
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AUTD3Sharp.Utils
 {
@@ -33,9 +34,10 @@ namespace AUTD3Sharp.Utils
 
 
         #region arithmetic
-        public static bool operator ==(Quaterniond left, Quaterniond right) => left.Equals(right);
-        public static bool operator !=(Quaterniond left, Quaterniond right) => !left.Equals(right);
-        public bool Equals(Quaterniond other) => W.Equals(other.W) && X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
+        [ExcludeFromCodeCoverage] public static bool operator ==(Quaterniond left, Quaterniond right) => left.Equals(right);
+        [ExcludeFromCodeCoverage] public static bool operator !=(Quaterniond left, Quaterniond right) => !left.Equals(right);
+        [ExcludeFromCodeCoverage] public bool Equals(Quaterniond other) => W.Equals(other.W) && X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
+        [ExcludeFromCodeCoverage]
         public override bool Equals(object? obj)
         {
             if (obj is Quaterniond qua) return Equals(qua);
@@ -54,7 +56,7 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region util
-        public override int GetHashCode() => W.GetHashCode() ^ X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => W.GetHashCode() ^ X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
 
         public override string ToString() => $"({W}, {X}, {Y}, {Z})";
         #endregion
