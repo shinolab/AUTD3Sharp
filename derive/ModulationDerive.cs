@@ -37,7 +37,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
 
         private ModulationPtr ModulationPtr(Geometry geometry)
         {
-            var data = Calc();
+            var data = Calc(geometry);
             unsafe
             {
                 fixed (EmitIntensity* ptr = &data[0])

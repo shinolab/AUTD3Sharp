@@ -5,7 +5,7 @@ public partial class ForCacheTest
 {
     internal int CalcCnt;
 
-    private EmitIntensity[] Calc()
+    private EmitIntensity[] Calc(Geometry geometry)
     {
         CalcCnt++;
         return [EmitIntensity.Max, EmitIntensity.Max];

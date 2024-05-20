@@ -7,14 +7,13 @@ public partial class Burst
     {
     }
 
-    private EmitIntensity[] Calc()
+    private EmitIntensity[] Calc(Geometry geometry)
     {
         var buf = new EmitIntensity[10];
         buf[0] = EmitIntensity.Max;
         return buf;
     }
 }
-
 
 public class ModulationTest
 {
