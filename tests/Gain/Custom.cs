@@ -7,7 +7,7 @@ public class CustomTest
     {
         var autd = await AUTDTest.CreateController();
 
-        await autd.SendAsync(new Custom((dev, tr) =>
+        await autd.SendAsync(new Custom(dev => tr =>
             (dev.Idx, tr.Idx) switch
             {
                 (0, 0) => new Drive(new Phase(0x90), new EmitIntensity(0x80)),

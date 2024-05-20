@@ -15,15 +15,15 @@ public class PhaseTest
     [Fact]
     public void PhaseFromRad()
     {
-        var phase = Phase.FromRad(0.0);
+        var phase = new Phase(0.0 * rad);
         Assert.Equal(0, phase.Value);
         Assert.Equal(0.0, phase.Radian);
 
-        phase = Phase.FromRad(Math.PI);
+        phase = new Phase(Math.PI * rad);
         Assert.Equal(128, phase.Value);
         Assert.Equal(Math.PI, phase.Radian);
 
-        phase = Phase.FromRad(2 * Math.PI);
+        phase = new Phase(2 * Math.PI * rad);
         Assert.Equal(0, phase.Value);
         Assert.Equal(0, phase.Radian);
     }

@@ -9,7 +9,7 @@ public partial class MyUniform(EmitIntensity intensity, Phase phase, bool[] chec
 
     Dictionary<int, Drive[]> Calc(Geometry geometry)
     {
-        return Transform(geometry, (dev, _) =>
+        return Transform(geometry, dev => _ =>
         {
             Check[dev.Idx] = true;
             return new Drive { Phase = phase, Intensity = intensity };

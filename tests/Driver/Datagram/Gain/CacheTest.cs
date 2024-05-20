@@ -8,7 +8,7 @@ partial class ForCacheTestGain
     Dictionary<int, Drive[]> Calc(Geometry geometry)
     {
         CalcCnt++;
-        return Transform(geometry, (_, _) => new Drive { Phase = new Phase(0x90), Intensity = new EmitIntensity(0x80) });
+        return Transform(geometry, (_) => (_) => new Drive { Phase = new Phase(0x90), Intensity = new EmitIntensity(0x80) });
     }
 }
 
