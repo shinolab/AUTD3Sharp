@@ -9,10 +9,8 @@ public class RadiationPressureTest
 
         var m = new Sine(150 * Hz);
         var mr = m.WithRadiationPressure().WithLoopBehavior(LoopBehavior.Once);
-        Assert.Equal(m.SamplingConfig, mr.SamplingConfig);
-        Assert.Equal(m.Length, mr.Length);
         Assert.Equal(LoopBehavior.Once, mr.LoopBehavior);
-        Assert.True(await autd.SendAsync(mr));
+        await autd.SendAsync(mr);
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

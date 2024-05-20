@@ -5,10 +5,6 @@ public partial class ForCacheTest
 {
     internal int CalcCnt;
 
-    public ForCacheTest()
-    {
-    }
-
     private EmitIntensity[] Calc()
     {
         CalcCnt++;
@@ -26,11 +22,9 @@ public class CacheTest
 
         var m = new Sine(150 * Hz);
         var mc = m.WithCache().WithLoopBehavior(LoopBehavior.Once);
-        Assert.Equal(m.SamplingConfig, mc.SamplingConfig);
-        Assert.Equal(m.Length, mc.Length);
         Assert.Equal(LoopBehavior.Once, mc.LoopBehavior);
-        Assert.True(await autd1.SendAsync(m));
-        Assert.True(await autd2.SendAsync(mc));
+        await autd1.SendAsync(m);
+        await autd2.SendAsync(mc);
         foreach (var dev in autd2.Geometry)
         {
             var modExpect = autd1.Link.Modulation(dev.Idx, Segment.S0);
@@ -43,10 +37,12 @@ public class CacheTest
     [Fact]
     public void CacheBuffer()
     {
+        var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).Open(Audit.Builder());
+
         var m = new Static().WithCache();
         Assert.Equal(0, m.Buffer.Length);
 
-        m.Init();
+        m.Init(autd.Geometry);
         Assert.Equal(new EmitIntensity(0xFF), m[0]);
         Assert.Equal(new EmitIntensity(0xFF), m[1]);
         var buffer = m.Buffer;
@@ -66,18 +62,18 @@ public class CacheTest
 
         {
             var m = new ForCacheTest();
-            Assert.True(await autd.SendAsync(m));
+            await autd.SendAsync(m);
             Assert.Equal(1, m.CalcCnt);
-            Assert.True(await autd.SendAsync(m));
+            await autd.SendAsync(m);
             Assert.Equal(2, m.CalcCnt);
         }
 
         {
             var m = new ForCacheTest();
             var mc = m.WithCache();
-            Assert.True(await autd.SendAsync(mc));
+            await autd.SendAsync(mc);
             Assert.Equal(1, m.CalcCnt);
-            Assert.True(await autd.SendAsync(mc));
+            await autd.SendAsync(mc);
             Assert.Equal(1, m.CalcCnt);
         }
     }
@@ -89,9 +85,9 @@ public class CacheTest
 
         var mc = new ForCacheTest().WithCache();
         {
-            Assert.True(await autd.SendAsync(mc));
+            await autd.SendAsync(mc);
         }
 
-        Assert.True(await autd.SendAsync(mc));
+        await autd.SendAsync(mc);
     }
 }

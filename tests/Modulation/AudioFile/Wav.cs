@@ -93,10 +93,8 @@ public class WavTest
 
         {
             var m = new Wav("sin150.wav");
-            Assert.Equal(5120u, m.SamplingConfig.FreqDivision);
-            Assert.Equal(modExpect.Length, m.Length);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            Assert.True(await autd.SendAsync(m));
+            await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -107,10 +105,9 @@ public class WavTest
         }
 
         {
-            var m = new Wav("sin150.wav").WithSamplingConfig(SamplingConfig.FromFreqDivision(10240)).WithLoopBehavior(LoopBehavior.Once);
-            Assert.Equal(10240u, m.SamplingConfig.FreqDivision);
+            var m = new Wav("sin150.wav").WithSamplingConfig(SamplingConfig.Division(10240)).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            Assert.True(await autd.SendAsync(m));
+            await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
@@ -124,7 +121,9 @@ public class WavTest
     {
 #pragma warning disable CS8602, CS8605
         var m = new Wav(" ");
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsModulationAudioFile.AUTDModulationWavIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Wav).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m, new object[] { })));
+        var autd = AUTDTest.CreateControllerSync();
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsModulationAudioFile.AUTDModulationWavIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Wav).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
+            [autd.Geometry])));
 #pragma warning restore CS8602, CS8605
     }
 }

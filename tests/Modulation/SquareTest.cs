@@ -1,19 +1,15 @@
 namespace tests.Modulation;
 
-using AUTD3Sharp.NativeMethods;
-
 public class SquareTest
 {
     [Fact]
-    public async Task Square()
+    public async Task SquareExact()
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         {
-            var m = new Square(200).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1);
-            Assert.True(await autd.SendAsync(m));
-            Assert.Equal(5120u, m.SamplingConfig.FreqDivision);
-            Assert.Equal(20, m.Length);
+            var m = new Square(200 * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1);
+            await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
             {
@@ -28,9 +24,8 @@ public class SquareTest
         }
 
         {
-            var m = new Square(150).WithSamplingConfig(SamplingConfig.FromFreqDivision(10240)).WithLoopBehavior(LoopBehavior.Once);
-            Assert.True(await autd.SendAsync(m));
-            Assert.Equal(10240u, m.SamplingConfig.FreqDivision);
+            var m = new Square(150 * Hz).WithSamplingConfig(SamplingConfig.Division(10240)).WithLoopBehavior(LoopBehavior.Once);
+            await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
             {
@@ -41,11 +36,11 @@ public class SquareTest
     }
 
     [Fact]
-    public async Task SquareMode()
+    public async Task SquareNearest()
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(new Square(150).WithMode(SamplingMode.SizeOptimized)));
+        await autd.SendAsync(Square.WithFreqNearest(150.0 * Hz));
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -53,16 +48,18 @@ public class SquareTest
             Assert.Equal(modExpect, mod);
         }
 
-        await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.SendAsync(new Square(100.1).WithMode(SamplingMode.ExactFreq)));
-        Assert.True(await autd.SendAsync(new Square(100.1).WithMode(SamplingMode.SizeOptimized)));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Square(100.1 * Hz)));
+        await autd.SendAsync(Square.WithFreqNearest(100.1 * Hz));
     }
 
     [Fact]
     public void SquareDefault()
     {
 #pragma warning disable CS8602, CS8605
-        var m = new Square(0);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSquareIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Square).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m, new object[] { })));
+        var m = new Square(0.0 * Hz);
+        var autd = AUTDTest.CreateControllerSync();
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSquareIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Square).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
+            [autd.Geometry])));
 #pragma warning restore CS8602, CS8605
     }
 }

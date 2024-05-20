@@ -197,7 +197,6 @@ def copy_dll(config: Config):
     rm_f("tmp.zip")
     for dll in glob.glob("bin/*.dll"):
         shutil.copy(dll, "src/native/windows/arm")
-        shutil.copy(dll, "tests")
     rmtree_f("bin")
 
     url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-aarch64-shared.tar.gz"

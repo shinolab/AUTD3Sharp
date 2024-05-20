@@ -23,7 +23,7 @@ public class ModulationTest
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(new Burst()));
+        await autd.SendAsync(new Burst());
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

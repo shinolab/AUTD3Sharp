@@ -13,7 +13,7 @@ public class BesselTest
         Assert.Equal(Math.PI / 4, g.Theta);
         Assert.Equal(0x80, g.Intensity.Value);
         Assert.Equal(0x81, g.PhaseOffset.Value);
-        Assert.True(await autd.SendAsync(g));
+        await autd.SendAsync(g);
         foreach (var dev in autd.Geometry)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
@@ -28,7 +28,8 @@ public class BesselTest
 #pragma warning disable CS8602, CS8605
         var autd = await AUTDTest.CreateController();
         var g = new Bessel(Vector3d.Zero, Vector3d.Zero, 0);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainBesselIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(Bessel).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g, new object[] { autd.Geometry })));
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainBesselIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(Bessel).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g,
+            [autd.Geometry])));
 #pragma warning restore CS8602, CS8605
     }
 }

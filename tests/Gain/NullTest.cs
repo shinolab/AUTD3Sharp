@@ -7,7 +7,7 @@ public class NullTest
     {
         var autd = await AUTDTest.CreateController();
 
-        Assert.True(await autd.SendAsync(new Null()));
+        await autd.SendAsync(new Null());
 
         foreach (var dev in autd.Geometry)
         {

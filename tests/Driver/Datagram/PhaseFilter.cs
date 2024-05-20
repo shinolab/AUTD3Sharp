@@ -8,7 +8,7 @@ public class PhaseFilterTest
     {
         var autd = await AUTDTest.CreateController();
 
-        Assert.True(await autd.SendAsync(new PhaseFilter((dev, tr) => new Phase((byte)(dev.Idx + tr.Idx)))));
+        await autd.SendAsync(AUTD3Sharp.PhaseFilter.Additive((dev, tr) => new Phase((byte)(dev.Idx + tr.Idx))));
         foreach (var dev in autd.Geometry)
         {
             var filter = autd.Link.PhaseFilter(dev.Idx);

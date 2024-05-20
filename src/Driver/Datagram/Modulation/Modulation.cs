@@ -7,7 +7,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
     public interface IModulation
     {
         public ModulationPtr ModulationPtr(Geometry geometry);
-        internal NativeMethods.LoopBehavior LoopBehavior();
-        internal SamplingConfigWrap SamplingConfig();
+        public NativeMethods.LoopBehavior LoopBehavior();
+        public SamplingConfigWrap SamplingConfig();
     }
 }

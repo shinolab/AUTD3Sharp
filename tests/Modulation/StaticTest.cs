@@ -9,16 +9,12 @@ public class StaticTest
 
         {
             var m = new AUTD3Sharp.Modulation.Static();
-            Assert.Equal(0xFFFFFFFFu, m.SamplingConfig.FreqDivision);
-            Assert.Equal(2, m.Length);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            Assert.True(await autd.SendAsync(m));
+            await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
-#pragma warning disable IDE0230
                 var modExpect = new byte[] { 0xFF, 0xFF };
-#pragma warning restore IDE0230
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
@@ -27,10 +23,8 @@ public class StaticTest
 
         {
             var m = AUTD3Sharp.Modulation.Static.WithIntensity(new EmitIntensity(32)).WithLoopBehavior(LoopBehavior.Once);
-            Assert.Equal(0xFFFFFFFFu, m.SamplingConfig.FreqDivision);
-            Assert.Equal(2, m.Length);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            Assert.True(await autd.SendAsync(m));
+            await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -50,7 +44,9 @@ public class StaticTest
     {
 #pragma warning disable CS8602, CS8605
         var m = new Static();
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationStaticIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Static).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m, new object[] { })));
+        var autd = AUTDTest.CreateControllerSync();
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationStaticIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Static).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
+            [autd.Geometry])));
 #pragma warning restore CS8602, CS8605
     }
 }

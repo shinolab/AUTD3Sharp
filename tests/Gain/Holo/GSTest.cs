@@ -1,5 +1,5 @@
 using AUTD3Sharp.Gain.Holo;
-using static AUTD3Sharp.Gain.Holo.Amplitude.Units;
+using static AUTD3Sharp.Units;
 
 namespace tests.Gain.Holo;
 
@@ -12,12 +12,12 @@ public class GSTest
 
         var backend = new NalgebraBackend();
         var g = new GS<NalgebraBackend>(backend)
-            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
-            .AddFociFromIter(new double[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3d(x, 0, 150), 5e3 * Pascal)))
+            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pa)
+            .AddFociFromIter(new double[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3d(x, 0, 150), 5e3 * Pa)))
             .WithRepeat(100)
-            .WithConstraint(EmissionConstraint.Uniform(0x80));
+            .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
-        Assert.True(await autd.SendAsync(g));
+        await autd.SendAsync(g);
 
         foreach (var dev in autd.Geometry)
         {
@@ -34,7 +34,8 @@ public class GSTest
         var autd = await AUTDTest.CreateController();
         var backend = new NalgebraBackend();
         var g = new GS<NalgebraBackend>(backend);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGSIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(GS<NalgebraBackend>).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g, new object[] { autd.Geometry })));
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGSIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(GS<NalgebraBackend>).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g,
+            [autd.Geometry])));
 #pragma warning restore CS8602, CS8605
     }
 }

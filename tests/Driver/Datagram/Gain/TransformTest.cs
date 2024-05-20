@@ -7,8 +7,8 @@ public class TransformTest
     {
         var autd = await AUTDTest.CreateController();
 
-        Assert.True(await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(128)).WithTransform((dev, _, d) =>
-            dev.Idx == 0 ? d with { Phase = new Phase((byte)(d.Phase.Value + 32)) } : d with { Phase = new Phase((byte)(d.Phase.Value - 32)) })));
+        await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(128)).WithTransform((dev, _, d) =>
+            dev.Idx == 0 ? d with { Phase = new Phase((byte)(d.Phase.Value + 32)) } : d with { Phase = new Phase((byte)(d.Phase.Value - 32)) }));
         {
             var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
@@ -29,12 +29,12 @@ public class TransformTest
         autd.Geometry[0].Enable = false;
 
         var check = new bool[autd.Geometry.NumDevices];
-        Assert.True(await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))
+        await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))
         .WithTransform((dev, _, d) =>
         {
             check[dev.Idx] = true;
             return d;
-        })));
+        }));
 
         Assert.False(check[0]);
         Assert.True(check[1]);

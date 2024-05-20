@@ -14,8 +14,6 @@ public class GeometryTest
         Assert.Equal(18, AUTD3.NumTransInX);
         Assert.Equal(14, AUTD3.NumTransInY);
         Assert.Equal(249, AUTD3.NumTransInUnit);
-
-        Assert.Equal(20.48e6, AUTD3.FPGAClkFreq);
     }
 
     [Fact]
@@ -188,6 +186,26 @@ public class GeometryTest
     }
 
     [Fact]
+    public async Task TestDeviceWavelength()
+    {
+        var autd = await AUTDTest.CreateController();
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(340e3 / 40e3, dev.Wavelength);
+        }
+    }
+
+    [Fact]
+    public async Task TestDeviceWavenumber()
+    {
+        var autd = await AUTDTest.CreateController();
+        foreach (var dev in autd.Geometry)
+        {
+                Assert.Equal(2.0 * Math.PI * 40e3 / 340e3, dev.Wavenumber);
+        }
+    }
+
+    [Fact]
     public async Task TestTransducerIdx()
     {
         var autd = await AUTDTest.CreateController();
@@ -264,31 +282,4 @@ public class GeometryTest
             }
         }
     }
-
-    [Fact]
-    public async Task TestTransducerWavelength()
-    {
-        var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
-        {
-            foreach (var tr in dev)
-            {
-                Assert.Equal(340e3 / 40e3, tr.Wavelength(340e3));
-            }
-        }
-    }
-
-    [Fact]
-    public async Task TestTransducerWavenum()
-    {
-        var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
-        {
-            foreach (var tr in dev)
-            {
-                Assert.Equal(2.0 * Math.PI * 40e3 / 340e3, tr.Wavenumber(340e3));
-            }
-        }
-    }
-
 }

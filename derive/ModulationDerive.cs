@@ -41,7 +41,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
             unsafe
             {
                 fixed (EmitIntensity* ptr = &data[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)ptr, (ulong)data.Length);
+                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)ptr, (uint)data.Length);
             }
         }
 
@@ -92,14 +92,14 @@ using AUTD3Sharp.NativeMethods;
         [ExcludeFromCodeCoverage] ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr(Geometry geometry) => ModulationPtr(geometry);
         [ExcludeFromCodeCoverage] public DatagramWithSegmentTransition<{{typeName}}, ModulationPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new DatagramWithSegmentTransition<{{typeName}}, ModulationPtr>(this, segment, transitionMode);
         
-        NativeMethods.LoopBehavior IModulation.LoopBehavior() => LoopBehavior;
+        AUTD3Sharp.NativeMethods.LoopBehavior IModulation.LoopBehavior() => LoopBehavior;
         SamplingConfigWrap IModulation.SamplingConfig() => _config;
 
         private SamplingConfigWrap _config = SamplingConfig.Division(5120);
 
-        public NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
+        public AUTD3Sharp.NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
 
-        public {{typeName}} WithLoopBehavior(NativeMethods.LoopBehavior loopBehavior)
+        public {{typeName}} WithLoopBehavior(AUTD3Sharp.NativeMethods.LoopBehavior loopBehavior)
         {
             LoopBehavior = loopBehavior;
             return this;

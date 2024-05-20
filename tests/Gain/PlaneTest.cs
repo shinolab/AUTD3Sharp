@@ -7,7 +7,7 @@ public class PlaneTest
     {
         var autd = await AUTDTest.CreateController();
 
-        Assert.True(await autd.SendAsync(new Plane(new Vector3d(0, 0, 1)).WithIntensity(0x80).WithPhaseOffset(new Phase(0x81))));
+        await autd.SendAsync(new Plane(new Vector3d(0, 0, 1)).WithIntensity(0x80).WithPhaseOffset(new Phase(0x81)));
         foreach (var dev in autd.Geometry)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
@@ -15,7 +15,7 @@ public class PlaneTest
             Assert.All(phases, p => Assert.Equal(0x81, p));
         }
 
-        Assert.True(await autd.SendAsync(new Plane(new Vector3d(0, 0, 1)).WithIntensity(new EmitIntensity(0x81))));
+        await autd.SendAsync(new Plane(new Vector3d(0, 0, 1)).WithIntensity(new EmitIntensity(0x81)));
         foreach (var dev in autd.Geometry)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);

@@ -1,7 +1,6 @@
-using static AUTD3Sharp.Gain.Holo.Amplitude.Units;
+using static AUTD3Sharp.Units;
 
 namespace tests.Gain.Holo;
-
 
 public class AmplitudeTest
 {
@@ -16,7 +15,7 @@ public class AmplitudeTest
     [Fact]
     public void HoloAmplitudePascal()
     {
-        var amp = 23.77004454874038 * Pascal;
+        var amp = 23.77004454874038 * Pa;
         Assert.Equal(23.77004454874038, amp.Pascal);
         Assert.Equal(121.5, amp.SPL);
     }

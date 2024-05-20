@@ -14,11 +14,6 @@ namespace AUTD3Sharp
     {
         private ControllerBuilderPtr _ptr = NativeMethodsBase.AUTDControllerBuilder();
 
-
-
-
-
-
         public ControllerBuilder AddDevice(AUTD3 device)
         {
             var rot = device.Rot ?? Quaterniond.Identity;
@@ -27,12 +22,6 @@ namespace AUTD3Sharp
             return this;
         }
 
-
-
-
-
-
-
         public async Task<Controller<T>> OpenAsync<T>(ILinkBuilder<T> linkBuilder, TimeSpan? timeout = null)
         {
             var ptr = await Task.Run(() => NativeMethodsBase.AUTDControllerOpen(_ptr, linkBuilder.Ptr(), (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1)).Validate());
@@ -40,12 +29,6 @@ namespace AUTD3Sharp
             var link = linkBuilder.ResolveLink(NativeMethodsBase.AUTDLinkGet(ptr));
             return new Controller<T>(geometry, ptr, link);
         }
-
-
-
-
-
-
 
         public Controller<T> Open<T>(ILinkBuilder<T> linkBuilder, TimeSpan? timeout = null)
         {

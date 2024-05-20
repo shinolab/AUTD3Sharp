@@ -12,6 +12,6 @@ public class SynchronizeTest
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero))
             .OpenAsync(Audit.Builder());
 
-        Assert.True(await autd.SendAsync(new Synchronize()));
+        await autd.SendAsync(new Synchronize());
     }
 }

@@ -3,7 +3,7 @@ namespace tests.Modulation;
 public class FourierTest
 {
     [Fact]
-    public async Task Fourier()
+    public async Task FourierExact()
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
@@ -12,33 +12,15 @@ public class FourierTest
         122, 115, 108, 102, 99,  99,  101, 106, 113, 120, 127, 130, 129, 124, 115, 100, 83,  65,  48,  35,  27,  26,  34,  48,  70,  97 };
 
         {
-            var m = (new Sine(50) + new Sine(100)).AddComponent(new Sine(150 * Hz))
-              .AddComponentsFromIter(new[] { 200 }.Select(x => new Sine(x))) + new Sine(250);
-            Assert.Equal(5120u, m.SamplingConfig.FreqDivision);
-            Assert.Equal(modExpect.Length, m.Length);
+            var m = (new Sine(50 * Hz) + new Sine(100 * Hz)).AddComponent(new Sine(150 * Hz))
+              .AddComponentsFromIter(new[] { 200 * Hz }.Select(x => new Sine(x))) + new Sine(250 * Hz);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            Assert.True(await autd.SendAsync(m));
+            await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
-
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
-            }
-        }
-
-
-        {
-            var m = ((new Sine(50) + new Sine(100)).AddComponent(new Sine(150 * Hz))
-              .AddComponentsFromIter(new[] { 200 }.Select(x => new Sine(x))) + new Sine(250)).WithLoopBehavior(LoopBehavior.Once);
-            Assert.Equal(5120u, m.SamplingConfig.FreqDivision);
-            Assert.Equal(modExpect.Length, m.Length);
-            Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            Assert.True(await autd.SendAsync(m));
-            foreach (var dev in autd.Geometry)
-            {
-                Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }

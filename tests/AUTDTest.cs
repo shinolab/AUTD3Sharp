@@ -21,7 +21,7 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.True(await autd.SendAsync(new ReadsFPGAState(_ => true)));
+        await autd.SendAsync(new ReadsFPGAState(_ => true));
 
         {
             autd.Link.AssertThermalSensor(0);
@@ -54,7 +54,7 @@ public class AUTDTest
     {
         var autd = CreateControllerSync();
 
-        Assert.True(autd.Send(new ReadsFPGAState(_ => true)));
+        autd.Send(new ReadsFPGAState(_ => true));
 
         {
             autd.Link.AssertThermalSensor(0);
@@ -84,13 +84,13 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v6.1.0", FirmwareVersion.LatestVersion);
+        Assert.Equal("v7.0.0", FirmwareVersion.LatestVersion);
 
         {
             foreach (var (info, i) in (await autd.FirmwareVersionListAsync()).Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v6.1.0, FPGA = v6.1.0 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v6.1.0, FPGA = v6.1.0 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v7.0.0, FPGA = v7.0.0 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v7.0.0, FPGA = v7.0.0 [Emulator]");
             }
         }
 
@@ -106,7 +106,7 @@ public class AUTDTest
         var autd = CreateControllerSync();
 
         foreach (var (info, i) in autd.FirmwareVersionList().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v6.1.0, FPGA = v6.1.0 [Emulator]");
+            Assert.Equal(info.Info, $"{i}: CPU = v7.0.0, FPGA = v7.0.0 [Emulator]");
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersionList().Last());
@@ -208,7 +208,7 @@ public class AUTDTest
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
-        Assert.True(await autd.SendAsync(new Static()));
+        await autd.SendAsync(new Static());
 
         foreach (var dev in autd.Geometry)
         {
@@ -217,7 +217,7 @@ public class AUTDTest
         }
 
         autd.Link.Down();
-        Assert.False(await autd.SendAsync(new Static()));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Static()));
 
         autd.Link.BreakDown();
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Static()));
@@ -233,7 +233,7 @@ public class AUTDTest
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
-        Assert.True(autd.Send(new Static()));
+        autd.Send(new Static());
 
         foreach (var dev in autd.Geometry)
         {
@@ -242,7 +242,7 @@ public class AUTDTest
         }
 
         autd.Link.Down();
-        Assert.False(autd.Send(new Static()));
+        Assert.Throws<AUTDException>(() => autd.Send(new Static()));
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => autd.Send(new Static()));
@@ -261,7 +261,7 @@ public class AUTDTest
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
-        Assert.True(await autd.SendAsync(new Static(), new Uniform(EmitIntensity.Max)));
+        await autd.SendAsync(new Static(), new Uniform(EmitIntensity.Max));
         foreach (var dev in autd.Geometry)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -272,7 +272,7 @@ public class AUTDTest
         }
 
         autd.Link.Down();
-        Assert.False(await autd.SendAsync((new Static(), new Uniform(EmitIntensity.Max))));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Static(), new Uniform(EmitIntensity.Max)));
 
         autd.Link.BreakDown();
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Static(), new Uniform(EmitIntensity.Max)));
@@ -291,7 +291,7 @@ public class AUTDTest
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
-        Assert.True(autd.Send(new Static(), new Uniform(EmitIntensity.Max)));
+        autd.Send(new Static(), new Uniform(EmitIntensity.Max));
         foreach (var dev in autd.Geometry)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -302,7 +302,7 @@ public class AUTDTest
         }
 
         autd.Link.Down();
-        Assert.False(autd.Send((new Static(), new Uniform(EmitIntensity.Max))));
+        Assert.Throws<AUTDException>(() => autd.Send(new Static(), new Uniform(EmitIntensity.Max)));
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => autd.Send(new Static(), new Uniform(EmitIntensity.Max)));

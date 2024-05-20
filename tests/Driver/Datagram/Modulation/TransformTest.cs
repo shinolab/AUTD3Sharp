@@ -10,11 +10,9 @@ public class TransformTest
 
         var m = new Sine(150 * Hz);
         var mt = m.WithTransform((_, v) => new EmitIntensity((byte)(v.Value / 2))).WithLoopBehavior(LoopBehavior.Once);
-        Assert.Equal(m.SamplingConfig, mt.SamplingConfig);
-        Assert.Equal(m.Length, mt.Length);
         Assert.Equal(LoopBehavior.Once, mt.LoopBehavior);
-        Assert.True(await autd1.SendAsync(m));
-        Assert.True(await autd2.SendAsync(mt));
+        await autd1.SendAsync(m);
+        await autd2.SendAsync(mt);
         foreach (var dev in autd1.Geometry)
         {
             var modExpect = autd1.Link.Modulation(dev.Idx, Segment.S0).Select(v => (byte)(v / 2));

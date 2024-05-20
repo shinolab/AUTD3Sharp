@@ -19,7 +19,7 @@ public class CacheTest
     {
         var autd = await AUTDTest.CreateController();
 
-        Assert.True(await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90)).WithCache()));
+        await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90)).WithCache());
 
         foreach (var dev in autd.Geometry)
         {
@@ -35,18 +35,18 @@ public class CacheTest
         var autd = await AUTDTest.CreateController();
         {
             var g = new ForCacheTestGain();
-            Assert.True(await autd.SendAsync(g));
+            await autd.SendAsync(g);
             Assert.Equal(1, g.CalcCnt);
-            Assert.True(await autd.SendAsync(g));
+            await autd.SendAsync(g);
             Assert.Equal(2, g.CalcCnt);
         }
 
         {
             var g = new ForCacheTestGain();
             var gc = g.WithCache();
-            Assert.True(await autd.SendAsync(gc));
+            await autd.SendAsync(gc);
             Assert.Equal(1, g.CalcCnt);
-            Assert.True(await autd.SendAsync(gc));
+            await autd.SendAsync(gc);
             Assert.Equal(1, g.CalcCnt);
         }
     }
@@ -59,7 +59,7 @@ public class CacheTest
 
         var g = new ForCacheTestGain();
         var gc = g.WithCache();
-        Assert.True(await autd.SendAsync(gc));
+        await autd.SendAsync(gc);
 
         Assert.False(gc.Drives().ContainsKey(0));
         Assert.True(gc.Drives().ContainsKey(1));

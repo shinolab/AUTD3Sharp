@@ -25,7 +25,7 @@ public class GainTest
         var autd = await AUTDTest.CreateController();
 
         var check = new bool[autd.Geometry.NumDevices];
-        Assert.True(await autd.SendAsync(new MyUniform(new EmitIntensity(0x80), new Phase(0x90), check)));
+        await autd.SendAsync(new MyUniform(new EmitIntensity(0x80), new Phase(0x90), check));
 
         foreach (var dev in autd.Geometry)
         {
@@ -42,7 +42,7 @@ public class GainTest
         autd.Geometry[0].Enable = false;
 
         var check = new bool[autd.Geometry.NumDevices];
-        Assert.True(await autd.SendAsync(new MyUniform(new EmitIntensity(0x80), new Phase(0x90), check)));
+        await autd.SendAsync(new MyUniform(new EmitIntensity(0x80), new Phase(0x90), check));
 
         Assert.False(check[0]);
         Assert.True(check[1]);

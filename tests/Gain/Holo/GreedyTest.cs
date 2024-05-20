@@ -1,5 +1,5 @@
 using AUTD3Sharp.Gain.Holo;
-using static AUTD3Sharp.Gain.Holo.Amplitude.Units;
+using static AUTD3Sharp.Units;
 
 namespace tests.Gain.Holo;
 
@@ -11,12 +11,12 @@ public class GreedyTest
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
 
         var g = new Greedy()
-            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pascal)
-            .AddFociFromIter(new double[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3d(x, 0, 150), 5e3 * Pascal)))
+            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pa)
+            .AddFociFromIter(new double[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3d(x, 0, 150), 5e3 * Pa)))
             .WithPhaseDiv(16)
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
-        Assert.True(await autd.SendAsync(g));
+        await autd.SendAsync(g);
 
         foreach (var dev in autd.Geometry)
         {
@@ -32,7 +32,8 @@ public class GreedyTest
 #pragma warning disable CS8602, CS8605
         var autd = await AUTDTest.CreateController();
         var g = new Greedy();
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGreedyIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(Greedy).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g, new object[] { autd.Geometry })));
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGreedyIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(Greedy).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g,
+            [autd.Geometry])));
 #pragma warning restore CS8602, CS8605
     }
 }

@@ -11,7 +11,7 @@ public class ClearTest
     public async Task TestClear()
     {
         using var autd = await CreateController();
-        Assert.True(await autd.SendAsync(new Uniform(EmitIntensity.Max).WithPhase(new Phase(0x90))));
+        await autd.SendAsync(new Uniform(EmitIntensity.Max).WithPhase(new Phase(0x90)));
         foreach (var dev in autd.Geometry)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -21,7 +21,7 @@ public class ClearTest
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }
 
-        Assert.True(await autd.SendAsync(new Clear()));
+        await autd.SendAsync(new Clear());
         foreach (var dev in autd.Geometry)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
