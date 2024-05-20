@@ -17,12 +17,6 @@ namespace AUTD3Sharp.Modulation
             Intensity = intensity;
         }
 
-        [ExcludeFromCodeCoverage]
-        public static Static WithIntensity(byte intensity)
-        {
-            return new Static(new EmitIntensity(intensity));
-        }
-
         public static Static WithIntensity(EmitIntensity intensity)
         {
             return new Static(intensity);
