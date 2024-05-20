@@ -464,13 +464,12 @@ def copy_dll_unity(config: Config):
         shutil.copy(dll, "unity/Assets/Plugins/x86_64")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-unity-universal-shared.tar.gz"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-unity-aarch64-shared.tar.gz"
     urllib.request.urlretrieve(url, "tmp.tar.gz")
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
     rm_f("tmp.tar.gz")
     for dll in glob.glob("bin/*.dylib"):
-        shutil.copy(dll, "unity/Assets/Plugins/x86_64")
         shutil.copy(dll, "unity/Assets/Plugins/aarch64")
     rmtree_f("bin")
 
@@ -517,8 +516,8 @@ def unity_build(args):
     rmtree_f("unity/Assets/Scripts/bin")
     rmtree_f("unity/Assets/Scripts/native")
     shutil.copy(
-        "src/NativeMethods/DefExt.cs",
-        "unity/Assets/Scripts/NativeMethods/DefExt.cs",
+        "src/NativeMethods/DriverExt.cs",
+        "unity/Assets/Scripts/NativeMethods/DriverExt.cs",
     )
 
     shutil.copy(

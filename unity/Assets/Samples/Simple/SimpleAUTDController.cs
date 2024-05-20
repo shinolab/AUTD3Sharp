@@ -1,8 +1,8 @@
 ﻿using System;
 using AUTD3Sharp;
 using AUTD3Sharp.Link;
-using AUTD3Sharp.NativeMethods;
 using UnityEngine;
+using static AUTD3Sharp.Units;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -56,7 +56,7 @@ public class SimpleAUTDController : MonoBehaviour
 #endif
         }
 
-        _autd!.Send(new AUTD3Sharp.Modulation.Sine(150)); // 150 Hz
+        _autd!.Send(new AUTD3Sharp.Modulation.Sine(150 * Hz)); // 150 Hz
 
         if (Target == null) return;
         _autd!.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));

@@ -1,5 +1,9 @@
 using System;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public readonly struct Freq<T> : IEquatable<Freq<T>> where T : struct
@@ -39,3 +43,7 @@ namespace AUTD3Sharp
         public static UnitHz Hz { get; } = new UnitHz();
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

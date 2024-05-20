@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using AUTD3Sharp;
 using UnityEngine;
+using static AUTD3Sharp.Units;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -33,7 +34,7 @@ public class MultiAUTD3Controller : MonoBehaviour
 #endif
         }
 
-        _autd!.Send(new AUTD3Sharp.Modulation.Sine(150)); // 150 Hz
+        _autd!.Send(new AUTD3Sharp.Modulation.Sine(150 * Hz)); // 150 Hz
 
         if (Target == null) return;
         _autd!.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));

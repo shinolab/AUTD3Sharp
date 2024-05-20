@@ -4,6 +4,10 @@ using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public sealed class PulseWidthEncoder : IDatagram
@@ -33,3 +37,7 @@ namespace AUTD3Sharp
         }
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif
