@@ -10,7 +10,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Compile Include="Wav.fs" />
-    <Compile Include="Transtest.fs" />
+    <Compile Include="Custom.fs" />
     <Compile Include="Plane.fs" />
     <Compile Include="Flag.fs" />
     <Compile Include="STMTest.fs" />
@@ -24,7 +24,7 @@
   <ItemGroup />
 
   <ItemGroup>
-    <PackageReference Include="AUTD3Sharp" Version="24.0.0" />
+    <PackageReference Include="AUTD3Sharp" Version="24.0.0.1" />
   </ItemGroup>
 
 </Project>

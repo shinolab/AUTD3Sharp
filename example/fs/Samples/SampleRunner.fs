@@ -14,7 +14,7 @@ module SampleRunner =
                 (STMTest.GainSTMTest, "GainSTM test");
                 (GainHoloTest.Test, "Multiple foci test");
                 (FlagTest.Test, "Flag test");
-                (TransTest.Test, "TransducerTest test");
+                (CustomTest.Test, "Custom gain test");
                 (GroupByTransducerTest.Test, "Group (by Transducer) test")];
 
         let examples = 
@@ -22,7 +22,7 @@ module SampleRunner =
 
 
         printfn "======== AUTD3 firmware information ========"
-        autd.FirmwareVersionList() |> Seq.iter (fun firm -> printfn $"{firm}")
+        autd.FirmwareVersion() |> Seq.iter (fun firm -> printfn $"{firm}")
         printfn "============================================"
 
         let rec run_example () =

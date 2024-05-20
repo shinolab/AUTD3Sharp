@@ -12,7 +12,7 @@ namespace AUTD3Sharp.Gain
 
         private readonly TransducerTestDelegate _f;
 
-        public Custom(Func<Device, Transducer, Drive> f)
+        public Custom(Func<Device, Func<Transducer, Drive>> f)
         {
             unsafe
             {
@@ -20,7 +20,7 @@ namespace AUTD3Sharp.Gain
                 {
                     var dev = new Device((int)devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx));
                     var tr = new Transducer(trIdx, dev.Ptr);
-                    var d = f(dev, tr);
+                    var d = f(dev)(tr);
                     raw->phase = d.Phase.Value;
                     raw->intensity = d.Intensity.Value;
                 };

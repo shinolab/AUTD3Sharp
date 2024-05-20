@@ -44,7 +44,7 @@ namespace AUTD3Sharp
             }
         }
 
-        public async Task<FirmwareVersion[]> FirmwareVersionListAsync()
+        public async Task<FirmwareVersion[]> FirmwareVersionAsync()
         {
             var handle = await Task.Run(() => NativeMethodsBase.AUTDControllerFirmwareVersionListPointer(Ptr).Validate());
             var result = Enumerable.Range(0, Geometry.NumDevices).Select(i => GetFirmwareVersion(handle, (uint)i)).ToArray();
@@ -52,7 +52,7 @@ namespace AUTD3Sharp
             return result;
         }
 
-        public FirmwareVersion[] FirmwareVersionList()
+        public FirmwareVersion[] FirmwareVersion()
         {
             var handle = NativeMethodsBase.AUTDControllerFirmwareVersionListPointer(Ptr).Validate();
             var result = Enumerable.Range(0, Geometry.NumDevices).Select(i => GetFirmwareVersion(handle, (uint)i)).ToArray();

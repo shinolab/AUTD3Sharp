@@ -12,16 +12,16 @@ namespace AUTD3Sharp
 
         private readonly PhaseFilterDelegate _f;
 
-        private PhaseFilter(Func<Device, Transducer, Phase> f)
+        private PhaseFilter(Func<Device, Func<Transducer, Phase>> f)
         {
             _f = (context, geometryPtr, devIdx, trIdx) =>
             {
                 var devPtr = NativeMethodsBase.AUTDDevice(geometryPtr, devIdx);
-                return f(new Device((int)devIdx, devPtr), new Transducer(trIdx, devPtr)).Value;
+                return f(new Device((int)devIdx, devPtr))(new Transducer(trIdx, devPtr)).Value;
             };
         }
 
-        public static PhaseFilter Additive(Func<Device, Transducer, Phase> f) => new PhaseFilter(f);
+        public static PhaseFilter Additive(Func<Device, Func<Transducer, Phase>> f) => new PhaseFilter(f);
 
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramPhaseFilterAdditive(Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, geometry.Ptr);
     }

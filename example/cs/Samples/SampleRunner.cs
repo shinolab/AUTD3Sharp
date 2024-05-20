@@ -25,7 +25,7 @@ public class SampleRunner
         if (autd.Geometry.NumDevices >= 2) examples.Add((GroupByDeviceTest.Test, "Group (by Device) test"));
 
         Console.WriteLine("======== AUTD3 firmware information ========");
-        Console.WriteLine(string.Join("\n", autd.FirmwareVersionList()));
+        Console.WriteLine(string.Join("\n", autd.FirmwareVersion()));
         Console.WriteLine("============================================");
 
         while (true)

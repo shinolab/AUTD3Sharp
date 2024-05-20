@@ -13,8 +13,10 @@ namespace AUTD3Sharp
             Value = value;
         }
 
-        public double Radian => NativeMethodsBase.AUTDPhaseToRad(Value);
+        public Phase(Angle value) : this(NativeMethodsBase.AUTDPhaseFromRad(value.Radian))
+        {
+        }
 
-        public static Phase FromRad(double value) => new Phase(NativeMethodsBase.AUTDPhaseFromRad(value));
+        public double Radian => NativeMethodsBase.AUTDPhaseToRad(Value);
     }
 }

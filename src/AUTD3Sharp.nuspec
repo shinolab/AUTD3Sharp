@@ -11,7 +11,7 @@
     <dependencies>
       <group targetFramework=".NETStandard2.1">
         <dependency id="NETStandard.Library" version="2.0.3" exclude="Build,Analyzers" />
-        <dependency id="AUTD3Sharp.Derive" version="24.0.0" >
+        <dependency id="AUTD3Sharp.Derive" version="24.0.0.1" >
         	<OutputItemType>Analyzer</OutputItemType>
 			    <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
         </dependency>

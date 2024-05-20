@@ -11,11 +11,11 @@ partial class MyFocus(Vector3d point)
 {
     private Dictionary<int, Drive[]> Calc(Geometry geometry)
     {
-        return Transform(geometry, (dev, tr) =>
+        return Transform(geometry, dev => tr =>
         {
             var tp = tr.Position;
             var dist = (tp - point).L2Norm;
-            var phase = Phase.FromRad(dist * dev.Wavenumber);
+            var phase = new Phase(dist * dev.Wavenumber * rad);
             return new Drive { Phase = phase, Intensity = EmitIntensity.Max };
         });
     }
