@@ -3,9 +3,9 @@ using AUTD3Sharp.Link;
 using AUTD3Sharp.Utils;
 using Samples;
 
-using var autd = await new ControllerBuilder().
+using var autd = new ControllerBuilder().
     AddDevice(new AUTD3(Vector3d.Zero))
-    .OpenAsync(SOEM.Builder()
+    .Open(SOEM.Builder()
         .WithErrHandler((slave, status, msg) =>
         {
             switch (status)
@@ -24,4 +24,4 @@ using var autd = await new ControllerBuilder().
             };
         }));
 
-await SampleRunner.Run(autd);
+SampleRunner.Run(autd);

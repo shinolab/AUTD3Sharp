@@ -8,10 +8,10 @@ namespace Samples;
 
 internal static class BesselBeamTest
 {
-    public static async Task Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd)
     {
         var config = Silencer.Default();
-        await autd.SendAsync(config);
+        autd.Send(config);
 
         var m = new Sine(150 * Hz); // AM sin 150 Hz
 
@@ -19,6 +19,6 @@ internal static class BesselBeamTest
         var dir = Vector3d.UnitZ;
         var g = new Bessel(start, dir, 13.0 / 180.0 * Math.PI); // BesselBeam from (x, y, 0), theta = 13 deg
 
-        await autd.SendAsync((m, g));
+        autd.Send((m, g));
     }
 }

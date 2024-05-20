@@ -8,10 +8,10 @@ namespace Samples;
 
 internal static class GainSTMTest
 {
-    public static async Task Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd)
     {
         var config = Silencer.Disable();
-        await autd.SendAsync(config);
+        autd.Send(config);
 
         var m = new Static();
 
@@ -24,19 +24,19 @@ internal static class GainSTMTest
             return new Focus(center + radius * new Vector3d(Math.Cos(theta), Math.Sin(theta), 0));
         }));
 
-        await autd.SendAsync((m, stm));
+        autd.Send((m, stm));
     }
 }
 
 internal static class FocusSTMTest
 {
-    public static async Task Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd)
     {
         var config = Silencer.Disable();
-        await autd.SendAsync(config);
+        autd.Send(config);
 
         var mod = new Static();
-        await autd.SendAsync(mod);
+        autd.Send(mod);
 
         var center = autd.Geometry.Center + new Vector3d(0, 0, 150);
         const int pointNum = 200;
@@ -47,6 +47,6 @@ internal static class FocusSTMTest
             return center + radius * new Vector3d(Math.Cos(theta), Math.Sin(theta), 0);
         }));
 
-        await autd.SendAsync(stm);
+        autd.Send(stm);
     }
 }

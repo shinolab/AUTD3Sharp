@@ -4,6 +4,6 @@ using AUTD3Sharp;
 using AUTD3Sharp.Link;
 using Samples;
 
-using var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(TwinCAT.Builder());
+using var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).Open(TwinCAT.Builder());
 
-await SampleRunner.Run(autd);
+SampleRunner.Run(autd);

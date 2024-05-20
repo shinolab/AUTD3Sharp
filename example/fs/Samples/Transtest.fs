@@ -3,14 +3,15 @@
 open AUTD3Sharp
 open AUTD3Sharp.Gain
 open AUTD3Sharp.Modulation
+open type AUTD3Sharp.Units
 
 module TransTest =
     let Test<'T> (autd : Controller<'T>) = 
-        (Silencer.Default()) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        (Silencer.Default()) |> autd.Send;
 
-        let m = new Sine(150 * Hz);
-        let g = new TransducerTest(fun dev tr -> match (dev.Idx, tr.Idx) with
-                                                    | (0, 0) -> System.Nullable(new Drive(new Phase(byte(0)), EmitIntensity.Max))
-                                                    | (0, 248) -> System.Nullable(new Drive(new Phase(byte(0)), EmitIntensity.Max))
-                                                    | _ ->  System.Nullable());
-        (m, g) |> autd.SendAsync |> Async.AwaitTask |> Async.RunSynchronously |> ignore;
+        let m = new Sine(150u * Hz);
+        let g = new Custom(fun dev tr -> match (dev.Idx, tr.Idx) with
+                                                    | (0, 0) -> new Drive(new Phase(byte(0)), EmitIntensity.Max)
+                                                    | (0, 248) -> new Drive(new Phase(byte(0)), EmitIntensity.Max)
+                                                    | _ ->  Drive.Null);
+        (m, g) |> autd.Send;

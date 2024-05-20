@@ -8,16 +8,16 @@ namespace Samples;
 
 internal static class PlaneWaveTest
 {
-    public static async Task Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd)
     {
         var config = Silencer.Default();
-        await autd.SendAsync(config);
+        autd.Send(config);
 
         var m = new Sine(150 * Hz); // AM sin 150 Hz
 
         var dir = Vector3d.UnitZ;
         var g = new Plane(dir);
 
-        await autd.SendAsync((m, g));
+        autd.Send((m, g));
     }
 }

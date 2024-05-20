@@ -5,9 +5,9 @@ using Samples;
 
 const string serverAmsNetId = "your TwinCATAUTDServer AMS net id (e.g. 172.16.99.2.1.1)";
 
-using var autd = await new ControllerBuilder()
+using var autd = new ControllerBuilder()
     .AddDevice(new AUTD3(Vector3d.Zero))
-    .OpenAsync(RemoteTwinCAT.Builder(serverAmsNetId));
+    .Open(RemoteTwinCAT.Builder(serverAmsNetId));
 
 
-await SampleRunner.Run(autd);
+SampleRunner.Run(autd);

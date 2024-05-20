@@ -7,13 +7,13 @@ namespace Samples;
 
 internal static class WavTest
 {
-    public static async Task Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd)
     {
         var config = Silencer.Default();
-        await autd.SendAsync(config);
+        autd.Send(config);
 
         var m = new Wav("sin150.wav");
         var g = new Focus(autd.Geometry.Center + new Vector3d(0, 0, 150));
-        await autd.SendAsync((m, g));
+        autd.Send((m, g));
     }
 }
