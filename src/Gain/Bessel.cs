@@ -4,9 +4,6 @@ using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp.Gain
 {
-
-
-
     [Gain]
     [Builder]
     public sealed partial class Bessel

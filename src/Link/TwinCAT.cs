@@ -5,9 +5,6 @@ using AUTD3Sharp.Driver;
 
 namespace AUTD3Sharp.Link
 {
-
-
-
     public sealed class TwinCAT
     {
         public sealed class TwinCATBuilder : ILinkBuilder<TwinCAT>
@@ -42,19 +39,11 @@ namespace AUTD3Sharp.Link
         }
     }
 
-
-
-
     public sealed class RemoteTwinCAT
     {
         public sealed class RemoteTwinCATBuilder : ILinkBuilder<RemoteTwinCAT>
         {
             private LinkRemoteTwinCATBuilderPtr _ptr;
-
-
-
-
-
 
             public RemoteTwinCATBuilder(string serverAmsNetId)
             {
@@ -68,11 +57,6 @@ namespace AUTD3Sharp.Link
                 }
             }
 
-
-
-
-
-
             public RemoteTwinCATBuilder WithServerIp(IPAddress serverIp)
             {
                 var serverIpBytes = serverIp.GetAddressBytes();
@@ -84,11 +68,6 @@ namespace AUTD3Sharp.Link
 
                 return this;
             }
-
-
-
-
-
 
             public RemoteTwinCATBuilder WithClientAmsNetId(string clientAmsNetId)
             {

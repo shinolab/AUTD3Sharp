@@ -32,6 +32,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
                 fixed (EmitIntensity* pBuf = &_cache[0])
                     NativeMethodsBase.AUTDModulationCalcGetResult(res, (byte*)pBuf);
             }
+            NativeMethodsBase.AUTDModulationCalcFreeResult(res);
             return Buffer;
         }
 

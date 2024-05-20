@@ -37,6 +37,20 @@ namespace AUTD3Sharp
 
     namespace NativeMethods
     {
+        public static class StatusExt
+        {
+            public static AUTD3Sharp.Status Into(this AUTD3Sharp.NativeMethods.Status mode)
+            {
+                return mode switch
+                {
+                    AUTD3Sharp.NativeMethods.Status.Error => AUTD3Sharp.Status.Error,
+                    AUTD3Sharp.NativeMethods.Status.StateChanged => AUTD3Sharp.Status.StateChanged,
+                    AUTD3Sharp.NativeMethods.Status.Lost => AUTD3Sharp.Status.Lost,
+                    _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+                };
+            }
+        }
+
         public static class SyncModeExt
         {
             public static SyncMode Into(this AUTD3Sharp.SyncMode mode)
@@ -56,7 +70,7 @@ namespace AUTD3Sharp
             {
                 return strategy switch
                 {
-                    AUTD3Sharp.TimerStrategy.Sleep=> TimerStrategy.Sleep,
+                    AUTD3Sharp.TimerStrategy.Sleep => TimerStrategy.Sleep,
                     AUTD3Sharp.TimerStrategy.BusyWait => TimerStrategy.BusyWait,
                     AUTD3Sharp.TimerStrategy.NativeTimer => TimerStrategy.NativeTimer,
                     _ => throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null)

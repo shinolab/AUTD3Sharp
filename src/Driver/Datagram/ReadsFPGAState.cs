@@ -1,14 +1,10 @@
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
-
 using System.Runtime.InteropServices;
 using System;
 
 namespace AUTD3Sharp
 {
-
-
-
     public sealed class ReadsFPGAState : IDatagram
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]

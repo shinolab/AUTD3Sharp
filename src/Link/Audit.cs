@@ -1,6 +1,7 @@
 using AUTD3Sharp.NativeMethods;
 using System;
 using AUTD3Sharp.Driver;
+using System.Linq;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -117,7 +118,7 @@ namespace AUTD3Sharp.Link
             return buf;
         }
 
-        public uint ModulationFreqDivision(int idx, Segment segment)=>NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivision(_ptr, segment, (uint)idx);
+        public uint ModulationFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivision(_ptr, segment, (uint)idx);
 
         public NativeMethods.LoopBehavior ModulationLoopBehavior(int idx, Segment segment) =>
             NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopBehavior(_ptr, segment, (uint)idx);
@@ -146,6 +147,23 @@ namespace AUTD3Sharp.Link
         public uint StmSoundSpeed(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(_ptr, segment, (uint)idx);
         public NativeMethods.LoopBehavior StmLoopBehavior(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(_ptr, segment, (uint)idx);
         public Segment CurrentStmSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(_ptr, (uint)idx);
+        public uint UltrasoundFreq(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaUltrasoundFreq(_ptr, (uint)idx);
+
+        public ushort[] PulseWidthEncoderTable(int idx)
+        {
+            var table = new ushort[65536];
+            unsafe
+            {
+                var buf = new byte[65536];
+                fixed (byte* p = &buf[0])
+                {
+                    var fullWidthStart = NativeMethodsBase.AUTDLinkAuditFpgaPulseWidthEncoderTable(_ptr, (uint)idx, p);
+                    Enumerable.Range(0, 65536).ToList().ForEach(i => table[i] = i < fullWidthStart ? buf[i] : (ushort)(0x100 | buf[i]));
+                }
+            }
+            return table;
+        }
+
     }
 }
 

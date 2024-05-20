@@ -22,6 +22,12 @@ namespace AUTD3Sharp
             return this;
         }
 
+        public ControllerBuilder WithUltrasoundFreq(Freq<uint> freq)
+        {
+            _ptr = NativeMethodsBase.AUTDControllerBuilderWithUltrasoundFreq(_ptr, freq.Hz);
+            return this;
+        }
+
         public async Task<Controller<T>> OpenAsync<T>(ILinkBuilder<T> linkBuilder, TimeSpan? timeout = null)
         {
             var ptr = await Task.Run(() => NativeMethodsBase.AUTDControllerOpen(_ptr, linkBuilder.Ptr(), (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1)).Validate());

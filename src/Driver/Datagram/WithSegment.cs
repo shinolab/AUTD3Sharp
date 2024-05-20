@@ -30,6 +30,5 @@ namespace AUTD3Sharp.Driver.Datagram
             var rawPtr = _datagram.RawPtr(geometry);
             return _datagram.IntoSegment(rawPtr, _segment, _updateSegment);
         }
-
     }
 }

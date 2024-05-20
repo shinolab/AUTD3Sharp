@@ -3,10 +3,6 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain
 {
-
-
-
-
     [Gain]
     [Builder]
     public sealed partial class Uniform

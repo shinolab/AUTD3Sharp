@@ -77,7 +77,6 @@ namespace AUTD3Sharp.Gain
             }
         }
     }
-
 }
 
 #if UNITY_2020_2_OR_NEWER

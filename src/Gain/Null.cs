@@ -4,9 +4,6 @@ using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp.Gain
 {
-
-
-
     [Gain]
     public sealed partial class Null
     {

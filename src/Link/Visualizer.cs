@@ -153,9 +153,6 @@ namespace AUTD3Sharp.Link
         }
     }
 
-
-
-
     public sealed class Visualizer
     {
         public sealed class VisualizerBuilder : ILinkBuilder<Visualizer>
@@ -314,7 +311,6 @@ namespace AUTD3Sharp.Link
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
             NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotPhase(_ptr, _backend, _directivity, config.Ptr(), geometry.Ptr, segment, (uint)idx).Validate();
         }
-
 
         public void PlotModulation(IPlotConfig config, Segment segment)
         {

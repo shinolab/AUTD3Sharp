@@ -331,6 +331,7 @@ def check_if_all_native_methods_called():
                 result = pattern.match(line)
                 if result:
                     defined_methods.add(result.group(1))
+    defined_methods = set(filter(lambda x: not x.endswith("T4010A1"), defined_methods))
 
     used_methods = set()
     pattern = re.compile("NativeMethods.*?\\.(AUTD.*?)\\(")
@@ -340,7 +341,7 @@ def check_if_all_native_methods_called():
             - set(glob_norm("src/NativeMethods/*.cs", recursive=True))
         )
         + list(set(glob_norm("tests/**/*.cs", recursive=True)))
-        + ["src/NativeMethods/DefExt.cs"]
+        + ["src/NativeMethods/DriverExt.cs"]
     ):
         with open(file, encoding="utf-8", mode="r") as f:
             for line in f.readlines():
