@@ -111,4 +111,25 @@ public class ConstraintTest
             Assert.Contains(phases, p => p != 0);
         }
     }
+
+    [Fact]
+    public async Task Multyply()
+    {
+        var autd = await AUTDTest.CreateController();
+
+        var backend = new NalgebraBackend();
+        var g = new Naive<NalgebraBackend>(backend)
+            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pa)
+            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pa)
+            .WithConstraint(EmissionConstraint.Multiply(0));
+
+        await autd.SendAsync(g);
+
+        foreach (var dev in autd.Geometry)
+        {
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
+            Assert.All(intensities, d => Assert.Equal(0, d));
+            Assert.Contains(phases, p => p != 0);
+        }
+    }
 }

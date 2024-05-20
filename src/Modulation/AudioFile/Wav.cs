@@ -18,7 +18,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             var filenameBytes = System.Text.Encoding.UTF8.GetBytes(_filename);
             unsafe
             {
-                fixed (byte* fp = filenameBytes)
+                fixed (byte* fp = &filenameBytes[0])
                 {
                     return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, _config, LoopBehavior).Validate();
                 }

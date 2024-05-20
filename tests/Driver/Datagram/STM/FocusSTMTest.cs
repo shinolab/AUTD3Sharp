@@ -24,6 +24,16 @@ public class FocusSTMTest
             Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
         }
 
+        stm = FocusSTM.FromFreqNearest(1.0 * Hz)
+            .AddFociFromIter(Enumerable.Range(0, size).Select(i => 2 * Math.PI * i / size).Select(theta =>
+                center + radius * new Vector3d(Math.Cos(theta), Math.Sin(theta), 0)));
+        await autd.SendAsync(stm);
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+            Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
+        }
+
         stm = FocusSTM.FromSamplingConfig(SamplingConfig.Division(512)).AddFocus(center).AddFocus(center).WithLoopBehavior(LoopBehavior.Once);
         await autd.SendAsync(stm);
         Assert.Equal(LoopBehavior.Once, stm.LoopBehavior);

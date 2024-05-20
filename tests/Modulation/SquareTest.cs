@@ -36,6 +36,28 @@ public class SquareTest
     }
 
     [Fact]
+    public async Task SquareExactFloat()
+    {
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
+
+        {
+            var m = new Square(200.0 * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1);
+            await autd.SendAsync(m);
+            Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
+            foreach (var dev in autd.Geometry)
+            {
+                var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+#pragma warning disable IDE0230
+                var modExpect = new byte[] { 85, 85, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 };
+#pragma warning restore IDE0230
+                Assert.Equal(modExpect, mod);
+                Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+            }
+        }
+    }
+
+    [Fact]
     public async Task SquareNearest()
     {
         var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());

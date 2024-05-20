@@ -37,7 +37,7 @@ namespace AUTD3Sharp
             return new GainSTM(freq, null, null);
         }
 
-        public static GainSTM FromPeriod(Freq<double> freq)
+        public static GainSTM FromFreqNearest(Freq<double> freq)
         {
             return new GainSTM(null, freq, null);
         }

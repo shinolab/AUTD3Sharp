@@ -12,9 +12,9 @@ namespace AUTD3Sharp
 {
     public sealed class PulseWidthEncoder : IDatagram
     {
-        private readonly List<ushort>? _buf;
+        private readonly ushort[]? _buf;
 
-        public PulseWidthEncoder(List<ushort> buf)
+        public PulseWidthEncoder(ushort[] buf)
         {
             _buf = buf;
         }
@@ -29,9 +29,9 @@ namespace AUTD3Sharp
             if (_buf == null) return NativeMethodsBase.AUTDDatagramPulseWidthEncoderDefault();
             unsafe
             {
-                fixed (ushort* p = _buf.ToArray())
+                fixed (ushort* p = _buf)
                 {
-                    return NativeMethodsBase.AUTDDatagramPulseWidthEncoder(p, (uint)_buf.Count).Validate();
+                    return NativeMethodsBase.AUTDDatagramPulseWidthEncoder(p, (uint)_buf.Length).Validate();
                 }
             }
         }

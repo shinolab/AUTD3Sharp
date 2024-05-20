@@ -23,9 +23,16 @@ public class GainSTMTest
         foreach (var dev in autd.Geometry)
         {
             Assert.True(autd.Link.IsStmGainMode(dev.Idx, Segment.S0));
+            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
         }
 
-        foreach (var dev in autd.Geometry) Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+        stm = GainSTM.FromFreqNearest(1.0 * Hz).AddGain(new Uniform(EmitIntensity.Max)).AddGain(new Uniform(new EmitIntensity(0x80)));
+        await autd.SendAsync(stm);
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+            Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
+        }
 
         stm = GainSTM.FromSamplingConfig(SamplingConfig.Division(512)).AddGain(new Uniform(EmitIntensity.Max)).AddGain(new Uniform(new EmitIntensity(0x80))).WithLoopBehavior(LoopBehavior.Once);
         Assert.Equal(LoopBehavior.Once, stm.LoopBehavior);

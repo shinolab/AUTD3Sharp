@@ -14,12 +14,6 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public Drive(Phase phase, byte intensity)
-        {
-            Phase = phase;
-            Intensity = new EmitIntensity(intensity);
-        }
-
         public static Drive Null => new Drive(new Phase(0), new EmitIntensity(0));
     }
 }

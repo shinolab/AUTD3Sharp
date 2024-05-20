@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -15,16 +16,19 @@ namespace AUTD3Sharp
             Hz = hz;
         }
 
+        [ExcludeFromCodeCoverage]
         public bool Equals(Freq<T> other)
         {
             return Hz.Equals(other.Hz);
         }
 
+        [ExcludeFromCodeCoverage]
         public override bool Equals(object? obj)
         {
             return obj is Freq<T> other && Equals(other);
         }
 
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode()
         {
             return Hz.GetHashCode();

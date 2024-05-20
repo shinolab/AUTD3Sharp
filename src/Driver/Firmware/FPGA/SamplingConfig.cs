@@ -4,10 +4,10 @@ namespace AUTD3Sharp
 {
     public static class SamplingConfig
     {
-        public static SamplingConfigWrap Freq(uint f) => NativeMethodsBase.AUTDSamplingConfigFromFreq(f);
+        public static SamplingConfigWrap Freq(Freq<uint> f) => NativeMethodsBase.AUTDSamplingConfigFromFreq(f.Hz);
 
-        public static SamplingConfigWrap FreqNearest(double f) =>
-            NativeMethodsBase.AUTDSamplingConfigFromFreqNearest(f);
+        public static SamplingConfigWrap FreqNearest(Freq<double> f) =>
+            NativeMethodsBase.AUTDSamplingConfigFromFreqNearest(f.Hz);
 
         public static SamplingConfigWrap Division(uint d) =>
             NativeMethodsBase.AUTDSamplingConfigFromDivision(d);
