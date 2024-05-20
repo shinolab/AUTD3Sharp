@@ -15,7 +15,7 @@ namespace AUTD3Sharp
     {
         private readonly Controller<T> _controller;
         private readonly Func<Device, object?> _map;
-        private GroupKVMapPtr _kvMap;
+        private readonly GroupKVMapPtr _kvMap;
         private readonly IDictionary<object, int> _keymap;
         private int _k;
 

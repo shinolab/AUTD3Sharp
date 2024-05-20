@@ -36,9 +36,9 @@ namespace AUTD3Sharp
 {
     public static partial class Units
     {
-        public static AUTD3Sharp.Gain.Holo.Amplitude.UnitPascal Pa { get; } = new AUTD3Sharp.Gain.Holo.Amplitude.UnitPascal();
+        public static Gain.Holo.Amplitude.UnitPascal Pa { get; } = new Gain.Holo.Amplitude.UnitPascal();
 #pragma warning disable IDE1006
-        public static AUTD3Sharp.Gain.Holo.Amplitude.UnitSPL dB { get; } = new AUTD3Sharp.Gain.Holo.Amplitude.UnitSPL();
+        public static Gain.Holo.Amplitude.UnitSPL dB { get; } = new Gain.Holo.Amplitude.UnitSPL();
 #pragma warning restore IDE1006
     }
 }

@@ -70,7 +70,7 @@ namespace AUTD3Sharp
             return this;
         }
 
-        public DatagramPtr Ptr(Geometry geometry) => NativeMethodsBase.AUTDSTMGainIntoDatagram(this.RawPtr(geometry));
+        public DatagramPtr Ptr(Geometry geometry) => NativeMethodsBase.AUTDSTMGainIntoDatagram(RawPtr(geometry));
 
         public DatagramPtr IntoSegmentTransition(GainSTMPtr p, Segment segment, TransitionModeWrap? transitionMode) =>
             transitionMode.HasValue
@@ -86,7 +86,7 @@ namespace AUTD3Sharp
                 {
                     ({ } f, null, null) => NativeMethodsBase.AUTDSTMGainFromFreq(f.Hz),
                     (null, { } f, null) => NativeMethodsBase.AUTDSTMGainFromFreqNearest(f.Hz),
-                    _ => NativeMethodsBase.AUTDSTMGainFromSamplingConfig(_config!.Value),
+                    _ => NativeMethodsBase.AUTDSTMGainFromSamplingConfig(_config!.Value)
                 };
                 ptr = NativeMethodsBase.AUTDSTMGainWithLoopBehavior(ptr, LoopBehavior);
                 ptr = NativeMethodsBase.AUTDSTMGainWithMode(ptr, _mode);

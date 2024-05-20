@@ -1,4 +1,3 @@
-using System;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
 

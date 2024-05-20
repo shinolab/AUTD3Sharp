@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "tests", "tests.csproj", "{40542277-F4B6-452B-B29F-4FDF6B05D4E9}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AUTD3Sharp", "..\src\AUTD3Sharp.csproj", "{A52A4DBC-C921-4077-92F9-249913872AFF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{40542277-F4B6-452B-B29F-4FDF6B05D4E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40542277-F4B6-452B-B29F-4FDF6B05D4E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40542277-F4B6-452B-B29F-4FDF6B05D4E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A52A4DBC-C921-4077-92F9-249913872AFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A52A4DBC-C921-4077-92F9-249913872AFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A52A4DBC-C921-4077-92F9-249913872AFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A52A4DBC-C921-4077-92F9-249913872AFF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

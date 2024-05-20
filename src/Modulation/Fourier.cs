@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Derive;
-using AUTD3Sharp.Driver.Datagram.Modulation;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
@@ -32,7 +31,7 @@ namespace AUTD3Sharp.Modulation
 
         private ModulationPtr ModulationPtr(Geometry geometry)
         {
-            var components = _components.Select(m => ((AUTD3Sharp.Driver.Datagram.Modulation.IModulation)m).ModulationPtr(geometry)).ToArray();
+            var components = _components.Select(m => ((Driver.Datagram.Modulation.IModulation)m).ModulationPtr(geometry)).ToArray();
             unsafe
             {
                 fixed (ModulationPtr* p = &components[0])

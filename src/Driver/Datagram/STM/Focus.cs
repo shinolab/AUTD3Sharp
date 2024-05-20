@@ -89,7 +89,7 @@ namespace AUTD3Sharp
                 {
                     ({ } f, null, null) => NativeMethodsBase.AUTDSTMFocusFromFreq(f.Hz),
                     (null, { } f, null) => NativeMethodsBase.AUTDSTMFocusFromFreqNearest(f.Hz),
-                    _ => NativeMethodsBase.AUTDSTMFocusFromSamplingConfig(_config!.Value),
+                    _ => NativeMethodsBase.AUTDSTMFocusFromSamplingConfig(_config!.Value)
                 };
                 ptr = NativeMethodsBase.AUTDSTMFocusWithLoopBehavior(ptr, LoopBehavior);
                 fixed (double* pp = &points[0])

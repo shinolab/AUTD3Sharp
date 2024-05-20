@@ -39,13 +39,13 @@ namespace AUTD3Sharp
     {
         public static class StatusExt
         {
-            public static AUTD3Sharp.Status Into(this AUTD3Sharp.NativeMethods.Status mode)
+            public static AUTD3Sharp.Status Into(this Status mode)
             {
                 return mode switch
                 {
-                    AUTD3Sharp.NativeMethods.Status.Error => AUTD3Sharp.Status.Error,
-                    AUTD3Sharp.NativeMethods.Status.StateChanged => AUTD3Sharp.Status.StateChanged,
-                    AUTD3Sharp.NativeMethods.Status.Lost => AUTD3Sharp.Status.Lost,
+                    Status.Error => AUTD3Sharp.Status.Error,
+                    Status.StateChanged => AUTD3Sharp.Status.StateChanged,
+                    Status.Lost => AUTD3Sharp.Status.Lost,
                     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
                 };
             }
@@ -53,12 +53,12 @@ namespace AUTD3Sharp
 
         public static class SyncModeExt
         {
-            public static SyncMode Into(this AUTD3Sharp.SyncMode mode)
+            public static SyncMode Into(this SyncMode mode)
             {
                 return mode switch
                 {
-                    AUTD3Sharp.SyncMode.FreeRun => SyncMode.FreeRun,
-                    AUTD3Sharp.SyncMode.DC => SyncMode.DC,
+                    SyncMode.FreeRun => SyncMode.FreeRun,
+                    SyncMode.DC => SyncMode.DC,
                     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
                 };
             }

@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
         {
             _m = m;
             _cache = Array.Empty<EmitIntensity>();
-            this.LoopBehavior = m.LoopBehavior();
+            LoopBehavior = m.LoopBehavior();
             _config = m.SamplingConfig();
         }
 
