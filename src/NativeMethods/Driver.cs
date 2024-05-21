@@ -68,7 +68,7 @@ namespace AUTD3Sharp.NativeMethods
     [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct TransitionModeWrap
     {
-        public byte ty;
+        public TransitionModeTag tag;
         public ulong value;
     }
 
@@ -159,18 +159,18 @@ namespace AUTD3Sharp.NativeMethods
 
     public enum DebugTypeTag : byte
     {
-        None,
-        BaseSignal,
-        Thermo,
-        ForceFan,
-        Sync,
-        ModSegment,
-        ModIdx,
-        StmSegment,
-        StmIdx,
-        IsStmMode,
-        PwmOut,
-        Direct,
+        None = 0,
+        BaseSignal = 1,
+        Thermo = 2,
+        ForceFan = 3,
+        Sync = 4,
+        ModSegment = 5,
+        ModIdx = 6,
+        StmSegment = 7,
+        StmIdx = 8,
+        IsStmMode = 9,
+        PwmOut = 10,
+        Direct = 11,
     }
 
     public enum GPIOIn : byte
@@ -191,10 +191,19 @@ namespace AUTD3Sharp.NativeMethods
 
     public enum SamplingConfigTag : byte
     {
-        Division,
-        DivisionRaw,
-        Freq,
-        FreqNearest,
+        Division = 0,
+        DivisionRaw = 1,
+        Freq = 2,
+        FreqNearest = 3,
+    }
+
+    public enum TransitionModeTag : byte
+    {
+        SyncIdx = 0,
+        SysTime = 1,
+        Gpio = 2,
+        Ext = 3,
+        Immediate = 4,
     }
 
 

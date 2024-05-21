@@ -149,11 +149,11 @@ namespace AUTD3Sharp.NativeMethods
 
     public enum EmissionConstraintTag : byte
     {
-        DontCare,
-        Normalize,
-        Uniform,
-        Multiply,
-        Clamp,
+        DontCare = 0,
+        Normalize = 1,
+        Uniform = 2,
+        Multiply = 3,
+        Clamp = 4,
     }
 
 

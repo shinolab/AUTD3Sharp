@@ -8,7 +8,7 @@ public class TransitionModeTest
     public void TransitionModeSyncIdx()
     {
         var m = TransitionMode.SyncIdx;
-        Assert.Equal(0, m.ty);
+        Assert.Equal(TransitionModeTag.SyncIdx, m.tag);
         Assert.Equal(0ul, m.value);
     }
 
@@ -17,7 +17,7 @@ public class TransitionModeTest
     {
         var now = DcSysTime.Now;
         var m = TransitionMode.SysTime(now);
-        Assert.Equal(1, m.ty);
+        Assert.Equal(TransitionModeTag.SysTime, m.tag);
         Assert.Equal(now.SysTime, m.value);
     }
 
@@ -25,7 +25,7 @@ public class TransitionModeTest
     public void TransitionModeGPIO()
     {
         var m = TransitionMode.GPIO(GPIOIn.I1);
-        Assert.Equal(2, m.ty);
+        Assert.Equal(TransitionModeTag.Gpio, m.tag);
         Assert.Equal(1ul, m.value);
     }
 
@@ -33,7 +33,7 @@ public class TransitionModeTest
     public void TransitionModeExt()
     {
         var m = TransitionMode.Ext;
-        Assert.Equal(0xF0, m.ty);
+        Assert.Equal(TransitionModeTag.Ext, m.tag);
         Assert.Equal(0ul, m.value);
     }
 
@@ -41,7 +41,7 @@ public class TransitionModeTest
     public void TransitionModeImmediate()
     {
         var m = TransitionMode.Immediate;
-        Assert.Equal(0xFF, m.ty);
+        Assert.Equal(TransitionModeTag.Immediate, m.tag);
         Assert.Equal(0ul, m.value);
     }
 }
