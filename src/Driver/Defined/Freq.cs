@@ -42,9 +42,17 @@ namespace AUTD3Sharp
         public static Freq<uint> operator *(uint a, UnitHz _) => new Freq<uint>(a);
     }
 
+    public class UnitkHz
+    {
+        internal UnitkHz() { }
+        public static Freq<double> operator *(double a, UnitkHz _) => new Freq<double>(a * 1000.0);
+        public static Freq<uint> operator *(uint a, UnitkHz _) => new Freq<uint>(a * 1000);
+    }
+
     public static partial class Units
     {
         public static UnitHz Hz { get; } = new UnitHz();
+        public static UnitkHz kHz { get; } = new UnitkHz();
     }
 }
 

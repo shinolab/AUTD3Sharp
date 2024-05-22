@@ -19,7 +19,7 @@ public class ControllerBuilderTest
     [Fact]
     public void WithUltrasoundFreq()
     {
-        var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).WithUltrasoundFreq(41000 * Hz).Open(Audit.Builder());
+        var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).WithUltrasoundFreq(41 * kHz).Open(Audit.Builder());
 
         foreach (var dev in autd.Geometry)
         {
