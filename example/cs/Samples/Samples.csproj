@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AUTD3Sharp" Version="24.1.0" />
+    <PackageReference Include="AUTD3Sharp" Version="24.1.0.1" />
   </ItemGroup>
 
 </Project>
