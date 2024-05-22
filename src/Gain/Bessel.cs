@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Gain
     [Builder]
     public sealed partial class Bessel
     {
-        public Bessel(Vector3d pos, Vector3d dir, double theta)
+        public Bessel(Vector3d pos, Vector3d dir, Angle theta)
         {
             Pos = pos;
             Dir = dir;
@@ -21,7 +21,7 @@ namespace AUTD3Sharp.Gain
 
         public Vector3d Dir { get; }
 
-        public double Theta { get; }
+        public Angle Theta { get; }
 
         [Property(EmitIntensity = true)]
         public EmitIntensity Intensity { get; private set; }
@@ -29,6 +29,6 @@ namespace AUTD3Sharp.Gain
         [Property]
         public Phase PhaseOffset { get; private set; }
 
-        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainBessel(Pos.X, Pos.Y, Pos.Z, Dir.X, Dir.Y, Dir.Z, Theta, Intensity.Value, PhaseOffset.Value);
+        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainBessel(Pos.X, Pos.Y, Pos.Z, Dir.X, Dir.Y, Dir.Z, Theta.Radian, Intensity.Value, PhaseOffset.Value);
     }
 }

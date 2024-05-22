@@ -64,7 +64,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
         var transformCode = noTransform ? "" :
             $$"""
               
-        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}> WithTransform(Func<AUTD3Sharp.Device, AUTD3Sharp.Transducer, AUTD3Sharp.Drive, AUTD3Sharp.Drive> f)
+        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}> WithTransform(Func<Device, Func<AUTD3Sharp.Transducer, AUTD3Sharp.Drive, AUTD3Sharp.Drive>> f)
         {
             return new AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}>(this, f);
         }

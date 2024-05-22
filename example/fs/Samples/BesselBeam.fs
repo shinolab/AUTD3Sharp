@@ -16,5 +16,5 @@ module BesselBeamTest =
         let start = autd.Geometry.Center;
         let dir = Vector3d.UnitZ;
 
-        let g = new Bessel(start, dir, 13.0 / 180.0 * Math.PI);
+        let g = new Bessel(start, dir, 13.0 / 180.0 * Math.PI * rad);
         (m, g) |> autd.Send;

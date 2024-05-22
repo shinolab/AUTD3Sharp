@@ -296,6 +296,9 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGainRawSet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainRawSet(GainPtr custom, uint dev_idx, Drive* ptr, uint len);
 
+        [DllImport(__DllName, EntryPoint = "AUTDGainWithTransform", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainWithTransform(GainPtr g, IntPtr f, IntPtr context, GeometryPtr geometry);
+
         [DllImport(__DllName, EntryPoint = "AUTDGainUniform", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainUniform(byte intensity, byte phase);
 

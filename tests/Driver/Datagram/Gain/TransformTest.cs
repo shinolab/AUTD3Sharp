@@ -7,7 +7,7 @@ public class TransformTest
     {
         var autd = await AUTDTest.CreateController();
 
-        await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(128)).WithTransform((dev, _, d) =>
+        await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(128)).WithTransform((dev) => (_, d) =>
             dev.Idx == 0 ? d with { Phase = new Phase((byte)(d.Phase.Value + 32)) } : d with { Phase = new Phase((byte)(d.Phase.Value - 32)) }));
         {
             var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
@@ -30,7 +30,7 @@ public class TransformTest
 
         var check = new bool[autd.Geometry.NumDevices];
         await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))
-        .WithTransform((dev, _, d) =>
+        .WithTransform((dev) => (_, d) =>
         {
             check[dev.Idx] = true;
             return d;

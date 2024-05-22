@@ -5,7 +5,7 @@ namespace AUTD3Sharp
 {
     public static class EulerAngles
     {
-        public static Quaterniond FromZyz(Angle z1, Angle y, Angle z2)
+        public static Quaterniond ZYZ(Angle z1, Angle y, Angle z2)
         {
             unsafe
             {

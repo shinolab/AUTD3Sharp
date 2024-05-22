@@ -17,7 +17,7 @@ internal static class BesselBeamTest
 
         var start = autd.Geometry.Center;
         var dir = Vector3d.UnitZ;
-        var g = new Bessel(start, dir, 13.0 / 180.0 * Math.PI); // BesselBeam from (x, y, 0), theta = 13 deg
+        var g = new Bessel(start, dir, 13.0 / 180.0 * Math.PI * rad); // BesselBeam from (x, y, 0), theta = 13 deg
 
         autd.Send((m, g));
     }
