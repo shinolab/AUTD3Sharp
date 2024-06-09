@@ -74,9 +74,9 @@ namespace AUTD3Sharp
 
     public class FociSTM
     {
-        public static FociSTM<N1> FromFreq(Freq<float> freq, IEnumerable<ControlPoints<N1>> points) => new FociSTM<N1>(freq, null, null, points);
-        public static FociSTM<N1> FromFreqNearest(Freq<float> freq, IEnumerable<ControlPoints<N1>> points) => new FociSTM<N1>(null, freq, null, points);
-        public static FociSTM<N1> FromSamplingConfig(SamplingConfigWrap config, IEnumerable<ControlPoints<N1>> points) => new FociSTM<N1>(null, null, config, points);
+        public static FociSTM<T> FromFreq<T>(Freq<float> freq, IEnumerable<ControlPoints<T>> points) where T : struct, IFociTuple => new FociSTM<T>(freq, null, null, points);
+        public static FociSTM<T> FromFreqNearest<T>(Freq<float> freq, IEnumerable<ControlPoints<T>> points) where T : struct, IFociTuple => new FociSTM<T>(null, freq, null, points);
+        public static FociSTM<T> FromSamplingConfig<T>(SamplingConfigWrap config, IEnumerable<ControlPoints<T>> points) where T : struct, IFociTuple => new FociSTM<T>(null, null, config, points);
 
         public static FociSTM<N1> FromFreq(Freq<float> freq, IEnumerable<Vector3> points) => new FociSTM<N1>(freq, null, null, points.Select(p => new ControlPoints<N1>(p)));
         public static FociSTM<N1> FromFreqNearest(Freq<float> freq, IEnumerable<Vector3> points) => new FociSTM<N1>(null, freq, null, points.Select(p => new ControlPoints<N1>(p)));
