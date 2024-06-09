@@ -5,7 +5,7 @@ public class StaticTest
     [Fact]
     public async Task Static()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
             var m = new AUTD3Sharp.Modulation.Static();

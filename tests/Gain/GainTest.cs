@@ -7,9 +7,9 @@ public partial class MyUniform(EmitIntensity intensity, Phase phase, bool[] chec
 {
     public bool[] Check = check;
 
-    Dictionary<int, Drive[]> Calc(Geometry geometry)
+    Func<Device, Func<Transducer, Drive>> Calc(Geometry geometry)
     {
-        return Transform(geometry, dev => _ =>
+        return Transform(dev => _ =>
         {
             Check[dev.Idx] = true;
             return new Drive { Phase = phase, Intensity = intensity };

@@ -6,7 +6,9 @@ using System;
 namespace AUTD3Sharp.Driver.Datagram
 {
     [ComVisible(false)]
-    public class DatagramTuple : IDatagram
+    public class DatagramTuple<TD1, TD2> : IDatagram
+    where TD1 : IDatagram
+    where TD2 : IDatagram
     {
         internal DatagramTuple((IDatagram, IDatagram) d)
         {
@@ -21,5 +23,7 @@ namespace AUTD3Sharp.Driver.Datagram
 
         private IDatagram _d1;
         private IDatagram _d2;
+
+        public static implicit operator DatagramTuple<TD1, TD2>((TD1, TD2) d) => new DatagramTuple<TD1, TD2>(d);
     }
 }

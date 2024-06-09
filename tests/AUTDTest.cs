@@ -8,12 +8,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
+        return await new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).AddDevice(new AUTD3(Vector3.Zero)).Open(Audit.Builder());
+        return new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).Open(Audit.Builder());
     }
 
     [Fact]
@@ -84,13 +84,13 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v7.0.0", FirmwareVersion.LatestVersion);
+        Assert.Equal("v8.0.0", FirmwareVersion.LatestVersion);
 
         {
             foreach (var (info, i) in (await autd.FirmwareVersionAsync()).Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v7.0.0, FPGA = v7.0.0 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v7.0.0, FPGA = v7.0.0 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v8.0.0, FPGA = v8.0.0 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v8.0.0, FPGA = v8.0.0 [Emulator]");
             }
         }
 
@@ -106,7 +106,7 @@ public class AUTDTest
         var autd = CreateControllerSync();
 
         foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v7.0.0, FPGA = v7.0.0 [Emulator]");
+            Assert.Equal(info.Info, $"{i}: CPU = v8.0.0, FPGA = v8.0.0 [Emulator]");
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersion().Last());
@@ -157,46 +157,46 @@ public class AUTDTest
         }
     }
 
-    [Fact]
-    public async Task TestSendTimeout()
-    {
-        {
-            var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).AddDevice(new AUTD3(Vector3.Zero))
-                .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
+    // [Fact]
+    // public async Task TestSendTimeout()
+    // {
+    //     {
+    //         var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
+    //             .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
-            Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
-            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
+    //         Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
+    //         Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
-            await autd.SendAsync(new Null());
-            Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
+    //         await autd.SendAsync(new Null());
+    //         Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
 
-            await autd.SendAsync(new Null(), TimeSpan.FromMicroseconds(1));
-            Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
+    //         await autd.SendAsync(new Null(), TimeSpan.FromMicroseconds(1));
+    //         Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
 
-            await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-            Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
-        }
-    }
+    //         await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
+    //         Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
+    //     }
+    // }
 
-    [Fact]
-    public void TestSendTimeoutSync()
-    {
-        {
-            var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).AddDevice(new AUTD3(Vector3.Zero))
-                .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
-            Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
-            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
+    // [Fact]
+    // public void TestSendTimeoutSync()
+    // {
+    //     {
+    //         var autd = new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
+    //             .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
+    //         Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
+    //         Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
-            autd.Send(new Null());
-            Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
+    //         autd.Send(new Null());
+    //         Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
 
-            autd.Send(new Null(), TimeSpan.FromMicroseconds(1));
-            Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
+    //         autd.Send(new Null(), TimeSpan.FromMicroseconds(1));
+    //         Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
 
-            autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-            Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
-        }
-    }
+    //         autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
+    //         Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
+    //     }
+    // }
 
     [Fact]
     public async Task TestSendSingle()
@@ -261,7 +261,7 @@ public class AUTDTest
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
-        await autd.SendAsync(new Static(), new Uniform(EmitIntensity.Max));
+        await autd.SendAsync((new Static(), new Uniform(EmitIntensity.Max)));
         foreach (var dev in autd.Geometry)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -272,10 +272,10 @@ public class AUTDTest
         }
 
         autd.Link.Down();
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Static(), new Uniform(EmitIntensity.Max)));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync((new Static(), new Uniform(EmitIntensity.Max))));
 
         autd.Link.BreakDown();
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Static(), new Uniform(EmitIntensity.Max)));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync((new Static(), new Uniform(EmitIntensity.Max))));
     }
 
     [Fact]
@@ -291,7 +291,7 @@ public class AUTDTest
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
-        autd.Send(new Static(), new Uniform(EmitIntensity.Max));
+        autd.Send((new Static(), new Uniform(EmitIntensity.Max)));
         foreach (var dev in autd.Geometry)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -302,10 +302,10 @@ public class AUTDTest
         }
 
         autd.Link.Down();
-        Assert.Throws<AUTDException>(() => autd.Send(new Static(), new Uniform(EmitIntensity.Max)));
+        Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(EmitIntensity.Max))));
 
         autd.Link.BreakDown();
-        Assert.Throws<AUTDException>(() => autd.Send(new Static(), new Uniform(EmitIntensity.Max)));
+        Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(EmitIntensity.Max))));
     }
 
     [Fact]
@@ -315,7 +315,7 @@ public class AUTDTest
 
         await autd.Group(dev => dev.Idx.ToString())
              .Set("0", (new Static(), new Null()))
-             .Set("1", new Sine(150 * Hz), new Uniform(EmitIntensity.Max))
+             .Set("1", (new Sine(150 * Hz), new Uniform(EmitIntensity.Max)))
              .SendAsync();
         {
             var m = autd.Link.Modulation(0, Segment.S0);
@@ -378,7 +378,7 @@ public class AUTDTest
 
         autd.Group(dev => dev.Idx.ToString())
              .Set("0", (new Static(), new Null()))
-             .Set("1", new Sine(150 * Hz), new Uniform(EmitIntensity.Max))
+             .Set("1", (new Sine(150 * Hz), new Uniform(EmitIntensity.Max)))
              .Send();
         {
             var m = autd.Link.Modulation(0, Segment.S0);
@@ -432,8 +432,8 @@ public class AUTDTest
         using var autd = await CreateController();
 
         await autd.Group(dev => dev.Idx.ToString())
-             .Set("0", (new Static(), new Null()), TimeSpan.FromSeconds(10))
-             .Set("1", new Null(), TimeSpan.FromSeconds(5))
+             .Set("0", (new Static(), new Null()))
+             .Set("1", new Null())
              .SendAsync();
     }
 
@@ -449,7 +449,7 @@ public class AUTDTest
             check[dev.Idx] = true;
             return "0";
         })
-                 .Set("0", new Sine(150 * Hz), new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90)))
+                 .Set("0", (new Sine(150 * Hz), new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))))
                  .SendAsync();
 
         Assert.False(check[0]);

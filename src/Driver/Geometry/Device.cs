@@ -73,7 +73,7 @@ namespace AUTD3Sharp
             }
         }
 
-        public Vector3 ZDirection
+        public Vector3 AxialDirection
         {
             get
             {

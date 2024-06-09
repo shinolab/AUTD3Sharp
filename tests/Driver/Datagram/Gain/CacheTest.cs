@@ -5,10 +5,10 @@ partial class ForCacheTestGain
 {
     internal int CalcCnt;
 
-    Dictionary<int, Drive[]> Calc(Geometry geometry)
+    Func<Device, Func<Transducer, AUTD3Sharp.Drive>> Calc(Geometry geometry)
     {
         CalcCnt++;
-        return Transform(geometry, (_) => (_) => new Drive { Phase = new Phase(0x90), Intensity = new EmitIntensity(0x80) });
+        return Transform((_) => (_) => new Drive { Phase = new Phase(0x90), Intensity = new EmitIntensity(0x80) });
     }
 }
 

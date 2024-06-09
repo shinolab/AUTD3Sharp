@@ -40,10 +40,10 @@ public class QuaternionTests
 
         var result = q.Normalized;
 
-        Assert.Equal(1 / 5.0, result.W);
-        Assert.Equal(2 / 5.0, result.X);
-        Assert.Equal(2 / 5.0, result.Y);
-        Assert.Equal(4 / 5.0, result.Z);
+        Assert.Equal(1 / 5.0f, result.W);
+        Assert.Equal(2 / 5.0f, result.X);
+        Assert.Equal(2 / 5.0f, result.Y);
+        Assert.Equal(4 / 5.0f, result.Z);
     }
 
     [Fact]

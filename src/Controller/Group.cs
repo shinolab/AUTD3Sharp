@@ -12,11 +12,11 @@ using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+    internal delegate int GroupMapDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx);
+
     public sealed class GroupGuard<T>
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate int GroupMapDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx);
-
         private readonly GroupMapDelegate _f;
         private readonly Controller<T> _controller;
         private readonly PList<int> _keys;
@@ -38,7 +38,8 @@ namespace AUTD3Sharp
             };
         }
 
-        public GroupGuard<T> Set(object key, IDatagram d)
+        public GroupGuard<T> Set<TD>(object key, TD d)
+        where TD : IDatagram
         {
             if (_keymap.ContainsKey(key)) throw new AUTDException("Key already exists");
             _datagrams.Add(d.Ptr(_controller.Geometry));
@@ -47,7 +48,10 @@ namespace AUTD3Sharp
             return this;
         }
 
-        public GroupGuard<T> Set(object key, (IDatagram, IDatagram) d) => Set(key, new DatagramTuple(d));
+        public GroupGuard<T> Set<TD1, TD2>(object key, (TD1, TD2) d)
+        where TD1 : IDatagram
+        where TD2 : IDatagram
+         => Set(key, new DatagramTuple<TD1, TD2>(d));
 
         public async Task SendAsync()
         {

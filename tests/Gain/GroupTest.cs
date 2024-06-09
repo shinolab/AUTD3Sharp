@@ -72,21 +72,6 @@ public class GroupTest
     }
 
     [Fact]
-    public async Task GroupUnspecifiedKey()
-    {
-        var autd = await AUTDTest.CreateController();
-
-        var exception = await Record.ExceptionAsync(async () =>
-        {
-            await autd.SendAsync(new Group((_, _) => "null"));
-        });
-
-        if (exception == null) Assert.Fail("Exception is expected");
-        Assert.Equal(typeof(AUTDException), exception.GetType());
-        Assert.Equal("AUTDException: Unspecified group key: [0]", exception.Message);
-    }
-
-    [Fact]
     public async Task GroupCheckOnlyForEnabled()
     {
         var autd = await AUTDTest.CreateController();

@@ -97,9 +97,9 @@ public class Vector3Test
 
         var result = vector.Normalized;
 
-        Assert.Equal(1 / 3.0, result.X);
-        Assert.Equal(2 / 3.0, result.Y);
-        Assert.Equal(2 / 3.0, result.Z);
+        Assert.Equal(1 / 3.0f, result.X);
+        Assert.Equal(2 / 3.0f, result.Y);
+        Assert.Equal(2 / 3.0f, result.Z);
     }
 
     [Fact]

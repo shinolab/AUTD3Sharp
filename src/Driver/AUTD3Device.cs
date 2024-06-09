@@ -29,12 +29,12 @@ namespace AUTD3Sharp
 
         public Vector3 Pos { get; }
         [Property]
-        public Quaternion Rot { get; private set; }
+        public Quaternion Rotation { get; private set; }
 
         public AUTD3(Vector3 pos)
         {
             Pos = pos;
-            Rot = Quaternion.Identity;
+            Rotation = Quaternion.Identity;
         }
     }
 }

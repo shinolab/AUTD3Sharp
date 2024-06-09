@@ -9,24 +9,22 @@ public class FociSTMTest
 
         await autd.SendAsync(Silencer.Disable());
 
-        const float radius = 30.0;
+        const float radius = 30.0f;
         const int size = 2;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0 * Hz)
-            .AddFociFromIter(Enumerable.Range(0, size).Select(i => 2 * Math.PI * i / size).Select(theta =>
-                (center + radius * new Vector3(Math.Cos(theta), Math.Sin(theta), 0), EmitIntensity.Max)));
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+                center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         await autd.SendAsync(stm);
 
         foreach (var dev in autd.Geometry) Assert.False(autd.Link.IsStmGainMode(dev.Idx, Segment.S0));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0 * 1024.0), autd.Link.StmSoundSpeed(dev.Idx, Segment.S0));
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link.StmSoundSpeed(dev.Idx, Segment.S0));
             Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
         }
 
-        stm = FociSTM.FromFreqNearest(1.0 * Hz)
-            .AddFociFromIter(Enumerable.Range(0, size).Select(i => 2 * Math.PI * i / size).Select(theta =>
-                center + radius * new Vector3(Math.Cos(theta), Math.Sin(theta), 0)));
+        stm = FociSTM.FromFreqNearest(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+                center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         await autd.SendAsync(stm);
         foreach (var dev in autd.Geometry)
         {
@@ -34,7 +32,7 @@ public class FociSTMTest
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = FociSTM.FromSamplingConfig(SamplingConfig.Division(512)).AddFocus(center).AddFocus(center).WithLoopBehavior(LoopBehavior.Once);
+        stm = FociSTM.FromSamplingConfig(SamplingConfig.Division(512), [center, center]).WithLoopBehavior(LoopBehavior.Once);
         await autd.SendAsync(stm);
         Assert.Equal(LoopBehavior.Once, stm.LoopBehavior);
         foreach (var dev in autd.Geometry)
@@ -62,8 +60,7 @@ public class FociSTMTest
     [Fact]
     public async Task TestChangeFociSTMSegment()
     {
-        var autd = await new ControllerBuilder()
-         .AddDevice(new AUTD3(Vector3.Zero))
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)])
          .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new ReadsFPGAState(_ => true));
@@ -73,12 +70,11 @@ public class FociSTMTest
         Assert.Equal(Segment.S0, infos[0]?.CurrentGainSegment);
         Assert.Null(infos[0]?.CurrentSTMSegment);
 
-        const float radius = 30.0;
+        const float radius = 30.0f;
         const int size = 2;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0 * Hz)
-            .AddFociFromIter(Enumerable.Range(0, size).Select(i => 2 * Math.PI * i / size).Select(theta =>
-                (center + radius * new Vector3(Math.Cos(theta), Math.Sin(theta), 0), EmitIntensity.Max)));
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+                center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
 
         await autd.SendAsync(stm);
         Assert.Equal(Segment.S0, autd.Link.CurrentStmSegment(0));

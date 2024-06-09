@@ -7,7 +7,7 @@ public class RawPCMTest
     [Fact]
     public async Task RawPCM()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] {
                 157,
@@ -105,7 +105,7 @@ public class RawPCMTest
         }
 
         {
-            var m = new RawPCM("sin150.dat", 4000 * Hz).WithSamplingConfig(SamplingConfig.Division(10240)).WithLoopBehavior(LoopBehavior.Once);
+            var m = new RawPCM("sin150.dat", 2000 * Hz).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)
@@ -114,16 +114,5 @@ public class RawPCMTest
                 Assert.Equal(10240u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
-    }
-
-    [Fact]
-    public void RawPCMDefault()
-    {
-#pragma warning disable CS8602, CS8605
-        var m = new RawPCM(" ", 0 * Hz);
-        var autd = AUTDTest.CreateControllerSync();
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsModulationAudioFile.AUTDModulationRawPCMIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(RawPCM).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
-            [autd.Geometry])));
-#pragma warning restore CS8602, CS8605
     }
 }

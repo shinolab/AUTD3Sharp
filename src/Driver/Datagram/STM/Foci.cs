@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -21,7 +22,7 @@ namespace AUTD3Sharp
 
         public NativeMethods.LoopBehavior LoopBehavior { get; private set; }
 
-        private FociSTM(Freq<float>? freq, Freq<float>? freqNearest, SamplingConfigWrap? config, IEnumerable<ControlPoints<T>> points)
+        internal FociSTM(Freq<float>? freq, Freq<float>? freqNearest, SamplingConfigWrap? config, IEnumerable<ControlPoints<T>> points)
         {
             _freq = freq;
             _freqNearest = freqNearest;
@@ -30,21 +31,6 @@ namespace AUTD3Sharp
             _points = points.ToArray();
 
             LoopBehavior = AUTD3Sharp.LoopBehavior.Infinite;
-        }
-
-        public static FociSTM<T> FromFreq(Freq<float> freq, IEnumerable<ControlPoints<T>> points)
-        {
-            return new FociSTM<T>(freq, null, null, points);
-        }
-
-        public static FociSTM<T> FromFreqNearest(Freq<float> freq, IEnumerable<ControlPoints<T>> points)
-        {
-            return new FociSTM<T>(null, freq, null, points);
-        }
-
-        public static FociSTM<T> FromSamplingConfig(SamplingConfigWrap config, IEnumerable<ControlPoints<T>> points)
-        {
-            return new FociSTM<T>(null, null, config, points);
         }
 
         public DatagramPtr Ptr(Geometry geometry) => NativeMethodsBase.AUTDSTMFociIntoDatagram(RawPtr(geometry), default(T).Value);
@@ -84,6 +70,21 @@ namespace AUTD3Sharp
 
         public DatagramWithSegmentTransition<FociSTM<T>, FociSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode)
             => new DatagramWithSegmentTransition<FociSTM<T>, FociSTMPtr>(this, segment, transitionMode);
+    }
+
+    public class FociSTM
+    {
+        public static FociSTM<N1> FromFreq(Freq<float> freq, IEnumerable<ControlPoints<N1>> points) => new FociSTM<N1>(freq, null, null, points);
+        public static FociSTM<N1> FromFreqNearest(Freq<float> freq, IEnumerable<ControlPoints<N1>> points) => new FociSTM<N1>(null, freq, null, points);
+        public static FociSTM<N1> FromSamplingConfig(SamplingConfigWrap config, IEnumerable<ControlPoints<N1>> points) => new FociSTM<N1>(null, null, config, points);
+
+        public static FociSTM<N1> FromFreq(Freq<float> freq, IEnumerable<Vector3> points) => new FociSTM<N1>(freq, null, null, points.Select(p => new ControlPoints<N1>(p)));
+        public static FociSTM<N1> FromFreqNearest(Freq<float> freq, IEnumerable<Vector3> points) => new FociSTM<N1>(null, freq, null, points.Select(p => new ControlPoints<N1>(p)));
+        public static FociSTM<N1> FromSamplingConfig(SamplingConfigWrap config, IEnumerable<Vector3> points) => new FociSTM<N1>(null, null, config, points.Select(p => new ControlPoints<N1>(p)));
+
+        public static FociSTM<N1> FromFreq(Freq<float> freq, IEnumerable<ControlPoint> points) => new FociSTM<N1>(freq, null, null, points.Select(p => new ControlPoints<N1>(p)));
+        public static FociSTM<N1> FromFreqNearest(Freq<float> freq, IEnumerable<ControlPoint> points) => new FociSTM<N1>(null, freq, null, points.Select(p => new ControlPoints<N1>(p)));
+        public static FociSTM<N1> FromSamplingConfig(SamplingConfigWrap config, IEnumerable<ControlPoint> points) => new FociSTM<N1>(null, null, config, points.Select(p => new ControlPoints<N1>(p)));
     }
 }
 

@@ -15,9 +15,9 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigFreqNearest()
     {
-        var m = SamplingConfig.FreqNearest(4000.0 * Hz);
+        var m = SamplingConfig.FreqNearest(4000.0f * Hz);
         Assert.Equal(SamplingConfigTag.FreqNearest, m.tag);
-        Assert.Equal(4000.0, m.value.freq_nearest);
+        Assert.Equal(4000.0f, m.value.freq_nearest);
     }
 
     [Fact]

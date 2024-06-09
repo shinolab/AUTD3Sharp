@@ -115,24 +115,30 @@ namespace AUTD3Sharp
 
         #endregion
 
-        public async Task SendAsync(IDatagram d)
+        public async Task SendAsync<TD>(TD d)
+        where TD : IDatagram
         {
             await Task.Run(() => Send(d));
         }
 
-        public async Task SendAsync((IDatagram, IDatagram) d)
+        public async Task SendAsync<TD1, TD2>((TD1, TD2) d)
+        where TD1 : IDatagram
+        where TD2 : IDatagram
         {
-            await SendAsync(new DatagramTuple(d));
+            await SendAsync(new DatagramTuple<TD1, TD2>(d));
         }
 
-        public void Send(IDatagram d)
+        public void Send<TD>(TD d)
+        where TD : IDatagram
         {
             NativeMethodsBase.AUTDControllerSend(Ptr, d.Ptr(Geometry)).Validate();
         }
 
-        public void Send((IDatagram, IDatagram) d)
+        public void Send<TD1, TD2>((TD1, TD2) d)
+        where TD1 : IDatagram
+        where TD2 : IDatagram
         {
-            Send(new DatagramTuple(d));
+            Send(new DatagramTuple<TD1, TD2>(d));
         }
 
         public GroupGuard<T> Group(Func<Device, object?> map)

@@ -17,7 +17,7 @@ namespace AUTD3Sharp
 
         public ControllerBuilder(IEnumerable<AUTD3> iter)
         {
-            var devices = iter.SelectMany(dev => new[] { dev.Pos.X, dev.Pos.Y, dev.Pos.Z, dev.Rot.W, dev.Rot.X, dev.Rot.Y, dev.Rot.Z }).ToArray();
+            var devices = iter.SelectMany(dev => new[] { dev.Pos.X, dev.Pos.Y, dev.Pos.Z, dev.Rotation.W, dev.Rotation.X, dev.Rotation.Y, dev.Rotation.Z }).ToArray();
             unsafe
             {
                 fixed (float* p = &devices[0])

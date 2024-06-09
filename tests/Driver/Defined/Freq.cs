@@ -14,7 +14,7 @@ public class FreqTest
     [Fact]
     public void FreqkHzFloatTest()
     {
-        var f = 1.0 * kHz;
-        Assert.Equal(1000.0, f.Hz);
+        var f = 1.0f * kHz;
+        Assert.Equal(1000.0f, f.Hz);
     }
 }

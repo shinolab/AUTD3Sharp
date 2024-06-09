@@ -8,11 +8,11 @@ public class GreedyTest
     [Fact]
     public async Task Greedy()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var g = new Greedy()
-            .AddFocus(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3 * Pa)
-            .AddFociFromIter(new float[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3 * Pa)))
+            .AddFocus(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa)
+            .AddFociFromIter(new float[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
             .WithPhaseDiv(16)
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 

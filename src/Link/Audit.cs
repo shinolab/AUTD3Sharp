@@ -47,9 +47,9 @@ namespace AUTD3Sharp.Link
             return new AuditBuilder();
         }
 
-        public TimeSpan Timeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0);
+        public TimeSpan Timeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0f);
 
-        public TimeSpan LastTimeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditLastTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0);
+        public TimeSpan LastTimeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditLastTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0f);
 
         public void Down()
         {
@@ -139,14 +139,14 @@ namespace AUTD3Sharp.Link
 
         public ushort[] PulseWidthEncoderTable(int idx)
         {
-            var table = new ushort[65536];
+            var table = new ushort[32768];
             unsafe
             {
-                var buf = new byte[65536];
+                var buf = new byte[32768];
                 fixed (byte* p = &buf[0])
                 {
                     var fullWidthStart = NativeMethodsBase.AUTDLinkAuditFpgaPulseWidthEncoderTable(_ptr, (ushort)idx, p);
-                    Enumerable.Range(0, 65536).ToList().ForEach(i => table[i] = i < fullWidthStart ? buf[i] : (ushort)(0x100 | buf[i]));
+                    Enumerable.Range(0, 32768).ToList().ForEach(i => table[i] = i < fullWidthStart / 2 ? buf[i] : (ushort)(0x100 | buf[i]));
                 }
             }
             return table;

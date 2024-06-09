@@ -8,8 +8,7 @@ public class SOEMTest()
     [Fact, Trait("require", "soem")]
     public async Task TestSOEM()
     {
-        await Assert.ThrowsAsync<AUTDException>(async () => _ = await new ControllerBuilder()
-             .AddDevice(new AUTD3(Vector3.Zero))
+        await Assert.ThrowsAsync<AUTDException>(async () => _ = await new ControllerBuilder([new AUTD3(Vector3.Zero)])
              .OpenAsync(SOEM.Builder()
                  .WithIfname("ifname")
                  .WithBufSize(32)

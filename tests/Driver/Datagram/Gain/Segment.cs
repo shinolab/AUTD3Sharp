@@ -5,8 +5,7 @@ public class SegmentTest
     [Fact]
     public async Task TestChangeGainSegment()
     {
-        var autd = await new ControllerBuilder()
-         .AddDevice(new AUTD3(Vector3.Zero))
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)])
          .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new ReadsFPGAState(_ => true));

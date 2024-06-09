@@ -5,10 +5,10 @@ public class SquareTest
     [Fact]
     public async Task SquareExact()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
-            var m = new Square(200 * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1);
+            var m = new Square(200 * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1f);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -38,10 +38,10 @@ public class SquareTest
     [Fact]
     public async Task SquareExactFloat()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
-            var m = new Square(200.0 * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1);
+            var m = new Square(200.0f * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1f);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -60,9 +60,9 @@ public class SquareTest
     [Fact]
     public async Task SquareNearest()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
-        await autd.SendAsync(Square.WithFreqNearest(150.0 * Hz));
+        await autd.SendAsync(Square.WithFreqNearest(150.0f * Hz));
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -70,15 +70,15 @@ public class SquareTest
             Assert.Equal(modExpect, mod);
         }
 
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Square(100.1 * Hz)));
-        await autd.SendAsync(Square.WithFreqNearest(100.1 * Hz));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Square(100.1f * Hz)));
+        await autd.SendAsync(Square.WithFreqNearest(100.1f * Hz));
     }
 
     [Fact]
     public void SquareDefault()
     {
 #pragma warning disable CS8602, CS8605
-        var m = new Square(0.0 * Hz);
+        var m = new Square(0.0f * Hz);
         var autd = AUTDTest.CreateControllerSync();
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSquareIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Square).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
             [autd.Geometry])));

@@ -39,9 +39,6 @@ namespace AUTD3Sharp.Modulation
 
         internal ISamplingMode Mode { get; }
 
-        public static Fourier operator +(Sine a, Sine b)
-            => new Fourier(a).AddComponent(b);
-
         private ModulationPtr ModulationPtr(Geometry _) => Mode.SinePtr(_config, Intensity, Offset, Phase, LoopBehavior);
     }
 }

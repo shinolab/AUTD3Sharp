@@ -8,23 +8,23 @@ public class LMTest
     [Fact]
     public async Task LM()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new LM<NalgebraBackend>(backend)
-            .AddFocus(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3 * Pa)
-            .AddFociFromIter(new float[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3 * Pa)))
-            .WithEps1(1e-3)
-            .WithEps2(1e-3)
-            .WithTau(1e-3)
+            .AddFocus(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa)
+            .AddFociFromIter(new float[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
+            .WithEps1(1e-3f)
+            .WithEps2(1e-3f)
+            .WithTau(1e-3f)
             .WithKMax(5)
-            .WithInitial([1.0])
+            .WithInitial([1.0f])
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
-        Assert.Equal(1e-3, g.Eps1);
-        Assert.Equal(1e-3, g.Eps2);
-        Assert.Equal(1e-3, g.Tau);
+        Assert.Equal(1e-3f, g.Eps1);
+        Assert.Equal(1e-3f, g.Eps2);
+        Assert.Equal(1e-3f, g.Tau);
         Assert.Equal(5u, g.KMax);
-        Assert.Equal([1.0], g.Initial.ToArray());
+        Assert.Equal([1.0f], g.Initial.ToArray());
         await autd.SendAsync(g);
 
         foreach (var dev in autd.Geometry)

@@ -42,7 +42,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
             unsafe
             {
                 fixed (EmitIntensity* ptr = &data[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)ptr, (uint)data.Length);
+                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)ptr, (ushort)data.Length);
             }
         }
 

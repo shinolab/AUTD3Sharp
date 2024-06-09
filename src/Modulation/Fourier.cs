@@ -8,26 +8,12 @@ namespace AUTD3Sharp.Modulation
     [Modulation(ConfigNoChange = true)]
     public sealed partial class Fourier
     {
-        private readonly List<Sine> _components;
+        private readonly Sine[] _components;
 
-        public Fourier(Sine sine)
+        public Fourier(IEnumerable<Sine> iter)
         {
-            _components = new List<Sine> { sine };
+            _components = iter.ToArray();
         }
-
-        public Fourier AddComponent(Sine sine)
-        {
-            _components.Add(sine);
-            return this;
-        }
-
-        public Fourier AddComponentsFromIter(IEnumerable<Sine> iter)
-        {
-            return iter.Aggregate(this, (fourier, sine) => fourier.AddComponent(sine));
-        }
-
-        public static Fourier operator +(Fourier a, Sine b)
-            => a.AddComponent(b);
 
         private ModulationPtr ModulationPtr(Geometry geometry)
         {
