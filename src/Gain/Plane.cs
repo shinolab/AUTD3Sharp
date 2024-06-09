@@ -8,14 +8,14 @@ namespace AUTD3Sharp.Gain
     [Builder]
     public sealed partial class Plane
     {
-        public Plane(Vector3d dir)
+        public Plane(Vector3 dir)
         {
             Dir = dir;
             Intensity = EmitIntensity.Max;
             PhaseOffset = new Phase(0);
         }
 
-        public Vector3d Dir { get; }
+        public Vector3 Dir { get; }
 
         [Property]
         public Phase PhaseOffset { get; private set; }

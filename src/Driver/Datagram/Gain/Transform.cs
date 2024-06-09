@@ -8,7 +8,7 @@ using AUTD3Sharp.Derive;
 namespace AUTD3Sharp.Driver.Datagram.Gain
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-    internal unsafe delegate void GainTransformDelegate(IntPtr context, GeometryPtr geometryPtr, uint devIdx, byte trIdx, Drive src, NativeMethods.Drive* dst);
+    internal unsafe delegate void GainTransformDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, Drive src, NativeMethods.Drive* dst);
 
     [Gain(NoTransform = true)]
     public sealed partial class Transform<TG>
@@ -24,7 +24,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
                 _g = g;
                 _f = (context, geometryPtr, devIdx, trIdx, src, dst) =>
                     {
-                        var dev = new Device((int)devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx));
+                        var dev = new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx));
                         var tr = new Transducer(trIdx, dev.Ptr);
                         var d = f(dev)(tr, src);
                         dst->intensity = d.Intensity.Value;
@@ -35,7 +35,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
 
         private GainPtr GainPtr(Geometry geometry)
         {
-            return NativeMethodsBase.AUTDGainWithTransform(_g.GainPtr(geometry), Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, geometry.Ptr);
+            return NativeMethodsBase.AUTDGainWithTransform(_g.GainPtr(geometry), Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, geometry.Ptr);
         }
     }
 }

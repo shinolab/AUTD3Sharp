@@ -2,7 +2,7 @@
 
 namespace AUTD3Sharp.Derive
 {
-    [AttributeUsage(AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct)]
     public sealed class BuilderAttribute : Attribute { }
 
     [AttributeUsage(AttributeTargets.Property)]

@@ -115,38 +115,24 @@ namespace AUTD3Sharp
 
         #endregion
 
-        public async Task SendAsync(IDatagram data, TimeSpan? timeout = null)
+        public async Task SendAsync(IDatagram d)
         {
-            await SendAsync(data, new NullDatagram(), timeout);
+            await Task.Run(() => Send(d));
         }
 
-        public void Send(IDatagram data, TimeSpan? timeout = null)
+        public async Task SendAsync((IDatagram, IDatagram) d)
         {
-            Send(data, new NullDatagram(), timeout);
+            await SendAsync(new DatagramTuple(d));
         }
 
-        public async Task SendAsync(IDatagram data1, IDatagram data2, TimeSpan? timeout = null)
+        public void Send(IDatagram d)
         {
-            await Task.Run(() => NativeMethodsBase.AUTDControllerSend(Ptr, data1.Ptr(Geometry), data2.Ptr(Geometry),
-                (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1)).Validate());
+            NativeMethodsBase.AUTDControllerSend(Ptr, d.Ptr(Geometry)).Validate();
         }
 
-        public void Send(IDatagram data1, IDatagram data2, TimeSpan? timeout = null)
+        public void Send((IDatagram, IDatagram) d)
         {
-            NativeMethodsBase.AUTDControllerSend(Ptr, data1.Ptr(Geometry), data2.Ptr(Geometry),
-                (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1)).Validate();
-        }
-
-        public async Task SendAsync((IDatagram, IDatagram) data, TimeSpan? timeout = null)
-        {
-            var (data1, data2) = data;
-            await SendAsync(data1, data2, timeout);
-        }
-
-        public void Send((IDatagram, IDatagram) data, TimeSpan? timeout = null)
-        {
-            var (data1, data2) = data;
-            Send(data1, data2, timeout);
+            Send(new DatagramTuple(d));
         }
 
         public GroupGuard<T> Group(Func<Device, object?> map)

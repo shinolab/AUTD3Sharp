@@ -11,8 +11,8 @@ namespace AUTD3Sharp
 {
     public sealed class GainSTM : IDatagramST<GainSTMPtr>, IDatagram
     {
-        private readonly Freq<double>? _freq;
-        private readonly Freq<double>? _freqNearest;
+        private readonly Freq<float>? _freq;
+        private readonly Freq<float>? _freqNearest;
         private readonly SamplingConfigWrap? _config;
 
         private readonly List<Driver.Datagram.Gain.IGain> _gains;
@@ -20,7 +20,7 @@ namespace AUTD3Sharp
 
         public NativeMethods.LoopBehavior LoopBehavior { get; private set; }
 
-        private GainSTM(Freq<double>? freq, Freq<double>? freqNearest, SamplingConfigWrap? config)
+        private GainSTM(Freq<float>? freq, Freq<float>? freqNearest, SamplingConfigWrap? config)
         {
             _freq = freq;
             _freqNearest = freqNearest;
@@ -32,12 +32,12 @@ namespace AUTD3Sharp
             LoopBehavior = AUTD3Sharp.LoopBehavior.Infinite;
         }
 
-        public static GainSTM FromFreq(Freq<double> freq)
+        public static GainSTM FromFreq(Freq<float> freq)
         {
             return new GainSTM(freq, null, null);
         }
 
-        public static GainSTM FromFreqNearest(Freq<double> freq)
+        public static GainSTM FromFreqNearest(Freq<float> freq)
         {
             return new GainSTM(null, freq, null);
         }
@@ -82,17 +82,17 @@ namespace AUTD3Sharp
             var gains = _gains.Select(g => g.GainPtr(geometry)).ToArray();
             unsafe
             {
-                var ptr = (_freq, _freqNearest, _config) switch
-                {
-                    ({ } f, null, null) => NativeMethodsBase.AUTDSTMGainFromFreq(f.Hz),
-                    (null, { } f, null) => NativeMethodsBase.AUTDSTMGainFromFreqNearest(f.Hz),
-                    _ => NativeMethodsBase.AUTDSTMGainFromSamplingConfig(_config!.Value)
-                };
-                ptr = NativeMethodsBase.AUTDSTMGainWithLoopBehavior(ptr, LoopBehavior);
-                ptr = NativeMethodsBase.AUTDSTMGainWithMode(ptr, _mode);
                 fixed (GainPtr* gp = &gains[0])
                 {
-                    return NativeMethodsBase.AUTDSTMGainAddGains(ptr, gp, (uint)gains.Length);
+                    var ptr = (_freq, _freqNearest, _config) switch
+                    {
+                        ({ } f, null, null) => NativeMethodsBase.AUTDSTMGainFromFreq(f.Hz, gp, (ushort)gains.Length).Validate(),
+                        (null, { } f, null) => NativeMethodsBase.AUTDSTMGainFromFreqNearest(f.Hz, gp, (ushort)gains.Length).Validate(),
+                        _ => NativeMethodsBase.AUTDSTMGainFromSamplingConfig(_config!.Value, gp, (ushort)gains.Length)
+                    };
+                    ptr = NativeMethodsBase.AUTDSTMGainWithLoopBehavior(ptr, LoopBehavior);
+                    ptr = NativeMethodsBase.AUTDSTMGainWithMode(ptr, _mode);
+                    return ptr;
                 }
             }
         }

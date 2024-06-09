@@ -22,7 +22,7 @@ namespace AUTD3Sharp.Gain.Holo
 
         private GainPtr GainPtr(Geometry _)
         {
-            return _backend.Gspat(Foci.ToArray(), Amps.ToArray(), (ulong)Amps.Count, Repeat, Constraint);
+            return _backend.Gspat(Foci.ToArray(), Amps.ToArray(), (uint)Amps.Count, Repeat, Constraint);
         }
     }
 }

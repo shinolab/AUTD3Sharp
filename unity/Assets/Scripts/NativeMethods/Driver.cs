@@ -17,9 +17,9 @@ namespace AUTD3Sharp.NativeMethods
         public const uint NUM_TRANS_IN_UNIT = 249;
         public const uint NUM_TRANS_IN_X = 18;
         public const uint NUM_TRANS_IN_Y = 14;
-        public const double TRANS_SPACING_MM = 10.16;
-        public const double DEVICE_HEIGHT_MM = 151.4;
-        public const double DEVICE_WIDTH_MM = 192;
+        public const float TRANS_SPACING_MM = 10.16f;
+        public const float DEVICE_HEIGHT_MM = 151.4f;
+        public const float DEVICE_WIDTH_MM = 192f;
         public const int AUTD3_TRUE = 1;
         public const int AUTD3_FALSE = 0;
 
@@ -55,7 +55,7 @@ namespace AUTD3Sharp.NativeMethods
         [FieldOffset(0)]
         public uint freq;
         [FieldOffset(0)]
-        public double freq_nearest;
+        public float freq_nearest;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -70,6 +70,12 @@ namespace AUTD3Sharp.NativeMethods
     {
         public TransitionModeTag tag;
         public ulong value;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ContextPtr
+    {
+        public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -88,6 +94,14 @@ namespace AUTD3Sharp.NativeMethods
     public unsafe partial struct DatagramPtr
     {
         public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultDatagram
+    {
+        public DatagramPtr result;
+        public uint err_len;
+        public IntPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -121,7 +135,15 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct FocusSTMPtr
+    public unsafe partial struct ResultModulation
+    {
+        public ModulationPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct FociSTMPtr
     {
         public IntPtr Item1;
     }
@@ -133,25 +155,25 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultFociSTM
+    {
+        public FociSTMPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultGainSTM
+    {
+        public GainSTMPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct ResultI32
     {
         public int result;
-        public uint err_len;
-        public IntPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultModulation
-    {
-        public ModulationPtr result;
-        public uint err_len;
-        public IntPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultDatagram
-    {
-        public DatagramPtr result;
         public uint err_len;
         public IntPtr err;
     }

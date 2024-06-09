@@ -25,7 +25,7 @@ public class PulseWidthEncoderTest
         var autd = await AUTDTest.CreateController();
 
         var buf = Enumerable.Range(0, 255 * 255).Select(i =>
-            (ushort)Math.Round(Math.Asin((double)i / 255 / 255) / Math.PI * 512)
+            (ushort)Math.Round(Math.Asin((float)i / 255 / 255) / Math.PI * 512)
         ).Concat(Enumerable.Repeat((ushort)256, 65536 - 255 * 255)).ToArray();
 
         await autd.SendAsync(new AUTD3Sharp.PulseWidthEncoder());

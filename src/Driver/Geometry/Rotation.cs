@@ -5,13 +5,13 @@ namespace AUTD3Sharp
 {
     public static class EulerAngles
     {
-        public static Quaterniond ZYZ(Angle z1, Angle y, Angle z2)
+        public static Quaternion ZYZ(Angle z1, Angle y, Angle z2)
         {
             unsafe
             {
-                var rot = stackalloc double[4];
+                var rot = stackalloc float[4];
                 NativeMethodsBase.AUTDRotationFromEulerZYZ(z1.Radian, y.Radian, z2.Radian, rot);
-                return new Quaterniond(rot[0], rot[1], rot[2], rot[3]);
+                return new Quaternion(rot[0], rot[1], rot[2], rot[3]);
             }
         }
     }

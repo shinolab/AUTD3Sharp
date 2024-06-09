@@ -32,29 +32,41 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
 
         var customCode = isCustom ?
             $$"""
-              
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        private unsafe delegate void GainDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, AUTD3Sharp.NativeMethods.Drive* dst);
+
+        private GainDelegate _f = null;
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private GainPtr GainPtr(Geometry geometry)
         {
-            return Calc(geometry).Aggregate(NativeMethodsBase.AUTDGainRaw(), (acc, d) =>
-            {
-                unsafe
-                {
-                    fixed (AUTD3Sharp.Drive* p = &d.Value[0])
-                        return NativeMethodsBase.AUTDGainRawSet(acc, (uint)d.Key, (AUTD3Sharp.NativeMethods.Drive*)p, (uint)d.Value.Length);
-                }
-            });
+            unsafe{
+                var f = Calc(geometry);
+                _f = (context, geometryPtr, devIdx, trIdx, dst) =>
+                {   
+                    var devPtr = NativeMethodsBase.AUTDDevice(geometryPtr, devIdx);
+                    var dev = ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetDevice(devIdx, devPtr);
+                    var tr = ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetTransducer(trIdx, devPtr);
+                    var d = f(dev)(tr);
+                    dst->intensity = d.Intensity.Value;
+                    dst->phase = d.Phase.Value;
+                };
+
+                return NativeMethodsBase.AUTDGainCustom(Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetGeometryPtr(geometry));
+            }
         }
         
-        [ExcludeFromCodeCoverage] private static Dictionary<int, AUTD3Sharp.Drive[]> Transform(Geometry geometry, Func<Device, Func<Transducer, AUTD3Sharp.Drive>> f)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage] private static Func<Device, Func<Transducer, AUTD3Sharp.Drive>> Transform(Func<Device, Func<Transducer, AUTD3Sharp.Drive>> f)
         {
-            return geometry.Devices().Select(dev => (dev.Idx, dev.Select(tr => f(dev)(tr)).ToArray())).ToDictionary(x => x.Idx, x => x.Item2);
+            return f;
         }
 
 """ : "";
 
         var cacheCode = noCache ? "" :
             $$"""
-              
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Cache<{{typeName}}> WithCache()
         {
             return new AUTD3Sharp.Driver.Datagram.Gain.Cache<{{typeName}}>(this);
@@ -63,7 +75,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
 """;
         var transformCode = noTransform ? "" :
             $$"""
-              
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}> WithTransform(Func<Device, Func<AUTD3Sharp.Transducer, AUTD3Sharp.Drive, AUTD3Sharp.Drive>> f)
         {
             return new AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}>(this, f);
@@ -86,6 +98,8 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using AUTD3Sharp;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
@@ -93,14 +107,20 @@ using AUTD3Sharp.NativeMethods;
 {{nsBegin}}
     public partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Gain.IGain, IDatagramS<GainPtr>, IDatagram
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDGainIntoDatagram(((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GainPtr(geometry));
-        [ExcludeFromCodeCoverage] DatagramPtr IDatagramS<GainPtr>.IntoSegment(GainPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(p, segment, updateSegment);
-        [ExcludeFromCodeCoverage] GainPtr IDatagramS<GainPtr>.RawPtr(Geometry geometry) => GainPtr(geometry);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage] 
+        DatagramPtr IDatagramS<GainPtr>.IntoSegment(GainPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(p, segment, updateSegment);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage] 
+        GainPtr IDatagramS<GainPtr>.RawPtr(Geometry geometry) => GainPtr(geometry);
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] 
         GainPtr AUTD3Sharp.Driver.Datagram.Gain.IGain.GainPtr(Geometry geometry) => GainPtr(geometry);
-        [ExcludeFromCodeCoverage] public DatagramWithSegment<{{typeName}}, GainPtr> WithSegment(Segment segment, bool updateSegment)
-        {
-            return new DatagramWithSegment<{{typeName}}, GainPtr>(this, segment, updateSegment);
-        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage] 
+        public DatagramWithSegment<{{typeName}}, GainPtr> WithSegment(Segment segment, bool updateSegment) => new DatagramWithSegment<{{typeName}}, GainPtr>(this, segment, updateSegment);
+
 {{customCode}}
 {{cacheCode}}
 {{transformCode}}

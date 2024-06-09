@@ -6,28 +6,28 @@ namespace AUTD3Sharp.Gain.Holo
     [StructLayout(LayoutKind.Sequential)]
     public readonly struct Amplitude
     {
-        internal Amplitude(double value)
+        internal Amplitude(float value)
         {
             Pascal = value;
         }
 
-        public double Pascal { get; }
+        public float Pascal { get; }
 
-        public double SPL => NativeMethodsGainHolo.AUTDGainHoloPascalToSPL(Pascal);
+        public float SPL => NativeMethodsGainHolo.AUTDGainHoloPascalToSPL(Pascal);
 
-        public static Amplitude NewPascal(double pascal) => new Amplitude(pascal);
-        public static Amplitude NewSPL(double spl) => new Amplitude(NativeMethodsGainHolo.AUTDGainHoloSPLToPascal(spl));
+        public static Amplitude NewPascal(float pascal) => new Amplitude(pascal);
+        public static Amplitude NewSPL(float spl) => new Amplitude(NativeMethodsGainHolo.AUTDGainHoloSPLToPascal(spl));
 
         public class UnitPascal
         {
             internal UnitPascal() { }
-            public static Amplitude operator *(double a, UnitPascal _) => NewPascal(a);
+            public static Amplitude operator *(float a, UnitPascal _) => NewPascal(a);
         }
 
         public class UnitSPL
         {
             internal UnitSPL() { }
-            public static Amplitude operator *(double a, UnitSPL _) => NewSPL(a);
+            public static Amplitude operator *(float a, UnitSPL _) => NewSPL(a);
         }
     }
 }

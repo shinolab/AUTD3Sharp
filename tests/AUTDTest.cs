@@ -8,12 +8,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
+        return await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero)).Open(Audit.Builder());
+        return new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).AddDevice(new AUTD3(Vector3.Zero)).Open(Audit.Builder());
     }
 
     [Fact]
@@ -161,7 +161,7 @@ public class AUTDTest
     public async Task TestSendTimeout()
     {
         {
-            var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero))
+            var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).AddDevice(new AUTD3(Vector3.Zero))
                 .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
             Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
@@ -182,7 +182,7 @@ public class AUTDTest
     public void TestSendTimeoutSync()
     {
         {
-            var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).AddDevice(new AUTD3(Vector3d.Zero))
+            var autd = new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).AddDevice(new AUTD3(Vector3.Zero))
                 .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
             Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
             Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());

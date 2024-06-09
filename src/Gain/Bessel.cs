@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Gain
     [Builder]
     public sealed partial class Bessel
     {
-        public Bessel(Vector3d pos, Vector3d dir, Angle theta)
+        public Bessel(Vector3 pos, Vector3 dir, Angle theta)
         {
             Pos = pos;
             Dir = dir;
@@ -17,9 +17,9 @@ namespace AUTD3Sharp.Gain
             PhaseOffset = new Phase(0);
         }
 
-        public Vector3d Pos { get; }
+        public Vector3 Pos { get; }
 
-        public Vector3d Dir { get; }
+        public Vector3 Dir { get; }
 
         public Angle Theta { get; }
 

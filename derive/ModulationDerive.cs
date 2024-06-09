@@ -35,6 +35,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
         var customCode = isCustom ?
             $$"""
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private ModulationPtr ModulationPtr(Geometry geometry)
         {
             var data = Calc(geometry);
@@ -48,16 +49,17 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
 """ : "";
 
         var cacheCode = noCache ? "" :
-            $"        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}> WithCache() => new AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}>(this);";
+            $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}> WithCache() => new AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}>(this);";
         var radiationPressureCode = noRadiationPressure ? "" :
-            $"        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}> WithRadiationPressure() => new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}>(this);";
+            $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}> WithRadiationPressure() => new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}>(this);";
 
         var transformCode = noTransform ? "" :
-            $"        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}> WithTransform(Func<int, EmitIntensity, EmitIntensity> f) => new AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}>(this, f);";
+            $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}> WithTransform(Func<int, EmitIntensity, EmitIntensity> f) => new AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}>(this, f);";
 
         var configCode = configNoChange ? "" :
             $$"""
-              
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public {{typeName}} WithSamplingConfig(SamplingConfigWrap config)
         {
             _config = config;
@@ -80,6 +82,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 using AUTD3Sharp;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Driver.Datagram.Modulation;
@@ -88,21 +91,41 @@ using AUTD3Sharp.NativeMethods;
 {{nsBegin}}
     partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagramST<ModulationPtr>, IDatagram
     {
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr(geometry));
-        [ExcludeFromCodeCoverage] DatagramPtr IDatagramST<ModulationPtr>.IntoSegmentTransition(ModulationPtr p, Segment segment, TransitionModeWrap? transitionMode) 
+    
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage] 
+        DatagramPtr IDatagramST<ModulationPtr>.IntoSegmentTransition(ModulationPtr p, Segment segment, TransitionModeWrap? transitionMode) 
         => transitionMode.HasValue ? NativeMethodsBase.AUTDModulationIntoDatagramWithSegmentTransition(p, segment, transitionMode.Value) : NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(p, segment);
-        [ExcludeFromCodeCoverage] ModulationPtr IDatagramST<ModulationPtr>.RawPtr(Geometry geometry) => ModulationPtr(geometry);
-        [ExcludeFromCodeCoverage] ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr(Geometry geometry) => ModulationPtr(geometry);
-        [ExcludeFromCodeCoverage] public DatagramWithSegmentTransition<{{typeName}}, ModulationPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new DatagramWithSegmentTransition<{{typeName}}, ModulationPtr>(this, segment, transitionMode);
         
-        [ExcludeFromCodeCoverage] AUTD3Sharp.NativeMethods.LoopBehavior IModulation.LoopBehavior() => LoopBehavior;
-        [ExcludeFromCodeCoverage] SamplingConfigWrap IModulation.SamplingConfig() => _config;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage]
+        ModulationPtr IDatagramST<ModulationPtr>.RawPtr(Geometry geometry) => ModulationPtr(geometry);
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage]
+        ModulationPtr AUTD3Sharp.Driver.Datagram.Modulation.IModulation.ModulationPtr(Geometry geometry) => ModulationPtr(geometry);
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage]
+        public DatagramWithSegmentTransition<{{typeName}}, ModulationPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new DatagramWithSegmentTransition<{{typeName}}, ModulationPtr>(this, segment, transitionMode);
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage]
+        AUTD3Sharp.NativeMethods.LoopBehavior IModulation.LoopBehavior() => LoopBehavior;
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage]
+        SamplingConfigWrap IModulation.SamplingConfig() => _config;
 
         private SamplingConfigWrap _config = SamplingConfig.Division(5120);
 
         public AUTD3Sharp.NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
 
-        [ExcludeFromCodeCoverage] public {{typeName}} WithLoopBehavior(AUTD3Sharp.NativeMethods.LoopBehavior loopBehavior)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        [ExcludeFromCodeCoverage]
+        public {{typeName}} WithLoopBehavior(AUTD3Sharp.NativeMethods.LoopBehavior loopBehavior)
         {
             LoopBehavior = loopBehavior;
             return this;

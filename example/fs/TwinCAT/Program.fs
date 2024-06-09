@@ -1,6 +1,0 @@
-﻿open AUTD3Sharp.Utils
-open AUTD3Sharp
-open AUTD3Sharp.Link
-open Samples
-
-(new ControllerBuilder()).AddDevice(new AUTD3(Vector3d.Zero)).Open(TwinCAT.Builder()) |> SampleRunner.Run

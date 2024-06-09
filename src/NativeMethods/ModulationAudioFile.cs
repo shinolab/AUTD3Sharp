@@ -24,11 +24,10 @@ namespace AUTD3Sharp.NativeMethods
         public static extern bool AUTDModulationWavIsDefault(ModulationPtr wav);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationRawPCM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationRawPCM(byte* path, uint sample_rate, SamplingConfigWrap config, LoopBehavior loop_behavior);
+        public static extern ResultModulation AUTDModulationRawPCM(byte* path, uint sample_rate, LoopBehavior loop_behavior);
 
-        [DllImport(__DllName, EntryPoint = "AUTDModulationRawPCMIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDModulationRawPCMIsDefault(ModulationPtr rawpcm);
+        [DllImport(__DllName, EntryPoint = "AUTDModulationCsv", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultModulation AUTDModulationCsv(byte* path, uint sample_rate, byte deliminator, LoopBehavior loop_behavior);
 
 
     }

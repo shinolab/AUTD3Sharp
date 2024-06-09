@@ -61,20 +61,20 @@ namespace AUTD3Sharp.Link
             return NativeMethodsBase.AUTDLinkAuditIsOpen(_ptr);
         }
 
-        public bool IsForceFan(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(_ptr, (uint)idx);
+        public bool IsForceFan(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(_ptr, (ushort)idx);
         public void BreakDown() => NativeMethodsBase.AUTDLinkAuditBreakDown(_ptr);
-        public ushort SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (uint)idx);
-        public ushort SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (uint)idx);
-        public ushort SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (uint)idx);
-        public ushort SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (uint)idx);
-        public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (uint)idx);
+        public ushort SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (ushort)idx);
+        public ushort SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (ushort)idx);
+        public ushort SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);
+        public ushort SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (ushort)idx);
+        public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (ushort)idx);
         public byte[] DebugTypes(int idx)
         {
             var ty = new byte[4];
             unsafe
             {
                 fixed (byte* p = &ty[0])
-                    NativeMethodsBase.AUTDLinkAuditFpgaDebugTypes(_ptr, (uint)idx, p);
+                    NativeMethodsBase.AUTDLinkAuditFpgaDebugTypes(_ptr, (ushort)idx, p);
             }
             return ty;
         }
@@ -85,49 +85,37 @@ namespace AUTD3Sharp.Link
             unsafe
             {
                 fixed (ushort* p = &value[0])
-                    NativeMethodsBase.AUTDLinkAuditFpgaDebugValues(_ptr, (uint)idx, p);
+                    NativeMethodsBase.AUTDLinkAuditFpgaDebugValues(_ptr, (ushort)idx, p);
             }
             return value;
         }
 
-        public void AssertThermalSensor(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaAssertThermalSensor(_ptr, (uint)idx);
+        public void AssertThermalSensor(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaAssertThermalSensor(_ptr, (ushort)idx);
 
-        public void DeassertThermalSensor(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaDeassertThermalSensor(_ptr, (uint)idx);
-
-        public byte[] PhaseFilter(int idx)
-        {
-            var n = (int)NativeMethodsBase.AUTDLinkAuditCpuNumTransducers(_ptr, (uint)idx);
-            var buf = new byte[n];
-            unsafe
-            {
-                fixed (byte* p = &buf[0])
-                    NativeMethodsBase.AUTDLinkAuditFpgaPhaseFilter(_ptr, (uint)idx, p);
-            }
-            return buf;
-        }
+        public void DeassertThermalSensor(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaDeassertThermalSensor(_ptr, (ushort)idx);
 
         public byte[] Modulation(int idx, Segment segment)
         {
-            var n = (int)NativeMethodsBase.AUTDLinkAuditFpgaModulationCycle(_ptr, segment, (uint)idx);
+            var n = (int)NativeMethodsBase.AUTDLinkAuditFpgaModulationCycle(_ptr, segment, (ushort)idx);
             var buf = new byte[n];
             unsafe
             {
                 fixed (byte* p = &buf[0])
-                    NativeMethodsBase.AUTDLinkAuditFpgaModulation(_ptr, segment, (uint)idx, p);
+                    NativeMethodsBase.AUTDLinkAuditFpgaModulation(_ptr, segment, (ushort)idx, p);
             }
             return buf;
         }
 
-        public uint ModulationFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivision(_ptr, segment, (uint)idx);
+        public uint ModulationFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivision(_ptr, segment, (ushort)idx);
 
         public NativeMethods.LoopBehavior ModulationLoopBehavior(int idx, Segment segment) =>
-            NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopBehavior(_ptr, segment, (uint)idx);
+            NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopBehavior(_ptr, segment, (ushort)idx);
 
-        public Segment CurrentModulationSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentModSegment(_ptr, (uint)idx);
+        public Segment CurrentModulationSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentModSegment(_ptr, (ushort)idx);
 
         public (byte[], byte[]) Drives(int idx, Segment segment, int stmIdx)
         {
-            var n = (int)NativeMethodsBase.AUTDLinkAuditCpuNumTransducers(_ptr, (uint)idx);
+            var n = (int)NativeMethodsBase.AUTDLinkAuditCpuNumTransducers(_ptr, (ushort)idx);
             var intensities = new byte[n];
             var phases = new byte[n];
             unsafe
@@ -135,19 +123,19 @@ namespace AUTD3Sharp.Link
                 fixed (byte* pd = &intensities[0])
                 fixed (byte* pp = &phases[0])
                 {
-                    NativeMethodsBase.AUTDLinkAuditFpgaDrives(_ptr, segment, (uint)idx, (uint)stmIdx, pd, pp);
+                    NativeMethodsBase.AUTDLinkAuditFpgaDrives(_ptr, segment, (ushort)idx, (ushort)stmIdx, pd, pp);
                 }
             }
             return (intensities, phases);
         }
 
-        public uint StmCycle(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmCycle(_ptr, segment, (uint)idx);
-        public bool IsStmGainMode(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaIsStmGainMode(_ptr, segment, (uint)idx);
-        public uint StmFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmFreqDivision(_ptr, segment, (uint)idx);
-        public uint StmSoundSpeed(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(_ptr, segment, (uint)idx);
-        public NativeMethods.LoopBehavior StmLoopBehavior(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(_ptr, segment, (uint)idx);
-        public Segment CurrentStmSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(_ptr, (uint)idx);
-        public uint UltrasoundFreq(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaUltrasoundFreq(_ptr, (uint)idx);
+        public uint StmCycle(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmCycle(_ptr, segment, (ushort)idx);
+        public bool IsStmGainMode(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaIsStmGainMode(_ptr, segment, (ushort)idx);
+        public uint StmFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmFreqDivision(_ptr, segment, (ushort)idx);
+        public uint StmSoundSpeed(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(_ptr, segment, (ushort)idx);
+        public NativeMethods.LoopBehavior StmLoopBehavior(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(_ptr, segment, (ushort)idx);
+        public Segment CurrentStmSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(_ptr, (ushort)idx);
+        public uint UltrasoundFreq(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaUltrasoundFreq(_ptr, (ushort)idx);
 
         public ushort[] PulseWidthEncoderTable(int idx)
         {
@@ -157,7 +145,7 @@ namespace AUTD3Sharp.Link
                 var buf = new byte[65536];
                 fixed (byte* p = &buf[0])
                 {
-                    var fullWidthStart = NativeMethodsBase.AUTDLinkAuditFpgaPulseWidthEncoderTable(_ptr, (uint)idx, p);
+                    var fullWidthStart = NativeMethodsBase.AUTDLinkAuditFpgaPulseWidthEncoderTable(_ptr, (ushort)idx, p);
                     Enumerable.Range(0, 65536).ToList().ForEach(i => table[i] = i < fullWidthStart ? buf[i] : (ushort)(0x100 | buf[i]));
                 }
             }

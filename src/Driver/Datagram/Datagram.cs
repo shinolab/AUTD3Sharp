@@ -9,12 +9,4 @@ namespace AUTD3Sharp.Driver.Datagram
     {
         public DatagramPtr Ptr(Geometry geometry);
     }
-
-    internal class NullDatagram : IDatagram
-    {
-        DatagramPtr IDatagram.Ptr(Geometry _)
-        {
-            return new DatagramPtr { Item1 = IntPtr.Zero };
-        }
-    }
 }

@@ -3,7 +3,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation.AudioFile
 {
-    [Modulation]
+    [Modulation(ConfigNoChange = true)]
     public sealed partial class RawPCM
     {
         private readonly string _filename;
@@ -22,7 +22,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationRawPCM(fp, _sampleRate.Hz, _config, LoopBehavior).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationRawPCM(fp, _sampleRate.Hz, LoopBehavior).Validate();
                 }
             }
         }

@@ -10,40 +10,40 @@ namespace AUTD3Sharp.Gain.Holo
         where TB : Backend
     {
         private readonly TB _backend;
-        private double[] _initial;
+        private float[] _initial;
 
         public LM(TB backend) : base(EmissionConstraint.DontCare)
         {
             _backend = backend;
-            Eps1 = 1e-8;
-            Eps2 = 1e-8;
-            Tau = 1e-3;
+            Eps1 = 1e-8f;
+            Eps2 = 1e-8f;
+            Tau = 1e-3f;
             KMax = 5;
-            _initial = Array.Empty<double>();
+            _initial = Array.Empty<float>();
         }
 
-        public LM<TB> WithInitial(double[] value)
+        public LM<TB> WithInitial(float[] value)
         {
             _initial = value;
             return this;
         }
 
         [Property]
-        public double Eps1 { get; private set; }
+        public float Eps1 { get; private set; }
 
         [Property]
-        public double Eps2 { get; private set; }
+        public float Eps2 { get; private set; }
 
         [Property]
-        public double Tau { get; private set; }
+        public float Tau { get; private set; }
 
         [Property]
         public uint KMax { get; private set; }
 
-        public ReadOnlySpan<double> Initial => new ReadOnlySpan<double>(_initial);
+        public ReadOnlySpan<float> Initial => new ReadOnlySpan<float>(_initial);
 
         private GainPtr GainPtr(Geometry _) =>
             _backend.Lm(Foci.ToArray(), Amps.ToArray(),
-                (ulong)Amps.Count, Eps1, Eps2, Tau, KMax, _initial, Constraint);
+                (uint)Amps.Count, Eps1, Eps2, Tau, KMax, _initial, Constraint);
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace AUTD3Sharp.Derive;
 
@@ -17,6 +18,8 @@ public class PropertyGenerator : IIncrementalGenerator
 
     private static void Emit(SourceProductionContext context, GeneratorAttributeSyntaxContext source)
     {
+        var decl = source.TargetNode.IsKind(SyntaxKind.ClassDeclaration) ? "class" : "struct";
+
         var typeSymbol = (INamedTypeSymbol)source.TargetSymbol;
         var typeName = typeSymbol.ToDisplayString(SymbolDisplayFormat.MinimallyQualifiedFormat);
 
@@ -40,18 +43,21 @@ public class PropertyGenerator : IIncrementalGenerator
             var name = publicMember.Name;
             var type = ((IPropertySymbol)publicMember).Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
             return attr.NamedArguments.Any(arg => arg.Key == "EmitIntensity" && (bool)(arg.Value.Value ?? false)) ? $$"""
+                          [MethodImpl(MethodImplOptions.AggressiveInlining)]
                           public {{typeName}} With{{name}}({{type}} value)
                           {
                              {{name}} = value;
                              return this;
                           }
                   
+                          [MethodImpl(MethodImplOptions.AggressiveInlining)]
                           [ExcludeFromCodeCoverage] public {{typeName}} With{{name}}(byte value)
                           {
                              {{name}} = new EmitIntensity(value);
                              return this;
                           }
                   """ : $$"""
+                                  [MethodImpl(MethodImplOptions.AggressiveInlining)]
                                   public {{typeName}} With{{name}}({{type}} value)
                                   {
                                       {{name}} = value;
@@ -73,9 +79,10 @@ public class PropertyGenerator : IIncrementalGenerator
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 {{ns}} {
-    public partial class {{typeName}}
+    public partial {{decl}} {{typeName}}
     {
         {{setters}}
     }   

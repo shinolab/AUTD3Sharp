@@ -8,12 +8,12 @@ public class SDPTest
     [Fact]
     public async Task SDP()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new SDP<NalgebraBackend>(backend)
-            .AddFocus(autd.Geometry.Center + new Vector3d(30, 0, 150), 5e3 * Pa)
-            .AddFociFromIter(new double[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3d(x, 0, 150), 5e3 * Pa)))
+            .AddFocus(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3 * Pa)
+            .AddFociFromIter(new float[] { -40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3 * Pa)))
             .WithAlpha(1e-3)
             .WithLambda(0.9)
             .WithRepeat(10)

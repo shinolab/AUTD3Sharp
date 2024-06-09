@@ -17,6 +17,6 @@ namespace AUTD3Sharp
         {
         }
 
-        public double Radian => NativeMethodsBase.AUTDPhaseToRad(Value);
+        public float Radian => NativeMethodsBase.AUTDPhaseToRad(Value);
     }
 }

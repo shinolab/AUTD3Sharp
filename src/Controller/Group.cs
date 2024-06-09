@@ -4,85 +4,63 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
     public sealed class GroupGuard<T>
     {
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate int GroupMapDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx);
+
+        private readonly GroupMapDelegate _f;
         private readonly Controller<T> _controller;
-        private readonly Func<Device, object?> _map;
-        private readonly GroupKVMapPtr _kvMap;
-        private readonly IDictionary<object, int> _keymap;
+        private readonly PList<int> _keys;
+        private readonly PList<DatagramPtr> _datagrams;
+        private readonly Dictionary<object, int> _keymap;
         private int _k;
 
         internal GroupGuard(Func<Device, object?> map, Controller<T> controller)
         {
             _controller = controller;
-            _map = map;
-            _kvMap = NativeMethodsBase.AUTDControllerGroupCreateKVMap();
+            _keys = new PList<int>();
+            _datagrams = new PList<DatagramPtr>();
             _keymap = new Dictionary<object, int>();
             _k = 0;
+            _f = (context, geometryPtr, devIdx) =>
+            {
+                var key = map(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)));
+                return key != null ? _keymap[key] : -1;
+            };
         }
 
-        public GroupGuard<T> Set(object key, IDatagram data1, IDatagram data2, TimeSpan? timeout = null)
+        public GroupGuard<T> Set(object key, IDatagram d)
         {
             if (_keymap.ContainsKey(key)) throw new AUTDException("Key already exists");
-
-            var timeoutNs = (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1);
-            var ptr1 = data1.Ptr(_controller.Geometry);
-            var ptr2 = data2.Ptr(_controller.Geometry);
+            _datagrams.Add(d.Ptr(_controller.Geometry));
+            _keys.Add(_k);
             _keymap[key] = _k++;
-            NativeMethodsBase.AUTDControllerGroupKVMapSet(_kvMap, _keymap[key], ptr1, ptr2, timeoutNs);
             return this;
         }
 
-        public GroupGuard<T> Set(object key, IDatagram data, TimeSpan? timeout = null)
-        {
-            return Set(key, data, new NullDatagram(), timeout);
-        }
-
-        public GroupGuard<T> Set(object key, (IDatagram, IDatagram) data, TimeSpan? timeout = null)
-        {
-            return Set(key, data.Item1, data.Item2, timeout);
-        }
+        public GroupGuard<T> Set(object key, (IDatagram, IDatagram) d) => Set(key, new DatagramTuple(d));
 
         public async Task SendAsync()
         {
-            var map = _controller.Geometry.Select(dev =>
-            {
-                if (!dev.Enable) return -1;
-                var k = _map(dev);
-                return k != null ? _keymap[k] : -1;
-            }).ToArray();
-
-            await Task.Run(() =>
-            {
-                unsafe
-                {
-                    fixed (int* mp = &map[0])
-                        NativeMethodsBase.AUTDControllerGroup(_controller.Ptr, mp, _kvMap).Validate();
-                }
-            });
+            await Task.Run(Send);
         }
 
         public void Send()
         {
-            var map = _controller.Geometry.Select(dev =>
-            {
-                if (!dev.Enable) return -1;
-                var k = _map(dev);
-                return k != null ? _keymap[k] : -1;
-            }).ToArray();
             unsafe
             {
-                fixed (int* mp = &map[0])
-                {
-                    NativeMethodsBase.AUTDControllerGroup(_controller.Ptr, mp, _kvMap).Validate();
-                }
+                fixed (int* kp = &_keys.Items[0])
+                fixed (DatagramPtr* dp = &_datagrams.Items[0])
+                    NativeMethodsBase.AUTDControllerGroup(_controller.Ptr, Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count).Validate();
             }
         }
     }

@@ -36,7 +36,7 @@ namespace AUTD3Sharp.Gain
             {
                 fixed (uint* deviceIndicesPtr = &deviceIndices[0])
                 {
-                    var map = NativeMethodsBase.AUTDGainGroupCreateMap(deviceIndicesPtr, (uint)deviceIndices.Length);
+                    var map = NativeMethodsBase.AUTDGainGroupCreateMap(deviceIndicesPtr, (ushort)deviceIndices.Length);
                     var k = 0;
                     foreach (var dev in geometry.Devices())
                     {
@@ -54,7 +54,7 @@ namespace AUTD3Sharp.Gain
                         }
 
                         fixed (int* p = &m[0])
-                            map = NativeMethodsBase.AUTDGainGroupMapSet(map, (uint)dev.Idx, p);
+                            map = NativeMethodsBase.AUTDGainGroupMapSet(map, (ushort)dev.Idx, p);
                     }
 
                     var keys = new int[_map.Count];

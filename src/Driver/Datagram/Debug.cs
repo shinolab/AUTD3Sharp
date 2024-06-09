@@ -24,7 +24,7 @@ namespace AUTD3Sharp
 
     public sealed class DebugSettings : IDatagram
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public unsafe delegate void DebugSettingsDelegate(IntPtr context, GeometryPtr geometryPtr, uint devIdx, GPIOOut gpio, DebugTypeWrap* debugType);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public unsafe delegate void DebugSettingsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, GPIOOut gpio, DebugTypeWrap* debugType);
 
         private readonly DebugSettingsDelegate _f;
 
@@ -34,11 +34,11 @@ namespace AUTD3Sharp
             {
                 _f = (context, geometryPtr, devIdx, gpio, debugType) =>
                 {
-                    *debugType = f(new Device((int)devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)), gpio);
+                    *debugType = f(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)), gpio);
                 };
             }
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramDebugSettings(Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, geometry.Ptr);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramDebugSettings(Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, geometry.Ptr);
     }
 }

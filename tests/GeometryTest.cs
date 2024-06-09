@@ -51,7 +51,7 @@ public class GeometryTest
     public async Task GeometryCenter()
     {
         var autd = await AUTDTest.CreateController();
-        Assert.Equal(new Vector3d(86.62522088353406, 66.71325301204821, 0), autd.Geometry.Center);
+        Assert.Equal(new Vector3(86.62522088353406, 66.71325301204821, 0), autd.Geometry.Center);
     }
 
     [Fact]
@@ -139,7 +139,7 @@ public class GeometryTest
         foreach (var dev in autd.Geometry)
         {
             var originalPos = dev.Select(tr => tr.Position).ToArray();
-            var t = new Vector3d(1, 2, 3);
+            var t = new Vector3(1, 2, 3);
             dev.Translate(t);
             foreach (var tr in dev)
             {
@@ -154,7 +154,7 @@ public class GeometryTest
         var autd = await AUTDTest.CreateController();
         foreach (var dev in autd.Geometry)
         {
-            var r = new Quaterniond(0.7071067811865476, 0, 0, 0.7071067811865476);
+            var r = new Quaternion(0.7071067811865476, 0, 0, 0.7071067811865476);
             dev.Rotate(r);
             foreach (var tr in dev)
             {
@@ -170,13 +170,13 @@ public class GeometryTest
         foreach (var dev in autd.Geometry)
         {
             var originalPos = dev.Select(tr => tr.Position).ToArray();
-            var t = new Vector3d(1, 2, 3);
-            var r = new Quaterniond(0.7071067811865476, 0, 0, 0.7071067811865476);
+            var t = new Vector3(1, 2, 3);
+            var r = new Quaternion(0.7071067811865476, 0, 0, 0.7071067811865476);
             dev.Affine(t, r);
             foreach (var tr in dev)
             {
                 var op = originalPos[tr.Idx];
-                var expected = new Vector3d(-op.Y, op.X, op.Z) + t;
+                var expected = new Vector3(-op.Y, op.X, op.Z) + t;
                 Assert.True(Math.Abs(expected.X - tr.Position.X) < 1e-3);
                 Assert.True(Math.Abs(expected.Y - tr.Position.Y) < 1e-3);
                 Assert.True(Math.Abs(expected.Z - tr.Position.Z) < 1e-3);
@@ -201,7 +201,7 @@ public class GeometryTest
         var autd = await AUTDTest.CreateController();
         foreach (var dev in autd.Geometry)
         {
-                Assert.Equal(2.0 * Math.PI * 40e3 / 340e3, dev.Wavenumber);
+            Assert.Equal(2.0 * Math.PI * 40e3 / 340e3, dev.Wavenumber);
         }
     }
 
@@ -222,13 +222,13 @@ public class GeometryTest
     public async Task TestTransducerPosition()
     {
         var autd = await AUTDTest.CreateController();
-        Assert.Equal(autd.Geometry[0][0].Position, new Vector3d(0.0, 0.0, 0.0));
+        Assert.Equal(autd.Geometry[0][0].Position, new Vector3(0.0, 0.0, 0.0));
         Assert.Equal(autd.Geometry[0][AUTD3.NumTransInUnit - 1].Position,
-            new Vector3d((AUTD3.NumTransInX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransInY - 1) * AUTD3.TransSpacing, 0.0));
+            new Vector3((AUTD3.NumTransInX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransInY - 1) * AUTD3.TransSpacing, 0.0));
 
-        Assert.Equal(autd.Geometry[1][0].Position, new Vector3d(0.0, 0.0, 0.0));
+        Assert.Equal(autd.Geometry[1][0].Position, new Vector3(0.0, 0.0, 0.0));
         Assert.Equal(autd.Geometry[1][AUTD3.NumTransInUnit - 1].Position,
-            new Vector3d((AUTD3.NumTransInX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransInY - 1) * AUTD3.TransSpacing, 0.0));
+            new Vector3((AUTD3.NumTransInX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransInY - 1) * AUTD3.TransSpacing, 0.0));
     }
 
     [Fact]
@@ -239,7 +239,7 @@ public class GeometryTest
         {
             foreach (var tr in dev)
             {
-                Assert.Equal(tr.Rotation, new Quaterniond(1.0, 0.0, 0.0, 0.0));
+                Assert.Equal(tr.Rotation, new Quaternion(1.0, 0.0, 0.0, 0.0));
             }
         }
     }
@@ -252,7 +252,7 @@ public class GeometryTest
         {
             foreach (var tr in dev)
             {
-                Assert.Equal(tr.XDirection, new Vector3d(1.0, 0.0, 0.0));
+                Assert.Equal(tr.XDirection, new Vector3(1.0, 0.0, 0.0));
             }
         }
     }
@@ -265,7 +265,7 @@ public class GeometryTest
         {
             foreach (var tr in dev)
             {
-                Assert.Equal(tr.YDirection, new Vector3d(0.0, 1.0, 0.0));
+                Assert.Equal(tr.YDirection, new Vector3(0.0, 1.0, 0.0));
             }
         }
     }
@@ -278,7 +278,7 @@ public class GeometryTest
         {
             foreach (var tr in dev)
             {
-                Assert.Equal(tr.ZDirection, new Vector3d(0.0, 0.0, 1.0));
+                Assert.Equal(tr.ZDirection, new Vector3(0.0, 0.0, 1.0));
             }
         }
     }

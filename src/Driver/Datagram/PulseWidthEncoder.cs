@@ -1,5 +1,7 @@
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
+using System.Runtime.InteropServices;
+using System;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -9,28 +11,24 @@ namespace AUTD3Sharp
 {
     public sealed class PulseWidthEncoder : IDatagram
     {
-        private readonly ushort[]? _buf;
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
+        public delegate ushort PulseWidthEncoderDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, ushort idx);
 
-        public PulseWidthEncoder(ushort[] buf)
+        private readonly PulseWidthEncoderDelegate? _f;
+
+        public PulseWidthEncoder(Func<Device, Func<ushort, ushort>> f)
         {
-            _buf = buf;
+            _f = (context, geometryPtr, devIdx, idx) => f(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)))(idx);
         }
 
         public PulseWidthEncoder()
         {
-            _buf = null;
+            _f = null;
         }
 
         DatagramPtr IDatagram.Ptr(Geometry geometry)
         {
-            if (_buf == null) return NativeMethodsBase.AUTDDatagramPulseWidthEncoderDefault();
-            unsafe
-            {
-                fixed (ushort* p = &_buf[0])
-                {
-                    return NativeMethodsBase.AUTDDatagramPulseWidthEncoder(p, (uint)_buf.Length).Validate();
-                }
-            }
+            return _f == null ? NativeMethodsBase.AUTDDatagramPulseWidthEncoderDefault() : NativeMethodsBase.AUTDDatagramPulseWidthEncoder(Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, geometry.Ptr);
         }
     }
 }

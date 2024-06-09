@@ -19,10 +19,10 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (double* foci = Foci.ToArray())
+                fixed (float* foci = Foci.ToArray())
                 fixed (Amplitude* amps = Amps.ToArray())
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloGreedySphere(foci, (double*)amps, (ulong)Amps.Count, PhaseDiv, Constraint);
+                    return NativeMethodsGainHolo.AUTDGainHoloGreedySphere(foci, (float*)amps, (uint)Amps.Count, PhaseDiv, Constraint);
                 }
             }
         }

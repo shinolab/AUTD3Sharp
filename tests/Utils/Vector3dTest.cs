@@ -1,12 +1,12 @@
 
 namespace tests;
 
-public class Vector3dTest
+public class Vector3Test
 {
     [Fact]
     public void Constructor_WithThreeArguments_SetsPropertiesCorrectly()
     {
-        var vector = new Vector3d(1, 2, 3);
+        var vector = new Vector3(1, 2, 3);
 
         Assert.Equal(1, vector.X);
         Assert.Equal(2, vector.Y);
@@ -16,22 +16,22 @@ public class Vector3dTest
     [Fact]
     public void Constructor_WithArrayArgument_SetsPropertiesCorrectly()
     {
-        var vector = new Vector3d([1, 2, 3]);
+        var vector = new Vector3([1, 2, 3]);
 
         Assert.Equal(1, vector.X);
         Assert.Equal(2, vector.Y);
         Assert.Equal(3, vector.Z);
 
-        Assert.Throws<InvalidCastException>(() => new Vector3d([]));
+        Assert.Throws<InvalidCastException>(() => new Vector3([]));
     }
 
     [Fact]
     public void Add_AddsVectorsCorrectly()
     {
-        var vector1 = new Vector3d(1, 2, 3);
-        var vector2 = new Vector3d(4, 5, 6);
+        var vector1 = new Vector3(1, 2, 3);
+        var vector2 = new Vector3(4, 5, 6);
 
-        var result = Vector3d.Add(vector1, vector2);
+        var result = Vector3.Add(vector1, vector2);
 
         Assert.Equal(5, result.X);
         Assert.Equal(7, result.Y);
@@ -41,11 +41,11 @@ public class Vector3dTest
     [Fact]
     public void Subtract_SubtractsVectorsCorrectly()
     {
-        var vector1 = new Vector3d(1, 2, 3);
-        var vector2 = new Vector3d(4, 5, 6);
+        var vector1 = new Vector3(1, 2, 3);
+        var vector2 = new Vector3(4, 5, 6);
 
         {
-            var result = Vector3d.Subtract(vector1, vector2);
+            var result = Vector3.Subtract(vector1, vector2);
 
             Assert.Equal(-3, result.X);
             Assert.Equal(-3, result.Y);
@@ -64,8 +64,8 @@ public class Vector3dTest
     [Fact]
     public void GetHashCode_ReturnsConsistentHashCodes()
     {
-        var vector1 = new Vector3d(1, 2, 3);
-        var vector2 = new Vector3d(1, 2, 3);
+        var vector1 = new Vector3(1, 2, 3);
+        var vector2 = new Vector3(1, 2, 3);
 
         Assert.Equal(vector1.GetHashCode(), vector2.GetHashCode());
     }
@@ -73,7 +73,7 @@ public class Vector3dTest
     [Fact]
     public void GetEnumerator_ReturnsCorrectValues()
     {
-        var vector = new Vector3d(1, 2, 3);
+        var vector = new Vector3(1, 2, 3);
 
         using var enumerator = vector.GetEnumerator();
 
@@ -93,7 +93,7 @@ public class Vector3dTest
     [Fact]
     public void Normalized_ReturnsNormalizedVector()
     {
-        var vector = new Vector3d(1, 2, 2);
+        var vector = new Vector3(1, 2, 2);
 
         var result = vector.Normalized;
 
@@ -105,7 +105,7 @@ public class Vector3dTest
     [Fact]
     public void L2Norm_ReturnsCorrectNorm()
     {
-        var vector = new Vector3d(1, 2, 2);
+        var vector = new Vector3(1, 2, 2);
 
         var result = vector.L2Norm;
 
@@ -115,7 +115,7 @@ public class Vector3dTest
     [Fact]
     public void L2NormSquared_ReturnsCorrectNormSquared()
     {
-        var vector = new Vector3d(1, 2, 2);
+        var vector = new Vector3(1, 2, 2);
 
         var result = vector.L2NormSquared;
 
@@ -125,7 +125,7 @@ public class Vector3dTest
     [Fact]
     public void Indexer_ReturnsCorrectValues()
     {
-        var vector = new Vector3d(1, 2, 3);
+        var vector = new Vector3(1, 2, 3);
 
         Assert.Equal(1, vector[0]);
         Assert.Equal(2, vector[1]);
@@ -136,9 +136,9 @@ public class Vector3dTest
     [Fact]
     public void Multiply_MultipliesCorrectly()
     {
-        var vector = new Vector3d(1, 2, 3);
+        var vector = new Vector3(1, 2, 3);
 
-        var result = Vector3d.Multiply(2, vector);
+        var result = Vector3.Multiply(2, vector);
 
         Assert.Equal(2, result.X);
         Assert.Equal(4, result.Y);
@@ -148,7 +148,7 @@ public class Vector3dTest
     [Fact]
     public void OperatorMultiply_MultipliesCorrectly()
     {
-        var vector = new Vector3d(1, 2, 3);
+        var vector = new Vector3(1, 2, 3);
 
         var result = vector * 2;
 
@@ -160,9 +160,9 @@ public class Vector3dTest
     [Fact]
     public void Equals_ReturnsTrueForEqualVectors()
     {
-        var vector1 = new Vector3d(1, 2, 3);
-        var vector2 = new Vector3d(1, 2, 3);
-        var vector3 = new Vector3d(2, 3, 4);
+        var vector1 = new Vector3(1, 2, 3);
+        var vector2 = new Vector3(1, 2, 3);
+        var vector3 = new Vector3(2, 3, 4);
 
         Assert.True(vector1 == vector2);
         Assert.True(vector1 != vector3);
@@ -176,7 +176,7 @@ public class Vector3dTest
     [Fact]
     public void Rectify_ReturnsRectifiedVector()
     {
-        var vector = new Vector3d(-1, -2, -3);
+        var vector = new Vector3(-1, -2, -3);
 
         var result = vector.Rectify();
 
@@ -188,7 +188,7 @@ public class Vector3dTest
     [Fact]
     public void ToArray_ReturnsCorrectArray()
     {
-        var vector = new Vector3d(1, 2, 3);
+        var vector = new Vector3(1, 2, 3);
 
         var result = vector.ToArray();
 
@@ -198,7 +198,7 @@ public class Vector3dTest
     [Fact]
     public void ToString_ReturnsCorrectString()
     {
-        var vector = new Vector3d(1, 2, 3);
+        var vector = new Vector3(1, 2, 3);
 
         var result = vector.ToString();
 

@@ -6,18 +6,18 @@ public class GainSTMTest
     public async Task TestGainSTM()
     {
         var autd = await new ControllerBuilder()
-            .AddDevice(new AUTD3(Vector3d.Zero))
-            .AddDevice(new AUTD3(Vector3d.Zero))
+            .AddDevice(new AUTD3(Vector3.Zero))
+            .AddDevice(new AUTD3(Vector3.Zero))
             .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(Silencer.Disable());
 
-        const double radius = 30.0;
+        const float radius = 30.0;
         const int size = 2;
-        var center = autd.Geometry.Center + new Vector3d(0, 0, 150);
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
         var stm = GainSTM.FromFreq(1.0 * Hz)
             .AddGainsFromIter(Enumerable.Range(0, size).Select(i => 2 * Math.PI * i / size).Select(theta =>
-                new Focus(center + radius * new Vector3d(Math.Cos(theta), Math.Sin(theta), 0))));
+                new Focus(center + radius * new Vector3(Math.Cos(theta), Math.Sin(theta), 0))));
         await autd.SendAsync(stm);
 
         foreach (var dev in autd.Geometry)
@@ -97,7 +97,7 @@ public class GainSTMTest
     public async Task TestChangeGainSTMSegment()
     {
         var autd = await new ControllerBuilder()
-         .AddDevice(new AUTD3(Vector3d.Zero))
+         .AddDevice(new AUTD3(Vector3.Zero))
          .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new ReadsFPGAState(_ => true));
@@ -107,12 +107,12 @@ public class GainSTMTest
         Assert.Equal(Segment.S0, infos[0]?.CurrentGainSegment);
         Assert.Null(infos[0]?.CurrentSTMSegment);
 
-        const double radius = 30.0;
+        const float radius = 30.0;
         const int size = 2;
-        var center = autd.Geometry.Center + new Vector3d(0, 0, 150);
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
         var stm = GainSTM.FromFreq(1.0 * Hz)
             .AddGainsFromIter(Enumerable.Range(0, size).Select(i => 2 * Math.PI * i / size).Select(theta =>
-                new Focus(center + radius * new Vector3d(Math.Cos(theta), Math.Sin(theta), 0))));
+                new Focus(center + radius * new Vector3(Math.Cos(theta), Math.Sin(theta), 0))));
         await autd.SendAsync(stm);
         Assert.Equal(Segment.S0, autd.Link.CurrentStmSegment(0));
         infos = await autd.FPGAStateAsync();

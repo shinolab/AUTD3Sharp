@@ -35,7 +35,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
                 unsafe
                 {
                     fixed (Drive* p = &drives[0])
-                        NativeMethodsBase.AUTDGainCalcGetResult(res, (NativeMethods.Drive*)p, (uint)dev.Idx);
+                        NativeMethodsBase.AUTDGainCalcGetResult(res, (NativeMethods.Drive*)p, dev.Ptr);
                 }
                 _cache[dev.Idx] = drives;
             }
@@ -50,7 +50,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
                 unsafe
                 {
                     fixed (Drive* p = &_cache[dev.Idx][0])
-                        return NativeMethodsBase.AUTDGainRawSet(acc, (uint)dev.Idx, (NativeMethods.Drive*)p, (uint)_cache[dev.Idx].Length);
+                        return NativeMethodsBase.AUTDGainRawSet(acc, (ushort)dev.Idx, (NativeMethods.Drive*)p, (byte)_cache[dev.Idx].Length);
                 }
             });
         }

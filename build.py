@@ -297,7 +297,7 @@ def cs_build(args):
 
     if not config.no_examples:
         info("Building examples...")
-        with working_dir("example/cs"):
+        with working_dir("example"):
             command = ["dotnet", "build"]
             if config.release:
                 command.append("-c:Release")
@@ -401,7 +401,7 @@ def cs_run(args):
     args.no_examples = False
     cs_build(args)
 
-    with working_dir("example/cs"):
+    with working_dir("example"):
         command = ["dotnet", "run"]
         command.append("--project")
         command.append(args.target)
@@ -563,51 +563,11 @@ def unity_clear(_):
         rm_glob_f("unity/Assets/Plugins/x86_64/*.so")
 
 
-def fs_build(args):
-    no_examples = args.no_examples
-    args.no_examples = True
-    cs_build(args)
-
-    if not no_examples:
-        info("Building examples...")
-        with working_dir("example/fs"):
-            command = ["dotnet", "build"]
-            if args.release:
-                command.append("-c:Release")
-            subprocess.run(command).check_returncode()
-
-
-def fs_run(args):
-    args.arch = None
-    args.no_examples = False
-    fs_build(args)
-
-    with working_dir("example/fs"):
-        command = ["dotnet", "run"]
-        command.append("--project")
-        command.append(args.target)
-        if args.release:
-            command.append("-c:Release")
-        subprocess.run(command).check_returncode()
-
-
 def util_update_ver(args):
     version = args.version
 
     with working_dir("."):
         for proj in glob.glob("example/**/*.csproj", recursive=True):
-            with open(proj, "r") as f:
-                content = f.read()
-                content = re.sub(
-                    r'"AUTD3Sharp" Version="(.*)"',
-                    f'"AUTD3Sharp" Version="{version}"',
-                    content,
-                    flags=re.MULTILINE,
-                )
-            with open(proj, "w") as f:
-                f.write(content)
-
-        for proj in glob.glob("example/**/*.fsproj", recursive=True):
             with open(proj, "r") as f:
                 content = f.read()
                 content = re.sub(
@@ -741,28 +701,6 @@ if __name__ == "__main__":
             "clear", help="see `unity clear -h`"
         )
         parser_unity_clear.set_defaults(handler=unity_clear)
-
-        # fs
-        parser_fs = subparsers.add_parser("fs", help="see `fs -h`")
-        subparsers_fs = parser_fs.add_subparsers()
-
-        # fs build
-        parser_fs_build = subparsers_fs.add_parser("build", help="see `fs build -h`")
-        parser_fs_build.add_argument(
-            "--release", action="store_true", help="release build"
-        )
-        parser_fs_build.add_argument(
-            "--no-examples", action="store_true", help="skip building examples"
-        )
-        parser_fs_build.set_defaults(handler=fs_build)
-
-        # fs run
-        parser_fs_run = subparsers_fs.add_parser("run", help="see `fs run -h`")
-        parser_fs_run.add_argument("target", help="binary target")
-        parser_fs_run.add_argument(
-            "--release", action="store_true", help="release build"
-        )
-        parser_fs_run.set_defaults(handler=fs_run)
 
         # util
         parser_util = subparsers.add_parser("util", help="see `util -h`")

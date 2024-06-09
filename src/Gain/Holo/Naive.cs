@@ -18,6 +18,6 @@ namespace AUTD3Sharp.Gain.Holo
 
         private GainPtr GainPtr(Geometry _) =>
             _backend.Naive(Foci.ToArray(), Amps.ToArray(),
-                (ulong)Amps.Count, Constraint);
+                (uint)Amps.Count, Constraint);
     }
 }

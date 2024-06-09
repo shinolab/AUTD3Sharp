@@ -13,22 +13,22 @@ namespace AUTD3Sharp.Gain.Holo
         public SDP(TB backend) : base(EmissionConstraint.DontCare)
         {
             _backend = backend;
-            Alpha = 1e-3;
-            Lambda = 0.9;
+            Alpha = 1e-3f;
+            Lambda = 0.9f;
             Repeat = 100;
         }
 
         [Property]
-        public double Alpha { get; private set; }
+        public float Alpha { get; private set; }
 
         [Property]
-        public double Lambda { get; private set; }
+        public float Lambda { get; private set; }
 
         [Property]
         public uint Repeat { get; private set; }
 
         private GainPtr GainPtr(Geometry _) =>
             _backend.Sdp(Foci.ToArray(), Amps.ToArray(),
-                (ulong)Amps.Count, Alpha, Repeat, Lambda, Constraint);
+                (uint)Amps.Count, Alpha, Repeat, Lambda, Constraint);
     }
 }

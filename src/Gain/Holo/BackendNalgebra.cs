@@ -18,63 +18,63 @@ namespace AUTD3Sharp.Gain.Holo
             Ptr.Item1 = IntPtr.Zero;
         }
 
-        internal override GainPtr Sdp(double[] foci, Amplitude[] amps, ulong size, double alpha, uint repeat, double lambda, EmissionConstraintWrap constraint)
+        internal override GainPtr Sdp(float[] foci, Amplitude[] amps, uint size, float alpha, uint repeat, float lambda, EmissionConstraintWrap constraint)
         {
             unsafe
             {
-                fixed (double* pf = foci)
+                fixed (float* pf = foci)
                 fixed (Amplitude* pa = amps)
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloSDPSphere(Ptr, pf, (double*)pa, size, alpha, lambda, repeat, constraint);
+                    return NativeMethodsGainHolo.AUTDGainHoloSDPSphere(Ptr, pf, (float*)pa, size, alpha, lambda, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr Gs(double[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintWrap constraint)
+        internal override GainPtr Gs(float[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint)
         {
             unsafe
             {
-                fixed (double* pf = foci)
+                fixed (float* pf = foci)
                 fixed (Amplitude* pa = amps)
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloGSSphere(Ptr, pf, (double*)pa, size, repeat, constraint);
+                    return NativeMethodsGainHolo.AUTDGainHoloGSSphere(Ptr, pf, (float*)pa, size, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr Gspat(double[] foci, Amplitude[] amps, ulong size, uint repeat, EmissionConstraintWrap constraint)
+        internal override GainPtr Gspat(float[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint)
         {
             unsafe
             {
-                fixed (double* pf = foci)
+                fixed (float* pf = foci)
                 fixed (Amplitude* pa = amps)
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloGSPATSphere(Ptr, pf, (double*)pa, size, repeat, constraint);
+                    return NativeMethodsGainHolo.AUTDGainHoloGSPATSphere(Ptr, pf, (float*)pa, size, repeat, constraint);
                 }
             }
         }
 
-        internal override GainPtr Naive(double[] foci, Amplitude[] amps, ulong size, EmissionConstraintWrap constraint)
+        internal override GainPtr Naive(float[] foci, Amplitude[] amps, uint size, EmissionConstraintWrap constraint)
         {
             unsafe
             {
-                fixed (double* pf = foci)
+                fixed (float* pf = foci)
                 fixed (Amplitude* pa = amps)
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloNaiveSphere(Ptr, pf, (double*)pa, size, constraint);
+                    return NativeMethodsGainHolo.AUTDGainHoloNaiveSphere(Ptr, pf, (float*)pa, size, constraint);
                 }
             }
         }
 
-        internal override GainPtr Lm(double[] foci, Amplitude[] amps, ulong size, double eps1, double eps2, double tau, uint kMax, double[] initial, EmissionConstraintWrap constraint)
+        internal override GainPtr Lm(float[] foci, Amplitude[] amps, uint size, float eps1, float eps2, float tau, uint kMax, float[] initial, EmissionConstraintWrap constraint)
         {
             unsafe
             {
-                fixed (double* pf = foci)
+                fixed (float* pf = foci)
                 fixed (Amplitude* pa = amps)
-                fixed (double* pInitial = initial)
+                fixed (float* pInitial = initial)
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pf, (double*)pa, size, eps1, eps2, tau, kMax, pInitial, (ulong)initial.Length, constraint);
+                    return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, pInitial, (uint)initial.Length, constraint);
                 }
             }
         }

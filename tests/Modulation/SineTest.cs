@@ -5,7 +5,7 @@ public class SineTest
     [Fact]
     public async Task SineExact()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
 
         {
             var m = new Sine(150 * Hz).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Math.PI / 2.0 * rad);
@@ -38,7 +38,7 @@ public class SineTest
     [Fact]
     public async Task SineExactFloat()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
 
         {
             var m = new Sine(150.0 * Hz).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(Math.PI / 2.0 * rad);
@@ -60,7 +60,7 @@ public class SineTest
     [Fact]
     public async Task SineNearest()
     {
-        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3d.Zero)).OpenAsync(Audit.Builder());
+        var autd = await new ControllerBuilder().AddDevice(new AUTD3(Vector3.Zero)).OpenAsync(Audit.Builder());
 
         await autd.SendAsync(Sine.WithFreqNearest(150.0 * Hz));
         foreach (var dev in autd.Geometry)

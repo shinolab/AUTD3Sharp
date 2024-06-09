@@ -20,11 +20,11 @@ namespace AUTD3Sharp.Modulation
         {
         }
 
-        public Sine(Freq<double> freq) : this(new SamplingModeExactFloat(freq))
+        public Sine(Freq<float> freq) : this(new SamplingModeExactFloat(freq))
         {
         }
 
-        public static Sine WithFreqNearest(Freq<double> freq) => new Sine(new SamplingModeNearest(freq));
+        public static Sine WithFreqNearest(Freq<float> freq) => new Sine(new SamplingModeNearest(freq));
 
         [Property(EmitIntensity = true)]
         public EmitIntensity Intensity { get; private set; }

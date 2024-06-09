@@ -6,7 +6,7 @@ public class SegmentTest
     public async Task TestChangeModulationSegment()
     {
         var autd = await new ControllerBuilder()
-         .AddDevice(new AUTD3(Vector3d.Zero))
+         .AddDevice(new AUTD3(Vector3.Zero))
          .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new ReadsFPGAState(_ => true));

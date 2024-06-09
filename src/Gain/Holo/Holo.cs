@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Gain.Holo
     public abstract class Holo<TH>
         where TH : Holo<TH>
     {
-        protected readonly List<double> Foci = new List<double>();
+        protected readonly List<float> Foci = new List<float>();
         protected readonly List<Amplitude> Amps = new List<Amplitude>();
         public EmissionConstraintWrap Constraint { get; private set; }
 
@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Gain.Holo
             Constraint = constraint;
         }
 
-        public TH AddFocus(Vector3d focus, Amplitude amp)
+        public TH AddFocus(Vector3 focus, Amplitude amp)
         {
             Foci.Add(focus.X);
             Foci.Add(focus.Y);
@@ -26,7 +26,7 @@ namespace AUTD3Sharp.Gain.Holo
             return (TH)this;
         }
 
-        public TH AddFociFromIter(IEnumerable<(Vector3d, Amplitude)> iter)
+        public TH AddFociFromIter(IEnumerable<(Vector3, Amplitude)> iter)
         {
             return (TH)iter.Aggregate(this, (holo, point) => holo.AddFocus(point.Item1, point.Item2));
         }

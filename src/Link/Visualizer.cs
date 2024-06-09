@@ -48,25 +48,25 @@ namespace AUTD3Sharp.Link
 
     public struct PlotRange
     {
-        public double XStart { get; set; }
-        public double XEnd { get; set; }
-        public double YStart { get; set; }
-        public double YEnd { get; set; }
-        public double ZStart { get; set; }
-        public double ZEnd { get; set; }
-        public double Resolution { get; set; }
+        public float XStart { get; set; }
+        public float XEnd { get; set; }
+        public float YStart { get; set; }
+        public float YEnd { get; set; }
+        public float ZStart { get; set; }
+        public float ZEnd { get; set; }
+        public float Resolution { get; set; }
 
         internal PlotRangePtr Ptr => NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRange(XStart, XEnd, YStart, YEnd, ZStart, ZEnd, Resolution);
 
-        public Vector3d[] ObservePoints()
+        public Vector3[] ObservePoints()
         {
             var range = Ptr;
             var pointsLen = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePointsLen(range);
-            var buf = new Vector3d[pointsLen];
+            var buf = new Vector3[pointsLen];
             unsafe
             {
-                fixed (Vector3d* p = &buf[0])
-                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePoints(range, (double*)p);
+                fixed (Vector3* p = &buf[0])
+                    NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePoints(range, (float*)p);
             }
             return buf;
         }
@@ -81,11 +81,11 @@ namespace AUTD3Sharp.Link
     public sealed class PlotConfig : IPlotConfig
     {
         public (uint, uint) FigSize { get; set; } = (960, 640);
-        public double CbarSize { get; set; } = 0.15;
+        public float CbarSize { get; set; } = 0.15f;
         public uint FontSize { get; set; } = 24;
         public uint LabelAreaSize { get; set; } = 80;
         public uint Margin { get; set; } = 10;
-        public double TicksStep { get; set; } = 10;
+        public float TicksStep { get; set; } = 10;
         public CMap Cmap { get; set; } = CMap.Jet;
         public string Fname { get; set; } = "";
 
@@ -112,7 +112,7 @@ namespace AUTD3Sharp.Link
         public string CbarSize { get; set; } = "5%";
         public string CbarPad { get; set; } = "3%";
         public int FontSize { get; set; } = 12;
-        public double TicksStep { get; set; } = 10;
+        public float TicksStep { get; set; } = 10;
         public string Cmap { get; set; } = "jet";
         public bool Show { get; set; } = false;
         public string Fname { get; set; } = "fig.png";
@@ -248,11 +248,11 @@ namespace AUTD3Sharp.Link
             unsafe
             {
                 var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity, segment,
-                    (uint)idx, null);
+                    (ushort)idx, null);
                 var buf = new Phase[size];
                 fixed (Phase* p = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerPhasesOf(_ptr, _backend, _directivity, segment,
-                    (uint)idx, (byte*)p);
+                    (ushort)idx, (byte*)p);
                 return buf;
             }
         }
@@ -262,11 +262,11 @@ namespace AUTD3Sharp.Link
             unsafe
             {
                 var size = NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensities(_ptr, _backend, _directivity, segment,
-                    (uint)idx, null);
+                    (ushort)idx, null);
                 var buf = new EmitIntensity[size];
                 fixed (EmitIntensity* p = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerIntensities(_ptr, _backend, _directivity, segment,
-                    (uint)idx, (byte*)p);
+                    (ushort)idx, (byte*)p);
                 return buf;
             }
         }
@@ -284,18 +284,18 @@ namespace AUTD3Sharp.Link
             }
         }
 
-        public System.Numerics.Complex[] CalcField(IEnumerable<Vector3d> pointsIter, Geometry geometry, Segment segment, int idx)
+        public System.Numerics.Complex[] CalcField(IEnumerable<Vector3> pointsIter, Geometry geometry, Segment segment, int idx)
         {
-            var points = pointsIter as Vector3d[] ?? pointsIter.ToArray();
+            var points = pointsIter as Vector3[] ?? pointsIter.ToArray();
             var pointsLen = points.Length;
             var pointsPtr = points.SelectMany(v => new[] { v.X, v.Y, v.Z }).ToArray();
-            var buf = new double[pointsLen * 2];
+            var buf = new float[pointsLen * 2];
             unsafe
             {
-                fixed (double* pp = &pointsPtr[0])
-                fixed (double* bp = &buf[0])
+                fixed (float* pp = &pointsPtr[0])
+                fixed (float* bp = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerCalcField(_ptr, _backend, _directivity,
-                        pp, (uint)pointsLen, geometry.Ptr, segment, (uint)idx, bp);
+                        pp, (uint)pointsLen, geometry.Ptr, segment, (ushort)idx, bp);
             }
             return Enumerable.Range(0, pointsLen).Select(i => new System.Numerics.Complex(buf[2 * i], buf[2 * i + 1])).ToArray();
         }
@@ -303,13 +303,13 @@ namespace AUTD3Sharp.Link
         public void PlotField(IPlotConfig config, PlotRange range, Geometry geometry, Segment segment, int idx)
         {
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
-            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotField(_ptr, _backend, _directivity, config.Ptr(), range.Ptr, geometry.Ptr, segment, (uint)idx).Validate();
+            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotField(_ptr, _backend, _directivity, config.Ptr(), range.Ptr, geometry.Ptr, segment, (ushort)idx).Validate();
         }
 
         public void PlotPhase(IPlotConfig config, Geometry geometry, Segment segment, int idx)
         {
             if (config.Backend() != _backend) throw new AUTDException("Invalid plot config type.");
-            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotPhase(_ptr, _backend, _directivity, config.Ptr(), geometry.Ptr, segment, (uint)idx).Validate();
+            NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotPhase(_ptr, _backend, _directivity, config.Ptr(), geometry.Ptr, segment, (ushort)idx).Validate();
         }
 
         public void PlotModulation(IPlotConfig config, Segment segment)

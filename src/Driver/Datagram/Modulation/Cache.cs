@@ -42,7 +42,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             unsafe
             {
                 fixed (EmitIntensity* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)pBuf, (uint)_cache.Length);
+                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)pBuf, (ushort)_cache.Length);
             }
         }
 
