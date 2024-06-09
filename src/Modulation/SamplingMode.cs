@@ -7,6 +7,7 @@ namespace AUTD3Sharp.Modulation
         internal ModulationPtr SinePtr(SamplingConfigWrap config, EmitIntensity intensity, EmitIntensity offset,
                                          Angle phase, NativeMethods.LoopBehavior loopBehavior);
         internal unsafe ModulationPtr FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior);
+        internal unsafe ModulationPtr MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior);
         internal ModulationPtr SquarePtr(SamplingConfigWrap config, EmitIntensity low, EmitIntensity high,
                                            float duty, NativeMethods.LoopBehavior loopBehavior);
     }
@@ -24,6 +25,8 @@ namespace AUTD3Sharp.Modulation
             Angle phase, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSineExact(Freq.Hz, config, intensity.Value, offset.Value, phase.Radian, loopBehavior);
 
         unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExact(p, len, loopBehavior).Validate();
+
+        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExact(p, len, loopBehavior).Validate();
 
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfigWrap config, EmitIntensity low, EmitIntensity high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareExact(Freq.Hz, config, low.Value, high.Value, duty, loopBehavior);
@@ -43,6 +46,8 @@ namespace AUTD3Sharp.Modulation
 
         unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExactFloat(p, len, loopBehavior).Validate();
 
+        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExactFloat(p, len, loopBehavior).Validate();
+
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfigWrap config, EmitIntensity low, EmitIntensity high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareExactFloat(Freq.Hz, config, low.Value, high.Value, duty, loopBehavior);
     }
@@ -60,6 +65,8 @@ namespace AUTD3Sharp.Modulation
             Angle phase, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSineNearest(Freq.Hz, config, intensity.Value, offset.Value, phase.Radian, loopBehavior);
 
         unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierNearest(p, len, loopBehavior).Validate();
+
+        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierNearest(p, len, loopBehavior).Validate();
 
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfigWrap config, EmitIntensity low, EmitIntensity high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareNearest(Freq.Hz, config, low.Value, high.Value, duty, loopBehavior);

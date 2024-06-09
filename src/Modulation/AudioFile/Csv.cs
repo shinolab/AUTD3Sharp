@@ -1,15 +1,20 @@
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
+using System;
 
 namespace AUTD3Sharp.Modulation.AudioFile
 {
+    [Builder]
     [Modulation(ConfigNoChange = true)]
-    public sealed partial class RawPCM
+    public sealed partial class Csv
     {
         private readonly string _filename;
         private readonly Freq<uint> _sampleRate;
 
-        public RawPCM(string filename, Freq<uint> sampleRate)
+        [Property]
+        public char Deliminator { get; private set; } = ',';
+
+        public Csv(string filename, Freq<uint> sampleRate)
         {
             _filename = filename;
             _sampleRate = sampleRate;
@@ -22,7 +27,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationRawPCM(fp, _sampleRate.Hz, LoopBehavior).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationCsv(fp, _sampleRate.Hz, Convert.ToByte(Deliminator), LoopBehavior).Validate();
                 }
             }
         }
