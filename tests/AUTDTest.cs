@@ -157,46 +157,46 @@ public class AUTDTest
         }
     }
 
-    // [Fact]
-    // public async Task TestSendTimeout()
-    // {
-    //     {
-    //         var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
-    //             .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
+    [Fact]
+    public async Task TestSendTimeout()
+    {
+        {
+            var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
+                .OpenAsync(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 
-    //         Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
-    //         Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
+            Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
+            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
-    //         await autd.SendAsync(new Null());
-    //         Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
+            await autd.SendAsync(new Null());
+            Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
 
-    //         await autd.SendAsync(new Null(), TimeSpan.FromMicroseconds(1));
-    //         Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
+            await autd.SendAsync(new Null().WithTimeout(TimeSpan.FromMicroseconds(1)));
+            Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
 
-    //         await autd.SendAsync((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-    //         Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
-    //     }
-    // }
+            await autd.SendAsync((new Null(), new Null()).WithTimeout(TimeSpan.FromMicroseconds(2)));
+            Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
+        }
+    }
 
-    // [Fact]
-    // public void TestSendTimeoutSync()
-    // {
-    //     {
-    //         var autd = new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
-    //             .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
-    //         Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
-    //         Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
+    [Fact]
+    public void TestSendTimeoutSync()
+    {
+        {
+            var autd = new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
+                .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
+            Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
+            Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
 
-    //         autd.Send(new Null());
-    //         Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
+            autd.Send(new Null());
+            Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
 
-    //         autd.Send(new Null(), TimeSpan.FromMicroseconds(1));
-    //         Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
+            autd.Send(new Null().WithTimeout(TimeSpan.FromMicroseconds(1)));
+            Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
 
-    //         autd.Send((new Null(), new Null()), TimeSpan.FromMicroseconds(2));
-    //         Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
-    //     }
-    // }
+            autd.Send((new Null(), new Null()).WithTimeout(TimeSpan.FromMicroseconds(2)));
+            Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
+        }
+    }
 
     [Fact]
     public async Task TestSendSingle()
