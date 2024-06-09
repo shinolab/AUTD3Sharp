@@ -15,8 +15,8 @@ namespace AUTD3Sharp.Gain.Holo
 
         public float SPL => NativeMethodsGainHolo.AUTDGainHoloPascalToSPL(Pascal);
 
-        public static Amplitude NewPascal(float pascal) => new Amplitude(pascal);
-        public static Amplitude NewSPL(float spl) => new Amplitude(NativeMethodsGainHolo.AUTDGainHoloSPLToPascal(spl));
+        private static Amplitude NewPascal(float pascal) => new Amplitude(pascal);
+        private static Amplitude NewSPL(float spl) => new Amplitude(NativeMethodsGainHolo.AUTDGainHoloSPLToPascal(spl));
 
         public class UnitPascal
         {
