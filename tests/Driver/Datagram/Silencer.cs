@@ -121,7 +121,7 @@ public class SilencerTest
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(GainSTM.FromSamplingConfig(SamplingConfig.Division(512)).AddGain(new Null()).AddGain(new Null())));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(GainSTM.FromSamplingConfig(SamplingConfig.Division(512), [new Null(), new Null()])));
 
         await autd.SendAsync(Silencer.FixedCompletionSteps(10, 40).WithStrictMode(false));
         foreach (var dev in autd.Geometry)
@@ -132,6 +132,6 @@ public class SilencerTest
         }
         await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(SamplingConfig.Division(512)));
 
-        await autd.SendAsync(GainSTM.FromSamplingConfig(SamplingConfig.Division(512)).AddGain(new Null()).AddGain(new Null()));
+        await autd.SendAsync(GainSTM.FromSamplingConfig(SamplingConfig.Division(512), [new Null(), new Null()]));
     }
 }

@@ -15,8 +15,7 @@ public class GainSTMTest
         const float radius = 30.0f;
         const int size = 2;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = GainSTM.FromFreq(1.0f * Hz)
-            .AddGainsFromIter(Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        var stm = GainSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
                 new Focus(center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0))));
         await autd.SendAsync(stm);
 
@@ -26,7 +25,7 @@ public class GainSTMTest
             Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
         }
 
-        stm = GainSTM.FromFreqNearest(1.0f * Hz).AddGain(new Uniform(EmitIntensity.Max)).AddGain(new Uniform(new EmitIntensity(0x80)));
+        stm = GainSTM.FromFreqNearest(1.0f * Hz, [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]);
         await autd.SendAsync(stm);
         foreach (var dev in autd.Geometry)
         {
@@ -34,7 +33,7 @@ public class GainSTMTest
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = GainSTM.FromSamplingConfig(SamplingConfig.Division(512)).AddGain(new Uniform(EmitIntensity.Max)).AddGain(new Uniform(new EmitIntensity(0x80))).WithLoopBehavior(LoopBehavior.Once);
+        stm = GainSTM.FromSamplingConfig(SamplingConfig.Division(512), [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]).WithLoopBehavior(LoopBehavior.Once);
         Assert.Equal(LoopBehavior.Once, stm.LoopBehavior);
         await autd.SendAsync(stm);
         foreach (var dev in autd.Geometry)
@@ -109,8 +108,7 @@ public class GainSTMTest
         const float radius = 30.0f;
         const int size = 2;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = GainSTM.FromFreq(1.0f * Hz)
-            .AddGainsFromIter(Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        var stm = GainSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
                 new Focus(center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0))));
         await autd.SendAsync(stm);
         Assert.Equal(Segment.S0, autd.Link.CurrentStmSegment(0));

@@ -15,48 +15,28 @@ namespace AUTD3Sharp
         private readonly Freq<float>? _freqNearest;
         private readonly SamplingConfigWrap? _config;
 
-        private readonly List<Driver.Datagram.Gain.IGain> _gains;
+        private readonly Driver.Datagram.Gain.IGain[] _gains;
         private GainSTMMode _mode;
 
         public NativeMethods.LoopBehavior LoopBehavior { get; private set; }
 
-        private GainSTM(Freq<float>? freq, Freq<float>? freqNearest, SamplingConfigWrap? config)
+        private GainSTM(Freq<float>? freq, Freq<float>? freqNearest, SamplingConfigWrap? config, IEnumerable<Driver.Datagram.Gain.IGain> iter)
         {
             _freq = freq;
             _freqNearest = freqNearest;
             _config = config;
 
-            _gains = new List<Driver.Datagram.Gain.IGain>();
+            _gains = iter.ToArray();
             _mode = GainSTMMode.PhaseIntensityFull;
 
             LoopBehavior = AUTD3Sharp.LoopBehavior.Infinite;
         }
 
-        public static GainSTM FromFreq(Freq<float> freq)
-        {
-            return new GainSTM(freq, null, null);
-        }
+        public static GainSTM FromFreq(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new GainSTM(freq, null, null, iter);
 
-        public static GainSTM FromFreqNearest(Freq<float> freq)
-        {
-            return new GainSTM(null, freq, null);
-        }
+        public static GainSTM FromFreqNearest(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new GainSTM(null, freq, null, iter);
 
-        public static GainSTM FromSamplingConfig(SamplingConfigWrap config)
-        {
-            return new GainSTM(null, null, config);
-        }
-
-        public GainSTM AddGain(Driver.Datagram.Gain.IGain gain)
-        {
-            _gains.Add(gain);
-            return this;
-        }
-
-        public GainSTM AddGainsFromIter(IEnumerable<Driver.Datagram.Gain.IGain> iter)
-        {
-            return iter.Aggregate(this, (stm, gain) => stm.AddGain(gain));
-        }
+        public static GainSTM FromSamplingConfig(SamplingConfigWrap config, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new GainSTM(null, null, config, iter);
 
         public GainSTM WithMode(GainSTMMode mode)
         {
