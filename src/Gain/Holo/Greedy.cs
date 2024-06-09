@@ -1,5 +1,8 @@
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 using AUTD3Sharp.Derive;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -7,7 +10,7 @@ namespace AUTD3Sharp.Gain.Holo
     [Builder]
     public sealed partial class Greedy : Holo<Greedy>
     {
-        public Greedy() : base(EmissionConstraint.Uniform(EmitIntensity.Max))
+        public Greedy(IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Uniform(EmitIntensity.Max), iter)
         {
             PhaseDiv = 16;
         }
@@ -19,10 +22,10 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* foci = Foci.ToArray())
-                fixed (Amplitude* amps = Amps.ToArray())
+                fixed (float* foci = &Foci[0])
+                fixed (Amplitude* amps = &Amps[0])
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloGreedySphere(foci, (float*)amps, (uint)Amps.Count, PhaseDiv, Constraint);
+                    return NativeMethodsGainHolo.AUTDGainHoloGreedySphere(foci, (float*)amps, (uint)Amps.Length, PhaseDiv, Constraint);
                 }
             }
         }

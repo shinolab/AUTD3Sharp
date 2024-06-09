@@ -9,7 +9,7 @@ public class GroupTest
 
         var cx = autd.Geometry.Center.X;
 
-        await autd.SendAsync(new Group((_, tr) => tr.Position.X switch
+        await autd.SendAsync(new Group(_ => tr => tr.Position.X switch
         {
             var x when x < cx => "uniform",
             _ => "null"
@@ -32,7 +32,7 @@ public class GroupTest
             }
         }
 
-        await autd.SendAsync(new Group((_, tr) => tr.Position.X switch
+        await autd.SendAsync(new Group(_ => tr => tr.Position.X switch
         {
             var x when x > cx => "uniform",
             _ => null
@@ -63,7 +63,7 @@ public class GroupTest
 
         var exception = await Record.ExceptionAsync(async () =>
         {
-            await autd.SendAsync(new Group((_, _) => "null").Set("uniform", new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))).Set("null", new Null()));
+            await autd.SendAsync(new Group(_ => _ => "null").Set("uniform", new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))).Set("null", new Null()));
         });
 
         if (exception == null) Assert.Fail("Exception is expected");
@@ -78,7 +78,7 @@ public class GroupTest
         autd.Geometry[0].Enable = false;
 
         var check = new bool[autd.Geometry.NumDevices];
-        await autd.SendAsync(new Group((dev, _) =>
+        await autd.SendAsync(new Group(dev => _ =>
         {
             check[dev.Idx] = true;
             return "uniform";

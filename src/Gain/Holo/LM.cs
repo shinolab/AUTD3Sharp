@@ -1,6 +1,9 @@
 using System;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
+using AUTD3Sharp.Utils;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -12,7 +15,7 @@ namespace AUTD3Sharp.Gain.Holo
         private readonly TB _backend;
         private float[] _initial;
 
-        public LM(TB backend) : base(EmissionConstraint.DontCare)
+        public LM(TB backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.DontCare, iter)
         {
             _backend = backend;
             Eps1 = 1e-8f;
@@ -43,7 +46,7 @@ namespace AUTD3Sharp.Gain.Holo
         public ReadOnlySpan<float> Initial => new ReadOnlySpan<float>(_initial);
 
         private GainPtr GainPtr(Geometry _) =>
-            _backend.Lm(Foci.ToArray(), Amps.ToArray(),
-                (uint)Amps.Count, Eps1, Eps2, Tau, KMax, _initial, Constraint);
+            _backend.Lm(Foci, Amps,
+                (uint)Amps.Length, Eps1, Eps2, Tau, KMax, _initial, Constraint);
     }
 }

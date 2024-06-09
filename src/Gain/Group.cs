@@ -13,10 +13,10 @@ namespace AUTD3Sharp.Gain
     [Gain]
     public sealed partial class Group
     {
-        private readonly Func<Device, Transducer, object?> _f;
+        private readonly Func<Device, Func<Transducer, object?>> _f;
         private readonly Dictionary<object, Driver.Datagram.Gain.IGain> _map;
 
-        public Group(Func<Device, Transducer, object?> f)
+        public Group(Func<Device, Func<Transducer, object?>> f)
         {
             _f = f;
             _map = new Dictionary<object, Driver.Datagram.Gain.IGain>();
@@ -43,7 +43,7 @@ namespace AUTD3Sharp.Gain
                         var m = new int[dev.NumTransducers];
                         foreach (var tr in dev)
                         {
-                            var key = _f(dev, tr);
+                            var key = _f(dev)(tr);
                             if (key != null)
                             {
                                 if (!keymap.ContainsKey(key)) keymap[key] = k++;

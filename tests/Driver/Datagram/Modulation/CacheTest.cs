@@ -5,10 +5,10 @@ public partial class ForCacheTest
 {
     internal int CalcCnt;
 
-    private EmitIntensity[] Calc(Geometry geometry)
+    private byte[] Calc(Geometry geometry)
     {
         CalcCnt++;
-        return [EmitIntensity.Max, EmitIntensity.Max];
+        return [0xFF, 0xFF];
     }
 }
 
@@ -43,15 +43,15 @@ public class CacheTest
         Assert.Equal(0, m.Buffer.Length);
 
         m.Init(autd.Geometry);
-        Assert.Equal(new EmitIntensity(0xFF), m[0]);
-        Assert.Equal(new EmitIntensity(0xFF), m[1]);
+        Assert.Equal(0xFF, m[0]);
+        Assert.Equal(0xFF, m[1]);
         var buffer = m.Buffer;
-        Assert.Equal(new EmitIntensity(0xFF), buffer[0]);
-        Assert.Equal(new EmitIntensity(0xFF), buffer[1]);
+        Assert.Equal(0xFF, buffer[0]);
+        Assert.Equal(0xFF, buffer[1]);
 
         foreach (var buf in m)
         {
-            Assert.Equal(new EmitIntensity(0xFF), buf);
+            Assert.Equal(0xFF, buf);
         }
     }
 

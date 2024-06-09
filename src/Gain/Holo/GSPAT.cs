@@ -1,5 +1,8 @@
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
+using AUTD3Sharp.Utils;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AUTD3Sharp.Gain.Holo
 {
@@ -10,7 +13,7 @@ namespace AUTD3Sharp.Gain.Holo
     {
         private readonly TB _backend;
 
-        public GSPAT(TB backend) : base(EmissionConstraint.DontCare)
+        public GSPAT(TB backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.DontCare, iter)
         {
             _backend = backend;
             Repeat = 100;
@@ -22,7 +25,7 @@ namespace AUTD3Sharp.Gain.Holo
 
         private GainPtr GainPtr(Geometry _)
         {
-            return _backend.Gspat(Foci.ToArray(), Amps.ToArray(), (uint)Amps.Count, Repeat, Constraint);
+            return _backend.Gspat(Foci, Amps, (uint)Amps.Length, Repeat, Constraint);
         }
     }
 }

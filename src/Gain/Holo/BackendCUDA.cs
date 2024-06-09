@@ -27,8 +27,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
+                fixed (float* pf = &foci[0])
+                fixed (Amplitude* pa = &amps[0])
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDASDP(Ptr, pf, (float*)pa, size, alpha, lambda, repeat, constraint);
                 }
@@ -39,8 +39,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
+                fixed (float* pf = &foci[0])
+                fixed (Amplitude* pa = &amps[0])
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDAGS(Ptr, pf, (float*)pa, size, repeat, constraint);
                 }
@@ -51,8 +51,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
+                fixed (float* pf = &foci[0])
+                fixed (Amplitude* pa = &amps[0])
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDAGSPAT(Ptr, pf, (float*)pa, size, repeat, constraint);
                 }
@@ -63,8 +63,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
+                fixed (float* pf = &foci[0])
+                fixed (Amplitude* pa = &amps[0])
                 {
                     return NativeMethodsBackendCuda.AUTDGainHoloCUDANaive(Ptr, pf, (float*)pa, size, constraint);
                 }
@@ -75,11 +75,22 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
-                fixed (float* pInitial = initial)
+                if (initial.Length == 0)
                 {
-                    return NativeMethodsBackendCuda.AUTDGainHoloCUDALM(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, constraint, pInitial, (ulong)initial.Length);
+                    fixed (float* pf = &foci[0])
+                    fixed (Amplitude* pa = &amps[0])
+                    {
+                        return NativeMethodsBackendCuda.AUTDGainHoloCUDALM(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, constraint, (float*)IntPtr.Zero, 0u);
+                    }
+                }
+                else
+                {
+                    fixed (float* pf = &foci[0])
+                    fixed (Amplitude* pa = &amps[0])
+                    fixed (float* pInitial = &initial[0])
+                    {
+                        return NativeMethodsBackendCuda.AUTDGainHoloCUDALM(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, constraint, pInitial, (ulong)initial.Length);
+                    }
                 }
             }
         }

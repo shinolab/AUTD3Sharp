@@ -22,8 +22,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
+                fixed (float* pf = &foci[0])
+                fixed (Amplitude* pa = &amps[0])
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloSDPSphere(Ptr, pf, (float*)pa, size, alpha, lambda, repeat, constraint);
                 }
@@ -34,8 +34,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
+                fixed (float* pf = &foci[0])
+                fixed (Amplitude* pa = &amps[0])
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloGSSphere(Ptr, pf, (float*)pa, size, repeat, constraint);
                 }
@@ -46,8 +46,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
+                fixed (float* pf = &foci[0])
+                fixed (Amplitude* pa = &amps[0])
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloGSPATSphere(Ptr, pf, (float*)pa, size, repeat, constraint);
                 }
@@ -58,8 +58,8 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
+                fixed (float* pf = &foci[0])
+                fixed (Amplitude* pa = &amps[0])
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloNaiveSphere(Ptr, pf, (float*)pa, size, constraint);
                 }
@@ -70,11 +70,22 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* pf = foci)
-                fixed (Amplitude* pa = amps)
-                fixed (float* pInitial = initial)
+                if (initial.Length == 0)
                 {
-                    return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, pInitial, (uint)initial.Length, constraint);
+                    fixed (float* pf = &foci[0])
+                    fixed (Amplitude* pa = &amps[0])
+                    {
+                        return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, (float*)IntPtr.Zero, 0u, constraint);
+                    }
+                }
+                else
+                {
+                    fixed (float* pf = &foci[0])
+                    fixed (Amplitude* pa = &amps[0])
+                    fixed (float* pInitial = &initial[0])
+                    {
+                        return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, pInitial, (uint)initial.Length, constraint);
+                    }
                 }
             }
         }

@@ -9,7 +9,7 @@ public class TransformTest
         var autd2 = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var m = new Sine(150 * Hz);
-        var mt = m.WithTransform((_, v) => new EmitIntensity((byte)(v.Value / 2))).WithLoopBehavior(LoopBehavior.Once);
+        var mt = m.WithTransform((_, v) => (byte)(v / 2)).WithLoopBehavior(LoopBehavior.Once);
         Assert.Equal(LoopBehavior.Once, mt.LoopBehavior);
         await autd1.SendAsync(m);
         await autd2.SendAsync(mt);

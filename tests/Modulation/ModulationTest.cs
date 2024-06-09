@@ -7,10 +7,10 @@ public partial class Burst
     {
     }
 
-    private EmitIntensity[] Calc(Geometry geometry)
+    private byte[] Calc(Geometry geometry)
     {
-        var buf = new EmitIntensity[10];
-        buf[0] = EmitIntensity.Max;
+        var buf = new byte[10];
+        buf[0] = 0xFF;
         return buf;
     }
 }
