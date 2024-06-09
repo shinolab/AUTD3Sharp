@@ -41,7 +41,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
             var data = Calc(geometry);
             unsafe
             {
-                fixed (EmitIntensity* ptr = &data[0])
+                fixed (byte* ptr = &data[0])
                     return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)ptr, (ushort)data.Length);
             }
         }
@@ -54,7 +54,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
             $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}> WithRadiationPressure() => new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}>(this);";
 
         var transformCode = noTransform ? "" :
-            $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}> WithTransform(Func<int, EmitIntensity, EmitIntensity> f) => new AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}>(this, f);";
+            $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}> WithTransform(Func<int, byte, byte> f) => new AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}>(this, f);";
 
         var configCode = configNoChange ? "" :
             $$"""

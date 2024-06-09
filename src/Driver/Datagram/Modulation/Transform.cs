@@ -14,10 +14,10 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
         private readonly TM _m;
         private readonly ModTransformDelegate _f;
 
-        public Transform(TM m, Func<int, EmitIntensity, EmitIntensity> f)
+        public Transform(TM m, Func<int, byte, byte> f)
         {
             _m = m;
-            _f = (context, i, d) => f((int)i, new EmitIntensity(d)).Value;
+            _f = (context, i, d) => f((int)i, d);
         }
 
         private ModulationPtr ModulationPtr(Geometry geometry) => NativeMethodsBase.AUTDModulationWithTransform(_m.ModulationPtr(geometry), Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, LoopBehavior);

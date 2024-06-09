@@ -7,29 +7,29 @@ using AUTD3Sharp.NativeMethods;
 namespace AUTD3Sharp.Driver.Datagram.Modulation
 {
     [Modulation(NoCache = true, ConfigNoChange = true, NoTransform = true, NoRadiationPressure = true)]
-    public sealed partial class Cache<TM> : IEnumerable<EmitIntensity>
+    public sealed partial class Cache<TM> : IEnumerable<byte>
     where TM : IModulation
     {
         private readonly TM _m;
-        private EmitIntensity[] _cache;
+        private byte[] _cache;
 
         public Cache(TM m)
         {
             _m = m;
-            _cache = Array.Empty<EmitIntensity>();
+            _cache = Array.Empty<byte>();
             LoopBehavior = m.LoopBehavior();
             _config = m.SamplingConfig();
         }
 
-        public ReadOnlySpan<EmitIntensity> Init(Geometry geometry)
+        public ReadOnlySpan<byte> Init(Geometry geometry)
         {
             if (_cache.Length != 0) return Buffer;
             var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr(geometry), geometry.Ptr);
             var res = ptr.Validate();
-            _cache = new EmitIntensity[NativeMethodsBase.AUTDModulationCalcGetSize(res)];
+            _cache = new byte[NativeMethodsBase.AUTDModulationCalcGetSize(res)];
             unsafe
             {
-                fixed (EmitIntensity* pBuf = &_cache[0])
+                fixed (byte* pBuf = &_cache[0])
                     NativeMethodsBase.AUTDModulationCalcGetResult(res, (byte*)pBuf);
             }
             NativeMethodsBase.AUTDModulationCalcFreeResult(res);
@@ -41,16 +41,16 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             Init(geometry);
             unsafe
             {
-                fixed (EmitIntensity* pBuf = &_cache[0])
+                fixed (byte* pBuf = &_cache[0])
                     return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)pBuf, (ushort)_cache.Length);
             }
         }
 
-        public EmitIntensity this[int index] => _cache[index];
+        public byte this[int index] => _cache[index];
 
-        public ReadOnlySpan<EmitIntensity> Buffer => new ReadOnlySpan<EmitIntensity>(_cache);
+        public ReadOnlySpan<byte> Buffer => new ReadOnlySpan<byte>(_cache);
 
-        public IEnumerator<EmitIntensity> GetEnumerator()
+        public IEnumerator<byte> GetEnumerator()
         {
             foreach (var e in _cache)
                 yield return e;
