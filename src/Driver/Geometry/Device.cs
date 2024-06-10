@@ -34,83 +34,27 @@ namespace AUTD3Sharp
             set => NativeMethodsBase.AUTDDeviceEnableSet(Ptr, value);
         }
 
-        public Quaternion Rotation
-        {
-            get
-            {
-                unsafe
-                {
-                    var rot = stackalloc float[4];
-                    NativeMethodsBase.AUTDDeviceRotation(Ptr, rot);
-                    return new Quaternion(rot[0], rot[1], rot[2], rot[3]);
-                }
-            }
-        }
+        public Quaternion Rotation => NativeMethodsBase.AUTDDeviceRotation(Ptr);
 
-        public Vector3 XDirection
-        {
-            get
-            {
-                unsafe
-                {
-                    var dir = stackalloc float[3];
-                    NativeMethodsBase.AUTDDeviceDirectionX(Ptr, dir);
-                    return new Vector3(dir[0], dir[1], dir[2]);
-                }
-            }
-        }
+        public Vector3 XDirection => NativeMethodsBase.AUTDDeviceDirectionX(Ptr);
+        public Vector3 YDirection => NativeMethodsBase.AUTDDeviceDirectionY(Ptr);
+        public Vector3 AxialDirection => NativeMethodsBase.AUTDDeviceDirectionAxial(Ptr);
 
-        public Vector3 YDirection
-        {
-            get
-            {
-                unsafe
-                {
-                    var dir = stackalloc float[3];
-                    NativeMethodsBase.AUTDDeviceDirectionY(Ptr, dir);
-                    return new Vector3(dir[0], dir[1], dir[2]);
-                }
-            }
-        }
-
-        public Vector3 AxialDirection
-        {
-            get
-            {
-                unsafe
-                {
-                    var dir = stackalloc float[3];
-                    NativeMethodsBase.AUTDDeviceDirectionAxial(Ptr, dir);
-                    return new Vector3(dir[0], dir[1], dir[2]);
-                }
-            }
-        }
-        public Vector3 Center
-        {
-            get
-            {
-                unsafe
-                {
-                    var center = stackalloc float[3];
-                    NativeMethodsBase.AUTDDeviceCenter(Ptr, center);
-                    return new Vector3(center[0], center[1], center[2]);
-                }
-            }
-        }
+        public Vector3 Center => NativeMethodsBase.AUTDDeviceCenter(Ptr);
 
         public void Translate(Vector3 t)
         {
-            NativeMethodsBase.AUTDDeviceTranslate(Ptr, t.X, t.Y, t.Z);
+            NativeMethodsBase.AUTDDeviceTranslate(Ptr, t);
         }
 
         public void Rotate(Quaternion r)
         {
-            NativeMethodsBase.AUTDDeviceRotate(Ptr, r.W, r.X, r.Y, r.Z);
+            NativeMethodsBase.AUTDDeviceRotate(Ptr, r);
         }
 
         public void Affine(Vector3 t, Quaternion r)
         {
-            NativeMethodsBase.AUTDDeviceAffine(Ptr, t.X, t.Y, t.Z, r.W, r.X, r.Y, r.Z);
+            NativeMethodsBase.AUTDDeviceAffine(Ptr, t, r);
         }
 
         public void SetSoundSpeedFromTemp(float temp, float k = 1.4f, float r = 8.31446261815324f, float m = 28.9647e-3f)

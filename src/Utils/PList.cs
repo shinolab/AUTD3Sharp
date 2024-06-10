@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AUTD3Sharp.Utils
 {
@@ -17,33 +18,7 @@ namespace AUTD3Sharp.Utils
             Items = Array.Empty<T>();
         }
 
-        public PList(int capacity)
-        {
-            Items = capacity == 0 ? Array.Empty<T>() : new T[capacity];
-        }
-
-        public PList(IEnumerable<T> collection)
-        {
-            if (collection is ICollection<T> c)
-            {
-                var count = c.Count;
-                if (count == 0)
-                    Items = Array.Empty<T>();
-                else
-                {
-                    Items = new T[count];
-                    c.CopyTo(Items, 0);
-                    _size = count;
-                }
-            }
-            else
-            {
-                Items = Array.Empty<T>();
-                using var en = collection.GetEnumerator();
-                while (en.MoveNext()) Add(en.Current);
-            }
-        }
-
+        [ExcludeFromCodeCoverage]
         public int Capacity
         {
             get => Items.Length;
@@ -63,12 +38,6 @@ namespace AUTD3Sharp.Utils
         }
 
         public int Count => _size;
-
-        public T this[int index]
-        {
-            get => Items[index];
-            set => Items[index] = value;
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(T item)
@@ -94,6 +63,7 @@ namespace AUTD3Sharp.Utils
             Items[size] = item;
         }
 
+        [ExcludeFromCodeCoverage]
         internal void Grow(int capacity)
         {
             var newCapacity = Items.Length == 0 ? DefaultCapacity : 2 * Items.Length;

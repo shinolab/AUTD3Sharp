@@ -13,7 +13,7 @@ internal static class CustomGain
         autd.Send(config);
 
         var m = new Sine(150 * Hz);
-        var g = new Custom(
+        var g = new AUTD3Sharp.Gain.Custom(
             (dev) => (tr) => (dev.Idx, tr.Idx) switch
             {
                 (0, 0) => new Drive(new Phase(0), EmitIntensity.Max),

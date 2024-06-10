@@ -26,7 +26,7 @@ namespace AUTD3Sharp.Modulation
 
         unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExact(p, len, loopBehavior).Validate();
 
-        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExact(p, len, loopBehavior).Validate();
+        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationMixerExact(p, len, loopBehavior).Validate();
 
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfigWrap config, EmitIntensity low, EmitIntensity high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareExact(Freq.Hz, config, low.Value, high.Value, duty, loopBehavior);
@@ -46,7 +46,7 @@ namespace AUTD3Sharp.Modulation
 
         unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExactFloat(p, len, loopBehavior).Validate();
 
-        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExactFloat(p, len, loopBehavior).Validate();
+        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationMixerExactFloat(p, len, loopBehavior).Validate();
 
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfigWrap config, EmitIntensity low, EmitIntensity high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareExactFloat(Freq.Hz, config, low.Value, high.Value, duty, loopBehavior);
@@ -66,7 +66,7 @@ namespace AUTD3Sharp.Modulation
 
         unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierNearest(p, len, loopBehavior).Validate();
 
-        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierNearest(p, len, loopBehavior).Validate();
+        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationMixerNearest(p, len, loopBehavior).Validate();
 
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfigWrap config, EmitIntensity low, EmitIntensity high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareNearest(Freq.Hz, config, low.Value, high.Value, duty, loopBehavior);

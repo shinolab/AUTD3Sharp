@@ -29,6 +29,6 @@ namespace AUTD3Sharp.Gain
         [Property]
         public Phase PhaseOffset { get; private set; }
 
-        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainBessel(Pos.X, Pos.Y, Pos.Z, Dir.X, Dir.Y, Dir.Z, Theta.Radian, Intensity.Value, PhaseOffset.Value);
+        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainBessel(Pos, Dir, Theta.Radian, Intensity.Value, PhaseOffset.Value);
     }
 }

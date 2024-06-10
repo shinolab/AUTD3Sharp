@@ -23,6 +23,6 @@ namespace AUTD3Sharp.Gain
         [Property]
         public Phase PhaseOffset { get; private set; }
 
-        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainFocus(Pos.X, Pos.Y, Pos.Z, Intensity.Value, PhaseOffset.Value);
+        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainFocus(Pos, Intensity.Value, PhaseOffset.Value);
     }
 }

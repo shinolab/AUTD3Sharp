@@ -46,12 +46,12 @@ public class FociSTMTest
             Assert.Equal(2u, autd.Link.StmCycle(dev.Idx, Segment.S0));
             {
                 var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
-                Assert.Contains(intensities, d => d != 0);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
             {
                 var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 1);
-                Assert.Contains(intensities, d => d != 0);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
         }
@@ -99,5 +99,29 @@ public class FociSTMTest
         infos = await autd.FPGAStateAsync();
         Assert.Null(infos[0]?.CurrentGainSegment);
         Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment);
+    }
+
+
+    [Fact]
+    public async Task TestFociSTMN2()
+    {
+        var autd = await AUTDTest.CreateController();
+
+        await autd.SendAsync(Silencer.Disable());
+
+        const int size = 2;
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(_ => new ControlPoints<N1>(center).WithIntensity(0x10)));
+        await autd.SendAsync(stm);
+
+        foreach (var dev in autd.Geometry) Assert.False(autd.Link.IsStmGainMode(dev.Idx, Segment.S0));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link.StmSoundSpeed(dev.Idx, Segment.S0));
+            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+            var (intensities, _) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
+            // Assert.All(intensities, d => Assert.Equal(0x80, d));
+            Assert.Equal(0x80, intensities[0]);
+        }
     }
 }

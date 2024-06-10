@@ -48,23 +48,20 @@ namespace AUTD3Sharp
 
         public FociSTMPtr RawPtr(Geometry geometry)
         {
-            var intensities = _points.Select(p => p.Intensity).ToArray();
-            var offsets = _points.SelectMany(p => p.Points.Select(c => c.Offset)).ToArray();
-            var points = _points.SelectMany(p => p.Points.SelectMany(c => c.Point)).ToArray();
             unsafe
             {
-                fixed (float* pp = &points[0])
-                fixed (EmitIntensity* ip = &intensities[0])
-                fixed (Phase* op = &offsets[0])
+#pragma warning disable CS8500
+                fixed (ControlPoints<T>* pp = &_points[0])
                 {
                     var ptr = (_freq, _freqNearest, _config) switch
                     {
-                        ({ } f, null, null) => NativeMethodsBase.AUTDSTMFociFromFreq(f.Hz, pp, (byte*)op, (byte*)ip, (ushort)intensities.Length, default(T).Value).Validate(),
-                        (null, { } f, null) => NativeMethodsBase.AUTDSTMFociFromFreqNearest(f.Hz, pp, (byte*)op, (byte*)ip, (ushort)intensities.Length, default(T).Value).Validate(),
-                        _ => NativeMethodsBase.AUTDSTMFociFromSamplingConfig(_config!.Value, pp, (byte*)op, (byte*)ip, (ushort)intensities.Length, default(T).Value)
+                        ({ } f, null, null) => NativeMethodsBase.AUTDSTMFociFromFreq(f.Hz, (IntPtr)pp, (ushort)_points.Length, default(T).Value).Validate(),
+                        (null, { } f, null) => NativeMethodsBase.AUTDSTMFociFromFreqNearest(f.Hz, (IntPtr)pp, (ushort)_points.Length, default(T).Value).Validate(),
+                        _ => NativeMethodsBase.AUTDSTMFociFromSamplingConfig(_config!.Value, (IntPtr)pp, (ushort)_points.Length, default(T).Value)
                     };
                     return NativeMethodsBase.AUTDSTMFociWithLoopBehavior(ptr, default(T).Value, LoopBehavior);
                 }
+#pragma warning restore CS8500
             }
         }
 

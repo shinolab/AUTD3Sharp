@@ -23,7 +23,5 @@ namespace AUTD3Sharp.Driver.Datagram
 
         private IDatagram _d1;
         private IDatagram _d2;
-
-        public static implicit operator DatagramTuple<TD1, TD2>((TD1, TD2) d) => new DatagramTuple<TD1, TD2>(d);
     }
 }

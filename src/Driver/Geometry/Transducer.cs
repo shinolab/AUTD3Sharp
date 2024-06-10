@@ -15,17 +15,6 @@ namespace AUTD3Sharp
 
         public int Idx { get; }
 
-        public Vector3 Position
-        {
-            get
-            {
-                unsafe
-                {
-                    var pos = stackalloc float[3];
-                    NativeMethodsBase.AUTDTransducerPosition(Ptr, pos);
-                    return new Vector3(pos[0], pos[1], pos[2]);
-                }
-            }
-        }
+        public Vector3 Position => NativeMethodsBase.AUTDTransducerPosition(Ptr);
     }
 }

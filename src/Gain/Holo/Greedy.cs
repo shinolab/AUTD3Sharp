@@ -22,7 +22,7 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (float* foci = &Foci[0])
+                fixed (Vector3* foci = &Foci[0])
                 fixed (Amplitude* amps = &Amps[0])
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloGreedySphere(foci, (float*)amps, (uint)Amps.Length, PhaseDiv, Constraint);

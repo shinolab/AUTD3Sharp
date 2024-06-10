@@ -6,6 +6,7 @@
 #pragma warning disable CS8981
 using System;
 using System.Runtime.InteropServices;
+using AUTD3Sharp.Utils;
 
 
 namespace AUTD3Sharp.NativeMethods

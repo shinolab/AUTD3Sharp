@@ -7,9 +7,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace AUTD3Sharp.Utils
 {
+    [StructLayout(LayoutKind.Sequential)]
     public readonly struct Vector3 : IEquatable<Vector3>, IEnumerable<float>
     {
         #region ctor

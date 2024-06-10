@@ -23,6 +23,6 @@ namespace AUTD3Sharp.Gain
         [Property(EmitIntensity = true)]
         public EmitIntensity Intensity { get; private set; }
 
-        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainPlane(Dir.X, Dir.Y, Dir.Z, Intensity.Value, PhaseOffset.Value);
+        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainPlane(Dir, Intensity.Value, PhaseOffset.Value);
     }
 }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AUTD3Sharp.Driver;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
@@ -17,12 +18,14 @@ namespace AUTD3Sharp
 
         public ControllerBuilder(IEnumerable<AUTD3> iter)
         {
-            var devices = iter.SelectMany(dev => new[] { dev.Pos.X, dev.Pos.Y, dev.Pos.Z, dev.Rotation.W, dev.Rotation.X, dev.Rotation.Y, dev.Rotation.Z }).ToArray();
+            var pos = iter.Select(dev => dev.Pos).ToArray();
+            var rot = iter.Select(dev => dev.Rotation).ToArray();
             unsafe
             {
-                fixed (float* p = &devices[0])
+                fixed (Vector3* pp = &pos[0])
+                fixed (Quaternion* rp = &rot[0])
                 {
-                    _ptr = NativeMethodsBase.AUTDControllerBuilder(p, (ushort)(devices.Length / 7));
+                    _ptr = NativeMethodsBase.AUTDControllerBuilder(pp, rp, (ushort)pos.Length);
                 }
             }
         }

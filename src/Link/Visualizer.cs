@@ -288,11 +288,10 @@ namespace AUTD3Sharp.Link
         {
             var points = pointsIter as Vector3[] ?? pointsIter.ToArray();
             var pointsLen = points.Length;
-            var pointsPtr = points.SelectMany(v => new[] { v.X, v.Y, v.Z }).ToArray();
             var buf = new float[pointsLen * 2];
             unsafe
             {
-                fixed (float* pp = &pointsPtr[0])
+                fixed (Vector3* pp = &points[0])
                 fixed (float* bp = &buf[0])
                     NativeMethodsLinkVisualizer.AUTDLinkVisualizerCalcField(_ptr, _backend, _directivity,
                         pp, (uint)pointsLen, geometry.Ptr, segment, (ushort)idx, bp);

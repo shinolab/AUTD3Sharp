@@ -4,9 +4,11 @@
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace AUTD3Sharp.Utils
 {
+    [StructLayout(LayoutKind.Sequential)]
     public readonly struct Quaternion : IEquatable<Quaternion>
     {
         #region ctor
@@ -20,10 +22,10 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region property
-        public float W { get; }
         public float X { get; }
         public float Y { get; }
         public float Z { get; }
+        public float W { get; }
 
         public static Quaternion Identity => new Quaternion(1, 0, 0, 0);
         #endregion

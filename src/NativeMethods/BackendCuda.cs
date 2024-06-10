@@ -6,6 +6,7 @@
 #pragma warning disable CS8981
 using System;
 using System.Runtime.InteropServices;
+using AUTD3Sharp.Utils;
 
 
 namespace AUTD3Sharp.NativeMethods
@@ -23,19 +24,19 @@ namespace AUTD3Sharp.NativeMethods
         public static extern void AUTDCUDABackendDelete(BackendPtr backend);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDASDP", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloCUDASDP(BackendPtr backend, float* points, float* amps, uint size, float alpha, float lambda, uint repeat, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloCUDASDP(BackendPtr backend, Vector3* points, float* amps, uint size, float alpha, float lambda, uint repeat, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDAGS", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloCUDAGS(BackendPtr backend, float* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloCUDAGS(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDAGSPAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloCUDAGSPAT(BackendPtr backend, float* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloCUDAGSPAT(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDANaive", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloCUDANaive(BackendPtr backend, float* points, float* amps, uint size, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloCUDANaive(BackendPtr backend, Vector3* points, float* amps, uint size, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDALM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloCUDALM(BackendPtr backend, float* points, float* amps, uint size, float eps_1, float eps_2, float tau, uint k_max, EmissionConstraintWrap constraint, float* initial_ptr, ulong initial_len);
+        public static extern GainPtr AUTDGainHoloCUDALM(BackendPtr backend, Vector3* points, float* amps, uint size, float eps_1, float eps_2, float tau, uint k_max, EmissionConstraintWrap constraint, float* initial_ptr, ulong initial_len);
 
 
     }
