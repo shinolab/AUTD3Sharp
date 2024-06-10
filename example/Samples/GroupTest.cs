@@ -41,7 +41,7 @@ internal static class GroupByTransducerTest
         var g2 = new Null();
 
         var g = new Group(
-            (_, tr) => tr.Position.X < cx ? "focus" : "null"
+            _ => tr => tr.Position.X < cx ? "focus" : "null"
             ).Set("focus", g1).Set("null", g2);
 
         var m = new Sine(150 * Hz);
