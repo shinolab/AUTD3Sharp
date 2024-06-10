@@ -17,13 +17,16 @@ namespace AUTD3Sharp.Driver.Datagram
 
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramWithTimeout(_datagram.Ptr(geometry), (ulong)(_timeout.TotalMilliseconds * 1000 * 1000));
     }
+}
 
+namespace AUTD3Sharp
+{
     public static class DatagramWithTimeoutExtension
     {
-        public static DatagramWithTimeout<T> WithTimeout<T>(this T datagram, TimeSpan timeout) where T : IDatagram => new DatagramWithTimeout<T>(datagram, timeout);
-        public static DatagramWithTimeout<DatagramTuple<T1, T2>> WithTimeout<T1, T2>(this (T1, T2) datagram, TimeSpan timeout)
-        where T1 : IDatagram
-        where T2 : IDatagram
-        => new DatagramWithTimeout<DatagramTuple<T1, T2>>(new DatagramTuple<T1, T2>(datagram), timeout);
+        public static Driver.Datagram.DatagramWithTimeout<T> WithTimeout<T>(this T datagram, TimeSpan timeout) where T : Driver.Datagram.IDatagram => new Driver.Datagram.DatagramWithTimeout<T>(datagram, timeout);
+        public static Driver.Datagram.DatagramWithTimeout<Driver.Datagram.DatagramTuple<T1, T2>> WithTimeout<T1, T2>(this (T1, T2) datagram, TimeSpan timeout)
+        where T1 : Driver.Datagram.IDatagram
+        where T2 : Driver.Datagram.IDatagram
+        => new Driver.Datagram.DatagramWithTimeout<Driver.Datagram.DatagramTuple<T1, T2>>(new Driver.Datagram.DatagramTuple<T1, T2>(datagram), timeout);
     }
 }
