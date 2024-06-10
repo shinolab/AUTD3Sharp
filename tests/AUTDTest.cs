@@ -9,12 +9,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).Open(Audit.Builder());
+        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).Open(Audit.Builder());
     }
 
     [Fact]
@@ -161,7 +161,7 @@ public class AUTDTest
     [Fact]
     public void TestSendTimeout()
     {
-        var autd = new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
+        var autd = Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
             .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
         Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
         Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
@@ -179,7 +179,7 @@ public class AUTDTest
     [Fact]
     public void TestParallelThreshold()
     {
-        var autd = new ControllerBuilder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
+        var autd = Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
             .WithParallelThreshold(0)
             .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
 

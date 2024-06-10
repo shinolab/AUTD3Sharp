@@ -6,7 +6,7 @@ public class CustomTest
     [Fact]
     public async Task Modulation()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 255, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         await autd.SendAsync(new AUTD3Sharp.Modulation.Custom(modExpect, SamplingConfig.Division(5120)));

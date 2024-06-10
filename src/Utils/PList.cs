@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
@@ -10,13 +9,8 @@ namespace AUTD3Sharp.Utils
     {
         private const int DefaultCapacity = 4;
 
-        internal T[] Items;
+        internal T[] Items = Array.Empty<T>();
         private int _size;
-
-        public PList()
-        {
-            Items = Array.Empty<T>();
-        }
 
         [ExcludeFromCodeCoverage]
         public int Capacity

@@ -3,6 +3,7 @@
 #endif
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
@@ -145,6 +146,11 @@ namespace AUTD3Sharp
         {
             return new GroupGuard<T>(map, this);
         }
+    }
+
+    public static class Controller
+    {
+        public static ControllerBuilder Builder(IEnumerable<AUTD3> iter) => new ControllerBuilder(iter);
     }
 }
 

@@ -1,25 +1,25 @@
 using AUTD3Sharp.NativeMethods;
 
-namespace tests.Driver.Controller;
+namespace tests.ControllerTest;
 
 public class ControllerBuilderTest
 {
     [Fact]
     public void OpenWithTimeout()
     {
-        _ = new ControllerBuilder([new AUTD3(Vector3.Zero)]).Open(Audit.Builder(), TimeSpan.FromMilliseconds(1));
+        _ = Controller.Builder([new AUTD3(Vector3.Zero)]).Open(Audit.Builder(), TimeSpan.FromMilliseconds(1));
     }
 
     [Fact]
     public async Task OpenWithTimeoutAsync()
     {
-        _ = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder(), TimeSpan.FromMilliseconds(1));
+        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder(), TimeSpan.FromMilliseconds(1));
     }
 
     [Fact]
     public void WithUltrasoundFreq()
     {
-        var autd = new ControllerBuilder([new AUTD3(Vector3.Zero)]).WithUltrasoundFreq(41 * kHz).Open(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Vector3.Zero)]).WithUltrasoundFreq(41 * kHz).Open(Audit.Builder());
 
         foreach (var dev in autd.Geometry)
         {

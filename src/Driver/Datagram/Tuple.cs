@@ -1,7 +1,6 @@
 using AUTD3Sharp.NativeMethods;
 
 using System.Runtime.InteropServices;
-using System;
 
 namespace AUTD3Sharp.Driver.Datagram
 {

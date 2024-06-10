@@ -30,7 +30,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             unsafe
             {
                 fixed (byte* pBuf = &_cache[0])
-                    NativeMethodsBase.AUTDModulationCalcGetResult(res, (byte*)pBuf);
+                    NativeMethodsBase.AUTDModulationCalcGetResult(res, pBuf);
             }
             NativeMethodsBase.AUTDModulationCalcFreeResult(res);
             return Buffer;
@@ -42,7 +42,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             unsafe
             {
                 fixed (byte* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)pBuf, (ushort)_cache.Length);
+                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, pBuf, (ushort)_cache.Length);
             }
         }
 

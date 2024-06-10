@@ -16,8 +16,9 @@ namespace AUTD3Sharp.Gain.Holo
         protected Holo(EmissionConstraintWrap constraint, IEnumerable<(Vector3, Amplitude)> iter)
         {
             Constraint = constraint;
-            Foci = iter.Select(x => x.Item1).ToArray();
-            Amps = iter.Select(x => x.Item2).ToArray();
+            var tupleIter = iter as (Vector3, Amplitude)[] ?? iter.ToArray();
+            Foci = tupleIter.Select(x => x.Item1).ToArray();
+            Amps = tupleIter.Select(x => x.Item2).ToArray();
         }
 
         public TH WithConstraint(EmissionConstraintWrap constraint)

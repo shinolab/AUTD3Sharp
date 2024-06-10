@@ -61,8 +61,8 @@ namespace AUTD3Sharp.Gain
                     var values = new GainPtr[_map.Count];
                     foreach (var (kv, i) in _map.Select((v, i) => (v, i)))
                     {
-                        if (!keymap.ContainsKey(kv.Key)) throw new AUTDException("Unknown group key");
-                        keys[i] = keymap[kv.Key];
+                        if (!keymap.TryGetValue(kv.Key, out var value)) throw new AUTDException("Unknown group key");
+                        keys[i] = value;
                         values[i] = kv.Value.GainPtr(geometry);
                     }
 

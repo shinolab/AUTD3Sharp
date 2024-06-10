@@ -1,7 +1,5 @@
 using System;
 using System.Runtime.InteropServices;
-using System.Collections.Generic;
-using System.Linq;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 

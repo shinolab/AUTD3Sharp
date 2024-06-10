@@ -3,7 +3,7 @@ using AUTD3Sharp.Link;
 using AUTD3Sharp.Utils;
 using Samples;
 
-using var autd = new ControllerBuilder([new AUTD3(Vector3.Zero)])
+using var autd = Controller.Builder([new AUTD3(Vector3.Zero)])
     .Open(SOEM.Builder()
         .WithErrHandler((slave, status, msg) =>
         {

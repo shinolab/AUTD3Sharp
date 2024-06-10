@@ -3,7 +3,6 @@ using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.Utils;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace AUTD3Sharp.Gain.Holo
 {

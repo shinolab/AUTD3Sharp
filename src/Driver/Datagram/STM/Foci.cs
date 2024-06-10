@@ -68,7 +68,7 @@ namespace AUTD3Sharp
             => new DatagramWithSegmentTransition<FociSTM<T>, FociSTMPtr>(this, segment, transitionMode);
     }
 
-    public class FociSTM
+    public static class FociSTM
     {
         [ExcludeFromCodeCoverage]
         public static FociSTM<T> FromFreq<T>(Freq<float> freq, IEnumerable<T> points) where T : unmanaged, IControlPoints => new FociSTM<T>(freq, null, null, points);

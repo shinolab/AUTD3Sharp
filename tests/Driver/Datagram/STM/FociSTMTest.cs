@@ -62,7 +62,7 @@ public class FociSTMTest
     [Fact]
     public async Task TestChangeFociSTMSegment()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)])
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)])
          .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new ReadsFPGAState(_ => true));

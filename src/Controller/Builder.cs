@@ -16,10 +16,11 @@ namespace AUTD3Sharp
     {
         private ControllerBuilderPtr _ptr;
 
-        public ControllerBuilder(IEnumerable<AUTD3> iter)
+        internal ControllerBuilder(IEnumerable<AUTD3> iter)
         {
-            var pos = iter.Select(dev => dev.Pos).ToArray();
-            var rot = iter.Select(dev => dev.Rotation).ToArray();
+            var devIter = iter as AUTD3[] ?? iter.ToArray();
+            var pos = devIter.Select(dev => dev.Pos).ToArray();
+            var rot = devIter.Select(dev => dev.Rotation).ToArray();
             unsafe
             {
                 fixed (Vector3* pp = &pos[0])

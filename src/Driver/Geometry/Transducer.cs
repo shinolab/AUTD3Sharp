@@ -9,7 +9,7 @@ namespace AUTD3Sharp
 
         internal Transducer(byte trIdx, DevicePtr ptr)
         {
-            Idx = (int)trIdx;
+            Idx = trIdx;
             Ptr = NativeMethodsBase.AUTDTransducer(ptr, trIdx);
         }
 

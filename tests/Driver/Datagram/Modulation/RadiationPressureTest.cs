@@ -5,7 +5,7 @@ public class RadiationPressureTest
     [Fact]
     public async Task RadiationPressure()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var m = new Sine(150 * Hz);
         var mr = m.WithRadiationPressure().WithLoopBehavior(LoopBehavior.Once);

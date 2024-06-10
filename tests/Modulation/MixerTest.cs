@@ -5,7 +5,7 @@ public class MixerTest
     [Fact]
     public async Task MixerExact()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] {7, 21, 46, 81, 115, 138, 137, 113, 75, 38, 13, 2, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 3, 4, 4, 3, 1,
                                     0, 0,  0,  0,  0,   0,   0,   0,   0,  0,  3,  6, 8, 7, 5, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 1, 0,
@@ -28,7 +28,7 @@ public class MixerTest
     [Fact]
     public async Task MixerExactFloat()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 7, 21, 46, 81, 115, 138, 137, 113, 75, 38, 13, 2, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 3, 4, 4, 3, 1,
                                     0, 0,  0,  0,  0,   0,   0,   0,   0,  0,  3,  6, 8, 7, 5, 2, 0, 0, 0, 0, 0, 0, 1, 2, 2, 1, 0,
@@ -51,7 +51,7 @@ public class MixerTest
     [Fact]
     public async Task MixerNearest()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 63,  78,  95, 113, 131, 149, 166, 183, 196, 208, 217, 222, 223, 223, 217, 208, 196, 182, 164, 146,
                                     127, 106, 87, 67,  50,  35,  22,  12,  5,   0,   0,   0,   4,   9,   17,  25,  33,  42,  50,  57,

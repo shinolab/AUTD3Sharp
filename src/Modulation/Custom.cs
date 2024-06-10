@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
@@ -9,7 +6,7 @@ namespace AUTD3Sharp.Modulation
     [Modulation(ConfigNoChange = true)]
     public sealed partial class Custom
     {
-        private byte[] _buf;
+        private readonly byte[] _buf;
 
         public Custom(byte[] buf, SamplingConfigWrap config)
         {
@@ -17,12 +14,12 @@ namespace AUTD3Sharp.Modulation
             _config = config;
         }
 
-        private ModulationPtr ModulationPtr(Geometry geometry)
+        private ModulationPtr ModulationPtr(Geometry _)
         {
             unsafe
             {
                 fixed (byte* pBuf = &_buf[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, (byte*)pBuf, (ushort)_buf.Length);
+                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, pBuf, (ushort)_buf.Length);
             }
         }
     }

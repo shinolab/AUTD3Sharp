@@ -5,8 +5,8 @@ public class TransformTest
     [Fact]
     public async Task Transform()
     {
-        var autd1 = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
-        var autd2 = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd1 = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd2 = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var m = new Sine(150 * Hz);
         var mt = m.WithTransform((_, v) => (byte)(v / 2)).WithLoopBehavior(LoopBehavior.Once);

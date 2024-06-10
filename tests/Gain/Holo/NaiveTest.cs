@@ -8,7 +8,7 @@ public class NaiveTest
     [Fact]
     public async Task Naive()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new Naive<NalgebraBackend>(backend, new float[] { -40, 40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3f * Pa)))

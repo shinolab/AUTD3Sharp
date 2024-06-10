@@ -5,7 +5,7 @@ public class SquareTest
     [Fact]
     public async Task SquareExact()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
             var m = new Square(200 * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1f);
@@ -38,7 +38,7 @@ public class SquareTest
     [Fact]
     public async Task SquareExactFloat()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
             var m = new Square(200.0f * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1f);
@@ -60,7 +60,7 @@ public class SquareTest
     [Fact]
     public async Task SquareNearest()
     {
-        var autd = await new ControllerBuilder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         await autd.SendAsync(Square.WithFreqNearest(150.0f * Hz));
         foreach (var dev in autd.Geometry)
