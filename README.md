@@ -11,27 +11,22 @@
 ## Install
 
 * Please install using NuGet
-    https://www.nuget.org/packages/autd3sharp
+    - https://www.nuget.org/packages/autd3sharp
 
 ## Example
 
-* Please refer to [C# example](./example/cs) or [F# example](./example/fs).
+* Please refer to [example](./example).
 
 * If you are using Linux/macOS, you may need to run as root (e.g. `sudo dotnet run`).
-    * On Ubuntu 20.04, you may need to specify runtime (e.g. `sudo dotnet run -r ubuntu-x64`).
 
 ## Unity
 
 * Please install via Unity Package Manager
 
-    1. From the menu bar, select `Edit > Project settings > Package Manager`.
-    1. Add the following `Scoped registory`.
-        - Name : shinolab
-        - URL : https://registry.npmjs.com
-        - Scope(s): com.shinolab
     1. From the menu bar, select `Window > Package Manager`.
-    1. Select `My Registries` from the drop-down menu in the upper left corner.
-    1. Install `autd3-unity` package.
+    1. Click "+" button in upper left corner, then "Add package from git URL".
+    1. Enter https://github.com/shinolab/AUTD3Sharp.git#upm/latest and click "Add".
+        - If you need a specific version, specify #upm/vX.X.X
 
 ## LICENSE
 
