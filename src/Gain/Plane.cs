@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Gain
 
         public Vector3 Dir { get; }
 
-        [Property]
+        [Property(Phase = true)]
         public Phase PhaseOffset { get; private set; }
 
         [Property(EmitIntensity = true)]

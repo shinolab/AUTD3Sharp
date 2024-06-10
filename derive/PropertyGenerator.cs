@@ -58,6 +58,22 @@ public class PropertyGenerator : IIncrementalGenerator
                              {{name}} = new EmitIntensity(value);
                              return this;
                           }
+                  """ : attr.NamedArguments.Any(arg => arg.Key == "Phase" && (bool)(arg.Value.Value ?? false)) ? $$"""
+                          [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                          [ExcludeFromCodeCoverage]
+                          public {{typeName}} With{{name}}({{type}} value)
+                          {
+                             {{name}} = value;
+                             return this;
+                          }
+                  
+                          [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                          [ExcludeFromCodeCoverage]
+                          public {{typeName}} With{{name}}(byte value)
+                          {
+                             {{name}} = new Phase(value);
+                             return this;
+                          }
                   """ : $$"""
                                   [MethodImpl(MethodImplOptions.AggressiveInlining)]
                                   [ExcludeFromCodeCoverage]

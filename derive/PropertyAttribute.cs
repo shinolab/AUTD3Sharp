@@ -9,5 +9,6 @@ namespace AUTD3Sharp.Derive
     public sealed class PropertyAttribute : Attribute
     {
         public bool EmitIntensity { get; set; } = false;
+        public bool Phase { get; set; } = false;
     }
 }

@@ -12,7 +12,7 @@ namespace AUTD3Sharp
         [ExcludeFromCodeCoverage]
         public Vector3 Point { get; }
 
-        [Property]
+        [Property(Phase = true)]
         public Phase Offset { get; private set; }
 
         public ControlPoint(Vector3 point)

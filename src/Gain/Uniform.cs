@@ -21,7 +21,7 @@ namespace AUTD3Sharp.Gain
 
         public EmitIntensity Intensity { get; }
 
-        [Property]
+        [Property(Phase = true)]
         public Phase Phase { get; private set; }
 
         private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainUniform(Intensity.Value, Phase.Value);

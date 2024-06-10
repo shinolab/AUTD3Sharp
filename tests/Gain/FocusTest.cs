@@ -7,7 +7,7 @@ public class FocusTest
     {
         var autd = await AUTDTest.CreateController();
 
-        var g = new Focus(autd.Geometry.Center).WithIntensity(new EmitIntensity(0x81)).WithPhaseOffset(new Phase(0x80));
+        var g = new Focus(autd.Geometry.Center).WithIntensity(0x81).WithPhaseOffset(0x80);
         Assert.Equal(autd.Geometry.Center, g.Pos);
         Assert.Equal(0x81, g.Intensity.Value);
         Assert.Equal(0x80, g.PhaseOffset.Value);

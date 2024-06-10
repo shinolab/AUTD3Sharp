@@ -7,7 +7,7 @@ public class BesselTest
     {
         var autd = await AUTDTest.CreateController();
 
-        var g = new Bessel(autd.Geometry.Center, new Vector3(0, 0, 1), MathF.PI / 4 * rad).WithIntensity(new EmitIntensity(0x80)).WithPhaseOffset(new Phase(0x81));
+        var g = new Bessel(autd.Geometry.Center, new Vector3(0, 0, 1), MathF.PI / 4 * rad).WithIntensity(0x80).WithPhaseOffset(0x81);
         Assert.Equal(autd.Geometry.Center, g.Pos);
         Assert.Equal(new Vector3(0, 0, 1), g.Dir);
         Assert.Equal(MathF.PI / 4 * rad, g.Theta);
