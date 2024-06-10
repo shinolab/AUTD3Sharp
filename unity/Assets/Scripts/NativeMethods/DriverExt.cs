@@ -225,6 +225,30 @@ namespace AUTD3Sharp
                 }
                 throw new AUTDException(err);
             }
+
+            public static GainSTMPtr Validate(this ResultGainSTM res)
+            {
+                if (res.result.Item1 != IntPtr.Zero) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+
+            public static FociSTMPtr Validate(this ResultFociSTM res)
+            {
+                if (res.result.Item1 != IntPtr.Zero) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
         }
     }
 }

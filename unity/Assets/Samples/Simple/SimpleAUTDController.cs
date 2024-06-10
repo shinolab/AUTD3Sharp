@@ -21,8 +21,7 @@ public class SimpleAUTDController : MonoBehaviour
     {
         try
         {
-            _autd = new ControllerBuilder()
-                .AddDevice(new AUTD3(gameObject.transform.position).WithRotation(gameObject.transform.rotation))
+            _autd = new ControllerBuilder(new[] { new AUTD3(gameObject.transform.position).WithRotation(gameObject.transform.rotation) })
                 .Open(SOEM.Builder()
                     .WithErrHandler((slave, status, msg) =>
                     {

@@ -44,6 +44,7 @@ public class PropertyGenerator : IIncrementalGenerator
             var type = ((IPropertySymbol)publicMember).Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
             return attr.NamedArguments.Any(arg => arg.Key == "EmitIntensity" && (bool)(arg.Value.Value ?? false)) ? $$"""
                           [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                          [ExcludeFromCodeCoverage]
                           public {{typeName}} With{{name}}({{type}} value)
                           {
                              {{name}} = value;
@@ -51,13 +52,15 @@ public class PropertyGenerator : IIncrementalGenerator
                           }
                   
                           [MethodImpl(MethodImplOptions.AggressiveInlining)]
-                          [ExcludeFromCodeCoverage] public {{typeName}} With{{name}}(byte value)
+                          [ExcludeFromCodeCoverage]
+                          public {{typeName}} With{{name}}(byte value)
                           {
                              {{name}} = new EmitIntensity(value);
                              return this;
                           }
                   """ : $$"""
                                   [MethodImpl(MethodImplOptions.AggressiveInlining)]
+                                  [ExcludeFromCodeCoverage]
                                   public {{typeName}} With{{name}}({{type}} value)
                                   {
                                       {{name}} = value;

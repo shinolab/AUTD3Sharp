@@ -66,8 +66,8 @@ namespace AUTD3Sharp.Gain
                         values[i] = kv.Value.GainPtr(geometry);
                     }
 
-                    fixed (int* keysPtr = keys)
-                    fixed (GainPtr* valuesPtr = values)
+                    fixed (int* keysPtr = &keys[0])
+                    fixed (GainPtr* valuesPtr = &values[0])
                         return NativeMethodsBase.AUTDGainGroup(
                             map,
                             keysPtr,

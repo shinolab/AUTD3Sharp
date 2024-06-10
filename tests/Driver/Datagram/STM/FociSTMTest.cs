@@ -1,3 +1,5 @@
+using System.Runtime.InteropServices;
+
 namespace tests.Driver.Datagram.STM;
 
 public class FociSTMTest
@@ -101,27 +103,129 @@ public class FociSTMTest
         Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment);
     }
 
-
     [Fact]
-    public async Task TestFociSTMN2()
+    public void TestFociSTMN2()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateControllerSync();
 
-        await autd.SendAsync(Silencer.Disable());
+        autd.Send(Silencer.Disable());
 
-        const int size = 2;
+        const int size = 100;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(_ => new ControlPoints<N1>(center).WithIntensity(0x10)));
-        await autd.SendAsync(stm);
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints2((center, center)).WithIntensity((byte)i)));
+        autd.Send(stm);
 
-        foreach (var dev in autd.Geometry) Assert.False(autd.Link.IsStmGainMode(dev.Idx, Segment.S0));
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link.StmSoundSpeed(dev.Idx, Segment.S0));
-            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
-            var (intensities, _) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
-            // Assert.All(intensities, d => Assert.Equal(0x80, d));
-            Assert.Equal(0x80, intensities[0]);
+            for (var i = 0; i < size; i++) Assert.All(autd.Link.Drives(dev.Idx, Segment.S0, i).Item1, d => Assert.Equal(i, d));
+        }
+    }
+
+    [Fact]
+    public void TestFociSTMN3()
+    {
+        var autd = AUTDTest.CreateControllerSync();
+
+        autd.Send(Silencer.Disable());
+
+        const int size = 100;
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints3((center, center, center)).WithIntensity((byte)i)));
+        autd.Send(stm);
+
+        foreach (var dev in autd.Geometry)
+        {
+            for (var i = 0; i < size; i++) Assert.All(autd.Link.Drives(dev.Idx, Segment.S0, i).Item1, d => Assert.Equal(i, d));
+        }
+    }
+
+    [Fact]
+    public void TestFociSTMN4()
+    {
+        var autd = AUTDTest.CreateControllerSync();
+
+        autd.Send(Silencer.Disable());
+
+        const int size = 100;
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints4((center, center, center, center)).WithIntensity((byte)i)));
+        autd.Send(stm);
+
+        foreach (var dev in autd.Geometry)
+        {
+            for (var i = 0; i < size; i++) Assert.All(autd.Link.Drives(dev.Idx, Segment.S0, i).Item1, d => Assert.Equal(i, d));
+        }
+    }
+
+    [Fact]
+    public void TestFociSTMN5()
+    {
+        var autd = AUTDTest.CreateControllerSync();
+
+        autd.Send(Silencer.Disable());
+
+        const int size = 100;
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints5((center, center, center, center, center)).WithIntensity((byte)i)));
+        autd.Send(stm);
+
+        foreach (var dev in autd.Geometry)
+        {
+            for (var i = 0; i < size; i++) Assert.All(autd.Link.Drives(dev.Idx, Segment.S0, i).Item1, d => Assert.Equal(i, d));
+        }
+    }
+
+    [Fact]
+    public void TestFociSTMN6()
+    {
+        var autd = AUTDTest.CreateControllerSync();
+
+        autd.Send(Silencer.Disable());
+
+        const int size = 100;
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints6((center, center, center, center, center, center)).WithIntensity((byte)i)));
+        autd.Send(stm);
+
+        foreach (var dev in autd.Geometry)
+        {
+            for (var i = 0; i < size; i++) Assert.All(autd.Link.Drives(dev.Idx, Segment.S0, i).Item1, d => Assert.Equal(i, d));
+        }
+    }
+
+    [Fact]
+    public void TestFociSTMN7()
+    {
+        var autd = AUTDTest.CreateControllerSync();
+
+        autd.Send(Silencer.Disable());
+
+        const int size = 100;
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints7((center, center, center, center, center, center, center)).WithIntensity((byte)i)));
+        autd.Send(stm);
+
+        foreach (var dev in autd.Geometry)
+        {
+            for (var i = 0; i < size; i++) Assert.All(autd.Link.Drives(dev.Idx, Segment.S0, i).Item1, d => Assert.Equal(i, d));
+        }
+    }
+
+    [Fact]
+    public void TestFociSTMN8()
+    {
+        var autd = AUTDTest.CreateControllerSync();
+
+        autd.Send(Silencer.Disable());
+
+        const int size = 100;
+        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints8((center, center, center, center, center, center, center, center)).WithIntensity((byte)i)));
+        autd.Send(stm);
+
+        foreach (var dev in autd.Geometry)
+        {
+            for (var i = 0; i < size; i++) Assert.All(autd.Link.Drives(dev.Idx, Segment.S0, i).Item1, d => Assert.Equal(i, d));
         }
     }
 }

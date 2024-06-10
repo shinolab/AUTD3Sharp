@@ -16,9 +16,9 @@ public class MultiAUTD3Controller : MonoBehaviour
 
     void Awake()
     {
-        var builder = new ControllerBuilder();
-        foreach (var obj in FindObjectsOfType<AUTD3Device>(false).OrderBy(obj => obj.ID))
-            builder.AddDevice(new AUTD3(obj.transform.position).WithRotation(obj.transform.rotation));
+        var builder = new ControllerBuilder(
+            FindObjectsByType<AUTD3Device>(FindObjectsSortMode.InstanceID).Select(obj => new AUTD3(obj.transform.position).WithRotation(obj.transform.rotation))
+        );
 
         try
         {

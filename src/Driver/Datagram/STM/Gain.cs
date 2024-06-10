@@ -26,7 +26,7 @@ namespace AUTD3Sharp
             _freqNearest = freqNearest;
             _config = config;
 
-            _gains = iter.ToArray();
+            _gains = iter as Driver.Datagram.Gain.IGain[] ?? iter.ToArray();
             _mode = GainSTMMode.PhaseIntensityFull;
 
             LoopBehavior = AUTD3Sharp.LoopBehavior.Infinite;

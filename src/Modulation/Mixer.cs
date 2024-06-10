@@ -12,7 +12,7 @@ namespace AUTD3Sharp.Modulation
 
         public Mixer(IEnumerable<Sine> iter)
         {
-            _components = iter.ToArray();
+            _components = iter as Sine[] ?? iter.ToArray();
         }
 
         private ModulationPtr ModulationPtr(Geometry geometry)
