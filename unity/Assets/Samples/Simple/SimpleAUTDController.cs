@@ -28,10 +28,10 @@ public class SimpleAUTDController : MonoBehaviour
                         switch (status)
                         {
                             case Status.Error:
-                                Debug.LogError($"Error [{slave}]: {msg}");
+                                UnityEngine.Debug.LogError($"Error [{slave}]: {msg}");
                                 break;
                             case Status.Lost:
-                                Debug.LogError($"Lost [{slave}]: {msg}");
+                                UnityEngine.Debug.LogError($"Lost [{slave}]: {msg}");
                                 // You can also wait for the link to recover, without exiting
 #if UNITY_EDITOR
                                 UnityEditor.EditorApplication.isPlaying = false;
@@ -40,14 +40,14 @@ public class SimpleAUTDController : MonoBehaviour
 #endif
                                 break;
                             case Status.StateChanged:
-                                Debug.LogError($"StateChanged [{slave}]: {msg}");
+                                UnityEngine.Debug.LogError($"StateChanged [{slave}]: {msg}");
                                 break;
                         };
                     }));
         }
         catch (Exception)
         {
-            Debug.LogError("Failed to open AUTD3 controller!");
+            UnityEngine.Debug.LogError("Failed to open AUTD3 controller!");
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_STANDALONE
