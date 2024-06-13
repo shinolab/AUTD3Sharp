@@ -37,6 +37,18 @@ namespace AUTD3Sharp
             return this;
         }
 
+        public ControllerBuilder WithSendInterval(TimeSpan interval)
+        {
+            _ptr = NativeMethodsBase.AUTDControllerBuilderWithSendInterval(_ptr, (ulong)(interval.TotalMilliseconds * 1000 * 1000));
+            return this;
+        }
+
+        public ControllerBuilder WithTimerResolution(uint resolution)
+        {
+            _ptr = NativeMethodsBase.AUTDControllerBuilderWithTimerResolution(_ptr, resolution);
+            return this;
+        }
+
         public ControllerBuilder WithParallelThreshold(ushort threshold)
         {
             _ptr = NativeMethodsBase.AUTDControllerBuilderWithParallelThreshold(_ptr, threshold);
@@ -45,18 +57,25 @@ namespace AUTD3Sharp
 
         public async Task<Controller<T>> OpenAsync<T>(ILinkBuilder<T> linkBuilder, TimeSpan? timeout = null)
         {
-            var ptr = await Task.Run(() => NativeMethodsBase.AUTDControllerOpen(_ptr, linkBuilder.Ptr(), (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1)).Validate());
+            var runtime = NativeMethodsBase.AUTDCreateRuntime();
+            var future = NativeMethodsBase.AUTDControllerOpen(_ptr, linkBuilder.Ptr(),
+                (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1));
+            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultController(runtime, future));
+            var ptr = result.Validate();
             var geometry = new Geometry(NativeMethodsBase.AUTDGeometry(ptr));
-            var link = linkBuilder.ResolveLink(NativeMethodsBase.AUTDLinkGet(ptr));
-            return new Controller<T>(geometry, ptr, link);
+            var link = linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr));
+            return new Controller<T>(geometry, runtime, ptr, link);
         }
 
         public Controller<T> Open<T>(ILinkBuilder<T> linkBuilder, TimeSpan? timeout = null)
         {
-            var ptr = NativeMethodsBase.AUTDControllerOpen(_ptr, linkBuilder.Ptr(), (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1)).Validate();
+            var runtime = NativeMethodsBase.AUTDCreateRuntime();
+            var future = NativeMethodsBase.AUTDControllerOpen(_ptr, linkBuilder.Ptr(),
+                (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1));
+            var ptr = NativeMethodsBase.AUTDWaitResultController(runtime, future).Validate();
             var geometry = new Geometry(NativeMethodsBase.AUTDGeometry(ptr));
-            var link = linkBuilder.ResolveLink(NativeMethodsBase.AUTDLinkGet(ptr));
-            return new Controller<T>(geometry, ptr, link);
+            var link = linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr));
+            return new Controller<T>(geometry, runtime, ptr, link);
         }
     }
 }

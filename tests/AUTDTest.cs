@@ -1,6 +1,4 @@
 using AUTD3Sharp.Driver;
-using AUTD3Sharp.Driver.Datagram;
-using AUTD3Sharp.NativeMethods;
 using System.Reflection;
 
 namespace tests;
@@ -9,12 +7,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithTimerResolution(1).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).Open(Audit.Builder());
+        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithTimerResolution(1).Open(Audit.Builder());
     }
 
     [Fact]
@@ -43,9 +41,17 @@ public class AUTDTest
             Assert.True(infos[1]!.IsThermalAssert);
         }
 
+        // await autd.SendAsync(new ReadsFPGAState(dev => dev.Idx == 1));
+        // {
+        //     var infos = await autd.FPGAStateAsync();
+        //     Assert.Null(infos[0]);
+        //     Assert.NotNull(infos[1]);
+        // }
+
         {
             autd.Link.BreakDown();
             await Assert.ThrowsAsync<AUTDException>(async () => _ = await autd.FPGAStateAsync());
+            autd.Link.Repair();
         }
     }
 
@@ -74,9 +80,17 @@ public class AUTDTest
             Assert.True(infos[1]!.IsThermalAssert);
         }
 
+        // autd.Send(new ReadsFPGAState(dev => dev.Idx == 1));
+        // {
+        //     var infos = autd.FPGAState();
+        //     Assert.Null(infos[0]);
+        //     Assert.NotNull(infos[1]);
+        // }
+
         {
             autd.Link.BreakDown();
             Assert.Throws<AUTDException>(() => _ = autd.FPGAState());
+            autd.Link.Repair();
         }
     }
 
@@ -98,6 +112,7 @@ public class AUTDTest
         {
             autd.Link.BreakDown();
             await Assert.ThrowsAsync<AUTDException>(async () => _ = (await autd.FirmwareVersionAsync()).Last());
+            autd.Link.Repair();
         }
     }
 
@@ -111,6 +126,7 @@ public class AUTDTest
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersion().Last());
+        autd.Link.Repair();
     }
 
 
@@ -133,6 +149,7 @@ public class AUTDTest
 
             autd.Link.BreakDown();
             await Assert.ThrowsAsync<AUTDException>(async () => await autd.CloseAsync());
+            autd.Link.Repair();
         }
     }
 
@@ -155,6 +172,7 @@ public class AUTDTest
 
             autd.Link.BreakDown();
             Assert.Throws<AUTDException>(() => autd.Close());
+            autd.Link.Repair();
         }
     }
 
@@ -223,9 +241,11 @@ public class AUTDTest
 
         autd.Link.Down();
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Static()));
+        autd.Link.Up();
 
         autd.Link.BreakDown();
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Static()));
+        autd.Link.Repair();
     }
 
     [Fact]
@@ -248,9 +268,11 @@ public class AUTDTest
 
         autd.Link.Down();
         Assert.Throws<AUTDException>(() => autd.Send(new Static()));
+        autd.Link.Up();
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => autd.Send(new Static()));
+        autd.Link.Repair();
     }
 
     [Fact]
@@ -278,9 +300,11 @@ public class AUTDTest
 
         autd.Link.Down();
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync((new Static(), new Uniform(EmitIntensity.Max))));
+        autd.Link.Up();
 
         autd.Link.BreakDown();
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync((new Static(), new Uniform(EmitIntensity.Max))));
+        autd.Link.Repair();
     }
 
     [Fact]
@@ -308,9 +332,11 @@ public class AUTDTest
 
         autd.Link.Down();
         Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(EmitIntensity.Max))));
+        autd.Link.Up();
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(EmitIntensity.Max))));
+        autd.Link.Repair();
     }
 
     [Fact]

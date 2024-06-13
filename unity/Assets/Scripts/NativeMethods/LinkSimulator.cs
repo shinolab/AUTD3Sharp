@@ -30,7 +30,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern LinkBuilderPtr AUTDLinkSimulatorIntoBuilder(LinkSimulatorBuilderPtr simulator);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorUpdateGeometry", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkSimulatorUpdateGeometry(LinkPtr simulator, GeometryPtr geometry);
+        public static extern FfiFuture AUTDLinkSimulatorUpdateGeometry(LinkPtr simulator, GeometryPtr geometry);
 
 
     }

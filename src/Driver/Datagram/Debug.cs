@@ -24,7 +24,7 @@ namespace AUTD3Sharp
 
     public sealed class DebugSettings : IDatagram
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public unsafe delegate void DebugSettingsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, GPIOOut gpio, DebugTypeWrap* debugType);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void DebugSettingsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, GPIOOut gpio, DebugTypeWrap* debugType);
 
         private readonly DebugSettingsDelegate _f;
 

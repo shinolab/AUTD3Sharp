@@ -50,7 +50,6 @@ namespace AUTD3Sharp.Utils
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void AddWithResize(T item)
         {
-            Debug.Assert(_size == Items.Length);
             var size = _size;
             Grow(size + 1);
             _size = size + 1;

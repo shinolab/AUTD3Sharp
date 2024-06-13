@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Gain
     [Gain]
     public sealed partial class Custom
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public unsafe delegate void TransducerTestDelegate(ContextPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, NativeMethods.Drive* raw);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void TransducerTestDelegate(ContextPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, NativeMethods.Drive* raw);
 
         private readonly TransducerTestDelegate _f;
 

@@ -31,7 +31,7 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsBase.AUTDLinkAuditIntoBuilder(_ptr);
             }
 
-            Audit ILinkBuilder<Audit>.ResolveLink(LinkPtr ptr)
+            Audit ILinkBuilder<Audit>.ResolveLink(RuntimePtr _, LinkPtr ptr)
             {
                 return new Audit
                 {
@@ -48,21 +48,13 @@ namespace AUTD3Sharp.Link
         }
 
         public TimeSpan Timeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0f);
-
         public TimeSpan LastTimeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditLastTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0f);
-
-        public void Down()
-        {
-            NativeMethodsBase.AUTDLinkAuditDown(_ptr);
-        }
-
-        public bool IsOpen()
-        {
-            return NativeMethodsBase.AUTDLinkAuditIsOpen(_ptr);
-        }
-
+        public void Down() => NativeMethodsBase.AUTDLinkAuditDown(_ptr);
+        public void Up() => NativeMethodsBase.AUTDLinkAuditUp(_ptr);
+        public bool IsOpen() => NativeMethodsBase.AUTDLinkAuditIsOpen(_ptr);
         public bool IsForceFan(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(_ptr, (ushort)idx);
         public void BreakDown() => NativeMethodsBase.AUTDLinkAuditBreakDown(_ptr);
+        public void Repair() => NativeMethodsBase.AUTDLinkAuditRepair(_ptr);
         public ushort SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (ushort)idx);
         public ushort SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (ushort)idx);
         public ushort SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);

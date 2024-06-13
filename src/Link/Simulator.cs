@@ -44,10 +44,11 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsLinkSimulator.AUTDLinkSimulatorIntoBuilder(_ptr);
             }
 
-            Simulator ILinkBuilder<Simulator>.ResolveLink(LinkPtr ptr)
+            Simulator ILinkBuilder<Simulator>.ResolveLink(RuntimePtr runtime, LinkPtr ptr)
             {
                 return new Simulator
                 {
+                    _runtime = runtime,
                     _ptr = ptr
                 };
             }
@@ -58,16 +59,21 @@ namespace AUTD3Sharp.Link
             return new SimulatorBuilder(port);
         }
 
+        private RuntimePtr _runtime;
         private LinkPtr _ptr = new LinkPtr { Item1 = IntPtr.Zero };
 
         public async Task<bool> UpdateGeometryAsync(Geometry geometry)
         {
-            return await Task.Run(() => NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr).Validate() == NativeMethodsDriver.AUTD3_TRUE);
+            var future = NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr);
+            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultI32(_runtime, future));
+            return result.Validate() == NativeMethodsDriver.AUTD3_TRUE;
         }
 
         public bool UpdateGeometry(Geometry geometry)
         {
-            return NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr).Validate() == NativeMethodsDriver.AUTD3_TRUE;
+            var future = NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr);
+            var result = NativeMethodsBase.AUTDWaitResultI32(_runtime, future);
+            return result.Validate() == NativeMethodsDriver.AUTD3_TRUE;
         }
     }
 }

@@ -24,7 +24,7 @@ public class TransitionModeTest
     [Fact]
     public void TransitionModeGPIO()
     {
-        var m = TransitionMode.GPIO(GPIOIn.I1);
+        var m = TransitionMode.GPIO(AUTD3Sharp.GPIOIn.I1);
         Assert.Equal(TransitionModeTag.Gpio, m.tag);
         Assert.Equal(1ul, m.value);
     }

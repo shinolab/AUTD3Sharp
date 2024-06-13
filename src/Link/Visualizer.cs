@@ -56,9 +56,9 @@ namespace AUTD3Sharp.Link
         public float ZEnd { get; set; }
         public float Resolution { get; set; }
 
-        internal PlotRangePtr Ptr => NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRange(XStart, XEnd, YStart, YEnd, ZStart, ZEnd, Resolution);
+        internal readonly PlotRangePtr Ptr => NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRange(XStart, XEnd, YStart, YEnd, ZStart, ZEnd, Resolution);
 
-        public Vector3[] ObservePoints()
+        public readonly Vector3[] ObservePoints()
         {
             var range = Ptr;
             var pointsLen = NativeMethodsLinkVisualizer.AUTDLinkVisualizerPlotRangeObservePointsLen(range);
@@ -208,7 +208,7 @@ namespace AUTD3Sharp.Link
                 _directivity = new TD().Directivity();
                 return this;
             }
-            Visualizer ILinkBuilder<Visualizer>.ResolveLink(LinkPtr ptr)
+            Visualizer ILinkBuilder<Visualizer>.ResolveLink(RuntimePtr _, LinkPtr ptr)
             {
                 return new Visualizer
                 {

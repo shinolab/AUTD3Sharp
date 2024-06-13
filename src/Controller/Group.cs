@@ -55,7 +55,20 @@ namespace AUTD3Sharp
 
         public async Task SendAsync()
         {
-            await Task.Run(Send);
+            LocalFfiFuture future;
+            unsafe
+            {
+                fixed (int* kp = &_keys.Items[0])
+                fixed (DatagramPtr* dp = &_datagrams.Items[0])
+                {
+                    future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
+                        Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero },
+                        _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count);
+                }
+            }
+            var result = await Task.Run(() =>
+                NativeMethodsBase.AUTDWaitLocalResultI32(_controller.Runtime, future));
+            result.Validate();
         }
 
         public void Send()
@@ -64,7 +77,13 @@ namespace AUTD3Sharp
             {
                 fixed (int* kp = &_keys.Items[0])
                 fixed (DatagramPtr* dp = &_datagrams.Items[0])
-                    NativeMethodsBase.AUTDControllerGroup(_controller.Ptr, Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count).Validate();
+                {
+                    var future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
+                        Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero },
+                        _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count);
+                    var result = NativeMethodsBase.AUTDWaitLocalResultI32(_controller.Runtime, future);
+                    result.Validate();
+                }
             }
         }
     }

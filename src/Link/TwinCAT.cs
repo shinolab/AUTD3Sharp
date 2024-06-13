@@ -27,7 +27,7 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsLinkTwinCAT.AUTDLinkTwinCATIntoBuilder(_ptr);
             }
 
-            TwinCAT ILinkBuilder<TwinCAT>.ResolveLink(LinkPtr ptr)
+            TwinCAT ILinkBuilder<TwinCAT>.ResolveLink(RuntimePtr _, LinkPtr ptr)
             {
                 return new TwinCAT();
             }
@@ -91,7 +91,7 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCATIntoBuilder(_ptr);
             }
 
-            RemoteTwinCAT ILinkBuilder<RemoteTwinCAT>.ResolveLink(LinkPtr ptr)
+            RemoteTwinCAT ILinkBuilder<RemoteTwinCAT>.ResolveLink(RuntimePtr _, LinkPtr ptr)
             {
                 return new RemoteTwinCAT();
             }

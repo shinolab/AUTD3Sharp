@@ -15,6 +15,11 @@ namespace AUTD3Sharp.NativeMethods
     {
         const string __DllName = "autd3capi";
 
+        public const byte TRACE_LEVEL_ERROR = 1;
+        public const byte TRACE_LEVEL_WARN = 2;
+        public const byte TRACE_LEVEL_INFO = 3;
+        public const byte TRACE_LEVEL_DEBUG = 4;
+        public const byte TRACE_LEVEL_TRACE = 5;
 
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
@@ -26,26 +31,38 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilderWithParallelThreshold", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ControllerBuilderPtr AUTDControllerBuilderWithParallelThreshold(ControllerBuilderPtr builder, ushort parallel_threshold);
 
+        [DllImport(__DllName, EntryPoint = "AUTDControllerBuilderWithSendInterval", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ControllerBuilderPtr AUTDControllerBuilderWithSendInterval(ControllerBuilderPtr builder, ulong interval_ns);
+
+        [DllImport(__DllName, EntryPoint = "AUTDControllerBuilderWithTimerResolution", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ControllerBuilderPtr AUTDControllerBuilderWithTimerResolution(ControllerBuilderPtr builder, uint resolution);
+
         [DllImport(__DllName, EntryPoint = "AUTDControllerOpen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultController AUTDControllerOpen(ControllerBuilderPtr builder, LinkBuilderPtr link_builder, long timeout_ns);
+        public static extern FfiFuture AUTDControllerOpen(ControllerBuilderPtr builder, LinkBuilderPtr link_builder, long timeout_ns);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDControllerGroup(ControllerPtr cnt, IntPtr f, ContextPtr context, GeometryPtr geometry, int* keys, DatagramPtr* d, ushort n);
+        public static extern LocalFfiFuture AUTDControllerGroup(ControllerPtr cnt, IntPtr f, ContextPtr context, GeometryPtr geometry, int* keys, DatagramPtr* d, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerClose", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDControllerClose(ControllerPtr cnt);
+        public static extern FfiFuture AUTDControllerClose(ControllerPtr cnt);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerDelete", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDControllerDelete(ControllerPtr cnt);
+        public static extern void AUTDControllerDelete(ControllerPtr cnt);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerLastParallelThreshold", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ushort AUTDControllerLastParallelThreshold(ControllerPtr cnt);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerFPGAState", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDControllerFPGAState(ControllerPtr cnt, int* @out);
+        public static extern FfiFuture AUTDControllerFPGAState(ControllerPtr cnt);
+
+        [DllImport(__DllName, EntryPoint = "AUTDControllerFPGAStateGet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern short AUTDControllerFPGAStateGet(FPGAStateListPtr p, uint idx);
+
+        [DllImport(__DllName, EntryPoint = "AUTDControllerFPGAStateDelete", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDControllerFPGAStateDelete(FPGAStateListPtr p);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerFirmwareVersionListPointer", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultFirmwareVersionList AUTDControllerFirmwareVersionListPointer(ControllerPtr cnt);
+        public static extern FfiFuture AUTDControllerFirmwareVersionListPointer(ControllerPtr cnt);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerFirmwareVersionGet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDControllerFirmwareVersionGet(FirmwareVersionListPtr p_info_list, uint idx, byte* info);
@@ -57,7 +74,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern void AUTDFirmwareLatest(byte* latest);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerSend", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDControllerSend(ControllerPtr cnt, DatagramPtr d);
+        public static extern FfiFuture AUTDControllerSend(ControllerPtr cnt, DatagramPtr d);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramClear", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramClear();
@@ -371,6 +388,30 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDTransducerPosition", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern Vector3 AUTDTransducerPosition(TransducerPtr tr);
 
+        [DllImport(__DllName, EntryPoint = "AUTDCreateRuntime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern RuntimePtr AUTDCreateRuntime();
+
+        [DllImport(__DllName, EntryPoint = "AUTDDeleteRuntime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDDeleteRuntime(RuntimePtr runtime);
+
+        [DllImport(__DllName, EntryPoint = "AUTDWaitResultI32", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultI32 AUTDWaitResultI32(RuntimePtr runtime, FfiFuture future);
+
+        [DllImport(__DllName, EntryPoint = "AUTDWaitLocalResultI32", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultI32 AUTDWaitLocalResultI32(RuntimePtr runtime, LocalFfiFuture future);
+
+        [DllImport(__DllName, EntryPoint = "AUTDWaitResultController", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultController AUTDWaitResultController(RuntimePtr runtime, FfiFuture future);
+
+        [DllImport(__DllName, EntryPoint = "AUTDWaitResultFPGAStateList", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultFPGAStateList AUTDWaitResultFPGAStateList(RuntimePtr runtime, FfiFuture future);
+
+        [DllImport(__DllName, EntryPoint = "AUTDWaitResultFirmwareVersionList", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultFirmwareVersionList AUTDWaitResultFirmwareVersionList(RuntimePtr runtime, FfiFuture future);
+
+        [DllImport(__DllName, EntryPoint = "AUTDTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDTracingInit(byte level);
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkAudit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkAuditBuilderPtr AUTDLinkAudit();
 
@@ -393,8 +434,14 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditDown", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDLinkAuditDown(LinkPtr audit);
 
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditUp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDLinkAuditUp(LinkPtr audit);
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditBreakDown", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDLinkAuditBreakDown(LinkPtr audit);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditRepair", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDLinkAuditRepair(LinkPtr audit);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditCpuNumTransducers", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDLinkAuditCpuNumTransducers(LinkPtr audit, ushort idx);
@@ -588,6 +635,20 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct FPGAStateListPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultFPGAStateList
+    {
+        public FPGAStateListPtr result;
+        public uint err_len;
+        public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct FirmwareVersionListPtr
     {
         public IntPtr Item1;
@@ -619,6 +680,12 @@ namespace AUTD3Sharp.NativeMethods
         public GainCalcDrivesMapPtr result;
         public uint err_len;
         public IntPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct RuntimePtr
+    {
+        public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]

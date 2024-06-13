@@ -35,11 +35,37 @@ namespace AUTD3Sharp
         Lost = 2
     }
 
+    public enum GPIOIn : byte
+    {
+        I0 = 0,
+        I1 = 1,
+        I2 = 2,
+        I3 = 3,
+    }
+
+    public enum GPIOOut : byte
+    {
+        O0 = 0,
+        O1 = 1,
+        O2 = 2,
+        O3 = 3,
+    }
+
     namespace NativeMethods
     {
+        public struct FfiFuture
+        {
+            private unsafe fixed byte _data[24];
+        }
+
+        public struct LocalFfiFuture
+        {
+            private unsafe fixed byte _data[24];
+        }
+
         public static class StatusExt
         {
-            public static AUTD3Sharp.Status Into(this Status mode)
+            public static AUTD3Sharp.Status Into(this AUTD3Sharp.NativeMethods.Status mode)
             {
                 return mode switch
                 {
@@ -51,14 +77,16 @@ namespace AUTD3Sharp
             }
         }
 
-        public static class SyncModeExt
+        public static class GPIOInExt
         {
-            public static SyncMode Into(this SyncMode mode)
+            public static AUTD3Sharp.NativeMethods.GPIOIn Into(this AUTD3Sharp.GPIOIn mode)
             {
                 return mode switch
                 {
-                    SyncMode.FreeRun => SyncMode.FreeRun,
-                    SyncMode.DC => SyncMode.DC,
+                    AUTD3Sharp.GPIOIn.I0 => GPIOIn.I0,
+                    AUTD3Sharp.GPIOIn.I1 => GPIOIn.I1,
+                    AUTD3Sharp.GPIOIn.I2 => GPIOIn.I2,
+                    AUTD3Sharp.GPIOIn.I3 => GPIOIn.I3,
                     _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
                 };
             }
@@ -66,7 +94,7 @@ namespace AUTD3Sharp
 
         public static class TimerStrategyExt
         {
-            public static TimerStrategy Into(this AUTD3Sharp.TimerStrategy strategy)
+            public static AUTD3Sharp.NativeMethods.TimerStrategy Into(this AUTD3Sharp.TimerStrategy strategy)
             {
                 return strategy switch
                 {
@@ -163,6 +191,17 @@ namespace AUTD3Sharp
             }
 
             public static FirmwareVersionListPtr Validate(this ResultFirmwareVersionList res)
+            {
+                if (res.result.Item1 != IntPtr.Zero) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            public static FPGAStateListPtr Validate(this ResultFPGAStateList res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];

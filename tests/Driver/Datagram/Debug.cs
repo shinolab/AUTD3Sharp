@@ -17,10 +17,10 @@ public class DebugTest
 
         await autd.SendAsync(new DebugSettings((_, gpio) => gpio switch
         {
-            GPIOOut.O0 => DebugType.None,
-            GPIOOut.O1 => DebugType.BaseSignal,
-            GPIOOut.O2 => DebugType.Thermo,
-            GPIOOut.O3 => DebugType.ForceFan,
+            AUTD3Sharp.GPIOOut.O0 => DebugType.None,
+            AUTD3Sharp.GPIOOut.O1 => DebugType.BaseSignal,
+            AUTD3Sharp.GPIOOut.O2 => DebugType.Thermo,
+            AUTD3Sharp.GPIOOut.O3 => DebugType.ForceFan,
             _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
         }));
 
@@ -32,10 +32,10 @@ public class DebugTest
 
         await autd.SendAsync(new DebugSettings((_, gpio) => gpio switch
         {
-            GPIOOut.O0 => DebugType.Sync,
-            GPIOOut.O1 => DebugType.ModSegment,
-            GPIOOut.O2 => DebugType.ModIdx(0x01),
-            GPIOOut.O3 => DebugType.StmSegment,
+            AUTD3Sharp.GPIOOut.O0 => DebugType.Sync,
+            AUTD3Sharp.GPIOOut.O1 => DebugType.ModSegment,
+            AUTD3Sharp.GPIOOut.O2 => DebugType.ModIdx(0x01),
+            AUTD3Sharp.GPIOOut.O3 => DebugType.StmSegment,
             _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
         }));
         foreach (var dev in autd.Geometry)
@@ -46,10 +46,10 @@ public class DebugTest
 
         await autd.SendAsync(new DebugSettings((dev, gpio) => gpio switch
         {
-            GPIOOut.O0 => DebugType.StmIdx(0x02),
-            GPIOOut.O1 => DebugType.IsStmMode,
-            GPIOOut.O2 => DebugType.PwmOut(dev[3]),
-            GPIOOut.O3 => DebugType.Direct(true),
+            AUTD3Sharp.GPIOOut.O0 => DebugType.StmIdx(0x02),
+            AUTD3Sharp.GPIOOut.O1 => DebugType.IsStmMode,
+            AUTD3Sharp.GPIOOut.O2 => DebugType.PwmOut(dev[3]),
+            AUTD3Sharp.GPIOOut.O3 => DebugType.Direct(true),
             _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
         }));
         foreach (var dev in autd.Geometry)

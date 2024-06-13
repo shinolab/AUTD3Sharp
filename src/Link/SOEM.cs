@@ -66,7 +66,7 @@ namespace AUTD3Sharp.Link
 
             public SOEMBuilder WithSyncMode(SyncMode syncMode)
             {
-                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithSyncMode(_ptr, syncMode.Into());
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithSyncMode(_ptr, syncMode);
                 return this;
             }
 
@@ -108,7 +108,7 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsLinkSOEM.AUTDLinkSOEMIntoBuilder(_ptr);
             }
 
-            SOEM ILinkBuilder<SOEM>.ResolveLink(LinkPtr ptr)
+            SOEM ILinkBuilder<SOEM>.ResolveLink(RuntimePtr _, LinkPtr ptr)
             {
                 return new SOEM(_errHandler);
             }
@@ -174,7 +174,7 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsLinkSOEM.AUTDLinkRemoteSOEMIntoBuilder(_ptr);
             }
 
-            RemoteSOEM ILinkBuilder<RemoteSOEM>.ResolveLink(LinkPtr ptr)
+            RemoteSOEM ILinkBuilder<RemoteSOEM>.ResolveLink(RuntimePtr _, LinkPtr ptr)
             {
                 return new RemoteSOEM();
             }
