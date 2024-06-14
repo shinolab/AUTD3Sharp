@@ -41,12 +41,12 @@ public class AUTDTest
             Assert.True(infos[1]!.IsThermalAssert);
         }
 
-        // await autd.SendAsync(new ReadsFPGAState(dev => dev.Idx == 1));
-        // {
-        //     var infos = await autd.FPGAStateAsync();
-        //     Assert.Null(infos[0]);
-        //     Assert.NotNull(infos[1]);
-        // }
+        await autd.SendAsync(new ReadsFPGAState(dev => dev.Idx == 1));
+        {
+            var infos = await autd.FPGAStateAsync();
+            Assert.Null(infos[0]);
+            Assert.NotNull(infos[1]);
+        }
 
         {
             autd.Link.BreakDown();
@@ -80,12 +80,12 @@ public class AUTDTest
             Assert.True(infos[1]!.IsThermalAssert);
         }
 
-        // autd.Send(new ReadsFPGAState(dev => dev.Idx == 1));
-        // {
-        //     var infos = autd.FPGAState();
-        //     Assert.Null(infos[0]);
-        //     Assert.NotNull(infos[1]);
-        // }
+        autd.Send(new ReadsFPGAState(dev => dev.Idx == 1));
+        {
+            var infos = autd.FPGAState();
+            Assert.Null(infos[0]);
+            Assert.NotNull(infos[1]);
+        }
 
         {
             autd.Link.BreakDown();
