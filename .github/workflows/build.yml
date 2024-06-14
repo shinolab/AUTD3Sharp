@@ -28,6 +28,7 @@ jobs:
             src/AUTD3Sharp.nuspec
             ./**/*.cs
             unity/Assets/package.json
+            build.py
 
   build:
     needs: check

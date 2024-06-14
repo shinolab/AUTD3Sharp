@@ -315,7 +315,7 @@ def cs_test(args):
         subprocess.run(command).check_returncode()
 
     with working_dir("tests"):
-        command = ["dotnet", "test"]
+        command = ["dotnet", "test", "-v", "detailed"]
         if not config.is_pcap_available():
             command.append("--filter")
             command.append("require!=soem")
