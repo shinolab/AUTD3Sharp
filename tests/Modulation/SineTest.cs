@@ -8,7 +8,7 @@ public class SineTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
-            var m = new Sine(150 * Hz).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(MathF.PI / 2.0f * rad);
+            var m = new Sine(150 * Hz).WithIntensity(0xFF / 2).WithOffset(0xFF / 4).WithPhase(MathF.PI / 2.0f * rad);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -41,7 +41,7 @@ public class SineTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
-            var m = new Sine(150.0f * Hz).WithIntensity(EmitIntensity.Max / 2).WithOffset(EmitIntensity.Max / 4).WithPhase(MathF.PI / 2.0f * rad);
+            var m = new Sine(150.0f * Hz).WithIntensity(0xFF / 2).WithOffset(0xFF / 4).WithPhase(MathF.PI / 2.0f * rad);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)

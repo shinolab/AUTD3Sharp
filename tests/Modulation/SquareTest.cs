@@ -8,7 +8,7 @@ public class SquareTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
-            var m = new Square(200 * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1f);
+            var m = new Square(200 * Hz).WithLow(32).WithHigh(85).WithDuty(0.1f);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -41,7 +41,7 @@ public class SquareTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
-            var m = new Square(200.0f * Hz).WithLow(new EmitIntensity(32)).WithHigh(new EmitIntensity(85)).WithDuty(0.1f);
+            var m = new Square(200.0f * Hz).WithLow(32).WithHigh(85).WithDuty(0.1f);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)

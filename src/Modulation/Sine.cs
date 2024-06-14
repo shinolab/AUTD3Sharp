@@ -10,8 +10,8 @@ namespace AUTD3Sharp.Modulation
     {
         private Sine(ISamplingMode mode)
         {
-            Intensity = EmitIntensity.Max;
-            Offset = EmitIntensity.Max / 2;
+            Intensity = 0xFF;
+            Offset = 0xFF / 2;
             Phase = 0 * rad;
             Mode = mode;
         }
@@ -26,12 +26,12 @@ namespace AUTD3Sharp.Modulation
 
         public static Sine WithFreqNearest(Freq<float> freq) => new Sine(new SamplingModeNearest(freq));
 
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
+        [Property]
+        public byte Intensity { get; private set; }
 
 
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Offset { get; private set; }
+        [Property]
+        public byte Offset { get; private set; }
 
         [Property]
 

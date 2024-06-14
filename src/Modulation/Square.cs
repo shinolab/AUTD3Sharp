@@ -9,8 +9,8 @@ namespace AUTD3Sharp.Modulation
     {
         private Square(ISamplingMode mode)
         {
-            Low = EmitIntensity.Min;
-            High = EmitIntensity.Max;
+            Low = 0x00;
+            High = 0xFF;
             Duty = 0.5f;
             Mode = mode;
         }
@@ -19,11 +19,11 @@ namespace AUTD3Sharp.Modulation
         public Square(Freq<float> freq) : this(new SamplingModeExactFloat(freq)) { }
         public static Square WithFreqNearest(Freq<float> freq) => new Square(new SamplingModeNearest(freq));
 
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Low { get; private set; }
+        [Property]
+        public byte Low { get; private set; }
 
-        [Property(EmitIntensity = true)]
-        public EmitIntensity High { get; private set; }
+        [Property]
+        public byte High { get; private set; }
 
         [Property]
 

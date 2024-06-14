@@ -8,20 +8,18 @@ namespace AUTD3Sharp.Modulation
     {
         public Static()
         {
-            Intensity = EmitIntensity.Max;
+            Intensity = 0xFF;
         }
 
-        private Static(EmitIntensity intensity)
+        private Static(byte intensity)
         {
             Intensity = intensity;
         }
 
-        public static Static WithIntensity(EmitIntensity intensity) => new Static(intensity);
+        public static Static WithIntensity(byte intensity) => new Static(intensity);
 
-        public static Static WithIntensity(byte intensity) => Static.WithIntensity(new EmitIntensity(intensity));
+        public byte Intensity { get; }
 
-        public EmitIntensity Intensity { get; }
-
-        private ModulationPtr ModulationPtr(Geometry _) => NativeMethodsBase.AUTDModulationStatic(Intensity.Value, LoopBehavior);
+        private ModulationPtr ModulationPtr(Geometry _) => NativeMethodsBase.AUTDModulationStatic(Intensity, LoopBehavior);
     }
 }
