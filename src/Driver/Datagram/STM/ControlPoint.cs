@@ -76,7 +76,11 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints2((Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2)), EmitIntensity.Max)
+        public ControlPoints2((Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2)))
+        {
+        }
+
+        public ControlPoints2((ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
         {
         }
     }
@@ -103,7 +107,11 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints3((Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3)), EmitIntensity.Max)
+        public ControlPoints3((Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3)))
+        {
+        }
+
+        public ControlPoints3((ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
         {
         }
     }
@@ -132,7 +140,11 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints4((Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4)), EmitIntensity.Max)
+        public ControlPoints4((Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4)))
+        {
+        }
+
+        public ControlPoints4((ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
         {
         }
     }
@@ -163,7 +175,11 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints5((Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5)), EmitIntensity.Max)
+        public ControlPoints5((Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5)))
+        {
+        }
+
+        public ControlPoints5((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
         {
         }
     }
@@ -196,7 +212,11 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints6((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6)), EmitIntensity.Max)
+        public ControlPoints6((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6)))
+        {
+        }
+
+        public ControlPoints6((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
         {
         }
     }
@@ -231,7 +251,11 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints7((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7)), EmitIntensity.Max)
+        public ControlPoints7((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7)))
+        {
+        }
+
+        public ControlPoints7((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
         {
         }
     }
@@ -268,7 +292,11 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints8((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7), new ControlPoint(v.Item8)), EmitIntensity.Max)
+        public ControlPoints8((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7), new ControlPoint(v.Item8)))
+        {
+        }
+
+        public ControlPoints8((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
         {
         }
     }
