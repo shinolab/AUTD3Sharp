@@ -103,17 +103,6 @@ public class WavTest
                 Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
-
-        {
-            var m = new Wav("sin150.wav").WithSamplingConfig(SamplingConfig.Division(10240)).WithLoopBehavior(LoopBehavior.Once);
-            Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
-            {
-                Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(10240u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
-            }
-        }
     }
 
     [Fact]

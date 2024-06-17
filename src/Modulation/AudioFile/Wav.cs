@@ -3,7 +3,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation.AudioFile
 {
-    [Modulation]
+    [Modulation(ConfigNoChange = true)]
     public sealed partial class Wav
     {
         private readonly string _filename;
@@ -20,7 +20,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, _config, LoopBehavior).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, LoopBehavior).Validate();
                 }
             }
         }

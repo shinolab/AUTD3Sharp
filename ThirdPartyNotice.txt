@@ -74,7 +74,7 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 25.2.3 (MIT)
+autd3 25.3.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -82,27 +82,27 @@ autd3-backend-cuda 25.0.0 (MIT)
 https://github.com/shinolab/autd3-backend-cuda
 ---------------------------------------------------------
 
-autd3-derive 25.2.3 (MIT)
+autd3-derive 25.3.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 25.2.3 (MIT)
+autd3-driver 25.3.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 25.2.3 (MIT)
+autd3-firmware-emulator 25.3.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 25.2.3 (MIT)
+autd3-gain-holo 25.3.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 25.2.3 (MIT)
+autd3-link-simulator 25.3.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 25.2.3
+autd3-link-soem 25.3.1
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -168,7 +168,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 25.2.3
+autd3-link-twincat 25.3.1
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -224,40 +224,40 @@ autd3-link-visualizer 25.0.0 (MIT)
 https://github.com/shinolab/autd3-link-visualizer
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 25.2.3 (MIT)
+autd3-modulation-audio-file 25.3.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 25.2.3 (MIT)
+autd3-protobuf 25.3.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 25.2.3 (MIT)
+autd3capi 25.3.1 (MIT)
 ---------------------------------------------------------
 
-autd3capi-backend-cuda 25.2.3 (MIT)
+autd3capi-backend-cuda 25.3.1 (MIT)
 ---------------------------------------------------------
 
-autd3capi-driver 25.2.3 (MIT)
+autd3capi-driver 25.3.1 (MIT)
 https://github.com/shinolab/autd3
 ---------------------------------------------------------
 
-autd3capi-gain-holo 25.2.3 (MIT)
+autd3capi-gain-holo 25.3.1 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-simulator 25.2.3 (MIT)
+autd3capi-link-simulator 25.3.1 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-soem 25.2.3 (MIT)
+autd3capi-link-soem 25.3.1 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-twincat 25.2.3 (MIT)
+autd3capi-link-twincat 25.3.1 (MIT)
 ---------------------------------------------------------
 
-autd3capi-link-visualizer 25.2.3 (MIT)
+autd3capi-link-visualizer 25.3.1 (MIT)
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 25.2.3 (MIT)
+autd3capi-modulation-audio-file 25.3.1 (MIT)
 ---------------------------------------------------------
 
 autocfg 1.3.0 (Apache-2.0 OR MIT)
@@ -1146,6 +1146,10 @@ sync_wrapper 0.1.2 (Apache-2.0)
 https://github.com/Actyx/sync_wrapper
 ---------------------------------------------------------
 
+ta 0.5.0 (MIT)
+https://github.com/greyblake/ta-rs
+---------------------------------------------------------
+
 tap 1.0.1 (MIT)
 https://github.com/myrrlyn/tap
 ---------------------------------------------------------
@@ -1320,10 +1324,6 @@ https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro-support
 
 wasm-bindgen-shared 0.2.92 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/shared
----------------------------------------------------------
-
-wav_io 0.1.14 (MIT)
-https://github.com/kujirahand/wav_io
 ---------------------------------------------------------
 
 web-sys 0.3.69 (Apache-2.0 OR MIT)

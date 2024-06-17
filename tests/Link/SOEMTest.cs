@@ -16,7 +16,8 @@ public class SOEMTest()
                  .WithSync0Cycle(2)
                  .WithErrHandler((slave, status, msg) => { })
                  .WithTimerStrategy(TimerStrategy.Sleep)
-                 .WithSyncMode(SyncMode.FreeRun)
+                 .WithSyncTolerance(TimeSpan.FromMilliseconds(1e-3))
+                 .WithSyncTimeout(TimeSpan.FromSeconds(10))
                  .WithStateCheckInterval(TimeSpan.FromMilliseconds(100))
                  .WithTimeout(TimeSpan.FromMilliseconds(200))));
     }

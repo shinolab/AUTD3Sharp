@@ -17,6 +17,9 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
+        [DllImport(__DllName, EntryPoint = "AUTDAUTDLinkSOEMTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDAUTDLinkSOEMTracingInit(byte level);
+
         [DllImport(__DllName, EntryPoint = "AUTDAdapterPointer", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern EthernetAdaptersPtr AUTDAdapterPointer();
 
@@ -44,8 +47,11 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithTimerStrategy", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithTimerStrategy(LinkSOEMBuilderPtr soem, TimerStrategy timer_strategy);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSyncMode", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSyncMode(LinkSOEMBuilderPtr soem, SyncMode mode);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSyncTolerance", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSyncTolerance(LinkSOEMBuilderPtr soem, ulong tolerance_ns);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSyncTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSyncTimeout(LinkSOEMBuilderPtr soem, ulong timeout_ns);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithIfname", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithIfname(LinkSOEMBuilderPtr soem, byte* ifname);

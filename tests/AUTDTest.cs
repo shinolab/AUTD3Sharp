@@ -200,7 +200,11 @@ public class AUTDTest
         var autd = Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
             .WithParallelThreshold(0)
             .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
+        Assert.Equal(0xFFFF, AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerLastParallelThreshold(
+            (AUTD3Sharp.NativeMethods.ControllerPtr)typeof(Controller<Audit>).GetField("Ptr", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(autd)!
+        ));
 
+        autd.Send(new Null());
         Assert.Equal(0, AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerLastParallelThreshold(
             (AUTD3Sharp.NativeMethods.ControllerPtr)typeof(Controller<Audit>).GetField("Ptr", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(autd)!
         ));

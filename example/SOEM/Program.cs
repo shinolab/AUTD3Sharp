@@ -3,6 +3,8 @@ using AUTD3Sharp.Link;
 using AUTD3Sharp.Utils;
 using Samples;
 
+AUTD3Sharp.Debug.TracingInit(AUTD3Sharp.Debug.Level.Info);
+
 using var autd = Controller.Builder([new AUTD3(Vector3.Zero)])
     .Open(SOEM.Builder()
         .WithErrHandler((slave, status, msg) =>

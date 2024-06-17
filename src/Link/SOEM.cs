@@ -64,9 +64,15 @@ namespace AUTD3Sharp.Link
                 return this;
             }
 
-            public SOEMBuilder WithSyncMode(SyncMode syncMode)
+            public SOEMBuilder WithSyncTolerance(TimeSpan tolerance)
             {
-                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithSyncMode(_ptr, syncMode);
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithSyncTolerance(_ptr, (ulong)(tolerance.TotalMilliseconds * 1000 * 1000));
+                return this;
+            }
+
+            public SOEMBuilder WithSyncTimeout(TimeSpan timeout)
+            {
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithSyncTimeout(_ptr, (ulong)(timeout.TotalMilliseconds * 1000 * 1000));
                 return this;
             }
 

@@ -15,11 +15,6 @@ namespace AUTD3Sharp.NativeMethods
     {
         const string __DllName = "autd3capi";
 
-        public const byte TRACE_LEVEL_ERROR = 1;
-        public const byte TRACE_LEVEL_WARN = 2;
-        public const byte TRACE_LEVEL_INFO = 3;
-        public const byte TRACE_LEVEL_DEBUG = 4;
-        public const byte TRACE_LEVEL_TRACE = 5;
 
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
