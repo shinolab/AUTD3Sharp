@@ -11,4 +11,13 @@ public class EmitIntensityTest
             Assert.Equal(i, intensity.Value);
         }
     }
+
+
+    [Fact]
+    public void EmitIntensityDiv()
+    {
+        var intensity = new EmitIntensity(0x80);
+        var div = intensity / 2;
+        Assert.Equal(0x40, div.Value);
+    }
 }
