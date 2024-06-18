@@ -47,6 +47,9 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithTimerStrategy", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithTimerStrategy(LinkSOEMBuilderPtr soem, TimerStrategy timer_strategy);
 
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSyncMode", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSyncMode(LinkSOEMBuilderPtr soem, SyncMode mode);
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSyncTolerance", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSyncTolerance(LinkSOEMBuilderPtr soem, ulong tolerance_ns);
 
