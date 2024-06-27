@@ -46,11 +46,11 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
+        [ExcludeFromCodeCoverage]
         public ControlPoints1(Vector3 v) : this(new ControlPoint(v), EmitIntensity.Max)
         {
         }
 
-        [ExcludeFromCodeCoverage]
         public ControlPoints1(ControlPoint v) : this(v, EmitIntensity.Max)
         {
         }

@@ -18,6 +18,7 @@ public class SilencerTest
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+            Assert.True(autd.Link.SilencerStrictMode(dev.Idx));
         }
 
         await autd.SendAsync(Silencer.FromCompletionSteps(2, 3));
@@ -26,6 +27,16 @@ public class SilencerTest
             Assert.Equal(2, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(3, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+            Assert.True(autd.Link.SilencerStrictMode(dev.Idx));
+        }
+
+        await autd.SendAsync(Silencer.FromCompletionTime(4 * TimeSpan.FromMicroseconds(25), 5 * TimeSpan.FromMicroseconds(25)));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(4, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(5, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+            Assert.True(autd.Link.SilencerStrictMode(dev.Idx));
         }
 
         await autd.SendAsync(Silencer.Disable());

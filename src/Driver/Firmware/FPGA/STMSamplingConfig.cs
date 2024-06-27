@@ -18,10 +18,10 @@ namespace AUTD3Sharp
         public static STMSamplingConfig FromFreqNearest(Freq<float> f) =>
           new(NativeMethodsBase.AUTDSTMSamplingConfigFromFreqNearest(f.Hz));
 
-        public static STMSamplingConfig Period(TimeSpan period) =>
+        public static STMSamplingConfig FromPeriod(TimeSpan period) =>
             new(NativeMethodsBase.AUTDSTMSamplingConfigFromPeriod((ulong)(period.TotalMilliseconds * 1000 * 1000)));
 
-        public static STMSamplingConfig PeriodNearest(TimeSpan period) =>
+        public static STMSamplingConfig FromPeriodNearest(TimeSpan period) =>
             new(NativeMethodsBase.AUTDSTMSamplingConfigFromPeriodNearest((ulong)(period.TotalMilliseconds * 1000 * 1000)));
 
         public static STMSamplingConfig FromSamplingConfig(SamplingConfig c) => new(NativeMethodsBase.AUTDSTMSamplingConfigFromSamplingConfig(c.Inner));

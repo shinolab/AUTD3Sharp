@@ -66,26 +66,23 @@ namespace AUTD3Sharp
 
     public static class FociSTM
     {
-        [ExcludeFromCodeCoverage]
         public static FociSTM<T> FromFreq<T>(Freq<float> freq, IEnumerable<T> points) where T : unmanaged, IControlPoints => new FociSTM<T>(STMSamplingConfig.FromFreq(freq), points);
-        [ExcludeFromCodeCoverage]
         public static FociSTM<T> FromFreqNearest<T>(Freq<float> freq, IEnumerable<T> points) where T : unmanaged, IControlPoints => new FociSTM<T>(STMSamplingConfig.FromFreqNearest(freq), points);
-        [ExcludeFromCodeCoverage]
+        public static FociSTM<T> FromPeriod<T>(TimeSpan period, IEnumerable<T> points) where T : unmanaged, IControlPoints => new FociSTM<T>(STMSamplingConfig.FromPeriod(period), points);
+        public static FociSTM<T> FromPeriodNearest<T>(TimeSpan period, IEnumerable<T> points) where T : unmanaged, IControlPoints => new FociSTM<T>(STMSamplingConfig.FromPeriodNearest(period), points);
         public static FociSTM<T> FromSamplingConfig<T>(SamplingConfig config, IEnumerable<T> points) where T : unmanaged, IControlPoints => new FociSTM<T>(STMSamplingConfig.FromSamplingConfig(config), points);
 
-        [ExcludeFromCodeCoverage]
-        public static FociSTM<ControlPoints1> FromFreq(Freq<float> freq, IEnumerable<Vector3> points) => new FociSTM<ControlPoints1>(STMSamplingConfig.FromFreq(freq), points.Select(p => new ControlPoints1(p)));
-        [ExcludeFromCodeCoverage]
-        public static FociSTM<ControlPoints1> FromFreqNearest(Freq<float> freq, IEnumerable<Vector3> points) => new FociSTM<ControlPoints1>(STMSamplingConfig.FromFreqNearest(freq), points.Select(p => new ControlPoints1(p)));
-        [ExcludeFromCodeCoverage]
-        public static FociSTM<ControlPoints1> FromSamplingConfig(SamplingConfig config, IEnumerable<Vector3> points) => new FociSTM<ControlPoints1>(STMSamplingConfig.FromSamplingConfig(config), points.Select(p => new ControlPoints1(p)));
+        public static FociSTM<ControlPoints1> FromFreq(Freq<float> freq, IEnumerable<ControlPoint> points) => FociSTM.FromFreq(freq, points.Select(p => new ControlPoints1(p)));
+        public static FociSTM<ControlPoints1> FromFreqNearest(Freq<float> freq, IEnumerable<ControlPoint> points) => FociSTM.FromFreqNearest(freq, points.Select(p => new ControlPoints1(p)));
+        public static FociSTM<ControlPoints1> FromPeriod(TimeSpan period, IEnumerable<ControlPoint> points) => FociSTM.FromPeriod(period, points.Select(p => new ControlPoints1(p)));
+        public static FociSTM<ControlPoints1> FromPeriodNearest(TimeSpan period, IEnumerable<ControlPoint> points) => FociSTM.FromPeriodNearest(period, points.Select(p => new ControlPoints1(p)));
+        public static FociSTM<ControlPoints1> FromSamplingConfig(SamplingConfig config, IEnumerable<ControlPoint> points) => FociSTM.FromSamplingConfig(config, points.Select(p => new ControlPoints1(p)));
 
-        [ExcludeFromCodeCoverage]
-        public static FociSTM<ControlPoints1> FromFreq(Freq<float> freq, IEnumerable<ControlPoint> points) => new FociSTM<ControlPoints1>(STMSamplingConfig.FromFreq(freq), points.Select(p => new ControlPoints1(p)));
-        [ExcludeFromCodeCoverage]
-        public static FociSTM<ControlPoints1> FromFreqNearest(Freq<float> freq, IEnumerable<ControlPoint> points) => new FociSTM<ControlPoints1>(STMSamplingConfig.FromFreqNearest(freq), points.Select(p => new ControlPoints1(p)));
-        [ExcludeFromCodeCoverage]
-        public static FociSTM<ControlPoints1> FromSamplingConfig(SamplingConfig config, IEnumerable<ControlPoint> points) => new FociSTM<ControlPoints1>(STMSamplingConfig.FromSamplingConfig(config), points.Select(p => new ControlPoints1(p)));
+        public static FociSTM<ControlPoints1> FromFreq(Freq<float> freq, IEnumerable<Vector3> points) => FociSTM.FromFreq(freq, points.Select(p => new ControlPoint(p)));
+        public static FociSTM<ControlPoints1> FromFreqNearest(Freq<float> freq, IEnumerable<Vector3> points) => FociSTM.FromFreqNearest(freq, points.Select(p => new ControlPoint(p)));
+        public static FociSTM<ControlPoints1> FromPeriod(TimeSpan period, IEnumerable<Vector3> points) => FociSTM.FromPeriod(period, points.Select(p => new ControlPoint(p)));
+        public static FociSTM<ControlPoints1> FromPeriodNearest(TimeSpan period, IEnumerable<Vector3> points) => FociSTM.FromPeriodNearest(period, points.Select(p => new ControlPoint(p)));
+        public static FociSTM<ControlPoints1> FromSamplingConfig(SamplingConfig config, IEnumerable<Vector3> points) => FociSTM.FromSamplingConfig(config, points.Select(p => new ControlPoint(p)));
     }
 }
 

@@ -30,9 +30,9 @@ namespace AUTD3Sharp
         }
 
         public static GainSTM FromFreq(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromFreq(freq), iter);
-
         public static GainSTM FromFreqNearest(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromFreqNearest(freq), iter);
-
+        public static GainSTM FromPeriod(TimeSpan period, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromPeriod(period), iter);
+        public static GainSTM FromPeriodNearest(TimeSpan period, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromPeriodNearest(period), iter);
         public static GainSTM FromSamplingConfig(SamplingConfig config, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromSamplingConfig(config), iter);
 
         public GainSTM WithMode(GainSTMMode mode)
