@@ -7,7 +7,7 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigFreq()
     {
-        var m = (SamplingConfigWrap)SamplingConfig.Freq(4000u * Hz);
+        var m = (SamplingConfigWrap)(SamplingConfig)(4000u * Hz);
         Assert.Equal(SamplingConfigTag.Freq, m.tag);
         Assert.Equal(4000u, m.value.freq);
     }

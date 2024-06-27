@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
@@ -28,11 +29,11 @@ namespace AUTD3Sharp
             LoopBehavior = AUTD3Sharp.LoopBehavior.Infinite;
         }
 
-        public static GainSTM FromFreq(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new (STMSamplingConfig.Freq(freq), iter);
+        public static GainSTM FromFreq(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromFreq(freq), iter);
 
-        public static GainSTM FromFreqNearest(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new (STMSamplingConfig.FreqNearest(freq), iter);
+        public static GainSTM FromFreqNearest(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromFreqNearest(freq), iter);
 
-        public static GainSTM FromSamplingConfig(SamplingConfig config, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new (STMSamplingConfig.SamplingConfig(config), iter);
+        public static GainSTM FromSamplingConfig(SamplingConfig config, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromSamplingConfig(config), iter);
 
         public GainSTM WithMode(GainSTMMode mode)
         {
@@ -70,6 +71,10 @@ namespace AUTD3Sharp
 
         public DatagramWithSegmentTransition<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode)
           => new DatagramWithSegmentTransition<GainSTM, GainSTMPtr>(this, segment, transitionMode);
+
+        public Freq<float> Freq => _config.Freq(_gains.Length);
+        public TimeSpan Period => _config.Period(_gains.Length);
+        public SamplingConfig SamplingConfig => _config.SamplingConfig(_gains.Length);
     }
 }
 

@@ -124,6 +124,50 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
+            public static uint Validate(this ResultU32 res)
+            {
+                if (res.err_len == 0) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            public static float Validate(this ResultF32 res)
+            {
+                if (res.err_len == 0) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            public static ulong Validate(this ResultU64 res)
+            {
+                if (res.err_len == 0) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            public static SamplingConfigWrap Validate(this ResultSamplingConfigWrap res)
+            {
+                if (res.err_len == 0) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
             public static ControllerPtr Validate(this ResultController res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
