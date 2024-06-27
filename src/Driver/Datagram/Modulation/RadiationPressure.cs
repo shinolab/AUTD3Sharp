@@ -14,9 +14,9 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             _m = m;
         }
 
-        private ModulationPtr ModulationPtr(Geometry geometry)
+        private ModulationPtr ModulationPtr()
         {
-            return NativeMethodsBase.AUTDModulationWithRadiationPressure(_m.ModulationPtr(geometry), LoopBehavior);
+            return NativeMethodsBase.AUTDModulationWithRadiationPressure(_m.ModulationPtr(), LoopBehavior);
         }
     }
 }

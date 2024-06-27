@@ -5,7 +5,7 @@ public partial class ForCacheTest
 {
     internal int CalcCnt;
 
-    private byte[] Calc(Geometry geometry)
+    private byte[] Calc()
     {
         CalcCnt++;
         return [0xFF, 0xFF];
@@ -42,7 +42,7 @@ public class CacheTest
         var m = new Static().WithCache();
         Assert.Equal(0, m.Buffer.Length);
 
-        m.Init(autd.Geometry);
+        m.Init();
         Assert.Equal(0xFF, m[0]);
         Assert.Equal(0xFF, m[1]);
         var buffer = m.Buffer;

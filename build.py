@@ -176,8 +176,10 @@ def should_update_dll(config: Config, version: str) -> bool:
 def copy_dll(config: Config):
     with open("src/AUTD3Sharp.csproj", "r") as f:
         content = f.read()
-        version = re.search(r"<Version>(.*)</Version>", content).group(1)
-        version = ".".join(version.split(".")[:3])
+        version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
+        version = (
+            ".".join(version) if version[2].endswith("rc") else ".".join(version[:3])
+        )
 
     if not should_update_dll(config, version):
         return
@@ -450,8 +452,11 @@ def copy_dll_unity(config: Config):
         content = f.read()
         version = re.search(r'"version": "(.*)"', content).group(1)
         version_tokens = version.split(".")
-        version_tokens[2] = version_tokens[2].split("-")[0]
-        version = ".".join(version_tokens[:3])
+        version = (
+            ".".join(version_tokens)
+            if version_tokens[2].endswith("rc")
+            else ".".join(version_tokens[:3])
+        )
 
     if not should_update_dll_unity(config, version):
         return
@@ -534,7 +539,7 @@ def unity_build(args):
     )
     configDir = config.release and "Release" or "Debug"
     for derive in glob.glob(
-        f"src/obj/{configDir}/netstandard2.1/generated/AUTD3Sharp.Derive/**/*.cs",
+        f"src/obj/{configDir}/net8.0/generated/AUTD3Sharp.Derive/**/*.cs",
         recursive=True,
     ):
         shutil.copy(derive, "unity/Assets/Scripts/Derive/")

@@ -49,6 +49,9 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "ModulationPtr",
         "CachePtr",
         "ResultI32",
+        "ResultU32",
+        "ResultF32",
+        "ResultU64",
         "GPIOIn",
         "GPIOOut",
         "ResultModulation",
@@ -62,9 +65,10 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "SamplingConfigWrap",
         "DebugTypeWrap",
         "TransitionModeWrap",
-        "ContextPtr",
         "ResultGainSTM",
         "ResultFociSTM",
+        "STMSamplingConfigWrap",
+        "ResultSamplingConfigWrap",
     ])
     .csharp_dll_name(dll_name)
     .csharp_class_name(format!("NativeMethods{}", class_name))
@@ -76,7 +80,6 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
     .map_err(|_| anyhow::anyhow!("failed to generate cs wrapper"))?;
 
     let content = std::fs::read_to_string(&out_file)?;
-    let content = content.replace("ConstPtr", "IntPtr");
     let content = content.replace("void*", "IntPtr");
     let content = content.replace("void @null", "byte @null");
 

@@ -31,12 +31,6 @@ namespace AUTD3Sharp
             }
         }
 
-        public ControllerBuilder WithUltrasoundFreq(Freq<uint> freq)
-        {
-            _ptr = NativeMethodsBase.AUTDControllerBuilderWithUltrasoundFreq(_ptr, freq.Hz);
-            return this;
-        }
-
         public ControllerBuilder WithSendInterval(TimeSpan interval)
         {
             _ptr = NativeMethodsBase.AUTDControllerBuilderWithSendInterval(_ptr, (ulong)(interval.TotalMilliseconds * 1000 * 1000));

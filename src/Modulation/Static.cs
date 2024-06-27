@@ -20,6 +20,6 @@ namespace AUTD3Sharp.Modulation
 
         public byte Intensity { get; }
 
-        private ModulationPtr ModulationPtr(Geometry _) => NativeMethodsBase.AUTDModulationStatic(Intensity, LoopBehavior);
+        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity, LoopBehavior);
     }
 }

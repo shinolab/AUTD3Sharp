@@ -79,9 +79,8 @@ public class SquareTest
     {
 #pragma warning disable CS8602, CS8605
         var m = new Square(0.0f * Hz);
-        var autd = AUTDTest.CreateControllerSync();
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSquareIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Square).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
-            [autd.Geometry])));
+            [])));
 #pragma warning restore CS8602, CS8605
     }
 }

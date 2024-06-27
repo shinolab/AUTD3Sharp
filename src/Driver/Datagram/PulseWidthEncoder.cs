@@ -13,15 +13,15 @@ namespace AUTD3Sharp
     public sealed class PulseWidthEncoder : IDatagram
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate ushort PulseWidthEncoderDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, ushort idx);
+        public delegate ushort PulseWidthEncoderDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, ushort idx);
 
         private readonly PulseWidthEncoderDelegate? _f;
-        private ConcurrentDictionary<ushort, Func<ushort, ushort>>? _cache;
+        private readonly ConcurrentDictionary<ushort, Func<ushort, ushort>>? _cache;
 
         public PulseWidthEncoder(Func<Device, Func<ushort, ushort>> f)
         {
             _cache = new ConcurrentDictionary<ushort, Func<ushort, ushort>>();
-            _f = (context, geometryPtr, devIdx, idx) =>
+            _f = (_, geometryPtr, devIdx, idx) =>
             {
                 var h = _cache.GetOrAdd(devIdx, f(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx))));
                 return h(idx);
@@ -35,7 +35,7 @@ namespace AUTD3Sharp
 
         DatagramPtr IDatagram.Ptr(Geometry geometry)
         {
-            return _f == null ? NativeMethodsBase.AUTDDatagramPulseWidthEncoderDefault() : NativeMethodsBase.AUTDDatagramPulseWidthEncoder(Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, geometry.Ptr);
+            return _f == null ? NativeMethodsBase.AUTDDatagramPulseWidthEncoderDefault() : NativeMethodsBase.AUTDDatagramPulseWidthEncoder(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.Ptr);
         }
     }
 }

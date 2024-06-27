@@ -7,7 +7,7 @@ public partial class Burst
     {
     }
 
-    private byte[] Calc(Geometry geometry)
+    private byte[] Calc()
     {
         var buf = new byte[10];
         buf[0] = 0xFF;

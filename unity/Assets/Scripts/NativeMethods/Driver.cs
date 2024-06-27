@@ -62,6 +62,8 @@ namespace AUTD3Sharp.NativeMethods
         public uint freq;
         [FieldOffset(0)]
         public float freq_nearest;
+        [FieldOffset(0)]
+        public ulong period_ns;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -69,6 +71,24 @@ namespace AUTD3Sharp.NativeMethods
     {
         public SamplingConfigTag tag;
         public SamplingConfigValue value;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public unsafe partial struct STMSamplingConfigValue
+    {
+        [FieldOffset(0)]
+        public float freq;
+        [FieldOffset(0)]
+        public ulong period_ns;
+        [FieldOffset(0)]
+        public SamplingConfigWrap sampling_config;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct STMSamplingConfigWrap
+    {
+        public STMSamplingConfigTag tag;
+        public STMSamplingConfigValue value;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -79,7 +99,7 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ContextPtr
+    public unsafe partial struct ConstPtr
     {
         public IntPtr Item1;
     }
@@ -107,7 +127,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public DatagramPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -145,7 +165,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public ModulationPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -165,7 +185,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public FociSTMPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -173,7 +193,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public GainSTMPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -181,7 +201,39 @@ namespace AUTD3Sharp.NativeMethods
     {
         public int result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultU32
+    {
+        public uint result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultF32
+    {
+        public float result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultU64
+    {
+        public ulong result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultSamplingConfigWrap
+    {
+        public SamplingConfigWrap result;
+        public uint err_len;
+        public ConstPtr err;
     }
 
 
@@ -223,6 +275,17 @@ namespace AUTD3Sharp.NativeMethods
         DivisionRaw = 1,
         Freq = 2,
         FreqNearest = 3,
+        Period = 4,
+        PeriodNearest = 5,
+    }
+
+    public enum STMSamplingConfigTag : byte
+    {
+        Freq = 1,
+        FreqNearest = 2,
+        Period = 3,
+        PeriodNearest = 4,
+        SamplingConfig = 5,
     }
 
     public enum TransitionModeTag : byte

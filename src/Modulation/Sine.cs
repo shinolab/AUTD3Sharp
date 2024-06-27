@@ -39,6 +39,6 @@ namespace AUTD3Sharp.Modulation
 
         internal ISamplingMode Mode { get; }
 
-        private ModulationPtr ModulationPtr(Geometry _) => Mode.SinePtr(_config, Intensity, Offset, Phase, LoopBehavior);
+        private ModulationPtr ModulationPtr() => Mode.SinePtr(_config, Intensity, Offset, Phase, LoopBehavior);
     }
 }

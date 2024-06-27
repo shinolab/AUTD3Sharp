@@ -31,7 +31,7 @@ namespace AUTD3Sharp
             _datagrams = new PList<DatagramPtr>();
             _keymap = new Dictionary<object, int>();
             _k = 0;
-            _f = (context, geometryPtr, devIdx) =>
+            _f = (_, geometryPtr, devIdx) =>
             {
                 var key = map(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)));
                 return key != null ? _keymap[key] : -1;
@@ -62,7 +62,7 @@ namespace AUTD3Sharp
                 fixed (DatagramPtr* dp = &_datagrams.Items[0])
                 {
                     future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
-                        Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero },
+                        new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero },
                         _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count);
                 }
             }
@@ -79,7 +79,7 @@ namespace AUTD3Sharp
                 fixed (DatagramPtr* dp = &_datagrams.Items[0])
                 {
                     var future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
-                        Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero },
+                        new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero },
                         _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count);
                     var result = NativeMethodsBase.AUTDWaitLocalResultI32(_controller.Runtime, future);
                     result.Validate();

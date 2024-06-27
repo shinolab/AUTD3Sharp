@@ -8,18 +8,18 @@ namespace AUTD3Sharp.Modulation
     {
         private readonly byte[] _buf;
 
-        public Custom(byte[] buf, SamplingConfigWrap config)
+        public Custom(byte[] buf, SamplingConfig config)
         {
             _buf = buf;
             _config = config;
         }
 
-        private ModulationPtr ModulationPtr(Geometry _)
+        private ModulationPtr ModulationPtr()
         {
             unsafe
             {
                 fixed (byte* pBuf = &_buf[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, pBuf, (ushort)_buf.Length);
+                    return NativeMethodsBase.AUTDModulationRaw(_config.Inner, LoopBehavior, pBuf, (ushort)_buf.Length);
             }
         }
     }

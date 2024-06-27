@@ -31,6 +31,6 @@ namespace AUTD3Sharp.Modulation
 
         private ISamplingMode Mode { get; }
 
-        private ModulationPtr ModulationPtr(Geometry _) => Mode.SquarePtr(_config, Low, High, Duty, LoopBehavior);
+        private ModulationPtr ModulationPtr() => Mode.SquarePtr(_config, Low, High, Duty, LoopBehavior);
     }
 }

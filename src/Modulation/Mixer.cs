@@ -15,9 +15,9 @@ namespace AUTD3Sharp.Modulation
             _components = iter as Sine[] ?? iter.ToArray();
         }
 
-        private ModulationPtr ModulationPtr(Geometry geometry)
+        private ModulationPtr ModulationPtr()
         {
-            var components = _components.Select(m => ((Driver.Datagram.Modulation.IModulation)m).ModulationPtr(geometry)).ToArray();
+            var components = _components.Select(m => ((Driver.Datagram.Modulation.IModulation)m).ModulationPtr()).ToArray();
             unsafe
             {
                 fixed (ModulationPtr* p = &components[0])

@@ -9,15 +9,15 @@ namespace AUTD3Sharp
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public delegate bool ForceFanDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx);
+        public delegate bool ForceFanDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx);
 
         private readonly ForceFanDelegate _f;
 
         public ForceFan(Func<Device, bool> f)
         {
-            _f = (context, geometryPtr, devIdx) => f(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)));
+            _f = (_, geometryPtr, devIdx) => f(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)));
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramForceFan(Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr{Item1 = IntPtr.Zero }, geometry.Ptr);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramForceFan(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.Ptr);
     }
 }

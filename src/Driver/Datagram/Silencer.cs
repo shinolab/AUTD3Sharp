@@ -16,7 +16,7 @@ namespace AUTD3Sharp
                 _valuePhase = valuePhase;
             }
 
-            DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRate(_valueIntensity, _valuePhase);
+            DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(_valueIntensity, _valuePhase);
         }
 
         public sealed class SilencerFixedCompletionSteps : IDatagram
@@ -38,11 +38,11 @@ namespace AUTD3Sharp
                 return this;
             }
 
-            DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionSteps(_valueIntensity, _valuePhase, _strictMode);
+            DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(_valueIntensity, _valuePhase, _strictMode);
         }
 
-        public static SilencerFixedUpdateRate FixedUpdateRate(ushort valueIntensity, ushort valuePhase) => new SilencerFixedUpdateRate(valueIntensity, valuePhase);
-        public static SilencerFixedCompletionSteps FixedCompletionSteps(ushort valueIntensity, ushort valuePhase) => new SilencerFixedCompletionSteps(valueIntensity, valuePhase);
+        public static SilencerFixedUpdateRate FromUpdateRate(ushort valueIntensity, ushort valuePhase) => new SilencerFixedUpdateRate(valueIntensity, valuePhase);
+        public static SilencerFixedCompletionSteps FromCompletionSteps(ushort valueIntensity, ushort valuePhase) => new SilencerFixedCompletionSteps(valueIntensity, valuePhase);
         public static SilencerFixedCompletionSteps Disable() => new SilencerFixedCompletionSteps(1, 1);
         public static SilencerFixedCompletionSteps Default() => new SilencerFixedCompletionSteps(10, 40);
     }

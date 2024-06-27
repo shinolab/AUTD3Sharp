@@ -114,7 +114,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public PlotConfigPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -128,7 +128,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public PyPlotConfigPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
 

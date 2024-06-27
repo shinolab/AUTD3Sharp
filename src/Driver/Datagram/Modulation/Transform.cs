@@ -5,7 +5,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Driver.Datagram.Modulation
 {
-    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public delegate byte ModTransformDelegate(IntPtr context, uint i, byte d);
+    [UnmanagedFunctionPointer(CallingConvention.Cdecl)] public delegate byte ModTransformDelegate(ConstPtr context, uint i, byte d);
 
     [Modulation(ConfigNoChange = true, NoTransform = true)]
     public sealed partial class Transform<TM>
@@ -17,9 +17,9 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
         public Transform(TM m, Func<int, byte, byte> f)
         {
             _m = m;
-            _f = (context, i, d) => f((int)i, d);
+            _f = (_, i, d) => f((int)i, d);
         }
 
-        private ModulationPtr ModulationPtr(Geometry geometry) => NativeMethodsBase.AUTDModulationWithTransform(_m.ModulationPtr(geometry), Marshal.GetFunctionPointerForDelegate(_f), IntPtr.Zero, LoopBehavior);
+        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationWithTransform(_m.ModulationPtr(), new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, LoopBehavior);
     }
 }

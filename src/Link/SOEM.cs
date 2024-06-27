@@ -95,11 +95,13 @@ namespace AUTD3Sharp.Link
                     var msgBytes = new byte[128];
                     unsafe
                     {
+#pragma warning disable CA1806
                         fixed (byte* p = &msgBytes[0]) NativeMethodsLinkSOEM.AUTDLinkSOEMStatusGetMsg(status, p);
+#pragma warning restore CA1806
                     }
                     handler((int)slave, status.Into(), System.Text.Encoding.UTF8.GetString(msgBytes).TrimEnd('\0'));
                 };
-                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithErrHandler(_ptr, Marshal.GetFunctionPointerForDelegate(_errHandler), IntPtr.Zero);
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithErrHandler(_ptr, new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_errHandler)}, new ConstPtr { Item1 = IntPtr.Zero});
                 return this;
             }
 

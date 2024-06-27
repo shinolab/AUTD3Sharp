@@ -7,7 +7,7 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigFreq()
     {
-        var m = SamplingConfig.Freq(4000u * Hz);
+        var m = (SamplingConfigWrap)SamplingConfig.Freq(4000u * Hz);
         Assert.Equal(SamplingConfigTag.Freq, m.tag);
         Assert.Equal(4000u, m.value.freq);
     }
@@ -15,7 +15,7 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigFreqNearest()
     {
-        var m = SamplingConfig.FreqNearest(4000.0f * Hz);
+        var m = (SamplingConfigWrap)SamplingConfig.FreqNearest(4000.0f * Hz);
         Assert.Equal(SamplingConfigTag.FreqNearest, m.tag);
         Assert.Equal(4000.0f, m.value.freq_nearest);
     }
@@ -23,7 +23,7 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigFreqDivision()
     {
-        var m = SamplingConfig.Division(5120u);
+        var m = (SamplingConfigWrap)SamplingConfig.Division(5120u);
         Assert.Equal(SamplingConfigTag.Division, m.tag);
         Assert.Equal(5120u, m.value.div);
     }
@@ -31,7 +31,7 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigFreqDivisionRaw()
     {
-        var m = SamplingConfig.DivisionRaw(5120u);
+        var m = (SamplingConfigWrap)SamplingConfig.DivisionRaw(5120u);
         Assert.Equal(SamplingConfigTag.DivisionRaw, m.tag);
         Assert.Equal(5120u, m.value.div);
     }

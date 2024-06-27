@@ -12,20 +12,21 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
     {
         private readonly TM _m;
         private byte[] _cache;
+        private SamplingConfigWrap? _sampling_config;
 
         public Cache(TM m)
         {
             _m = m;
             _cache = Array.Empty<byte>();
-            LoopBehavior = m.LoopBehavior();
-            _config = m.SamplingConfig();
+            _loopBehavior = m.LoopBehavior;
         }
 
-        public ReadOnlySpan<byte> Init(Geometry geometry)
+        public ReadOnlySpan<byte> Init()
         {
             if (_cache.Length != 0) return Buffer;
-            var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr(geometry), geometry.Ptr);
+            var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr());
             var res = ptr.Validate();
+            _sampling_config = ptr.config;
             _cache = new byte[NativeMethodsBase.AUTDModulationCalcGetSize(res)];
             unsafe
             {
@@ -36,13 +37,13 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             return Buffer;
         }
 
-        private ModulationPtr ModulationPtr(Geometry geometry)
+        private ModulationPtr ModulationPtr()
         {
-            Init(geometry);
+            Init();
             unsafe
             {
                 fixed (byte* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_config, LoopBehavior, pBuf, (ushort)_cache.Length);
+                    return NativeMethodsBase.AUTDModulationRaw(_sampling_config!.Value, LoopBehavior, pBuf, (ushort)_cache.Length);
             }
         }
 

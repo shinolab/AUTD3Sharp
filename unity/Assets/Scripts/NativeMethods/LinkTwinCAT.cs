@@ -61,7 +61,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public LinkRemoteTwinCATBuilderPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
 

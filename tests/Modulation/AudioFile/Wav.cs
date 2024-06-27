@@ -104,15 +104,4 @@ public class WavTest
             }
         }
     }
-
-    [Fact]
-    public void WavDefault()
-    {
-#pragma warning disable CS8602, CS8605
-        var m = new Wav(" ");
-        var autd = AUTDTest.CreateControllerSync();
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsModulationAudioFile.AUTDModulationWavIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Wav).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
-            [autd.Geometry])));
-#pragma warning restore CS8602, CS8605
-    }
 }

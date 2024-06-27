@@ -9,9 +9,8 @@
     <readme>README.md</readme>
     <description>$description$</description>
     <dependencies>
-      <group targetFramework=".NETStandard2.1">
-        <dependency id="NETStandard.Library" version="2.0.3" exclude="Build,Analyzers" />
-        <dependency id="AUTD3Sharp.Derive" version="25.3.2" >
+      <group targetFramework="net8.0">
+        <dependency id="AUTD3Sharp.Derive" version="26.0.0-rc.0" >
         	<OutputItemType>Analyzer</OutputItemType>
 			    <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
         </dependency>
@@ -22,7 +21,7 @@
   <files>
     <file src="LICENSE.txt" target=""/>
     <file src="../README.md" target=""/>
-    <file src="bin\$config$\netstandard2.1\$id$.dll" target="lib\netstandard2.1" />
+    <file src="bin\$config$\net8.0\$id$.dll" target="lib\net8.0" />
     <file src="native\windows\x64\*.dll" target="runtimes\win-x64\native" />
     <file src="native\windows\arm\*.dll" target="runtimes\win-arm64\native" />
     <file src="native\linux\x64\*.so" target="runtimes\linux-x64\native" />

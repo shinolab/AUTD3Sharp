@@ -52,7 +52,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
                     dst->phase = d.Phase.Value;
                 };
 
-                return NativeMethodsBase.AUTDGainCustom(Marshal.GetFunctionPointerForDelegate(_f), new ContextPtr { Item1 = IntPtr.Zero }, ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetGeometryPtr(geometry));
+                return NativeMethodsBase.AUTDGainCustom(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetGeometryPtr(geometry));
             }
         }
         

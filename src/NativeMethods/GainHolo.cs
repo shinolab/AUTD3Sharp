@@ -17,9 +17,6 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintDotCare", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern EmissionConstraintWrap AUTDGainHoloConstraintDotCare();
-
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintNormalize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern EmissionConstraintWrap AUTDGainHoloConstraintNormalize();
 
@@ -144,13 +141,12 @@ namespace AUTD3Sharp.NativeMethods
     {
         public BackendPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
 
     public enum EmissionConstraintTag : byte
     {
-        DontCare = 0,
         Normalize = 1,
         Uniform = 2,
         Multiply = 3,

@@ -12,7 +12,7 @@ namespace AUTD3Sharp.Gain.Holo
     {
         private readonly TB _backend;
 
-        public GSPAT(TB backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.DontCare, iter)
+        public GSPAT(TB backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
         {
             _backend = backend;
             Repeat = 100;

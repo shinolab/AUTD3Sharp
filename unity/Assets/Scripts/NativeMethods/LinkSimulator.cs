@@ -46,7 +46,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public LinkSimulatorBuilderPtr result;
         public uint err_len;
-        public IntPtr err;
+        public ConstPtr err;
     }
 
 

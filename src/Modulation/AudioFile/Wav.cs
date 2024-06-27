@@ -13,14 +13,14 @@ namespace AUTD3Sharp.Modulation.AudioFile
             _filename = filename;
         }
 
-        private ModulationPtr ModulationPtr(Geometry _)
+        private ModulationPtr ModulationPtr()
         {
             var filenameBytes = System.Text.Encoding.UTF8.GetBytes(_filename);
             unsafe
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationWav(fp, LoopBehavior).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileWav(fp, LoopBehavior).Validate();
                 }
             }
         }

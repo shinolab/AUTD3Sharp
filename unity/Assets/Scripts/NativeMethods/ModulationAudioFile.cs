@@ -17,18 +17,14 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
-        [DllImport(__DllName, EntryPoint = "AUTDModulationWav", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationWav(byte* path, LoopBehavior loop_behavior);
+        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileWav", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultModulation AUTDModulationAudioFileWav(byte* path, LoopBehavior loop_behavior);
 
-        [DllImport(__DllName, EntryPoint = "AUTDModulationWavIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDModulationWavIsDefault(ModulationPtr wav);
+        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileRawPCM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultModulation AUTDModulationAudioFileRawPCM(byte* path, uint sample_rate, LoopBehavior loop_behavior);
 
-        [DllImport(__DllName, EntryPoint = "AUTDModulationRawPCM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationRawPCM(byte* path, uint sample_rate, LoopBehavior loop_behavior);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationCsv", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationCsv(byte* path, uint sample_rate, byte deliminator, LoopBehavior loop_behavior);
+        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileCsv", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultModulation AUTDModulationAudioFileCsv(byte* path, uint sample_rate, byte deliminator, LoopBehavior loop_behavior);
 
 
     }
