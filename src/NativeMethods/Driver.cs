@@ -21,11 +21,6 @@ namespace AUTD3Sharp.NativeMethods
         public const float TRANS_SPACING_MM = 10.16f;
         public const float DEVICE_HEIGHT_MM = 151.4f;
         public const float DEVICE_WIDTH_MM = 192f;
-        public const byte TRACE_LEVEL_ERROR = 1;
-        public const byte TRACE_LEVEL_WARN = 2;
-        public const byte TRACE_LEVEL_INFO = 3;
-        public const byte TRACE_LEVEL_DEBUG = 4;
-        public const byte TRACE_LEVEL_TRACE = 5;
         public const int AUTD3_TRUE = 1;
         public const int AUTD3_FALSE = 0;
 

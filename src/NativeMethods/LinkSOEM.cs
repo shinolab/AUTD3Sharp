@@ -18,7 +18,7 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDAUTDLinkSOEMTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDAUTDLinkSOEMTracingInit(byte level);
+        public static extern void AUTDAUTDLinkSOEMTracingInit();
 
         [DllImport(__DllName, EntryPoint = "AUTDAdapterPointer", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern EthernetAdaptersPtr AUTDAdapterPointer();

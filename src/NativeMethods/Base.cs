@@ -432,7 +432,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ResultFirmwareVersionList AUTDWaitResultFirmwareVersionList(RuntimePtr runtime, FfiFuture future);
 
         [DllImport(__DllName, EntryPoint = "AUTDTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDTracingInit(byte level);
+        public static extern void AUTDTracingInit();
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAudit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkAuditBuilderPtr AUTDLinkAudit();
