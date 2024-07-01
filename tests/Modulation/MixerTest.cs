@@ -59,7 +59,7 @@ public class MixerTest
                                     0,   0,   0,  0,   1,   1,   1,   0,   0,   0,   0,   0,   1,   3,   6,   11,  17,  26,  36,  49 };
 
         {
-            var m = new Mixer([Sine.WithFreqNearest(50.0f * Hz), Sine.WithFreqNearest(100.0f * Hz)]);
+            var m = new Mixer([Sine.FromFreqNearest(50.0f * Hz), Sine.FromFreqNearest(100.0f * Hz)]);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)
