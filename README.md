@@ -6,7 +6,7 @@
 [![NuGet stable version](https://img.shields.io/nuget/v/autd3sharp)](https://nuget.org/packages/AUTD3Sharp)
 [![autd3-unity](https://img.shields.io/npm/v/com.shinolab.autd3?label=autd3-unity)](https://www.npmjs.com/package/com.shinolab.autd3)
 
-[autd3](https://github.com/shinolab/autd3-rs) wrapper for .Net Standard 2.1
+[autd3](https://github.com/shinolab/autd3-rs) wrapper for .NET 8+.
 
 ## Install
 

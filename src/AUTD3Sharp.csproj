@@ -5,7 +5,7 @@
     <LangVersion>9.0</LangVersion>
     <Platforms>AnyCPU</Platforms>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>26.0.0</Version>
+    <Version>26.0.0.1</Version>
     <Authors>Shun Suzuki</Authors>
     <Company>Shinolab</Company>
     <Description>AUTD3 library wrapper for .Net</Description>
