@@ -11,7 +11,7 @@ public class ConstraintTest
         var autd = await AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
-        var g = new Naive<NalgebraBackend>(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+        var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
         await autd.SendAsync(g);
@@ -30,7 +30,7 @@ public class ConstraintTest
         var autd = await AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
-        var g = new Naive<NalgebraBackend>(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+        var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Normalize);
 
         await autd.SendAsync(g);
@@ -50,7 +50,7 @@ public class ConstraintTest
             var autd = await AUTDTest.CreateController();
 
             var backend = new NalgebraBackend();
-            var g = new Naive<NalgebraBackend>(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+            var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
                 .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(67), new EmitIntensity(85)));
 
             await autd.SendAsync(g);
@@ -68,7 +68,7 @@ public class ConstraintTest
             var autd = await AUTDTest.CreateController();
 
             var backend = new NalgebraBackend();
-            var g = new Naive<NalgebraBackend>(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+            var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
                 .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(10), new EmitIntensity(20)));
 
             await autd.SendAsync(g);
@@ -89,7 +89,7 @@ public class ConstraintTest
         var autd = await AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
-        var g = new Naive<NalgebraBackend>(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+        var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Multiply(0));
 
         await autd.SendAsync(g);

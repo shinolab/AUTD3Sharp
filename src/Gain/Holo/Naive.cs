@@ -6,13 +6,11 @@ using System.Collections.Generic;
 namespace AUTD3Sharp.Gain.Holo
 {
     [Gain]
-    public sealed partial class Naive<TB> : Holo<Naive<TB>>
-          where TB : Backend
+    public sealed partial class Naive : Holo<Naive>
     {
-        private readonly TB _backend;
+        private readonly Backend _backend;
 
-
-        public Naive(TB backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        public Naive(Backend backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
         {
             _backend = backend;
         }

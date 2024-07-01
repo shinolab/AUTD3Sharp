@@ -7,12 +7,11 @@ namespace AUTD3Sharp.Gain.Holo
 {
     [Gain]
     [Builder]
-    public sealed partial class GS<TB> : Holo<GS<TB>>
-            where TB : Backend
+    public sealed partial class GS : Holo<GS>
     {
-        private readonly TB _backend;
+        private readonly Backend _backend;
 
-        public GS(TB backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        public GS(Backend backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
         {
             _backend = backend;
             Repeat = 100;

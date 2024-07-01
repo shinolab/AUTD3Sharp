@@ -11,7 +11,7 @@ public class GSPATTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
-        var g = new GSPAT<NalgebraBackend>(backend, new float[] { -40, 40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
+        var g = new GSPAT(backend, new float[] { -40, 40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
             .WithRepeat(100)
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
@@ -31,8 +31,8 @@ public class GSPATTest
 #pragma warning disable CS8602, CS8605
         var autd = await AUTDTest.CreateController();
         var backend = new NalgebraBackend();
-        var g = new GSPAT<NalgebraBackend>(backend, [(autd.Geometry.Center, 5e3f * Pa), (autd.Geometry.Center, 5e3f * Pa)]);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGSPATIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(GSPAT<NalgebraBackend>).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g,
+        var g = new GSPAT(backend, [(autd.Geometry.Center, 5e3f * Pa), (autd.Geometry.Center, 5e3f * Pa)]);
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGSPATIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(GSPAT).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g,
             [autd.Geometry])));
 #pragma warning restore CS8602, CS8605
     }

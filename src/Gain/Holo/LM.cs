@@ -8,13 +8,12 @@ namespace AUTD3Sharp.Gain.Holo
 {
     [Gain]
     [Builder]
-    public sealed partial class LM<TB> : Holo<LM<TB>>
-        where TB : Backend
+    public sealed partial class LM : Holo<LM>
     {
-        private readonly TB _backend;
+        private readonly Backend _backend;
         private float[] _initial;
 
-        public LM(TB backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        public LM(Backend backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
         {
             _backend = backend;
             Eps1 = 1e-8f;
@@ -24,7 +23,7 @@ namespace AUTD3Sharp.Gain.Holo
             _initial = Array.Empty<float>();
         }
 
-        public LM<TB> WithInitial(float[] value)
+        public LM WithInitial(float[] value)
         {
             _initial = value;
             return this;

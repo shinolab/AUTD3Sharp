@@ -7,12 +7,11 @@ namespace AUTD3Sharp.Gain.Holo
 {
     [Gain]
     [Builder]
-    public sealed partial class SDP<TB> : Holo<SDP<TB>>
-           where TB : Backend
+    public sealed partial class SDP : Holo<SDP>
     {
-        private readonly TB _backend;
+        private readonly Backend _backend;
 
-        public SDP(TB backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        public SDP(Backend backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
         {
             _backend = backend;
             Alpha = 1e-3f;
