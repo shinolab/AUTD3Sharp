@@ -11,16 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build project
-        run: |
-          python3 build.py unity build --release
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - run: python3 build.py unity build --release
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org'
-      - name: Publish on npmjs
-        continue-on-error: true
+      - continue-on-error: true
         run: |
           mv unity/Assets/Samples unity/Assets/Samples~
           rm -f unity/Assets/Samples.meta
@@ -35,11 +31,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Build project
-        run: |
-          python3 build.py unity build --release
-      - name: create npm branch
-        run: |
+      - run: python3 build.py unity build --release
+      - run: |
           git fetch origin upm/latest:upm/latest
           git config --global user.name 'github-bot'
           git config --global user.email 'github-bot@users.noreply.github.com'
@@ -55,16 +48,14 @@ jobs:
           git checkout upm/latest
           git clean -fxd
           git push -f -u origin upm/latest
-      - name: Get upm tag name
-        id: get_upm_tag
+      - id: get_upm_tag
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
           script: |
             return 'upm/'+context.payload.ref.replace(/refs\/tags\//, '');
-      - name: upm git tag
-        run: |
+      - run: |
           git tag $TAG upm/latest
           git push origin $TAG
         env:
@@ -75,15 +66,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v4
+    - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
-    - name: Get the version
-      id: get_version
+    - id: get_version
       run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3 | cut -d . -f 1,2,3)" >> $GITHUB_OUTPUT
-    - name: Build with dotnet and publish to NuGet
-      run: |
+    - run: |
         python3 build.py cs build --release
         cd derive/bin/Release
         dotnet nuget push autd3sharp.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate --no-symbols

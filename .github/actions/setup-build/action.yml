@@ -15,7 +15,6 @@ runs:
       uses: actions/setup-python@v5
       with:
         python-version: 3.12
-
     - name: Setup .NET Core
       if: needs.check.outputs.status
       uses: actions/setup-dotnet@v4

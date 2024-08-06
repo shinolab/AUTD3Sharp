@@ -2,48 +2,28 @@ name: Coverage
 
 on:
   push:
-    branches:
-      - 'develop'
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  check-src:
-    runs-on: ubuntu-latest
-    name: check if src files changed
-    outputs:
-      status: ${{ steps.changed-files.outputs.modified_files }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: tj-actions/changed-files@v42
-        id: changed-files
-        with:
-          files: |
-            .github/actions/setup-build/action.yml
-            .github/workflows/coverage.yml
-            ./src/AUTD3Sharp.csproj
-            ./src/AUTD3Sharp.nuspec
-            ./**/*.cs
-
   coverage:
-    needs: check-src
-    if: needs.check-src.outputs.status
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Setup
-        uses: ./.github/actions/setup-build
+      - uses: ./.github/actions/setup-build
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           os: ubuntu-latest
-
-      - name: Generate code coverage for csharp
-        run: |
+      - run: |
           python build.py cs cov
           cp $(find tests -name "coverage.cobertura.xml") ./
-
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+      - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.cobertura.xml
           fail_ci_if_error: true
-    

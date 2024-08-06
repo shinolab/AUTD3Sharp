@@ -2,81 +2,40 @@ name: build
 
 on:
   push:
-    branches:
-      - 'develop'
-  pull_request:
-    types: [opened, reopened, review_requested]
+    branches: [ "main" ]
 
-env:
-  CARGO_INCREMENTAL: 0
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
-  check:
-    runs-on: ubuntu-latest
-    name: check if files changed
-    outputs:
-      status: ${{ steps.changed-files.outputs.modified_files }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: tj-actions/changed-files@v42
-        id: changed-files
-        with:
-          files: |
-            .github/actions/setup-build/action.yml
-            .github/workflows/build-cs.yml
-            src/AUTD3Sharp.csproj
-            src/AUTD3Sharp.nuspec
-            ./**/*.cs
-            unity/Assets/package.json
-            build.py
-
-  build:
-    needs: check
-    name: build-cs-${{ matrix.os }}
+  test:
+    name: test-on-${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-
     steps:
       - uses: actions/checkout@v4
-      - name: Setup
-        if: needs.check.outputs.status
-        uses: ./.github/actions/setup-build
+      - uses: ./.github/actions/setup-build
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           os: ${{ matrix.os }}
+      - run: python3 build.py cs build
+      - run: python3 build.py cs test
 
-      - name: Build cs library on ${{ matrix.os }}
-        if: needs.check.outputs.status
-        run: |
-          python3 build.py cs build
-
-      - name: Test library on ${{ matrix.os }}
-        if: needs.check.outputs.status
-        run: |
-          python3 build.py cs test
-
-  build-unity:
-    needs: check
-    name: build-unity-${{ matrix.os }}
+  test-unity:
+    name: test-unity-on-${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-
     steps:
       - uses: actions/checkout@v4
-      - name: Setup
-        if: needs.check.outputs.status
-        uses: ./.github/actions/setup-build
+      - uses: ./.github/actions/setup-build
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           os: ${{ matrix.os }}
-
-      - name: Build unity library on ${{ matrix.os }}
-        if: needs.check.outputs.status
-        run: |
-          python3 build.py unity build
+      - run: python3 build.py unity build
