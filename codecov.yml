@@ -1,0 +1,16 @@
+codecov:
+  allow_coverage_offsets: true
+coverage:
+  status:
+    patch:
+    default_rules:
+    project:
+      default:
+        target: 100% || auto
+        threshold: 0%
+        base: auto
+        branches: 
+          - main
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
