@@ -9,7 +9,7 @@ public class PulseWidthEncoderTest
         var autd = await AUTDTest.CreateController();
 
         var rnd = new Random();
-        var buf = Enumerable.Range(0, 32768).Select(_ => (ushort)rnd.Next(0, 257)).OrderBy(i => i).ToArray();
+        var buf = Enumerable.Range(0, 256).Select(_ => (byte)rnd.Next(0, 256)).ToArray();
 
         await autd.SendAsync(new AUTD3Sharp.PulseWidthEncoder(dev => i => buf[i]));
         foreach (var dev in autd.Geometry)
@@ -24,9 +24,9 @@ public class PulseWidthEncoderTest
     {
         var autd = await AUTDTest.CreateController();
 
-        var buf = Enumerable.Range(0, 255 * 255 / 2).Select(i =>
-            (ushort)Math.Round(Math.Asin((float)i / (255 * 255 / 2)) / MathF.PI * 512)
-        ).Concat(Enumerable.Repeat((ushort)256, 32768 - 255 * 255 / 2)).ToArray();
+        var buf = Enumerable.Range(0, 256).Select(i =>
+            (byte)Math.Round(Math.Asin((float)i / 255) / MathF.PI * 256)
+        ).ToArray();
 
         await autd.SendAsync(new AUTD3Sharp.PulseWidthEncoder());
         foreach (var dev in autd.Geometry)

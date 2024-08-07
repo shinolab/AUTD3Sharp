@@ -20,7 +20,7 @@ public class MixerTest
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }
@@ -43,7 +43,7 @@ public class MixerTest
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }
@@ -67,7 +67,7 @@ public class MixerTest
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }

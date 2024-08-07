@@ -14,7 +14,7 @@ namespace AUTD3Sharp
         internal Geometry(GeometryPtr ptr)
         {
             Ptr = ptr;
-            _devices = Enumerable.Range(0, (int)NativeMethodsBase.AUTDGeometryNumDevices(Ptr)).Select(x => new Device((ushort)x, NativeMethodsBase.AUTDDevice(Ptr, (ushort)x))).ToList();
+            _devices = Enumerable.Range(0, (int)NativeMethodsBase.AUTDGeometryNumDevices(Ptr)).Select(x => new Device((ushort)x, Ptr)).ToList();
         }
 
         public int NumDevices => _devices.Count;

@@ -33,7 +33,7 @@ namespace AUTD3Sharp
             _k = 0;
             _f = (_, geometryPtr, devIdx) =>
             {
-                var key = map(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)));
+                var key = map(new Device(devIdx, geometryPtr));
                 return key != null ? _keymap[key] : -1;
             };
         }

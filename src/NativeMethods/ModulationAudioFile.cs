@@ -21,10 +21,10 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ResultModulation AUTDModulationAudioFileWav(byte* path, LoopBehavior loop_behavior);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileRawPCM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationAudioFileRawPCM(byte* path, uint sample_rate, LoopBehavior loop_behavior);
+        public static extern ResultModulation AUTDModulationAudioFileRawPCM(byte* path, SamplingConfig config, LoopBehavior loop_behavior);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileCsv", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationAudioFileCsv(byte* path, uint sample_rate, byte deliminator, LoopBehavior loop_behavior);
+        public static extern ResultModulation AUTDModulationAudioFileCsv(byte* path, SamplingConfig config, byte deliminator, LoopBehavior loop_behavior);
 
 
     }
