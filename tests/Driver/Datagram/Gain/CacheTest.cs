@@ -19,7 +19,7 @@ public class CacheTest
     {
         var autd = await AUTDTest.CreateController();
 
-        await autd.SendAsync(new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90)).WithCache());
+        await autd.SendAsync(new Uniform((new EmitIntensity(0x80), new Phase(0x90))).WithCache());
 
         foreach (var dev in autd.Geometry)
         {

@@ -13,7 +13,7 @@ public class GroupTest
         {
             var x when x < cx => "uniform",
             _ => "null"
-        }).Set("uniform", new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))).Set("null", new Null()));
+        }).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
         foreach (var dev in autd.Geometry)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
@@ -36,7 +36,7 @@ public class GroupTest
         {
             var x when x > cx => "uniform",
             _ => null
-        }).Set("uniform", new Uniform(new EmitIntensity(0x81)).WithPhase(new Phase(0x91))));
+        }).Set("uniform", new Uniform((new EmitIntensity(0x81), new Phase(0x91)))));
         foreach (var dev in autd.Geometry)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
@@ -67,7 +67,7 @@ public class GroupTest
         {
             var x when x < cx => "uniform",
             _ => "null"
-        }).Set("uniform", new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))).Set("null", new Null()));
+        }).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
         foreach (var dev in autd.Geometry)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
@@ -94,7 +94,7 @@ public class GroupTest
 
         var exception = await Record.ExceptionAsync(async () =>
         {
-            await autd.SendAsync(new Group(_ => _ => "null").Set("uniform", new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))).Set("null", new Null()));
+            await autd.SendAsync(new Group(_ => _ => "null").Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
         });
 
         if (exception == null) Assert.Fail("Exception is expected");
@@ -113,7 +113,7 @@ public class GroupTest
         {
             check[dev.Idx] = true;
             return "uniform";
-        }).Set("uniform", new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))));
+        }).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))));
 
         Assert.False(check[0]);
         Assert.True(check[1]);

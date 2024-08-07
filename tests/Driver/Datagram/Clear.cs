@@ -11,7 +11,7 @@ public class ClearTest
     public async Task TestClear()
     {
         using var autd = await CreateController();
-        await autd.SendAsync(new Uniform(EmitIntensity.Max).WithPhase(new Phase(0x90)));
+        await autd.SendAsync(new Uniform((new Phase(0x90), EmitIntensity.Max)));
         foreach (var dev in autd.Geometry)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);

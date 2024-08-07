@@ -8,7 +8,7 @@ public class VisualizerTest
     {
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
 
-        var g = new Uniform(0x80).WithPhase(0x81);
+        var g = new Uniform((new EmitIntensity(0x80), new Phase(0x81)));
         var m = Static.WithIntensity(0x82);
 
         autd.Send((m, g));
