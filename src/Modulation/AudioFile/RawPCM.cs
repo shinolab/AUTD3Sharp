@@ -7,12 +7,11 @@ namespace AUTD3Sharp.Modulation.AudioFile
     public sealed partial class RawPCM
     {
         private readonly string _filename;
-        private readonly Freq<uint> _sampleRate;
 
-        public RawPCM(string filename, Freq<uint> sampleRate)
+        public RawPCM(string filename, SamplingConfig config)
         {
             _filename = filename;
-            _sampleRate = sampleRate;
+            _config = config;
         }
 
         private ModulationPtr ModulationPtr()
@@ -22,7 +21,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileRawPCM(fp, _sampleRate.Hz, LoopBehavior).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileRawPCM(fp, _config.Inner, LoopBehavior).Validate();
                 }
             }
         }

@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram;
+using AUTD3Sharp.Driver.Datagram.Gain;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -14,26 +15,47 @@ namespace AUTD3Sharp
     {
         private readonly STMSamplingConfig _config;
 
-        private readonly Driver.Datagram.Gain.IGain[] _gains;
-        private GainSTMMode _mode;
+        private readonly IGain[] _gains;
+        private GainSTMMode _mode = GainSTMMode.PhaseIntensityFull;
 
-        public NativeMethods.LoopBehavior LoopBehavior { get; private set; }
+        public NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
 
-        private GainSTM(STMSamplingConfig config, IEnumerable<Driver.Datagram.Gain.IGain> iter)
+        private GainSTM(STMSamplingConfig config, IGain[] gains)
         {
             _config = config;
-
-            _gains = iter as Driver.Datagram.Gain.IGain[] ?? iter.ToArray();
-            _mode = GainSTMMode.PhaseIntensityFull;
-
-            LoopBehavior = AUTD3Sharp.LoopBehavior.Infinite;
+            _gains = gains;
         }
 
-        public static GainSTM FromFreq(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromFreq(freq), iter);
-        public static GainSTM FromFreqNearest(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromFreqNearest(freq), iter);
-        public static GainSTM FromPeriod(TimeSpan period, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromPeriod(period), iter);
-        public static GainSTM FromPeriodNearest(TimeSpan period, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromPeriodNearest(period), iter);
-        public static GainSTM FromSamplingConfig(SamplingConfig config, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromSamplingConfig(config), iter);
+        public GainSTM(Freq<float> freq, IEnumerable<IGain> iter)
+        {
+            _gains = iter as IGain[] ?? iter.ToArray();
+            _config = new STMSamplingConfig(freq, _gains.Length);
+        }
+
+        public GainSTM(TimeSpan period, IEnumerable<IGain> iter)
+        {
+            _gains = iter as IGain[] ?? iter.ToArray();
+            _config = new STMSamplingConfig(period, _gains.Length);
+        }
+
+        public GainSTM(SamplingConfig config, IEnumerable<IGain> iter)
+        {
+            _gains = iter as IGain[] ?? iter.ToArray();
+            _config = new STMSamplingConfig(config, _gains.Length);
+        }
+
+        public static GainSTM Nearest(Freq<float> freq, IEnumerable<IGain> iter)
+        {
+            var gains = iter as IGain[] ?? iter.ToArray();
+            var config = STMSamplingConfig.Nearest(freq, gains.Length);
+            return new GainSTM(config, gains);
+        }
+        public static GainSTM Nearest(TimeSpan period, IEnumerable<IGain> iter)
+        {
+            var gains = iter as IGain[] ?? iter.ToArray();
+            var config = STMSamplingConfig.Nearest(period, gains.Length);
+            return new GainSTM(config, gains);
+        }
 
         public GainSTM WithMode(GainSTMMode mode)
         {
@@ -69,12 +91,11 @@ namespace AUTD3Sharp
             }
         }
 
-        public DatagramWithSegmentTransition<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode)
-          => new DatagramWithSegmentTransition<GainSTM, GainSTMPtr>(this, segment, transitionMode);
+        public DatagramWithSegmentTransition<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
 
-        public Freq<float> Freq => _config.Freq(_gains.Length);
-        public TimeSpan Period => _config.Period(_gains.Length);
-        public SamplingConfig SamplingConfig => _config.SamplingConfig(_gains.Length);
+        public Freq<float> Freq => _config.Freq;
+        public TimeSpan Period => _config.Period;
+        public SamplingConfig SamplingConfig => _config.SamplingConfig;
     }
 }
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 
 namespace AUTD3Sharp.Utils
@@ -10,7 +9,6 @@ namespace AUTD3Sharp.Utils
         private const int DefaultCapacity = 4;
 
         internal T[] Items = Array.Empty<T>();
-        private int _size;
 
         [ExcludeFromCodeCoverage]
         public int Capacity
@@ -22,8 +20,8 @@ namespace AUTD3Sharp.Utils
                 if (value > 0)
                 {
                     var newItems = new T[value];
-                    if (_size > 0)
-                        Array.Copy(Items, newItems, _size);
+                    if (Count > 0)
+                        Array.Copy(Items, newItems, Count);
                     Items = newItems;
                 }
                 else
@@ -31,16 +29,16 @@ namespace AUTD3Sharp.Utils
             }
         }
 
-        public int Count => _size;
+        public int Count { get; private set; }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Add(T item)
         {
             var array = Items;
-            var size = _size;
+            var size = Count;
             if ((uint)size < (uint)array.Length)
             {
-                _size = size + 1;
+                Count = size + 1;
                 array[size] = item;
             }
             else
@@ -50,9 +48,9 @@ namespace AUTD3Sharp.Utils
         [MethodImpl(MethodImplOptions.NoInlining)]
         private void AddWithResize(T item)
         {
-            var size = _size;
+            var size = Count;
             Grow(size + 1);
-            _size = size + 1;
+            Count = size + 1;
             Items[size] = item;
         }
 

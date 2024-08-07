@@ -45,45 +45,7 @@ namespace AUTD3Sharp.NativeMethods
     [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct LoopBehavior
     {
-        public uint rep;
-    }
-
-    [StructLayout(LayoutKind.Explicit)]
-    public unsafe partial struct SamplingConfigValue
-    {
-        [FieldOffset(0)]
-        public uint div;
-        [FieldOffset(0)]
-        public uint freq;
-        [FieldOffset(0)]
-        public float freq_nearest;
-        [FieldOffset(0)]
-        public ulong period_ns;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct SamplingConfigWrap
-    {
-        public SamplingConfigTag tag;
-        public SamplingConfigValue value;
-    }
-
-    [StructLayout(LayoutKind.Explicit)]
-    public unsafe partial struct STMSamplingConfigValue
-    {
-        [FieldOffset(0)]
-        public float freq;
-        [FieldOffset(0)]
-        public ulong period_ns;
-        [FieldOffset(0)]
-        public SamplingConfigWrap sampling_config;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct STMSamplingConfigWrap
-    {
-        public STMSamplingConfigTag tag;
-        public STMSamplingConfigValue value;
+        public ushort rep;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -200,37 +162,19 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultU32
+    public unsafe partial struct ResultSamplingConfig
     {
-        public uint result;
+        public SamplingConfig result;
         public uint err_len;
         public ConstPtr err;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultF32
-    {
-        public float result;
-        public uint err_len;
-        public ConstPtr err;
-    }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultU64
+    public enum SilencerTarget : byte
     {
-        public ulong result;
-        public uint err_len;
-        public ConstPtr err;
+        Intensity = 0,
+        PulseWidth = 1,
     }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultSamplingConfigWrap
-    {
-        public SamplingConfigWrap result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
 
     public enum DebugTypeTag : byte
     {
@@ -262,25 +206,6 @@ namespace AUTD3Sharp.NativeMethods
         O1 = 1,
         O2 = 2,
         O3 = 3,
-    }
-
-    public enum SamplingConfigTag : byte
-    {
-        Division = 0,
-        DivisionRaw = 1,
-        Freq = 2,
-        FreqNearest = 3,
-        Period = 4,
-        PeriodNearest = 5,
-    }
-
-    public enum STMSamplingConfigTag : byte
-    {
-        Freq = 1,
-        FreqNearest = 2,
-        Period = 3,
-        PeriodNearest = 4,
-        SamplingConfig = 5,
     }
 
     public enum TransitionModeTag : byte

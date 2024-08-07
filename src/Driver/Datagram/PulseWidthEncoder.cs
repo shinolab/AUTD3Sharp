@@ -23,7 +23,7 @@ namespace AUTD3Sharp
             _cache = new ConcurrentDictionary<ushort, Func<ushort, ushort>>();
             _f = (_, geometryPtr, devIdx, idx) =>
             {
-                var h = _cache.GetOrAdd(devIdx, f(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx))));
+                var h = _cache.GetOrAdd(devIdx, f(new Device(devIdx, geometryPtr)));
                 return h(idx);
             };
         }

@@ -5,37 +5,23 @@ using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp
 {
-    public sealed class SilencerFixedUpdateRate : IDatagram
-    {
-        private readonly ushort _valueIntensity;
-        private readonly ushort _valuePhase;
-
-        public SilencerFixedUpdateRate(ushort valueIntensity, ushort valuePhase)
-        {
-            _valueIntensity = valueIntensity;
-            _valuePhase = valuePhase;
-        }
-
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(_valueIntensity, _valuePhase);
-    }
-
     [Builder]
-    public sealed partial class SilencerFixedCompletionSteps : IDatagram
+    public sealed partial class SilencerFixedUpdateRate : IDatagram
     {
-        private readonly ushort _valueIntensity;
-        private readonly ushort _valuePhase;
+        private readonly byte _valueIntensity;
+        private readonly byte _valuePhase;
 
         [Property]
-        public bool StrictMode { get; private set; }
+        public SilencerTarget Target { get; private set; }
 
-        public SilencerFixedCompletionSteps(ushort valueIntensity, ushort valuePhase)
+        public SilencerFixedUpdateRate(byte valueIntensity, byte valuePhase)
         {
             _valueIntensity = valueIntensity;
             _valuePhase = valuePhase;
-            StrictMode = true;
+            Target = SilencerTarget.Intensity;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(_valueIntensity, _valuePhase, StrictMode);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(_valueIntensity, _valuePhase, Target.Into());
     }
 
     [Builder]
@@ -47,23 +33,26 @@ namespace AUTD3Sharp
         [Property]
         public bool StrictMode { get; private set; }
 
+        [Property]
+        public SilencerTarget Target { get; private set; }
+
         public SilencerFixedCompletionTime(TimeSpan valueIntensity, TimeSpan valuePhase)
         {
             _valueIntensity = valueIntensity;
             _valuePhase = valuePhase;
             StrictMode = true;
+            Target = SilencerTarget.Intensity;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(_valueIntensity.TotalMilliseconds * 1000 * 1000), (ulong)(_valuePhase.TotalMilliseconds * 1000 * 1000), StrictMode);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(_valueIntensity.TotalMilliseconds * 1000 * 1000), (ulong)(_valuePhase.TotalMilliseconds * 1000 * 1000), StrictMode, Target.Into());
     }
 
     public sealed class Silencer
     {
 
-        public static SilencerFixedUpdateRate FromUpdateRate(ushort valueIntensity, ushort valuePhase) => new SilencerFixedUpdateRate(valueIntensity, valuePhase);
-        public static SilencerFixedCompletionSteps FromCompletionSteps(ushort valueIntensity, ushort valuePhase) => new SilencerFixedCompletionSteps(valueIntensity, valuePhase);
-        public static SilencerFixedCompletionTime FromCompletionTime(TimeSpan valueIntensity, TimeSpan valuePhase) => new SilencerFixedCompletionTime(valueIntensity, valuePhase);
-        public static SilencerFixedCompletionSteps Disable() => new SilencerFixedCompletionSteps(1, 1);
-        public static SilencerFixedCompletionSteps Default() => new SilencerFixedCompletionSteps(10, 40);
+        public static SilencerFixedUpdateRate FromUpdateRate(byte valueIntensity, byte valuePhase) => new(valueIntensity, valuePhase);
+        public static SilencerFixedCompletionTime FromCompletionTime(TimeSpan valueIntensity, TimeSpan valuePhase) => new(valueIntensity, valuePhase);
+        public static SilencerFixedCompletionTime Disable() => new(TimeSpan.FromMicroseconds(25), TimeSpan.FromMicroseconds(25));
+        public static SilencerFixedCompletionTime Default() => new(TimeSpan.FromMicroseconds(250), TimeSpan.FromMicroseconds(1000));
     }
 }

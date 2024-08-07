@@ -16,6 +16,7 @@ namespace AUTD3Sharp
             }
             catch (Exception)
             {
+                // ignored
             }
         }
     }

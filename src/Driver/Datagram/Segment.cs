@@ -59,9 +59,9 @@ namespace AUTD3Sharp
 
     public static class SwapSegment
     {
-        public static SwapSegmentModulation Modulation(Segment segment, TransitionModeWrap transitionMode) => new SwapSegmentModulation(segment, transitionMode);
-        public static SwapSegmentFociSTM FociSTM(Segment segment, TransitionModeWrap transitionMode) => new SwapSegmentFociSTM(segment, transitionMode);
-        public static SwapSegmentGainSTM GainSTM(Segment segment, TransitionModeWrap transitionMode) => new SwapSegmentGainSTM(segment, transitionMode);
-        public static SwapSegmentGain Gain(Segment segment) => new SwapSegmentGain(segment);
+        public static SwapSegmentModulation Modulation(Segment segment, TransitionModeWrap transitionMode) => new(segment, transitionMode);
+        public static SwapSegmentFociSTM FociSTM(Segment segment, TransitionModeWrap transitionMode) => new(segment, transitionMode);
+        public static SwapSegmentGainSTM GainSTM(Segment segment, TransitionModeWrap transitionMode) => new(segment, transitionMode);
+        public static SwapSegmentGain Gain(Segment segment) => new(segment);
     }
 }

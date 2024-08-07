@@ -52,6 +52,7 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "ResultU32",
         "ResultF32",
         "ResultU64",
+        "SilencerTarget",
         "GPIOIn",
         "GPIOOut",
         "ResultModulation",
@@ -62,13 +63,11 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "ResultGainCalcDrivesMap",
         "GainCalcDrivesMapPtr",
         "GainSTMPtr",
-        "SamplingConfigWrap",
         "DebugTypeWrap",
         "TransitionModeWrap",
         "ResultGainSTM",
         "ResultFociSTM",
-        "STMSamplingConfigWrap",
-        "ResultSamplingConfigWrap",
+        "ResultSamplingConfig",
     ])
     .csharp_dll_name(dll_name)
     .csharp_class_name(format!("NativeMethods{}", class_name))
