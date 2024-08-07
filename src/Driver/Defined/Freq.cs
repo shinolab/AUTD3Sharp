@@ -16,6 +16,11 @@ namespace AUTD3Sharp
             Hz = hz;
         }
 
+        public override string ToString()
+        {
+            return $"{Hz}Hz";
+        }
+
         [ExcludeFromCodeCoverage]
         public bool Equals(Freq<T> other)
         {

@@ -1,29 +1,98 @@
 using System;
 using AUTD3Sharp.NativeMethods;
+using System.Runtime.InteropServices;
 using static AUTD3Sharp.Units;
 
 namespace AUTD3Sharp
 {
+    internal enum STMSamplingConfigTag : uint
+    {
+        Freq,
+        Period,
+        Config
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
     public class STMSamplingConfig
     {
-        internal NativeMethods.SamplingConfig Inner;
-        internal int N;
+        [FieldOffset(0)]
+        private readonly STMSamplingConfigTag _tag;
 
-        private STMSamplingConfig(NativeMethods.SamplingConfig inner, int n)
+        [FieldOffset(8)]
+        private readonly Freq<float> _f;
+
+        [FieldOffset(8)]
+        private readonly TimeSpan _period;
+
+        [FieldOffset(8)]
+        private readonly NativeMethods.SamplingConfig _config;
+
+        private STMSamplingConfig(Freq<float> f)
         {
-            Inner = inner;
-            N = n;
+            _tag = STMSamplingConfigTag.Freq;
+            _f = f;
         }
 
-        internal STMSamplingConfig(Freq<float> f, int n) : this(NativeMethodsBase.AUTDSTMConfigFromFreq(f.Hz, (ushort)n).Validate(), n) { }
-        internal STMSamplingConfig(TimeSpan period, int n) : this(NativeMethodsBase.AUTDSTMConfigFromPeriod((ulong)(period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate(), n) { }
-        internal STMSamplingConfig(SamplingConfig config, int n) : this(config.Inner, n) { }
+        private STMSamplingConfig(TimeSpan period)
+        {
+            _tag = STMSamplingConfigTag.Period;
+            _period = period;
+        }
 
-        public static STMSamplingConfig Nearest(Freq<float> f, int n) => new(NativeMethodsBase.AUTDSTMConfigFromFreqNearest(f.Hz, (ushort)n).Validate(), n);
-        public static STMSamplingConfig Nearest(TimeSpan period, int n) => new(NativeMethodsBase.AUTDSTMConfigFromPeriodNearest((ulong)(period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate(), n);
+        private STMSamplingConfig(SamplingConfig config)
+        {
+            _tag = STMSamplingConfigTag.Config;
+            _config = config.Inner;
+        }
 
-        public Freq<float> Freq => NativeMethodsBase.AUTDSTMFreq(Inner, (uint)N) * Hz;
-        public TimeSpan Period => TimeSpan.FromMilliseconds((double)NativeMethodsBase.AUTDSTMPeriod(Inner, (uint)N) / 1000 / 1000);
-        public SamplingConfig SamplingConfig => new(Inner);
+        public static implicit operator STMSamplingConfig(Freq<float> f) => new(f);
+        public static implicit operator STMSamplingConfig(TimeSpan period) => new(period);
+        public static implicit operator STMSamplingConfig(SamplingConfig config) => new(config);
+
+        internal NativeMethods.SamplingConfig SamplingConfig(int n) => _tag switch
+        {
+            STMSamplingConfigTag.Freq => NativeMethodsBase.AUTDSTMConfigFromFreq(_f.Hz, (ushort)n).Validate(),
+            STMSamplingConfigTag.Period => NativeMethodsBase.AUTDSTMConfigFromPeriod((ulong)(_period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate(),
+            STMSamplingConfigTag.Config => _config,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
+        public Freq<float> Freq(int n) => NativeMethodsBase.AUTDSTMFreq(SamplingConfig(n), (uint)n) * Hz;
+        public TimeSpan Period(int n) => TimeSpan.FromMilliseconds((double)NativeMethodsBase.AUTDSTMPeriod(SamplingConfig(n), (uint)n) / 1000 / 1000);
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    public class STMSamplingConfigNearest
+    {
+        [FieldOffset(0)]
+        private readonly STMSamplingConfigTag _tag;
+
+        [FieldOffset(8)]
+        private readonly Freq<float> _f;
+
+        [FieldOffset(8)]
+        private readonly TimeSpan _period;
+
+        private STMSamplingConfigNearest(Freq<float> f)
+        {
+            _tag = STMSamplingConfigTag.Freq;
+            _f = f;
+        }
+
+        private STMSamplingConfigNearest(TimeSpan period)
+        {
+            _tag = STMSamplingConfigTag.Period;
+            _period = period;
+        }
+
+        public static implicit operator STMSamplingConfigNearest(Freq<float> f) => new(f);
+        public static implicit operator STMSamplingConfigNearest(TimeSpan period) => new(period);
+
+        internal STMSamplingConfig STMSamplingConfig(int n) => _tag switch
+        {
+            STMSamplingConfigTag.Freq => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromFreqNearest(_f.Hz, (ushort)n).Validate()),
+            STMSamplingConfigTag.Period => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromPeriodNearest((ulong)(_period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate()),
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }

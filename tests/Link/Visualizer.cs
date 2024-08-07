@@ -13,7 +13,7 @@ public class VisualizerTest
 
         autd.Send((m, g));
 
-        autd.Link.PlotPhase(config, autd.Geometry, Segment.S0, 0);
+        autd.Link.PlotPhase(config, Segment.S0, 0);
         autd.Link.PlotField(
             config,
             new PlotRange
@@ -26,7 +26,6 @@ public class VisualizerTest
                 ZEnd = center[2],
                 Resolution = 1
             },
-            autd.Geometry,
             Segment.S0,
             0
         );
@@ -42,7 +41,6 @@ public class VisualizerTest
                  ZEnd = center[2],
                  Resolution = 1
              },
-            autd.Geometry,
             Segment.S0,
             0
         );
@@ -56,8 +54,8 @@ public class VisualizerTest
         Assert.Equal([new EmitIntensity(0x82), new EmitIntensity(0x82)], mod);
 
         var points = new[] { center };
-        autd.Link.CalcField(points, autd.Geometry, Segment.S0, 0);
-        autd.Link.CalcField(Enumerable.Range(0, 1).Select(_ => center), autd.Geometry, Segment.S0, 0);
+        autd.Link.CalcField(points, Segment.S0, 0);
+        autd.Link.CalcField(Enumerable.Range(0, 1).Select(_ => center), Segment.S0, 0);
 
         autd.Close();
     }
@@ -186,7 +184,7 @@ public class VisualizerTest
     {
         {
             using var autd = Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).Open(Visualizer.Builder().WithBackend<PlottersBackend>().WithDirectivity<Sphere>());
-            Assert.Throws<AUTDException>(() => autd.Link.PlotPhase(new NullPlotConfig(), autd.Geometry, Segment.S0, 0));
+            Assert.Throws<AUTDException>(() => autd.Link.PlotPhase(new NullPlotConfig(), Segment.S0, 0));
             Assert.Throws<AUTDException>(() => autd.Link.PlotField(
             new PyPlotConfig(),
             new PlotRange
@@ -199,7 +197,6 @@ public class VisualizerTest
                 ZEnd = 0,
                 Resolution = 1
             },
-            autd.Geometry,
             Segment.S0,
             0
         ));
@@ -208,7 +205,7 @@ public class VisualizerTest
         {
             using var autd = Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).Open(Visualizer.Builder().WithBackend<PythonBackend>().WithDirectivity<Sphere>());
             Assert.Throws<AUTDException>(() => autd.Link.PlotModulation(new NullPlotConfig(), Segment.S0));
-            Assert.Throws<AUTDException>(() => autd.Link.PlotPhase(new PlotConfig(), autd.Geometry, Segment.S0, 0));
+            Assert.Throws<AUTDException>(() => autd.Link.PlotPhase(new PlotConfig(), Segment.S0, 0));
         }
 
         {
@@ -225,7 +222,6 @@ public class VisualizerTest
                 ZEnd = 0,
                 Resolution = 1
             },
-            autd.Geometry,
             Segment.S0,
             0
         ));

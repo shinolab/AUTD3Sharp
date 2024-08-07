@@ -20,41 +20,16 @@ namespace AUTD3Sharp
 
         public NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
 
-        private GainSTM(STMSamplingConfig config, IGain[] gains)
+        public GainSTM(STMSamplingConfig config, IEnumerable<IGain> iter)
         {
+            _gains = iter as IGain[] ?? iter.ToArray();
             _config = config;
-            _gains = gains;
         }
 
-        public GainSTM(Freq<float> freq, IEnumerable<IGain> iter)
-        {
-            _gains = iter as IGain[] ?? iter.ToArray();
-            _config = new STMSamplingConfig(freq, _gains.Length);
-        }
-
-        public GainSTM(TimeSpan period, IEnumerable<IGain> iter)
-        {
-            _gains = iter as IGain[] ?? iter.ToArray();
-            _config = new STMSamplingConfig(period, _gains.Length);
-        }
-
-        public GainSTM(SamplingConfig config, IEnumerable<IGain> iter)
-        {
-            _gains = iter as IGain[] ?? iter.ToArray();
-            _config = new STMSamplingConfig(config, _gains.Length);
-        }
-
-        public static GainSTM Nearest(Freq<float> freq, IEnumerable<IGain> iter)
+        public static GainSTM Nearest(STMSamplingConfigNearest config, IEnumerable<IGain> iter)
         {
             var gains = iter as IGain[] ?? iter.ToArray();
-            var config = STMSamplingConfig.Nearest(freq, gains.Length);
-            return new GainSTM(config, gains);
-        }
-        public static GainSTM Nearest(TimeSpan period, IEnumerable<IGain> iter)
-        {
-            var gains = iter as IGain[] ?? iter.ToArray();
-            var config = STMSamplingConfig.Nearest(period, gains.Length);
-            return new GainSTM(config, gains);
+            return new GainSTM(config.STMSamplingConfig(gains.Length), gains);
         }
 
         public GainSTM WithMode(GainSTMMode mode)
@@ -83,7 +58,7 @@ namespace AUTD3Sharp
             {
                 fixed (GainPtr* gp = &gains[0])
                 {
-                    var ptr = NativeMethodsBase.AUTDSTMGain(_config.Inner, gp, (ushort)gains.Length).Validate();
+                    var ptr = NativeMethodsBase.AUTDSTMGain(_config.SamplingConfig(_gains.Length), gp, (ushort)gains.Length).Validate();
                     ptr = NativeMethodsBase.AUTDSTMGainWithLoopBehavior(ptr, LoopBehavior);
                     ptr = NativeMethodsBase.AUTDSTMGainWithMode(ptr, _mode);
                     return ptr;
@@ -93,9 +68,9 @@ namespace AUTD3Sharp
 
         public DatagramWithSegmentTransition<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
 
-        public Freq<float> Freq => _config.Freq;
-        public TimeSpan Period => _config.Period;
-        public SamplingConfig SamplingConfig => _config.SamplingConfig;
+        public Freq<float> Freq => _config.Freq(_gains.Length);
+        public TimeSpan Period => _config.Period(_gains.Length);
+        public SamplingConfig SamplingConfig => new(_config.SamplingConfig(_gains.Length));
     }
 }
 

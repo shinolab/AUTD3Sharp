@@ -54,10 +54,10 @@ namespace AUTD3Sharp.Link
         public bool IsForceFan(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(_ptr, (ushort)idx);
         public void BreakDown() => NativeMethodsBase.AUTDLinkAuditBreakDown(_ptr);
         public void Repair() => NativeMethodsBase.AUTDLinkAuditRepair(_ptr);
-        public ushort SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (ushort)idx);
-        public ushort SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (ushort)idx);
-        public ushort SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);
-        public ushort SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (ushort)idx);
+        public byte SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (ushort)idx);
+        public byte SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (ushort)idx);
+        public byte SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);
+        public byte SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (ushort)idx);
         public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (ushort)idx);
         public bool SilencerStrictMode(int idx) => NativeMethodsBase.AUTDLinkAuditCpuSilencerStrictMode(_ptr, (ushort)idx);
         public byte[] DebugTypes(int idx)
@@ -98,7 +98,7 @@ namespace AUTD3Sharp.Link
             return buf;
         }
 
-        public uint ModulationFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivision(_ptr, segment, (ushort)idx);
+        public ushort ModulationFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivision(_ptr, segment, (ushort)idx);
 
         public NativeMethods.LoopBehavior ModulationLoopBehavior(int idx, Segment segment) =>
             NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopBehavior(_ptr, segment, (ushort)idx);
@@ -121,10 +121,10 @@ namespace AUTD3Sharp.Link
             return (intensities, phases);
         }
 
-        public uint StmCycle(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmCycle(_ptr, segment, (ushort)idx);
+        public ushort StmCycle(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmCycle(_ptr, segment, (ushort)idx);
         public bool IsStmGainMode(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaIsStmGainMode(_ptr, segment, (ushort)idx);
-        public uint StmFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmFreqDivision(_ptr, segment, (ushort)idx);
-        public uint StmSoundSpeed(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(_ptr, segment, (ushort)idx);
+        public ushort StmFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmFreqDivision(_ptr, segment, (ushort)idx);
+        public ushort StmSoundSpeed(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(_ptr, segment, (ushort)idx);
         public NativeMethods.LoopBehavior StmLoopBehavior(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(_ptr, segment, (ushort)idx);
         public Segment CurrentStmSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(_ptr, (ushort)idx);
 
