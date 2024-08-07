@@ -60,6 +60,9 @@ namespace AUTD3Sharp.Link
         public byte SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (ushort)idx);
         public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (ushort)idx);
         public bool SilencerStrictMode(int idx) => NativeMethodsBase.AUTDLinkAuditCpuSilencerStrictMode(_ptr, (ushort)idx);
+
+        public NativeMethods.SilencerTarget SilencerTarget(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerTarget(_ptr, (ushort)idx);
+
         public byte[] DebugTypes(int idx)
         {
             var ty = new byte[4];

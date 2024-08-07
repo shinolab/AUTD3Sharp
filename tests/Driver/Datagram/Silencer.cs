@@ -29,6 +29,25 @@ public class SilencerTest
     }
 
     [Fact]
+    public async Task TestSilencerFromCompletionTime()
+    {
+        using var autd = await CreateController();
+
+#pragma warning disable CS8602, CS8605
+        var s = Silencer.Default();
+        Assert.True(NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsDefault((AUTD3Sharp.NativeMethods.DatagramPtr)typeof(SilencerFixedCompletionTime).GetMethod("RawPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(s, [])));
+#pragma warning restore CS8602, CS8605
+
+        await autd.SendAsync(Silencer.FromCompletionTime(TimeSpan.FromMicroseconds(25), TimeSpan.FromMicroseconds(50)));
+        foreach (var dev in autd.Geometry)
+        {
+            Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
+            Assert.Equal(2, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
+        }
+    }
+
+    [Fact]
     public async Task TestSilencerLargeSteps()
     {
         using var autd = await CreateController();

@@ -26,6 +26,8 @@ namespace AUTD3Sharp.Modulation
 
         public static Sine FromFreqNearest(Freq<float> freq) => new(new SamplingModeNearest(freq));
 
+        public Freq<float> Freq => Mode.SineFreq(ModulationPtr());
+
         [Property]
         public byte Intensity { get; private set; }
 

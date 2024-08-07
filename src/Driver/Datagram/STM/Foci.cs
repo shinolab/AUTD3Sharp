@@ -162,7 +162,7 @@ namespace AUTD3Sharp
         int IControlPointsArray.Length() => _points.Length;
     }
 
-    public sealed class FociSTM : IDatagramST<FociSTMPtr>, IDatagram
+    public sealed class FociSTM : IDatagramST<FociSTMPtr>, IDatagram, IWithSampling
     {
         private readonly STMSamplingConfig _config;
 
@@ -324,6 +324,9 @@ namespace AUTD3Sharp
         public Freq<float> Freq => _config.Freq(_points.Length());
         public TimeSpan Period => _config.Period(_points.Length());
         public SamplingConfig SamplingConfig => new(_config.SamplingConfig(_points.Length()));
+
+        SamplingConfig? IWithSampling.SamplingConfigIntensity() => SamplingConfig;
+        SamplingConfig? IWithSampling.SamplingConfigPhase() => SamplingConfig;
     }
 }
 
