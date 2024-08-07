@@ -15,7 +15,7 @@ namespace AUTD3Sharp
 
         public ForceFan(Func<Device, bool> f)
         {
-            _f = (_, geometryPtr, devIdx) => f(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)));
+            _f = (_, geometryPtr, devIdx) => f(new Device(devIdx, geometryPtr));
         }
 
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramForceFan(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.Ptr);

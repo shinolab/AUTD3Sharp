@@ -97,16 +97,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDeleteNalgebraBackendT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDDeleteNalgebraBackendT4010A1(BackendPtr backend);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloSDPSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloSDPSphere(BackendPtr backend, Vector3* points, float* amps, uint size, float alpha, float lambda, uint repeat, EmissionConstraintWrap constraint);
-
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloSDPT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloSDPT4010A1(BackendPtr backend, Vector3* points, float* amps, uint size, float alpha, float lambda, uint repeat, EmissionConstraintWrap constraint);
-
-        [DllImport(__DllName, EntryPoint = "AUTDGainSDPIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDGainSDPIsDefault(GainPtr gs);
-
 
     }
 

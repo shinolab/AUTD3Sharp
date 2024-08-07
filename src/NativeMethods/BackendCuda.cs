@@ -23,9 +23,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDCUDABackendDelete", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDCUDABackendDelete(BackendPtr backend);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDASDP", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloCUDASDP(BackendPtr backend, Vector3* points, float* amps, uint size, float alpha, float lambda, uint repeat, EmissionConstraintWrap constraint);
-
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloCUDAGS", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainHoloCUDAGS(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
 

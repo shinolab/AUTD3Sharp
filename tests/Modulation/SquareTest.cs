@@ -19,18 +19,18 @@ public class SquareTest
 #pragma warning restore IDE0230
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
 
         {
-            var m = new Square(150 * Hz).WithSamplingConfig(SamplingConfig.Division(10240)).WithLoopBehavior(LoopBehavior.Once);
+            var m = new Square(150 * Hz).WithSamplingConfig(new SamplingConfig(20)).WithLoopBehavior(LoopBehavior.Once);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(10240u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(20u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }
@@ -52,7 +52,7 @@ public class SquareTest
 #pragma warning restore IDE0230
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }

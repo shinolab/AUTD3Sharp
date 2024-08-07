@@ -7,8 +7,8 @@ namespace AUTD3Sharp
     {
         public byte Value { get; }
 
-        public static readonly EmitIntensity Max = new EmitIntensity(0xFF);
-        public static readonly EmitIntensity Min = new EmitIntensity(0x00);
+        public static readonly EmitIntensity Max = new(0xFF);
+        public static readonly EmitIntensity Min = new(0x00);
 
         public EmitIntensity(byte value)
         {

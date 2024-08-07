@@ -184,7 +184,7 @@ def copy_dll(config: Config):
     if not should_update_dll(config, version):
         return
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-x64-dll.zip"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-x64-shared.zip"
     urllib.request.urlretrieve(url, "tmp.zip")
     shutil.unpack_archive("tmp.zip", ".")
     rm_f("tmp.zip")
@@ -193,7 +193,7 @@ def copy_dll(config: Config):
         shutil.copy(dll, "tests")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-arm-dll.zip"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-aarch64-shared.zip"
     urllib.request.urlretrieve(url, "tmp.zip")
     shutil.unpack_archive("tmp.zip", ".")
     rm_f("tmp.zip")
@@ -239,22 +239,28 @@ def cs_build(args):
 
     copy_dll(config)
 
+    _ = subprocess.run(
+        ["dotnet", "nuget", "remove", "source", "autd3sharp_local_derive"],
+        check=False,
+        capture_output=True,
+    )
+    _ = subprocess.run(
+        ["dotnet", "nuget", "remove", "source", "autd3sharp_local"],
+        check=False,
+        capture_output=True,
+    )
+    _ = subprocess.run(
+        ["dotnet", "nuget", "locals", "all", "-c"],
+        check=False,
+        capture_output=True,
+    )
+
     with working_dir("derive"):
         command = ["dotnet", "build"]
         if config.release:
             command.append("-c:Release")
         subprocess.run(command).check_returncode()
 
-        _ = subprocess.run(
-            ["dotnet", "nuget", "remove", "source", "autd3sharp_local_derive"],
-            check=False,
-            capture_output=True,
-        )
-        _ = subprocess.run(
-            ["dotnet", "nuget", "locals", "all", "-c"],
-            check=False,
-            capture_output=True,
-        )
         bin_dir = "Release" if config.release else "Debug"
         subprocess.run(
             [
@@ -274,16 +280,6 @@ def cs_build(args):
             command.append("-c:Release")
         subprocess.run(command).check_returncode()
 
-        _ = subprocess.run(
-            ["dotnet", "nuget", "remove", "source", "autd3sharp_local"],
-            check=False,
-            capture_output=True,
-        )
-        _ = subprocess.run(
-            ["dotnet", "nuget", "locals", "all", "-c"],
-            check=False,
-            capture_output=True,
-        )
         bin_dir = "Release" if config.release else "Debug"
         subprocess.run(
             [
@@ -465,7 +461,7 @@ def copy_dll_unity(config: Config):
     if not should_update_dll_unity(config, version):
         return
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-unity-x64-dll.zip"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-win-x64-unity.zip"
     urllib.request.urlretrieve(url, "tmp.zip")
     shutil.unpack_archive("tmp.zip", ".")
     rm_f("tmp.zip")
@@ -473,7 +469,7 @@ def copy_dll_unity(config: Config):
         shutil.copy(dll, "unity/Assets/Plugins/x86_64")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-unity-aarch64-shared.tar.gz"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-macos-aarch64-unity.tar.gz"
     urllib.request.urlretrieve(url, "tmp.tar.gz")
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()
@@ -482,7 +478,7 @@ def copy_dll_unity(config: Config):
         shutil.copy(dll, "unity/Assets/Plugins/aarch64")
     rmtree_f("bin")
 
-    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-linux-unity-x64-shared.tar.gz"
+    url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}/autd3-v{version}-linux-x64-unity.tar.gz"
     urllib.request.urlretrieve(url, "tmp.tar.gz")
     with tarfile.open("tmp.tar.gz", "r:gz") as tar:
         tar.extractall()

@@ -33,13 +33,13 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region property
-        public static Vector3 UnitX => new Vector3(1, 0, 0);
-        public static Vector3 UnitY => new Vector3(0, 1, 0);
-        public static Vector3 UnitZ => new Vector3(0, 0, 1);
+        public static Vector3 UnitX => new(1, 0, 0);
+        public static Vector3 UnitY => new(0, 1, 0);
+        public static Vector3 UnitZ => new(0, 0, 1);
         public Vector3 Normalized => this / L2Norm;
         public float L2Norm => MathF.Sqrt(L2NormSquared);
         public float L2NormSquared => X * X + Y * Y + Z * Z;
-        public static Vector3 Zero => new Vector3(0, 0, 0);
+        public static Vector3 Zero => new(0, 0, 0);
 
         public float X { get; }
         public float Y { get; }
@@ -63,7 +63,7 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region arithmetic
-        public static Vector3 Negate(Vector3 operand) => new Vector3(-operand.X, -operand.Y, -operand.Z);
+        public static Vector3 Negate(Vector3 operand) => new(-operand.X, -operand.Y, -operand.Z);
 
         public static Vector3 Add(Vector3 left, Vector3 right)
         {
@@ -114,7 +114,7 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region public methods
-        public Vector3 Rectify() => new Vector3(Math.Max(X, 0), Math.Max(Y, 0), Math.Max(Z, 0));
+        public Vector3 Rectify() => new(Math.Max(X, 0), Math.Max(Y, 0), Math.Max(Z, 0));
         public float[] ToArray() => new[] { X, Y, Z };
         #endregion
 

@@ -99,13 +99,13 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v8.0.1", FirmwareVersion.LatestVersion);
+        Assert.Equal("v9.0.0", FirmwareVersion.LatestVersion);
 
         {
             foreach (var (info, i) in (await autd.FirmwareVersionAsync()).Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v8.0.1, FPGA = v8.0.1 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v8.0.1, FPGA = v8.0.1 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v9.0.0, FPGA = v9.0.0 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v9.0.0, FPGA = v9.0.0 [Emulator]");
             }
         }
 
@@ -122,7 +122,7 @@ public class AUTDTest
         var autd = CreateControllerSync();
 
         foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v8.0.1, FPGA = v8.0.1 [Emulator]");
+            Assert.Equal(info.Info, $"{i}: CPU = v9.0.0, FPGA = v9.0.0 [Emulator]");
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersion().Last());

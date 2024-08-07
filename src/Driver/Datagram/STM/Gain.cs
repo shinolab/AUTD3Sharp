@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram;
+using AUTD3Sharp.Driver.Datagram.Gain;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -10,30 +11,26 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp
 {
-    public sealed class GainSTM : IDatagramST<GainSTMPtr>, IDatagram
+    public sealed class GainSTM : IDatagramST<GainSTMPtr>, IDatagram, IWithSampling
     {
         private readonly STMSamplingConfig _config;
 
-        private readonly Driver.Datagram.Gain.IGain[] _gains;
-        private GainSTMMode _mode;
+        private readonly IGain[] _gains;
+        private GainSTMMode _mode = GainSTMMode.PhaseIntensityFull;
 
-        public NativeMethods.LoopBehavior LoopBehavior { get; private set; }
+        public NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
 
-        private GainSTM(STMSamplingConfig config, IEnumerable<Driver.Datagram.Gain.IGain> iter)
+        public GainSTM(STMSamplingConfig config, IEnumerable<IGain> iter)
         {
+            _gains = iter as IGain[] ?? iter.ToArray();
             _config = config;
-
-            _gains = iter as Driver.Datagram.Gain.IGain[] ?? iter.ToArray();
-            _mode = GainSTMMode.PhaseIntensityFull;
-
-            LoopBehavior = AUTD3Sharp.LoopBehavior.Infinite;
         }
 
-        public static GainSTM FromFreq(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromFreq(freq), iter);
-        public static GainSTM FromFreqNearest(Freq<float> freq, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromFreqNearest(freq), iter);
-        public static GainSTM FromPeriod(TimeSpan period, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromPeriod(period), iter);
-        public static GainSTM FromPeriodNearest(TimeSpan period, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromPeriodNearest(period), iter);
-        public static GainSTM FromSamplingConfig(SamplingConfig config, IEnumerable<Driver.Datagram.Gain.IGain> iter) => new(STMSamplingConfig.FromSamplingConfig(config), iter);
+        public static GainSTM Nearest(STMSamplingConfigNearest config, IEnumerable<IGain> iter)
+        {
+            var gains = iter as IGain[] ?? iter.ToArray();
+            return new GainSTM(config.STMSamplingConfig(gains.Length), gains);
+        }
 
         public GainSTM WithMode(GainSTMMode mode)
         {
@@ -61,7 +58,7 @@ namespace AUTD3Sharp
             {
                 fixed (GainPtr* gp = &gains[0])
                 {
-                    var ptr = NativeMethodsBase.AUTDSTMGain(_config.Inner, gp, (ushort)gains.Length).Validate();
+                    var ptr = NativeMethodsBase.AUTDSTMGain(_config.SamplingConfig(_gains.Length), gp, (ushort)gains.Length).Validate();
                     ptr = NativeMethodsBase.AUTDSTMGainWithLoopBehavior(ptr, LoopBehavior);
                     ptr = NativeMethodsBase.AUTDSTMGainWithMode(ptr, _mode);
                     return ptr;
@@ -69,12 +66,14 @@ namespace AUTD3Sharp
             }
         }
 
-        public DatagramWithSegmentTransition<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode)
-          => new DatagramWithSegmentTransition<GainSTM, GainSTMPtr>(this, segment, transitionMode);
+        public DatagramWithSegmentTransition<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
 
         public Freq<float> Freq => _config.Freq(_gains.Length);
         public TimeSpan Period => _config.Period(_gains.Length);
-        public SamplingConfig SamplingConfig => _config.SamplingConfig(_gains.Length);
+        public SamplingConfig SamplingConfig => new(_config.SamplingConfig(_gains.Length));
+
+        SamplingConfig? IWithSampling.SamplingConfigIntensity() => SamplingConfig;
+        SamplingConfig? IWithSampling.SamplingConfigPhase() => SamplingConfig;
     }
 }
 

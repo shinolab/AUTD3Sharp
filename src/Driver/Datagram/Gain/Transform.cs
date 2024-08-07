@@ -22,7 +22,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
                 _g = g;
                 _f = (_, geometryPtr, devIdx, trIdx, src, dst) =>
                     {
-                        var dev = new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx));
+                        var dev = new Device(devIdx, geometryPtr);
                         var tr = new Transducer(trIdx, dev.Ptr);
                         var d = f(dev)(tr, src);
                         dst->intensity = d.Intensity.Value;

@@ -7,7 +7,7 @@ namespace AUTD3Sharp
     {
         public static NativeMethods.LoopBehavior Infinite => NativeMethodsBase.AUTDLoopBehaviorInfinite();
 
-        public static NativeMethods.LoopBehavior Finite(uint rep)
+        public static NativeMethods.LoopBehavior Finite(ushort rep)
         {
             if (rep == 0)
                 throw new ArgumentOutOfRangeException(nameof(rep), "rep must be greater than 0");

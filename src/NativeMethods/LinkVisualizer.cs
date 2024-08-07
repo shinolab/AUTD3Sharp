@@ -36,13 +36,13 @@ namespace AUTD3Sharp.NativeMethods
         public static extern uint AUTDLinkVisualizerModulation(LinkPtr visualizer, Backend backend, Directivity directivity, Segment segment, byte* buf);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerCalcField", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkVisualizerCalcField(LinkPtr visualizer, Backend backend, Directivity directivity, Vector3* points, uint points_len, GeometryPtr geometry, Segment segment, ushort idx, float* buf);
+        public static extern ResultI32 AUTDLinkVisualizerCalcField(LinkPtr visualizer, Backend backend, Directivity directivity, Vector3* points, uint points_len, Segment segment, ushort idx, float* buf);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotField", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkVisualizerPlotField(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, PlotRangePtr range, GeometryPtr geometry, Segment segment, ushort idx);
+        public static extern ResultI32 AUTDLinkVisualizerPlotField(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, PlotRangePtr range, Segment segment, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotPhase", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultI32 AUTDLinkVisualizerPlotPhase(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, GeometryPtr geometry, Segment segment, ushort idx);
+        public static extern ResultI32 AUTDLinkVisualizerPlotPhase(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, Segment segment, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkVisualizerPlotModulation", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultI32 AUTDLinkVisualizerPlotModulation(LinkPtr visualizer, Backend backend, Directivity directivity, ConfigPtr config, Segment segment);
