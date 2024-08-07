@@ -23,14 +23,4 @@ public class UniformTest
             Assert.All(phases, p => Assert.Equal(0x91, p));
         }
     }
-
-    [Fact]
-    public async Task UniformDefault()
-    {
-#pragma warning disable CS8602, CS8605
-        var autd = await AUTDTest.CreateController();
-        var g = new Uniform(0);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainUniformIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(Uniform).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g, new object[] { autd.Geometry })));
-#pragma warning restore CS8602, CS8605
-    }
 }

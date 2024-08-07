@@ -16,7 +16,7 @@ namespace AUTD3Sharp.Modulation
             Intensity = intensity;
         }
 
-        public static Static WithIntensity(byte intensity) => new Static(intensity);
+        public static Static WithIntensity(byte intensity) => new(intensity);
 
         public byte Intensity { get; }
 

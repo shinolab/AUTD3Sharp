@@ -1,12 +1,7 @@
 using System;
 using System.Net;
-using System.Threading.Tasks;
 using AUTD3Sharp.Driver;
 using AUTD3Sharp.NativeMethods;
-
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
 
 namespace AUTD3Sharp.Link
 {
@@ -16,21 +11,15 @@ namespace AUTD3Sharp.Link
         {
             private LinkSimulatorBuilderPtr _ptr;
 
-            internal SimulatorBuilder(ushort port)
-            {
-                _ptr = NativeMethodsLinkSimulator.AUTDLinkSimulator(port);
-            }
-
-            public SimulatorBuilder WithServerIp(IPAddress addr)
+            internal SimulatorBuilder(IPEndPoint addr)
             {
                 var addrStr = addr.ToString();
                 var addrBytes = System.Text.Encoding.UTF8.GetBytes(addrStr);
                 unsafe
                 {
                     fixed (byte* ap = &addrBytes[0])
-                        _ptr = NativeMethodsLinkSimulator.AUTDLinkSimulatorWithAddr(_ptr, ap).Validate();
+                        _ptr = NativeMethodsLinkSimulator.AUTDLinkSimulator(ap).Validate();
                 }
-                return this;
             }
 
             public SimulatorBuilder WithTimeout(TimeSpan timeout)
@@ -44,40 +33,9 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsLinkSimulator.AUTDLinkSimulatorIntoBuilder(_ptr);
             }
 
-            Simulator ILinkBuilder<Simulator>.ResolveLink(RuntimePtr runtime, LinkPtr ptr)
-            {
-                return new Simulator
-                {
-                    _runtime = runtime,
-                    _ptr = ptr
-                };
-            }
+            Simulator ILinkBuilder<Simulator>.ResolveLink(RuntimePtr r, LinkPtr p) => new();
         }
 
-        public static SimulatorBuilder Builder(ushort port)
-        {
-            return new SimulatorBuilder(port);
-        }
-
-        private RuntimePtr _runtime;
-        private LinkPtr _ptr = new LinkPtr { Item1 = IntPtr.Zero };
-
-        public async Task<bool> UpdateGeometryAsync(Geometry geometry)
-        {
-            var future = NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr);
-            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultI32(_runtime, future));
-            return result.Validate() == NativeMethodsDriver.AUTD3_TRUE;
-        }
-
-        public bool UpdateGeometry(Geometry geometry)
-        {
-            var future = NativeMethodsLinkSimulator.AUTDLinkSimulatorUpdateGeometry(_ptr, geometry.Ptr);
-            var result = NativeMethodsBase.AUTDWaitResultI32(_runtime, future);
-            return result.Validate() == NativeMethodsDriver.AUTD3_TRUE;
-        }
+        public static SimulatorBuilder Builder(IPEndPoint addr) => new(addr);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

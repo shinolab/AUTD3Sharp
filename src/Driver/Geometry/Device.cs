@@ -8,13 +8,15 @@ namespace AUTD3Sharp
 {
     public sealed class Device : IEnumerable<Transducer>
     {
+        internal readonly GeometryPtr GeoPtr;
         internal readonly DevicePtr Ptr;
         private readonly List<Transducer> _transducers;
 
-        internal Device(ushort idx, DevicePtr ptr)
+        internal Device(ushort idx, GeometryPtr ptr)
         {
             Idx = idx;
-            Ptr = ptr;
+            GeoPtr = ptr;
+            Ptr = NativeMethodsBase.AUTDDevice(ptr, idx);
             _transducers = Enumerable.Range(0, (int)NativeMethodsBase.AUTDDeviceNumTransducers(Ptr)).Select(i => new Transducer((byte)i, Ptr)).ToList();
         }
 
@@ -25,13 +27,13 @@ namespace AUTD3Sharp
         public float SoundSpeed
         {
             get => NativeMethodsBase.AUTDDeviceGetSoundSpeed(Ptr);
-            set => NativeMethodsBase.AUTDDeviceSetSoundSpeed(Ptr, value);
+            set => NativeMethodsBase.AUTDDeviceSetSoundSpeed(GeoPtr, (ushort)Idx, value);
         }
 
         public bool Enable
         {
             get => NativeMethodsBase.AUTDDeviceEnableGet(Ptr);
-            set => NativeMethodsBase.AUTDDeviceEnableSet(Ptr, value);
+            set => NativeMethodsBase.AUTDDeviceEnableSet(GeoPtr, (ushort)Idx, value);
         }
 
         public Quaternion Rotation => NativeMethodsBase.AUTDDeviceRotation(Ptr);
@@ -44,22 +46,22 @@ namespace AUTD3Sharp
 
         public void Translate(Vector3 t)
         {
-            NativeMethodsBase.AUTDDeviceTranslate(Ptr, t);
+            NativeMethodsBase.AUTDDeviceTranslate(GeoPtr, (ushort)Idx, t);
         }
 
         public void Rotate(Quaternion r)
         {
-            NativeMethodsBase.AUTDDeviceRotate(Ptr, r);
+            NativeMethodsBase.AUTDDeviceRotate(GeoPtr, (ushort)Idx, r);
         }
 
         public void Affine(Vector3 t, Quaternion r)
         {
-            NativeMethodsBase.AUTDDeviceAffine(Ptr, t, r);
+            NativeMethodsBase.AUTDDeviceAffine(GeoPtr, (ushort)Idx, t, r);
         }
 
         public void SetSoundSpeedFromTemp(float temp, float k = 1.4f, float r = 8.31446261815324f, float m = 28.9647e-3f)
         {
-            NativeMethodsBase.AUTDDeviceSetSoundSpeedFromTemp(Ptr, temp, k, r, m);
+            NativeMethodsBase.AUTDDeviceSetSoundSpeedFromTemp(GeoPtr, (ushort)Idx, temp, k, r, m);
         }
 
         public float Wavelength => NativeMethodsBase.AUTDDeviceWavelength(Ptr);

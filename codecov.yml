@@ -1,12 +1,22 @@
 codecov:
   allow_coverage_offsets: true
+  notify:
+    wait_for_ci: false
 coverage:
   status:
     patch:
-    default_rules:
+      default:
+        target: 100%
+        threshold: 0%
+        base: auto 
+        branches: 
+          - main
+        if_ci_failed: error
+        informational: false
+        only_pulls: false
     project:
       default:
-        target: 100% || auto
+        target: 100%
         threshold: 0%
         base: auto
         branches: 

@@ -14,53 +14,53 @@ public class FociSTMTest
         const float radius = 30.0f;
         const int size = 2;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
                 center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         Assert.Equal(1.0f * Hz, stm.Freq);
         Assert.Equal(TimeSpan.FromSeconds(1), stm.Period);
-        Assert.Equal(10240000u, stm.SamplingConfig.Div);
+        Assert.Equal(20000u, stm.SamplingConfig.Division);
         await autd.SendAsync(stm);
 
         foreach (var dev in autd.Geometry) Assert.False(autd.Link.IsStmGainMode(dev.Idx, Segment.S0));
         foreach (var dev in autd.Geometry)
         {
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link.StmSoundSpeed(dev.Idx, Segment.S0));
-            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+            Assert.Equal(20000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
         }
 
-        stm = FociSTM.FromFreqNearest(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        stm = FociSTM.Nearest(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
                 center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         await autd.SendAsync(stm);
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+            Assert.Equal(20000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = FociSTM.FromPeriod(TimeSpan.FromSeconds(1), Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        stm = new FociSTM(TimeSpan.FromSeconds(1), Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
               center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         await autd.SendAsync(stm);
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+            Assert.Equal(20000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = FociSTM.FromPeriodNearest(TimeSpan.FromSeconds(1), Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        stm = FociSTM.Nearest(TimeSpan.FromSeconds(1), Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
               center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         await autd.SendAsync(stm);
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(10240000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+            Assert.Equal(20000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = FociSTM.FromSamplingConfig(SamplingConfig.Division(512), [center, center]).WithLoopBehavior(LoopBehavior.Once);
+        stm = new FociSTM(new SamplingConfig(1), [center, center]).WithLoopBehavior(LoopBehavior.Once);
         await autd.SendAsync(stm);
         Assert.Equal(LoopBehavior.Once, stm.LoopBehavior);
         foreach (var dev in autd.Geometry)
         {
-            Assert.Equal(512u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
+            Assert.Equal(1u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
             Assert.Equal(LoopBehavior.Once, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
@@ -96,7 +96,7 @@ public class FociSTMTest
         const float radius = 30.0f;
         const int size = 2;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
                 center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
 
         await autd.SendAsync(stm);
@@ -133,7 +133,7 @@ public class FociSTMTest
 
         const int size = 100;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints2((center, center)).WithIntensity((byte)i)));
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints2((center, center)).WithIntensity((byte)i)));
         autd.Send(stm);
 
         foreach (var dev in autd.Geometry)
@@ -151,7 +151,7 @@ public class FociSTMTest
 
         const int size = 100;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints3((center, center, center)).WithIntensity((byte)i)));
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints3((center, center, center)).WithIntensity((byte)i)));
         autd.Send(stm);
 
         foreach (var dev in autd.Geometry)
@@ -169,7 +169,7 @@ public class FociSTMTest
 
         const int size = 100;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints4((center, center, center, center)).WithIntensity((byte)i)));
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints4((center, center, center, center)).WithIntensity((byte)i)));
         autd.Send(stm);
 
         foreach (var dev in autd.Geometry)
@@ -187,7 +187,7 @@ public class FociSTMTest
 
         const int size = 100;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints5((center, center, center, center, center)).WithIntensity((byte)i)));
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints5((center, center, center, center, center)).WithIntensity((byte)i)));
         autd.Send(stm);
 
         foreach (var dev in autd.Geometry)
@@ -205,7 +205,7 @@ public class FociSTMTest
 
         const int size = 100;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints6((center, center, center, center, center, center)).WithIntensity((byte)i)));
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints6((center, center, center, center, center, center)).WithIntensity((byte)i)));
         autd.Send(stm);
 
         foreach (var dev in autd.Geometry)
@@ -223,7 +223,7 @@ public class FociSTMTest
 
         const int size = 100;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints7((center, center, center, center, center, center, center)).WithIntensity((byte)i)));
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints7((center, center, center, center, center, center, center)).WithIntensity((byte)i)));
         autd.Send(stm);
 
         foreach (var dev in autd.Geometry)
@@ -241,7 +241,7 @@ public class FociSTMTest
 
         const int size = 100;
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);
-        var stm = FociSTM.FromFreq(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints8((center, center, center, center, center, center, center, center)).WithIntensity((byte)i)));
+        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => new ControlPoints8((center, center, center, center, center, center, center, center)).WithIntensity((byte)i)));
         autd.Send(stm);
 
         foreach (var dev in autd.Geometry)

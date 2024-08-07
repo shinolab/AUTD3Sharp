@@ -16,6 +16,11 @@ namespace AUTD3Sharp
             Hz = hz;
         }
 
+        public override string ToString()
+        {
+            return $"{Hz}Hz";
+        }
+
         [ExcludeFromCodeCoverage]
         public bool Equals(Freq<T> other)
         {
@@ -38,22 +43,22 @@ namespace AUTD3Sharp
     public class UnitHz
     {
         internal UnitHz() { }
-        public static Freq<float> operator *(float a, UnitHz _) => new Freq<float>(a);
-        public static Freq<uint> operator *(uint a, UnitHz _) => new Freq<uint>(a);
+        public static Freq<float> operator *(float a, UnitHz _) => new(a);
+        public static Freq<uint> operator *(uint a, UnitHz _) => new(a);
     }
 
     public class UnitkHz
     {
         internal UnitkHz() { }
-        public static Freq<float> operator *(float a, UnitkHz _) => new Freq<float>(a * 1000.0f);
-        public static Freq<uint> operator *(uint a, UnitkHz _) => new Freq<uint>(a * 1000);
+        public static Freq<float> operator *(float a, UnitkHz _) => new(a * 1000.0f);
+        public static Freq<uint> operator *(uint a, UnitkHz _) => new(a * 1000);
     }
 
     public static partial class Units
     {
-        public static UnitHz Hz { get; } = new UnitHz();
+        public static UnitHz Hz { get; } = new();
 #pragma warning disable IDE1006
-        public static UnitkHz kHz { get; } = new UnitkHz();
+        public static UnitkHz kHz { get; } = new();
 #pragma warning restore IDE1006
     }
 }
