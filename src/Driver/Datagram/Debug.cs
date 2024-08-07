@@ -32,9 +32,9 @@ namespace AUTD3Sharp
         {
             unsafe
             {
-                _f = (context, geometryPtr, devIdx, gpio, debugType) =>
+                _f = (_, geometryPtr, devIdx, gpio, debugType) =>
                 {
-                    *debugType = f(new Device(devIdx, NativeMethodsBase.AUTDDevice(geometryPtr, devIdx)), gpio);
+                    *debugType = f(new Device(devIdx, geometryPtr), gpio);
                 };
             }
         }

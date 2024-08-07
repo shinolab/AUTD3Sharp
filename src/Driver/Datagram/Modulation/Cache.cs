@@ -12,7 +12,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
     {
         private readonly TM _m;
         private byte[] _cache;
-        private SamplingConfigWrap? _sampling_config;
+        private AUTD3Sharp.NativeMethods.SamplingConfig? _samplingConfig;
 
         public Cache(TM m)
         {
@@ -26,7 +26,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             if (_cache.Length != 0) return Buffer;
             var ptr = NativeMethodsBase.AUTDModulationCalc(_m.ModulationPtr());
             var res = ptr.Validate();
-            _sampling_config = ptr.config;
+            _samplingConfig = ptr.config;
             _cache = new byte[NativeMethodsBase.AUTDModulationCalcGetSize(res)];
             unsafe
             {
@@ -43,13 +43,13 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             unsafe
             {
                 fixed (byte* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_sampling_config!.Value, LoopBehavior, pBuf, (ushort)_cache.Length);
+                    return NativeMethodsBase.AUTDModulationRaw(_samplingConfig!.Value, LoopBehavior, pBuf, (ushort)_cache.Length);
             }
         }
 
         public byte this[int index] => _cache[index];
 
-        public ReadOnlySpan<byte> Buffer => new ReadOnlySpan<byte>(_cache);
+        public ReadOnlySpan<byte> Buffer => new(_cache);
 
         public IEnumerator<byte> GetEnumerator()
         {

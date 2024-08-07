@@ -7,8 +7,7 @@ public class SimulatorTest
     [Fact]
     public void TestSimulator()
     {
-        _ = Simulator.Builder(8080)
-            .WithServerIp(IPAddress.Parse("127.0.0.1"))
+        _ = Simulator.Builder(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080))
             .WithTimeout(TimeSpan.FromMilliseconds(200));
     }
 }

@@ -18,19 +18,13 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSimulator", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSimulatorBuilderPtr AUTDLinkSimulator(ushort port);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorWithAddr", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultLinkSimulatorBuilder AUTDLinkSimulatorWithAddr(LinkSimulatorBuilderPtr simulator, byte* addr);
+        public static extern ResultLinkSimulatorBuilder AUTDLinkSimulator(byte* addr);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSimulatorBuilderPtr AUTDLinkSimulatorWithTimeout(LinkSimulatorBuilderPtr simulator, ulong timeout_ns);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorIntoBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkBuilderPtr AUTDLinkSimulatorIntoBuilder(LinkSimulatorBuilderPtr simulator);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorUpdateGeometry", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern FfiFuture AUTDLinkSimulatorUpdateGeometry(LinkPtr simulator, GeometryPtr geometry);
 
 
     }

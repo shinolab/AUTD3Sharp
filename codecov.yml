@@ -1,16 +1,18 @@
 codecov:
-  allow_coverage_offsets: true
+  notify:
+    wait_for_ci: false
+  require_ci_to_pass: true
+comment:
+  show_carryforward_flags: false
 coverage:
   status:
-    patch:
+    changes: false
     default_rules:
-    project:
+      flag_coverage_not_uploaded_behavior: include
+    patch:
       default:
-        target: 100% || auto
-        threshold: 0%
-        base: auto
-        branches: 
-          - main
-        if_ci_failed: error
-        informational: false
-        only_pulls: false
+        target: 100
+        threshold: 0
+    project: true
+github_checks:
+  annotations: true

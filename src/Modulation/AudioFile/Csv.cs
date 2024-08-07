@@ -9,15 +9,14 @@ namespace AUTD3Sharp.Modulation.AudioFile
     public sealed partial class Csv
     {
         private readonly string _filename;
-        private readonly Freq<uint> _sampleRate;
 
         [Property]
         public char Deliminator { get; private set; } = ',';
 
-        public Csv(string filename, Freq<uint> sampleRate)
+        public Csv(string filename, SamplingConfig config)
         {
             _filename = filename;
-            _sampleRate = sampleRate;
+            _config = config;
         }
 
         private ModulationPtr ModulationPtr()
@@ -27,7 +26,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, _sampleRate.Hz, Convert.ToByte(Deliminator), LoopBehavior).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, _config.Inner, Convert.ToByte(Deliminator), LoopBehavior).Validate();
                 }
             }
         }

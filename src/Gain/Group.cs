@@ -15,12 +15,18 @@ namespace AUTD3Sharp.Gain
     {
         private readonly Func<Device, Func<Transducer, object?>> _f;
         private readonly Dictionary<object, Driver.Datagram.Gain.IGain> _map;
+        private readonly bool _withParallel;
 
-        public Group(Func<Device, Func<Transducer, object?>> f)
+        private Group(Func<Device, Func<Transducer, object?>> f, bool withParallel)
         {
             _f = f;
             _map = new Dictionary<object, Driver.Datagram.Gain.IGain>();
+            _withParallel = withParallel;
         }
+
+        public Group(Func<Device, Func<Transducer, object?>> f) : this(f, false) { }
+
+        public static Group WithParallel(Func<Device, Func<Transducer, object?>> f) => new(f, true);
 
         public Group Set(object key, Driver.Datagram.Gain.IGain gain)
         {
@@ -72,7 +78,7 @@ namespace AUTD3Sharp.Gain
                             map,
                             keysPtr,
                             valuesPtr,
-                            (uint)values.Length);
+                            (uint)values.Length, _withParallel);
                 }
             }
         }
