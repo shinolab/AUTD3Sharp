@@ -6,28 +6,24 @@ namespace AUTD3Sharp
 {
     public class STMSamplingConfig
     {
-        internal STMSamplingConfigWrap Inner;
+        internal NativeMethods.SamplingConfig Inner;
+        internal int N;
 
-        private STMSamplingConfig(STMSamplingConfigWrap inner)
+        private STMSamplingConfig(NativeMethods.SamplingConfig inner, int n)
         {
             Inner = inner;
+            N = n;
         }
 
-        public static STMSamplingConfig FromFreq(Freq<float> f) => new(NativeMethodsBase.AUTDSTMSamplingConfigFromFreq(f.Hz));
+        internal STMSamplingConfig(Freq<float> f, int n) : this(NativeMethodsBase.AUTDSTMConfigFromFreq(f.Hz, (ushort)n).Validate(), n) { }
+        internal STMSamplingConfig(TimeSpan period, int n) : this(NativeMethodsBase.AUTDSTMConfigFromPeriod((ulong)(period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate(), n) { }
+        internal STMSamplingConfig(SamplingConfig config, int n) : this(config.Inner, n) { }
 
-        public static STMSamplingConfig FromFreqNearest(Freq<float> f) =>
-          new(NativeMethodsBase.AUTDSTMSamplingConfigFromFreqNearest(f.Hz));
+        public static STMSamplingConfig Nearest(Freq<float> f, int n) => new(NativeMethodsBase.AUTDSTMConfigFromFreqNearest(f.Hz, (ushort)n).Validate(), n);
+        public static STMSamplingConfig Nearest(TimeSpan period, int n) => new(NativeMethodsBase.AUTDSTMConfigFromPeriodNearest((ulong)(period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate(), n);
 
-        public static STMSamplingConfig FromPeriod(TimeSpan period) =>
-            new(NativeMethodsBase.AUTDSTMSamplingConfigFromPeriod((ulong)(period.TotalMilliseconds * 1000 * 1000)));
-
-        public static STMSamplingConfig FromPeriodNearest(TimeSpan period) =>
-            new(NativeMethodsBase.AUTDSTMSamplingConfigFromPeriodNearest((ulong)(period.TotalMilliseconds * 1000 * 1000)));
-
-        public static STMSamplingConfig FromSamplingConfig(SamplingConfig c) => new(NativeMethodsBase.AUTDSTMSamplingConfigFromSamplingConfig(c.Inner));
-
-        public Freq<float> Freq(int n) => NativeMethodsBase.AUTDSTMFreq(Inner, (uint)n).Validate() * Hz;
-        public TimeSpan Period(int n) => TimeSpan.FromMilliseconds((double)NativeMethodsBase.AUTDSTMPeriod(Inner, (uint)n).Validate() / 1000 / 1000);
-        public SamplingConfig SamplingConfig(int n) => new(NativeMethodsBase.AUTDSTMSamplingSamplingConfig(Inner, (uint)n).Validate());
+        public Freq<float> Freq => NativeMethodsBase.AUTDSTMFreq(Inner, (uint)N) * Hz;
+        public TimeSpan Period => TimeSpan.FromMilliseconds((double)NativeMethodsBase.AUTDSTMPeriod(Inner, (uint)N) / 1000 / 1000);
+        public SamplingConfig SamplingConfig => new(Inner);
     }
 }

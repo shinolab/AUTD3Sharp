@@ -114,7 +114,7 @@ using AUTD3Sharp.NativeMethods;
         [ExcludeFromCodeCoverage]
         public SamplingConfig SamplingConfig => new(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
 
-        private SamplingConfig _config = SamplingConfig.Division(5120);
+        private SamplingConfig _config = new SamplingConfig(10);
 
         public AUTD3Sharp.NativeMethods.LoopBehavior LoopBehavior => _loopBehavior;
 

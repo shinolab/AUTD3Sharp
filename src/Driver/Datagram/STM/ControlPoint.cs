@@ -22,14 +22,9 @@ namespace AUTD3Sharp
         }
     }
 
-    public interface IControlPoints
-    {
-        byte Value { get; }
-    }
-
     [Builder]
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints1 : IControlPoints
+    public partial struct ControlPoints1
     {
         private ControlPoint _point;
 
@@ -38,7 +33,6 @@ namespace AUTD3Sharp
 
         [ExcludeFromCodeCoverage]
         public readonly ControlPoint[] Points => new[] { _point };
-        public readonly byte Value => 1;
 
         private ControlPoints1(ControlPoint point, EmitIntensity intensity)
         {
@@ -58,7 +52,7 @@ namespace AUTD3Sharp
 
     [Builder]
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints2 : IControlPoints
+    public partial struct ControlPoints2
     {
         private ControlPoint _point1;
         private ControlPoint _point2;
@@ -67,8 +61,6 @@ namespace AUTD3Sharp
 
         [ExcludeFromCodeCoverage]
         public readonly ControlPoint[] Points => new[] { _point1, _point2 };
-        public readonly byte Value => 2;
-
         private ControlPoints2((ControlPoint, ControlPoint) points, EmitIntensity intensity)
         {
             _point1 = points.Item1;
@@ -87,7 +79,7 @@ namespace AUTD3Sharp
 
     [Builder]
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints3 : IControlPoints
+    public partial struct ControlPoints3
     {
         private ControlPoint _point1;
         private ControlPoint _point2;
@@ -97,7 +89,6 @@ namespace AUTD3Sharp
 
         [ExcludeFromCodeCoverage]
         public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3 };
-        public readonly byte Value => 3;
 
         private ControlPoints3((ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
         {
@@ -118,7 +109,7 @@ namespace AUTD3Sharp
 
     [Builder]
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints4 : IControlPoints
+    public partial struct ControlPoints4
     {
         private ControlPoint _point1;
         private ControlPoint _point2;
@@ -129,7 +120,6 @@ namespace AUTD3Sharp
 
         [ExcludeFromCodeCoverage]
         public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4 };
-        public readonly byte Value => 4;
 
         private ControlPoints4((ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
         {
@@ -151,7 +141,7 @@ namespace AUTD3Sharp
 
     [Builder]
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints5 : IControlPoints
+    public partial struct ControlPoints5
     {
         private ControlPoint _point1;
         private ControlPoint _point2;
@@ -163,7 +153,6 @@ namespace AUTD3Sharp
 
         [ExcludeFromCodeCoverage]
         public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4, _point5 };
-        public readonly byte Value => 5;
 
         private ControlPoints5((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
         {
@@ -186,7 +175,7 @@ namespace AUTD3Sharp
 
     [Builder]
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints6 : IControlPoints
+    public partial struct ControlPoints6
     {
         private ControlPoint _point1;
         private ControlPoint _point2;
@@ -199,7 +188,6 @@ namespace AUTD3Sharp
 
         [ExcludeFromCodeCoverage]
         public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4, _point5, _point6 };
-        public readonly byte Value => 6;
 
         private ControlPoints6((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
         {
@@ -223,7 +211,7 @@ namespace AUTD3Sharp
 
     [Builder]
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints7 : IControlPoints
+    public partial struct ControlPoints7
     {
         private ControlPoint _point1;
         private ControlPoint _point2;
@@ -237,7 +225,6 @@ namespace AUTD3Sharp
 
         [ExcludeFromCodeCoverage]
         public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4, _point5, _point6, _point7 };
-        public readonly byte Value => 7;
 
         private ControlPoints7((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
         {
@@ -262,7 +249,7 @@ namespace AUTD3Sharp
 
     [Builder]
     [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints8 : IControlPoints
+    public partial struct ControlPoints8
     {
         private ControlPoint _point1;
         private ControlPoint _point2;
@@ -277,7 +264,6 @@ namespace AUTD3Sharp
 
         [ExcludeFromCodeCoverage]
         public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4, _point5, _point6, _point7, _point8 };
-        public readonly byte Value => 8;
 
         private ControlPoints8((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
         {

@@ -4,8 +4,8 @@ namespace AUTD3Sharp
 {
     public readonly struct Angle
     {
-        public static Angle FromDegree(float degree) => new Angle(degree / 180 * MathF.PI);
-        public static Angle FromRadian(float radian) => new Angle(radian);
+        public static Angle FromDegree(float degree) => new(degree / 180 * MathF.PI);
+        public static Angle FromRadian(float radian) => new(radian);
 
         public float Radian { get; }
 
@@ -29,8 +29,8 @@ namespace AUTD3Sharp
     public static partial class Units
     {
 #pragma warning disable IDE1006
-        public static Angle.UnitRadian rad { get; } = new Angle.UnitRadian();
-        public static Angle.UnitDegree deg { get; } = new Angle.UnitDegree();
+        public static Angle.UnitRadian rad { get; } = new();
+        public static Angle.UnitDegree deg { get; } = new();
 #pragma warning restore IDE1006
     }
 }

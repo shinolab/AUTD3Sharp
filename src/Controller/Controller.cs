@@ -173,7 +173,7 @@ namespace AUTD3Sharp
 
     public static class Controller
     {
-        public static ControllerBuilder Builder(IEnumerable<AUTD3> iter) => new ControllerBuilder(iter);
+        public static ControllerBuilder Builder(IEnumerable<AUTD3> iter) => new(iter);
     }
 }
 

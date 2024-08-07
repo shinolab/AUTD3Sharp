@@ -17,7 +17,7 @@ namespace AUTD3Sharp.Modulation
 
         public Square(Freq<uint> freq) : this(new SamplingModeExact(freq)) { }
         public Square(Freq<float> freq) : this(new SamplingModeExactFloat(freq)) { }
-        public static Square FromFreqNearest(Freq<float> freq) => new Square(new SamplingModeNearest(freq));
+        public static Square FromFreqNearest(Freq<float> freq) => new(new SamplingModeNearest(freq));
 
         [Property]
         public byte Low { get; private set; }

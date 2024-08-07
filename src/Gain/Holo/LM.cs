@@ -41,7 +41,7 @@ namespace AUTD3Sharp.Gain.Holo
         [Property]
         public uint KMax { get; private set; }
 
-        public ReadOnlySpan<float> Initial => new ReadOnlySpan<float>(_initial);
+        public ReadOnlySpan<float> Initial => new(_initial);
 
         private GainPtr GainPtr(Geometry _) =>
             _backend.Lm(Foci, Amps,

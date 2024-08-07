@@ -24,18 +24,6 @@ namespace AUTD3Sharp.Gain.Holo
             Ptr.Item1 = IntPtr.Zero;
         }
 
-        internal override GainPtr Sdp(Vector3[] foci, Amplitude[] amps, uint size, float alpha, uint repeat, float lambda, EmissionConstraintWrap constraint)
-        {
-            unsafe
-            {
-                fixed (Vector3* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
-                {
-                    return NativeMethodsBackendCuda.AUTDGainHoloCUDASDP(Ptr, pf, (float*)pa, size, alpha, lambda, repeat, constraint);
-                }
-            }
-        }
-
         internal override GainPtr Gs(Vector3[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint)
         {
             unsafe

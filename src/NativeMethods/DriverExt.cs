@@ -40,7 +40,7 @@ namespace AUTD3Sharp
         I0 = 0,
         I1 = 1,
         I2 = 2,
-        I3 = 3,
+        I3 = 3
     }
 
     public enum GPIOOut : byte
@@ -48,11 +48,18 @@ namespace AUTD3Sharp
         O0 = 0,
         O1 = 1,
         O2 = 2,
-        O3 = 3,
+        O3 = 3
+    }
+
+    public enum SilencerTarget : byte
+    {
+        Intensity = 0,
+        PulseWidth = 1
     }
 
     namespace NativeMethods
     {
+#pragma warning disable CS0169, IDE0051
         public struct FfiFuture
         {
             private unsafe fixed byte _data[24];
@@ -63,9 +70,15 @@ namespace AUTD3Sharp
             private unsafe fixed byte _data[24];
         }
 
+        public readonly struct SamplingConfig
+        {
+            private readonly ushort _div;
+        }
+#pragma warning restore CS0169, IDE0051
+
         public static class StatusExt
         {
-            public static AUTD3Sharp.Status Into(this AUTD3Sharp.NativeMethods.Status mode)
+            public static AUTD3Sharp.Status Into(this Status mode)
             {
                 return mode switch
                 {
@@ -79,7 +92,7 @@ namespace AUTD3Sharp
 
         public static class GPIOInExt
         {
-            public static AUTD3Sharp.NativeMethods.GPIOIn Into(this AUTD3Sharp.GPIOIn mode)
+            public static GPIOIn Into(this AUTD3Sharp.GPIOIn mode)
             {
                 return mode switch
                 {
@@ -94,7 +107,7 @@ namespace AUTD3Sharp
 
         public static class TimerStrategyExt
         {
-            public static AUTD3Sharp.NativeMethods.TimerStrategy Into(this AUTD3Sharp.TimerStrategy strategy)
+            public static TimerStrategy Into(this AUTD3Sharp.TimerStrategy strategy)
             {
                 return strategy switch
                 {
@@ -102,6 +115,19 @@ namespace AUTD3Sharp
                     AUTD3Sharp.TimerStrategy.BusyWait => TimerStrategy.BusyWait,
                     AUTD3Sharp.TimerStrategy.NativeTimer => TimerStrategy.NativeTimer,
                     _ => throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null)
+                };
+            }
+        }
+
+        public static class SilencerTargetExt
+        {
+            public static SilencerTarget Into(this AUTD3Sharp.SilencerTarget target)
+            {
+                return target switch
+                {
+                    AUTD3Sharp.SilencerTarget.Intensity => SilencerTarget.Intensity,
+                    AUTD3Sharp.SilencerTarget.PulseWidth => SilencerTarget.PulseWidth,
+                    _ => throw new ArgumentOutOfRangeException(nameof(target), target, null)
                 };
             }
         }
@@ -124,40 +150,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static uint Validate(this ResultU32 res)
-            {
-                if (res.err_len == 0) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-
-            public static float Validate(this ResultF32 res)
-            {
-                if (res.err_len == 0) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-
-            public static ulong Validate(this ResultU64 res)
-            {
-                if (res.err_len == 0) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-
-            public static SamplingConfigWrap Validate(this ResultSamplingConfigWrap res)
+            public static SamplingConfig Validate(this ResultSamplingConfig res)
             {
                 if (res.err_len == 0) return res.result;
                 var err = new byte[res.err_len];

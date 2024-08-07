@@ -27,7 +27,7 @@ namespace AUTD3Sharp.Utils
         public float Z { get; }
         public float W { get; }
 
-        public static Quaternion Identity => new Quaternion(1, 0, 0, 0);
+        public static Quaternion Identity => new(1, 0, 0, 0);
         #endregion
 
         public Quaternion Normalized => this / L2Norm;
