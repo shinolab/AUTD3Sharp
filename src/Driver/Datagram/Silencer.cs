@@ -52,7 +52,7 @@ namespace AUTD3Sharp
 
         public static SilencerFixedUpdateRate FromUpdateRate(byte valueIntensity, byte valuePhase) => new(valueIntensity, valuePhase);
         public static SilencerFixedCompletionTime FromCompletionTime(TimeSpan valueIntensity, TimeSpan valuePhase) => new(valueIntensity, valuePhase);
-        public static SilencerFixedCompletionTime Disable() => new(TimeSpan.FromMicroseconds(25), TimeSpan.FromMicroseconds(25));
-        public static SilencerFixedCompletionTime Default() => new(TimeSpan.FromMicroseconds(250), TimeSpan.FromMicroseconds(1000));
+        public static SilencerFixedCompletionTime Disable() => new(TimeSpan.FromMilliseconds(25e-3), TimeSpan.FromMilliseconds(25e-3));
+        public static SilencerFixedCompletionTime Default() => new(TimeSpan.FromMilliseconds(250e-3), TimeSpan.FromMilliseconds(1));
     }
 }

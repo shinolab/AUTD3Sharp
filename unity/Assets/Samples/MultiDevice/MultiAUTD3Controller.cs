@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Net;
 using AUTD3Sharp;
 using UnityEngine;
 using static AUTD3Sharp.Units;
@@ -22,7 +23,7 @@ public class MultiAUTD3Controller : MonoBehaviour
 
         try
         {
-            _autd = builder.Open(AUTD3Sharp.Link.Simulator.Builder(8080));
+            _autd = builder.Open(AUTD3Sharp.Link.Simulator.Builder(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080)));
         }
         catch (Exception)
         {
