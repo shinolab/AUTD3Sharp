@@ -53,8 +53,7 @@ namespace AUTD3Sharp
         {
             STMSamplingConfigTag.Freq => NativeMethodsBase.AUTDSTMConfigFromFreq(_f.Hz, (ushort)n).Validate(),
             STMSamplingConfigTag.Period => NativeMethodsBase.AUTDSTMConfigFromPeriod((ulong)(_period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate(),
-            STMSamplingConfigTag.Config => _config,
-            _ => throw new ArgumentOutOfRangeException()
+            _ => _config,
         };
 
         public Freq<float> Freq(int n) => NativeMethodsBase.AUTDSTMFreq(SamplingConfig(n), (uint)n) * Hz;
@@ -91,8 +90,7 @@ namespace AUTD3Sharp
         internal STMSamplingConfig STMSamplingConfig(int n) => _tag switch
         {
             STMSamplingConfigTag.Freq => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromFreqNearest(_f.Hz, (ushort)n).Validate()),
-            STMSamplingConfigTag.Period => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromPeriodNearest((ulong)(_period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate()),
-            _ => throw new ArgumentOutOfRangeException()
+            _ => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromPeriodNearest((ulong)(_period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate()),
         };
     }
 }

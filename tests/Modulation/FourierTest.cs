@@ -59,7 +59,7 @@ public class FourierTest
                                     63,  53,  44,  36,  29,  23,  18,  15,  15,  15,  18,  22,  29,  36,  46,  57,  70,  83,  97,  112 };
 
         {
-            var m = new Fourier([Sine.FromFreqNearest(50.0f * Hz), Sine.FromFreqNearest(100.0f * Hz)]);
+            var m = new Fourier([Sine.Nearest(50.0f * Hz), Sine.Nearest(100.0f * Hz)]);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)

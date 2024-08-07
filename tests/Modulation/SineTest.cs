@@ -9,6 +9,7 @@ public class SineTest
 
         {
             var m = new Sine(150 * Hz).WithIntensity(0xFF / 2).WithOffset(0xFF / 4).WithPhase(MathF.PI / 2.0f * rad);
+            Assert.Equal(150.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -42,6 +43,7 @@ public class SineTest
 
         {
             var m = new Sine(150.0f * Hz).WithIntensity(0xFF / 2).WithOffset(0xFF / 4).WithPhase(MathF.PI / 2.0f * rad);
+            Assert.Equal(150.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -62,7 +64,9 @@ public class SineTest
     {
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
-        await autd.SendAsync(Sine.FromFreqNearest(150.0f * Hz));
+        var m = Sine.Nearest(150.0f * Hz);
+        await autd.SendAsync(m);
+        Assert.Equal(150.0f * Hz, m.Freq);
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -72,7 +76,7 @@ public class SineTest
         }
 
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Sine(100.1f * Hz)));
-        await autd.SendAsync(Sine.FromFreqNearest(100.1f * Hz));
+        await autd.SendAsync(Sine.Nearest(100.1f * Hz));
     }
 
     [Fact]

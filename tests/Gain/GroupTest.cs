@@ -57,6 +57,37 @@ public class GroupTest
     }
 
     [Fact]
+    public async Task GroupWithParallel()
+    {
+        var autd = await AUTDTest.CreateController();
+
+        var cx = autd.Geometry.Center.X;
+
+        await autd.SendAsync(AUTD3Sharp.Gain.Group.WithParallel(_ => tr => tr.Position.X switch
+        {
+            var x when x < cx => "uniform",
+            _ => "null"
+        }).Set("uniform", new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))).Set("null", new Null()));
+        foreach (var dev in autd.Geometry)
+        {
+            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
+            foreach (var tr in dev)
+            {
+                if (tr.Position.X < cx)
+                {
+                    Assert.Equal(0x80, intensities[tr.Idx]);
+                    Assert.Equal(0x90, phases[tr.Idx]);
+                }
+                else
+                {
+                    Assert.Equal(0, intensities[tr.Idx]);
+                    Assert.Equal(0, phases[tr.Idx]);
+                }
+            }
+        }
+    }
+
+    [Fact]
     public async Task GroupUnknownKey()
     {
         var autd = await AUTDTest.CreateController();

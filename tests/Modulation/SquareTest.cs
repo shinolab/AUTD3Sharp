@@ -9,6 +9,7 @@ public class SquareTest
 
         {
             var m = new Square(200 * Hz).WithLow(32).WithHigh(85).WithDuty(0.1f);
+            Assert.Equal(200.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -42,6 +43,7 @@ public class SquareTest
 
         {
             var m = new Square(200.0f * Hz).WithLow(32).WithHigh(85).WithDuty(0.1f);
+            Assert.Equal(200.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
@@ -62,7 +64,9 @@ public class SquareTest
     {
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
-        await autd.SendAsync(Square.FromFreqNearest(150.0f * Hz));
+        var m = Square.Nearest(150.0f * Hz);
+        await autd.SendAsync(m);
+        Assert.Equal(150.0f * Hz, m.Freq);
         foreach (var dev in autd.Geometry)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -71,7 +75,7 @@ public class SquareTest
         }
 
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Square(100.1f * Hz)));
-        await autd.SendAsync(Square.FromFreqNearest(100.1f * Hz));
+        await autd.SendAsync(Square.Nearest(100.1f * Hz));
     }
 
     [Fact]

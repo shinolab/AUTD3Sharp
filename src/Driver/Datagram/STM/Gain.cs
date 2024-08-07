@@ -72,7 +72,7 @@ namespace AUTD3Sharp
         public TimeSpan Period => _config.Period(_gains.Length);
         public SamplingConfig SamplingConfig => new(_config.SamplingConfig(_gains.Length));
 
-        SamplingConfig? IWithSampling.SamplingConfigIntensity() => SamplingConfig;
+        SamplingConfig IWithSampling.SamplingConfigIntensity() => SamplingConfig;
         SamplingConfig? IWithSampling.SamplingConfigPhase() => SamplingConfig;
     }
 }
