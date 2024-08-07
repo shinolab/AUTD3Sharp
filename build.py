@@ -239,18 +239,23 @@ def cs_build(args):
 
     copy_dll(config)
 
-    with working_dir("derive"):
-        _ = subprocess.run(
-            ["dotnet", "nuget", "remove", "source", "autd3sharp_local_derive"],
-            check=False,
-            capture_output=True,
-        )
-        _ = subprocess.run(
-            ["dotnet", "nuget", "locals", "all", "-c"],
-            check=False,
-            capture_output=True,
-        )
+    _ = subprocess.run(
+        ["dotnet", "nuget", "remove", "source", "autd3sharp_local_derive"],
+        check=False,
+        capture_output=True,
+    )
+    _ = subprocess.run(
+        ["dotnet", "nuget", "remove", "source", "autd3sharp_local"],
+        check=False,
+        capture_output=True,
+    )
+    _ = subprocess.run(
+        ["dotnet", "nuget", "locals", "all", "-c"],
+        check=False,
+        capture_output=True,
+    )
 
+    with working_dir("derive"):
         command = ["dotnet", "build"]
         if config.release:
             command.append("-c:Release")
@@ -270,17 +275,6 @@ def cs_build(args):
         )
 
     with working_dir("src"):
-        _ = subprocess.run(
-            ["dotnet", "nuget", "remove", "source", "autd3sharp_local"],
-            check=False,
-            capture_output=True,
-        )
-        _ = subprocess.run(
-            ["dotnet", "nuget", "locals", "all", "-c"],
-            check=False,
-            capture_output=True,
-        )
-
         command = ["dotnet", "build"]
         if config.release:
             command.append("-c:Release")
