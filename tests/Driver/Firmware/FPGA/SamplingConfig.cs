@@ -12,6 +12,15 @@ public class SamplingConfigTest
     }
 
     [Fact]
+    public void SamplingConfigFreqFloat()
+    {
+        SamplingConfig c = 4000.0f * Hz;
+        Assert.Equal(4000.0f * Hz, c.Freq);
+        Assert.Equal(TimeSpan.FromMicroseconds(250), c.Period);
+        Assert.Equal(10, c.Division);
+    }
+
+    [Fact]
     public void SamplingConfigFreqNearest()
     {
         var c = SamplingConfig.Nearest(4000.0f * Hz);

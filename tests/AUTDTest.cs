@@ -16,6 +16,18 @@ public class AUTDTest
     }
 
     [Fact]
+    public async Task TestOoenWithTimeout()
+    {
+        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder(), TimeSpan.FromMilliseconds(200));
+    }
+
+    [Fact]
+    public void TestOoenWithTimeoutSync()
+    {
+        _ = Controller.Builder([new AUTD3(Vector3.Zero)]).Open(Audit.Builder(), TimeSpan.FromMilliseconds(200));
+    }
+
+    [Fact]
     public async Task TestFPGAState()
     {
         using var autd = await CreateController();

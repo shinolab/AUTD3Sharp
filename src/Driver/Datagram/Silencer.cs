@@ -7,7 +7,7 @@ namespace AUTD3Sharp
 {
     public interface IWithSampling
     {
-        internal SamplingConfig? SamplingConfigIntensity();
+        internal SamplingConfig SamplingConfigIntensity();
         internal SamplingConfig? SamplingConfigPhase();
     }
 
@@ -27,7 +27,7 @@ namespace AUTD3Sharp
             Target = SilencerTarget.Intensity;
         }
 
-        public bool IsValid(IWithSampling target) => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRateIsValid(RawPtr(), (target.SamplingConfigIntensity() ?? new SamplingConfig(0xFFFF)).Inner, (target.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
+        public bool IsValid(IWithSampling target) => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRateIsValid(RawPtr(), target.SamplingConfigIntensity().Inner, (target.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
 
         private DatagramPtr RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(_valueIntensity, _valuePhase, Target.Into());
         DatagramPtr IDatagram.Ptr(Geometry geometry) => RawPtr();
@@ -53,7 +53,7 @@ namespace AUTD3Sharp
             Target = SilencerTarget.Intensity;
         }
 
-        public bool IsValid(IWithSampling target) => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid(RawPtr(), (target.SamplingConfigIntensity() ?? new SamplingConfig(0xFFFF)).Inner, (target.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
+        public bool IsValid(IWithSampling target) => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid(RawPtr(), target.SamplingConfigIntensity().Inner, (target.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
 
         private DatagramPtr RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(_valueIntensity.TotalMilliseconds * 1000 * 1000), (ulong)(_valuePhase.TotalMilliseconds * 1000 * 1000), StrictMode, Target.Into());
         DatagramPtr IDatagram.Ptr(Geometry geometry) => RawPtr();

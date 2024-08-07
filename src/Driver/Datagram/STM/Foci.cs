@@ -176,20 +176,8 @@ namespace AUTD3Sharp
             _config = config;
             _points = new ControlPointsArray1(pointsArray);
         }
-
-        public FociSTM(STMSamplingConfig config, IEnumerable<ControlPoint> points)
-        {
-            var pointsArray = points.Select(p => new ControlPoints1(p)).ToArray();
-            _config = config;
-            _points = new ControlPointsArray1(pointsArray);
-        }
-
-        public FociSTM(STMSamplingConfig config, IEnumerable<Vector3> points)
-        {
-            var pointsArray = points.Select(p => new ControlPoints1(p)).ToArray();
-            _config = config;
-            _points = new ControlPointsArray1(pointsArray);
-        }
+        public FociSTM(STMSamplingConfig config, IEnumerable<ControlPoint> points) : this(config, points.Select(p => new ControlPoints1(p))) { }
+        public FociSTM(STMSamplingConfig config, IEnumerable<Vector3> points) : this(config, points.Select(p => new ControlPoint(p))) { }
 
         public FociSTM(STMSamplingConfig config, IEnumerable<ControlPoints2> points)
         {
@@ -325,7 +313,7 @@ namespace AUTD3Sharp
         public TimeSpan Period => _config.Period(_points.Length());
         public SamplingConfig SamplingConfig => new(_config.SamplingConfig(_points.Length()));
 
-        SamplingConfig? IWithSampling.SamplingConfigIntensity() => SamplingConfig;
+        SamplingConfig IWithSampling.SamplingConfigIntensity() => SamplingConfig;
         SamplingConfig? IWithSampling.SamplingConfigPhase() => SamplingConfig;
     }
 }
