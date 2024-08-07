@@ -42,7 +42,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
             unsafe
             {
                 fixed (byte* ptr = &data[0])
-                    return NativeMethodsBase.AUTDModulationRaw((AUTD3Sharp.NativeMethods.SamplingConfigWrap)_config, LoopBehavior, (byte*)ptr, (ushort)data.Length);
+                    return NativeMethodsBase.AUTDModulationRaw((AUTD3Sharp.NativeMethods.SamplingConfig)_config, LoopBehavior, (byte*)ptr, (ushort)data.Length);
             }
         }
 
@@ -60,7 +60,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
             $$"""
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public {{typeName}} WithSamplingConfig(SamplingConfig config)
+        public {{typeName}} WithSamplingConfig(AUTD3Sharp.SamplingConfig config)
         {
             _config = config;
             return this;
@@ -112,9 +112,9 @@ using AUTD3Sharp.NativeMethods;
         public DatagramWithSegmentTransition<{{typeName}}, ModulationPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new DatagramWithSegmentTransition<{{typeName}}, ModulationPtr>(this, segment, transitionMode);
         
         [ExcludeFromCodeCoverage]
-        public SamplingConfig SamplingConfig => new(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
+        public AUTD3Sharp.SamplingConfig SamplingConfig => new(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
 
-        private SamplingConfig _config = new SamplingConfig(10);
+        private AUTD3Sharp.SamplingConfig _config = new(10);
 
         public AUTD3Sharp.NativeMethods.LoopBehavior LoopBehavior => _loopBehavior;
 

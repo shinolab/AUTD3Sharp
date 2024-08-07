@@ -13,14 +13,14 @@ namespace AUTD3Sharp
     public sealed class PulseWidthEncoder : IDatagram
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate ushort PulseWidthEncoderDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, ushort idx);
+        public delegate byte PulseWidthEncoderDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, byte idx);
 
         private readonly PulseWidthEncoderDelegate? _f;
-        private readonly ConcurrentDictionary<ushort, Func<ushort, ushort>>? _cache;
+        private readonly ConcurrentDictionary<ushort, Func<byte, byte>>? _cache;
 
-        public PulseWidthEncoder(Func<Device, Func<ushort, ushort>> f)
+        public PulseWidthEncoder(Func<Device, Func<byte, byte>> f)
         {
-            _cache = new ConcurrentDictionary<ushort, Func<ushort, ushort>>();
+            _cache = new ConcurrentDictionary<ushort, Func<byte, byte>>();
             _f = (_, geometryPtr, devIdx, idx) =>
             {
                 var h = _cache.GetOrAdd(devIdx, f(new Device(devIdx, geometryPtr)));

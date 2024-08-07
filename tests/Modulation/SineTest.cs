@@ -19,18 +19,18 @@ public class SineTest
                                     126, 122, 114, 104, 92,  78, 63, 48, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 43, 58, 73, 87, 100, 111, 120, 125};
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
 
         {
-            var m = new Sine(150 * Hz).WithSamplingConfig(SamplingConfig.Division(10240)).WithLoopBehavior(LoopBehavior.Once);
+            var m = new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(20)).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             await autd.SendAsync(m);
             foreach (var dev in autd.Geometry)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(10240u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(20u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }
@@ -52,7 +52,7 @@ public class SineTest
                                     126, 122, 114, 104, 92,  78, 63, 48, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 43, 58, 73, 87, 100, 111, 120, 125};
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(5120u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
     }

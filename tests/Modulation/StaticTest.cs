@@ -17,7 +17,7 @@ public class StaticTest
                 var modExpect = new byte[] { 0xFF, 0xFF };
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(0xFFFFu, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
 
@@ -33,7 +33,7 @@ public class StaticTest
 #pragma warning restore IDE0230
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
-                Assert.Equal(0xFFFFFFFFu, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+                Assert.Equal(0xFFFFu, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
         }
 
