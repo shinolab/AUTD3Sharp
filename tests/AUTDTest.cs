@@ -496,7 +496,7 @@ public class AUTDTest
             check[dev.Idx] = true;
             return "0";
         })
-                 .Set("0", (new Sine(150 * Hz), new Uniform(new EmitIntensity(0x80)).WithPhase(new Phase(0x90))))
+                 .Set("0", (new Sine(150 * Hz), new Uniform((new EmitIntensity(0x80), new Phase(0x90)))))
                  .SendAsync();
 
         Assert.False(check[0]);

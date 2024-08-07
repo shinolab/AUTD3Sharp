@@ -4,26 +4,15 @@ using AUTD3Sharp.NativeMethods;
 namespace AUTD3Sharp.Gain
 {
     [Gain]
-    [Builder]
     public sealed partial class Uniform
     {
-        public Uniform(byte intensity)
+        public Uniform(Drive d)
         {
-            Intensity = new EmitIntensity(intensity);
-            Phase = new Phase(0);
+            Drive = d;
         }
 
-        public Uniform(EmitIntensity intensity)
-        {
-            Intensity = intensity;
-            Phase = new Phase(0);
-        }
+        public Drive Drive { get; }
 
-        public EmitIntensity Intensity { get; }
-
-        [Property(Phase = true)]
-        public Phase Phase { get; private set; }
-
-        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainUniform(Intensity.Value, Phase.Value);
+        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainUniform(Drive.Intensity.Value, Drive.Phase.Value);
     }
 }
