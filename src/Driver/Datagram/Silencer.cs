@@ -5,6 +5,12 @@ using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp
 {
+    public interface IWithSampling
+    {
+        internal SamplingConfig? SamplingConfigIntensity();
+        internal SamplingConfig? SamplingConfigPhase();
+    }
+
     [Builder]
     public sealed partial class SilencerFixedUpdateRate : IDatagram
     {
@@ -21,7 +27,10 @@ namespace AUTD3Sharp
             Target = SilencerTarget.Intensity;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(_valueIntensity, _valuePhase, Target.Into());
+        public bool IsValid(IWithSampling target) => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRateIsValid(RawPtr(), (target.SamplingConfigIntensity() ?? new SamplingConfig(0xFFFF)).Inner, (target.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
+
+        private DatagramPtr RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(_valueIntensity, _valuePhase, Target.Into());
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => RawPtr();
     }
 
     [Builder]
@@ -44,7 +53,10 @@ namespace AUTD3Sharp
             Target = SilencerTarget.Intensity;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(_valueIntensity.TotalMilliseconds * 1000 * 1000), (ulong)(_valuePhase.TotalMilliseconds * 1000 * 1000), StrictMode, Target.Into());
+        public bool IsValid(IWithSampling target) => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid(RawPtr(), (target.SamplingConfigIntensity() ?? new SamplingConfig(0xFFFF)).Inner, (target.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
+
+        private DatagramPtr RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(_valueIntensity.TotalMilliseconds * 1000 * 1000), (ulong)(_valuePhase.TotalMilliseconds * 1000 * 1000), StrictMode, Target.Into());
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => RawPtr();
     }
 
     public sealed class Silencer

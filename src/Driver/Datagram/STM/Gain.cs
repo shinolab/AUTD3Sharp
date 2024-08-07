@@ -11,7 +11,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp
 {
-    public sealed class GainSTM : IDatagramST<GainSTMPtr>, IDatagram
+    public sealed class GainSTM : IDatagramST<GainSTMPtr>, IDatagram, IWithSampling
     {
         private readonly STMSamplingConfig _config;
 
@@ -71,6 +71,9 @@ namespace AUTD3Sharp
         public Freq<float> Freq => _config.Freq(_gains.Length);
         public TimeSpan Period => _config.Period(_gains.Length);
         public SamplingConfig SamplingConfig => new(_config.SamplingConfig(_gains.Length));
+
+        SamplingConfig? IWithSampling.SamplingConfigIntensity() => SamplingConfig;
+        SamplingConfig? IWithSampling.SamplingConfigPhase() => SamplingConfig;
     }
 }
 
