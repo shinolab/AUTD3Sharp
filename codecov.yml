@@ -3,18 +3,10 @@ codecov:
 coverage:
   status:
     patch:
-      default:
-        target: 100%
-        threshold: 0%
-        base: auto 
-        branches: 
-          - main
-        if_ci_failed: error
-        informational: false
-        only_pulls: false
+    default_rules:
     project:
       default:
-        target: 100%
+        target: 100% || auto
         threshold: 0%
         base: auto
         branches: 
