@@ -1,0 +1,52 @@
+﻿#if UNITY_EDITOR
+
+using UnityEditor;
+using UnityEngine;
+using System.Linq;
+
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
+public class EnumerateAdaptersWindow : EditorWindow
+{
+    private AUTD3Sharp.Link.EtherCATAdapter[]? _adapters;
+    private Vector2 _leftScrollPos = Vector2.zero;
+
+    private void OnEnable()
+    {
+        _adapters = AUTD3Sharp.Link.SOEM.EnumerateAdapters().ToArray();
+    }
+
+    [MenuItem("AUTD/Enumerate Adapters")]
+    private static void Open()
+    {
+        GetWindow<EnumerateAdaptersWindow>("Enumerate adapters");
+    }
+
+    private void OnGUI()
+    {
+        EditorGUILayout.LabelField("Available ethernet adapters ");
+        var defaultColor = GUI.color;
+        using var sv = new GUILayout.ScrollViewScope(_leftScrollPos);
+        _leftScrollPos = sv.scrollPosition;
+
+        foreach (var adapter in _adapters ?? new AUTD3Sharp.Link.EtherCATAdapter[] { })
+        {
+            using (new GUILayout.HorizontalScope(GUI.skin.box))
+            {
+                EditorGUILayout.SelectableLabel(adapter.Name);
+                GUI.color = Color.black;
+                GUILayout.Box("", GUILayout.ExpandHeight(true), GUILayout.MaxHeight(30), GUILayout.Width(1));
+                GUI.color = defaultColor;
+                EditorGUILayout.SelectableLabel(adapter.Desc);
+            }
+        }
+    }
+}
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif
+
+#endif
