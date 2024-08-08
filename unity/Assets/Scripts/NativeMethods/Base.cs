@@ -234,7 +234,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern float AUTDPhaseToRad(byte value);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern SamplingConfig AUTDSamplingConfigFromDivision(ushort div);
+        public static extern ResultSamplingConfig AUTDSamplingConfigFromDivision(ushort div);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultSamplingConfig AUTDSamplingConfigFromFreq(uint f);
