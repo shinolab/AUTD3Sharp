@@ -15,7 +15,7 @@ namespace AUTD3Sharp
 
         public SamplingConfig(ushort div)
         {
-            Inner = NativeMethodsBase.AUTDSamplingConfigFromDivision(div);
+            Inner = NativeMethodsBase.AUTDSamplingConfigFromDivision(div).Validate();
         }
 
         public static explicit operator NativeMethods.SamplingConfig(SamplingConfig config) => config.Inner;
