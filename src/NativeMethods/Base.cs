@@ -165,10 +165,10 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ResultSamplingConfig AUTDSTMConfigFromPeriodNearest(ulong p, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern float AUTDSTMFreq(SamplingConfig c, uint n);
+        public static extern float AUTDSTMFreq(SamplingConfig c, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ulong AUTDSTMPeriod(SamplingConfig c, uint n);
+        public static extern ulong AUTDSTMPeriod(SamplingConfig c, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSynchronize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramSynchronize();

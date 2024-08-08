@@ -74,7 +74,7 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 27.0.0-rc.6 (MIT)
+autd3 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -82,27 +82,27 @@ autd3-backend-cuda 27.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-backend-cuda
 ---------------------------------------------------------
 
-autd3-derive 27.0.0-rc.6 (MIT)
+autd3-derive 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 27.0.0-rc.6 (MIT)
+autd3-driver 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 27.0.0-rc.6 (MIT)
+autd3-firmware-emulator 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 27.0.0-rc.6 (MIT)
+autd3-gain-holo 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 27.0.0-rc.6 (MIT)
+autd3-link-simulator 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 27.0.0-rc.6
+autd3-link-soem 27.0.0-rc.7
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -168,7 +168,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 27.0.0-rc.6
+autd3-link-twincat 27.0.0-rc.7
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -224,47 +224,47 @@ autd3-link-visualizer 27.0.0-rc.4 (MIT)
 https://github.com/shinolab/autd3-link-visualizer
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 27.0.0-rc.6 (MIT)
+autd3-modulation-audio-file 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 27.0.0-rc.6 (MIT)
+autd3-protobuf 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 27.0.0-rc.6 (MIT)
+autd3capi 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-backend-cuda 27.0.0-rc.6 (MIT)
+autd3capi-backend-cuda 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 27.0.0-rc.6 (MIT)
+autd3capi-driver 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 27.0.0-rc.6 (MIT)
+autd3capi-gain-holo 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 27.0.0-rc.6 (MIT)
+autd3capi-link-simulator 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-soem 27.0.0-rc.6 (MIT)
+autd3capi-link-soem 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 27.0.0-rc.6 (MIT)
+autd3capi-link-twincat 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-visualizer 27.0.0-rc.6 (MIT)
+autd3capi-link-visualizer 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 27.0.0-rc.6 (MIT)
+autd3capi-modulation-audio-file 27.0.0-rc.7 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 

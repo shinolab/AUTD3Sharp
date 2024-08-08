@@ -56,8 +56,8 @@ namespace AUTD3Sharp
             _ => _config,
         };
 
-        public Freq<float> Freq(int n) => NativeMethodsBase.AUTDSTMFreq(SamplingConfig(n), (uint)n) * Hz;
-        public TimeSpan Period(int n) => TimeSpan.FromMilliseconds((double)NativeMethodsBase.AUTDSTMPeriod(SamplingConfig(n), (uint)n) / 1000 / 1000);
+        public Freq<float> Freq(int n) => NativeMethodsBase.AUTDSTMFreq(SamplingConfig(n), (ushort)n) * Hz;
+        public TimeSpan Period(int n) => TimeSpan.FromMilliseconds((double)NativeMethodsBase.AUTDSTMPeriod(SamplingConfig(n), (ushort)n) / 1000 / 1000);
     }
 
     [StructLayout(LayoutKind.Explicit)]
