@@ -50,7 +50,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - if: ${{ needs.test.result == 'failure' }}
+      - if: ${{ needs.test.result == 'failure' || needs.test.result == 'cancelled' }}
         run: exit 1
 
   test-unity:
@@ -76,5 +76,5 @@ jobs:
     runs-on: ubuntu-latest
     needs: test-unity
     steps:
-      - if: ${{ needs.test-unity.result == 'failure' }}
+      - if: ${{ needs.test-unity.result == 'failure' || needs.test-unity.result == 'cancelled' }}
         run: exit 1
