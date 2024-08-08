@@ -11,22 +11,21 @@ using AUTD3Sharp.Derive;
 namespace AUTD3Sharp.Gain
 {
     [Gain]
+    [Builder]
     public sealed partial class Group
     {
         private readonly Func<Device, Func<Transducer, object?>> _f;
         private readonly Dictionary<object, Driver.Datagram.Gain.IGain> _map;
-        private readonly bool _withParallel;
 
-        private Group(Func<Device, Func<Transducer, object?>> f, bool withParallel)
+        public Group(Func<Device, Func<Transducer, object?>> f)
         {
             _f = f;
-            _map = new Dictionary<object, Driver.Datagram.Gain.IGain>();
-            _withParallel = withParallel;
+            _map = new();
+            Parallel = false;
         }
 
-        public Group(Func<Device, Func<Transducer, object?>> f) : this(f, false) { }
-
-        public static Group WithParallel(Func<Device, Func<Transducer, object?>> f) => new(f, true);
+        [Property]
+        public bool Parallel { get; private set; }
 
         public Group Set(object key, Driver.Datagram.Gain.IGain gain)
         {
@@ -78,7 +77,7 @@ namespace AUTD3Sharp.Gain
                             map,
                             keysPtr,
                             valuesPtr,
-                            (uint)values.Length, _withParallel);
+                            (uint)values.Length, Parallel);
                 }
             }
         }

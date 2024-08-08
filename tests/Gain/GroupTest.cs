@@ -63,11 +63,11 @@ public class GroupTest
 
         var cx = autd.Geometry.Center.X;
 
-        await autd.SendAsync(AUTD3Sharp.Gain.Group.WithParallel(_ => tr => tr.Position.X switch
+        await autd.SendAsync(new AUTD3Sharp.Gain.Group(_ => tr => tr.Position.X switch
         {
             var x when x < cx => "uniform",
             _ => "null"
-        }).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
+        }).WithParallel(true).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
         foreach (var dev in autd.Geometry)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
