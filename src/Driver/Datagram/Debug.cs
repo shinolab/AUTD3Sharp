@@ -18,6 +18,7 @@ namespace AUTD3Sharp
         public static DebugTypeWrap StmSegment => NativeMethodsBase.AUTDDebugTypeStmSegment();
         public static DebugTypeWrap StmIdx(ushort idx) => NativeMethodsBase.AUTDDebugTypeStmIdx(idx);
         public static DebugTypeWrap IsStmMode => NativeMethodsBase.AUTDDebugTypeIsStmMode();
+        public static DebugTypeWrap SysTimeEq(DcSysTime sysTime) => NativeMethodsBase.AUTDDebugTypeSysTimeEq(sysTime.SysTime);
         public static DebugTypeWrap PwmOut(Transducer tr) => NativeMethodsBase.AUTDDebugTypePwmOut(tr.Ptr);
         public static DebugTypeWrap Direct(bool v) => NativeMethodsBase.AUTDDebugTypeDirect(v);
     }

@@ -7,10 +7,18 @@ namespace AUTD3Sharp.Modulation.AudioFile
     public sealed partial class Wav
     {
         private readonly string _filename;
+        private readonly (SamplingConfig, DynSincInterpolator)? _resample;
 
         public Wav(string filename)
         {
             _filename = filename;
+            _resample = null;
+        }
+
+        public Wav(string filename, SamplingConfig target, SincInterpolation resampler)
+        {
+            _filename = filename;
+            _resample = (target, resampler.DynResampler());
         }
 
         private ModulationPtr ModulationPtr()
@@ -20,7 +28,9 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileWav(fp, LoopBehavior).Validate();
+                    return _resample.HasValue ?
+                        NativeMethodsModulationAudioFile.AUTDModulationAudioFileWavWithResample(fp, LoopBehavior, _resample.Value.Item1.Inner, _resample.Value.Item2).Validate()
+                    : NativeMethodsModulationAudioFile.AUTDModulationAudioFileWav(fp, LoopBehavior).Validate();
                 }
             }
         }

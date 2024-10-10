@@ -13,10 +13,20 @@ namespace AUTD3Sharp.Modulation.AudioFile
         [Property]
         public char Deliminator { get; private set; } = ',';
 
+        private readonly (float, DynSincInterpolator)? _resample;
+
         public Csv(string filename, SamplingConfig config)
         {
             _filename = filename;
             _config = config;
+            _resample = null;
+        }
+
+        public Csv(string filename, Freq<float> source, SamplingConfig target, SincInterpolation resampler)
+        {
+            _filename = filename;
+            _config = target;
+            _resample = (source.Hz, resampler.DynResampler());
         }
 
         private ModulationPtr ModulationPtr()
@@ -26,7 +36,9 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, _config.Inner, Convert.ToByte(Deliminator), LoopBehavior).Validate();
+                    return _resample.HasValue ?
+                        NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsvWithResample(fp, Convert.ToByte(Deliminator), LoopBehavior, _resample.Value.Item1, _config.Inner, _resample.Value.Item2).Validate()
+                    : NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, _config.Inner, Convert.ToByte(Deliminator), LoopBehavior).Validate();
                 }
             }
         }

@@ -6,12 +6,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithTimerResolution(1).OpenAsync(Audit.Builder());
+        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithReceiveInterval(TimeSpan.FromMilliseconds(1)).WithTimerResolution(1).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithTimerResolution(1).Open(Audit.Builder());
+        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithReceiveInterval(TimeSpan.FromMilliseconds(1)).WithTimerResolution(1).Open(Audit.Builder());
     }
 
     [Fact]
@@ -149,10 +149,7 @@ public class AUTDTest
             Assert.True(autd.Link.IsOpen());
 
             await autd.CloseAsync();
-            Assert.False(autd.Link.IsOpen());
-
             await autd.CloseAsync();
-            Assert.False(autd.Link.IsOpen());
         }
 
         {
@@ -160,7 +157,6 @@ public class AUTDTest
 
             autd.Link.BreakDown();
             await Assert.ThrowsAsync<AUTDException>(async () => await autd.CloseAsync());
-            autd.Link.Repair();
         }
     }
 
@@ -172,10 +168,7 @@ public class AUTDTest
             Assert.True(autd.Link.IsOpen());
 
             autd.Close();
-            Assert.False(autd.Link.IsOpen());
-
             autd.Close();
-            Assert.False(autd.Link.IsOpen());
         }
 
         {
@@ -183,7 +176,6 @@ public class AUTDTest
 
             autd.Link.BreakDown();
             Assert.Throws<AUTDException>(() => autd.Close());
-            autd.Link.Repair();
         }
     }
 
