@@ -1,6 +1,10 @@
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp.Driver.Datagram.Modulation
 {
     [ComVisible(false)]
@@ -13,3 +17,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
         SamplingConfig? IWithSampling.SamplingConfigPhase() => null;
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

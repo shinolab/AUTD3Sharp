@@ -1,7 +1,22 @@
 using System;
+using System.ComponentModel;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Derive;
+
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
+#if UNITY_2018_3_OR_NEWER
+namespace System.Runtime.CompilerServices
+{
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static class IsExternalInit
+    {
+    }
+}
+#endif
 
 namespace AUTD3Sharp
 {
@@ -71,3 +86,7 @@ namespace AUTD3Sharp
         DatagramPtr IDatagram.Ptr(Geometry geometry) => _silencer.RawPtr(StrictMode, Target);
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif
