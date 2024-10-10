@@ -10,7 +10,7 @@ internal static class GroupByDeviceTest
 {
     public static void Test<T>(Controller<T> autd)
     {
-        var config = Silencer.Default();
+        var config = new Silencer();
         autd.Send(config);
 
         autd.Group(dev =>
@@ -33,7 +33,7 @@ internal static class GroupByTransducerTest
 {
     public static void Test<T>(Controller<T> autd)
     {
-        var config = Silencer.Default();
+        var config = new Silencer();
         autd.Send(config);
 
         var cx = autd.Geometry.Center.X;
