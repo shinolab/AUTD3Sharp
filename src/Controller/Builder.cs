@@ -37,9 +37,15 @@ namespace AUTD3Sharp
             return this;
         }
 
-        public ControllerBuilder WithTimerResolution(uint resolution)
+        public ControllerBuilder WithReceiveInterval(TimeSpan interval)
         {
-            _ptr = NativeMethodsBase.AUTDControllerBuilderWithTimerResolution(_ptr, resolution);
+            _ptr = NativeMethodsBase.AUTDControllerBuilderWithReceiveInterval(_ptr, (ulong)(interval.TotalMilliseconds * 1000 * 1000));
+            return this;
+        }
+
+        public ControllerBuilder WithTimerResolution(uint? resolution)
+        {
+            _ptr = NativeMethodsBase.AUTDControllerBuilderWithTimerResolution(_ptr, resolution ?? 0);
             return this;
         }
 

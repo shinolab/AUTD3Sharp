@@ -4,7 +4,7 @@ namespace tests.Modulation;
 public class CustomTest
 {
     [Fact]
-    public async Task Modulation()
+    public async Task ModulationCustom()
     {
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
@@ -14,6 +14,28 @@ public class CustomTest
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);
+            Assert.Equal(10, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+        }
+    }
+
+    [Fact]
+    public async Task ModulationCustomResample()
+    {
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+
+        await autd.SendAsync(new AUTD3Sharp.Modulation.Custom([127, 255, 127, 0], 2.0f * kHz, 4 * kHz, new SincInterpolation()));
+        foreach (var dev in autd.Geometry)
+        {
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+            Assert.Equal(new byte[] { 127, 217, 255, 217, 127, 37, 0, 37 }, mod);
+            Assert.Equal(10, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+        }
+
+        await autd.SendAsync(new AUTD3Sharp.Modulation.Custom([127, 255, 127, 0], 2.0f * kHz, 4 * kHz, new SincInterpolation(new Rectangular(32))));
+        foreach (var dev in autd.Geometry)
+        {
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+            Assert.Equal(new byte[] { 127, 217, 255, 223, 127, 42, 0, 37 }, mod);
             Assert.Equal(10, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
         }
     }

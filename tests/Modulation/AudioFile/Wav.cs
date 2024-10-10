@@ -104,4 +104,23 @@ public class WavTest
             }
         }
     }
+
+    [Fact]
+    public async Task WavResample()
+    {
+        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+
+        var modExpect = new byte[] { 127, 217, 255, 217, 127, 37, 0, 37 };
+
+        var m = new Wav("custom.wav", 4 * kHz, new SincInterpolation());
+        Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
+        await autd.SendAsync(m);
+        foreach (var dev in autd.Geometry)
+        {
+            var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
+            Assert.Equal(modExpect, mod);
+            Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+            Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
+        }
+    }
 }
