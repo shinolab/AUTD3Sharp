@@ -1,5 +1,4 @@
 using AUTD3Sharp.NativeMethods;
-using static AUTD3Sharp.Units;
 
 namespace AUTD3Sharp.Modulation
 {
@@ -15,7 +14,7 @@ namespace AUTD3Sharp.Modulation
 
         public BlackMan(uint windowSize)
         {
-            this.WindowSize = windowSize;
+            WindowSize = windowSize;
         }
 
         DynWindow IWindow.Window() { return DynWindow.Blackman; }
@@ -27,7 +26,7 @@ namespace AUTD3Sharp.Modulation
 
         public Rectangular(uint windowSize)
         {
-            this.WindowSize = windowSize;
+            WindowSize = windowSize;
         }
 
         DynWindow IWindow.Window() { return DynWindow.Rectangular; }
