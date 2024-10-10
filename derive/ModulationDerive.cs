@@ -23,9 +23,6 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
         var attribute = source.Attributes.First(attr => attr!.AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ==
                                                         "global::AUTD3Sharp.Derive.ModulationAttribute");
         var namedArguments = attribute.NamedArguments;
-        var noCache = namedArguments.Any(arg => arg.Key == "NoCache" && (bool)(arg.Value.Value ?? false));
-        var noRadiationPressure = namedArguments.Any(arg => arg.Key == "NoRadiationPressure" && (bool)(arg.Value.Value ?? false));
-        var noTransform = namedArguments.Any(arg => arg.Key == "NoTransform" && (bool)(arg.Value.Value ?? false));
         var configNoChange = namedArguments.Any(arg => arg.Key == "ConfigNoChange" && (bool)(arg.Value.Value ?? false));
 
         var isCustom = typeSymbol.GetMembers("Calc").Length != 0;
@@ -42,19 +39,16 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
             unsafe
             {
                 fixed (byte* ptr = &data[0])
-                    return NativeMethodsBase.AUTDModulationRaw((AUTD3Sharp.NativeMethods.SamplingConfig)_config, LoopBehavior, (byte*)ptr, (ushort)data.Length);
+                    return NativeMethodsBase.AUTDModulationCustom((AUTD3Sharp.NativeMethods.SamplingConfig)_config, LoopBehavior, (byte*)ptr, (ushort)data.Length);
             }
         }
 
 """ : "";
 
-        var cacheCode = noCache ? "" :
-            $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}> WithCache() => new AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}>(this);";
-        var radiationPressureCode = noRadiationPressure ? "" :
-            $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}> WithRadiationPressure() => new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}>(this);";
+        var cacheCode = $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}> WithCache() => new AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}>(this);";
+        var radiationPressureCode = $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}> WithRadiationPressure() => new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}>(this);";
 
-        var transformCode = noTransform ? "" :
-            $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}> WithTransform(Func<int, byte, byte> f) => new AUTD3Sharp.Driver.Datagram.Modulation.Transform<{typeName}>(this, f);";
+        var firCode = $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Fir<{typeName}> WithFir(IEnumerable<float> iter) => new AUTD3Sharp.Driver.Datagram.Modulation.Fir<{typeName}>(this, iter);";
 
         var configCode = configNoChange ? "" :
             $$"""
@@ -82,6 +76,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
 
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using AUTD3Sharp;
 using AUTD3Sharp.Driver.Datagram;
@@ -132,7 +127,7 @@ using AUTD3Sharp.NativeMethods;
 {{cacheCode}}
 {{configCode}}
 {{radiationPressureCode}}
-{{transformCode}}
+{{firCode}}
     }
 {{nsEnd}}
 """;

@@ -11,8 +11,9 @@ namespace AUTD3Sharp.Modulation
         private Sine(ISamplingMode mode)
         {
             Intensity = 0xFF;
-            Offset = 0xFF / 2;
+            Offset = 0xFF;
             Phase = 0 * rad;
+            Clamp = false;
             Mode = mode;
         }
 
@@ -39,8 +40,11 @@ namespace AUTD3Sharp.Modulation
 
         public Angle Phase { get; private set; }
 
+        [Property]
+        public bool Clamp { get; private set; }
+
         internal ISamplingMode Mode { get; }
 
-        private ModulationPtr ModulationPtr() => Mode.SinePtr(_config, Intensity, Offset, Phase, LoopBehavior);
+        private ModulationPtr ModulationPtr() => Mode.SinePtr(_config, Intensity, Offset, Phase, Clamp, LoopBehavior);
     }
 }

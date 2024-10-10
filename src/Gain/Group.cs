@@ -36,10 +36,10 @@ namespace AUTD3Sharp.Gain
         private GainPtr GainPtr(Geometry geometry)
         {
             var keymap = new Dictionary<object, int>();
-            var deviceIndices = geometry.Devices().Select(dev => (uint)dev.Idx).ToArray();
+            var deviceIndices = geometry.Devices().Select(dev => (ushort)dev.Idx).ToArray();
             unsafe
             {
-                fixed (uint* deviceIndicesPtr = &deviceIndices[0])
+                fixed (ushort* deviceIndicesPtr = &deviceIndices[0])
                 {
                     var map = NativeMethodsBase.AUTDGainGroupCreateMap(deviceIndicesPtr, (ushort)deviceIndices.Length);
                     var k = 0;

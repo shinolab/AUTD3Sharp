@@ -32,7 +32,7 @@ namespace AUTD3Sharp.NativeMethods
     public unsafe partial struct DebugTypeWrap
     {
         public DebugTypeTag ty;
-        public ushort value;
+        public ulong value;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -69,6 +69,12 @@ namespace AUTD3Sharp.NativeMethods
 
     [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct LinkPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ControllerPtr
     {
         public IntPtr Item1;
     }
@@ -126,6 +132,18 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct RuntimePtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct HandlePtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct FociSTMPtr
     {
         public IntPtr Item1;
@@ -151,6 +169,13 @@ namespace AUTD3Sharp.NativeMethods
         public GainSTMPtr result;
         public uint err_len;
         public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct DynSincInterpolator
+    {
+        public DynWindow window;
+        public uint window_size;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -190,6 +215,7 @@ namespace AUTD3Sharp.NativeMethods
         IsStmMode = 9,
         PwmOut = 10,
         Direct = 11,
+        SysTimeEq = 12,
     }
 
     public enum GPIOIn : byte
@@ -215,6 +241,12 @@ namespace AUTD3Sharp.NativeMethods
         Gpio = 2,
         Ext = 3,
         Immediate = 4,
+    }
+
+    public enum DynWindow : uint
+    {
+        Rectangular = 0,
+        Blackman = 1,
     }
 
 

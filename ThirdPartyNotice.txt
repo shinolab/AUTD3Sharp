@@ -6,12 +6,12 @@ The license terms for each of these components are provided later in this notice
 
 ---------------------------------------------------------
 
-addr2line 0.22.0 (Apache-2.0 OR MIT)
+addr2line 0.24.2 (Apache-2.0 OR MIT)
 https://github.com/gimli-rs/addr2line
 ---------------------------------------------------------
 
-adler 1.0.2 (0BSD OR Apache-2.0 OR MIT)
-https://github.com/jonas-schievink/adler.git
+adler2 2.0.0 (0BSD OR Apache-2.0 OR MIT)
+https://github.com/oyvindln/adler2
 ---------------------------------------------------------
 
 ahash 0.8.11 (Apache-2.0 OR MIT)
@@ -22,15 +22,15 @@ aho-corasick 1.1.3 (MIT OR Unlicense)
 https://github.com/BurntSushi/aho-corasick
 ---------------------------------------------------------
 
-android-tzdata 0.1.1 (Apache-2.0 OR MIT)
-https://github.com/RumovZ/android-tzdata
+allocator-api2 0.2.18 (Apache-2.0 OR MIT)
+https://github.com/zakarumych/allocator-api2
 ---------------------------------------------------------
 
 android_system_properties 0.1.5 (Apache-2.0 OR MIT)
 https://github.com/nical/android_system_properties
 ---------------------------------------------------------
 
-anyhow 1.0.86 (Apache-2.0 OR MIT)
+anyhow 1.0.89 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/anyhow
 ---------------------------------------------------------
 
@@ -38,12 +38,20 @@ approx 0.5.1 (Apache-2.0)
 https://github.com/brendanzab/approx
 ---------------------------------------------------------
 
-ash 0.37.3+1.3.251 (Apache-2.0 OR MIT)
-https://github.com/MaikKlein/ash
+argminmax 0.6.2 (MIT)
+https://github.com/jvdd/argminmax
 ---------------------------------------------------------
 
-assert_approx_eq 1.1.0 (Apache-2.0 OR MIT)
-https://github.com/ashleygwilliams/assert_approx_eq.git
+array-init-cursor 0.2.0 (Apache-2.0 OR MIT)
+https://github.com/planus-org/planus
+---------------------------------------------------------
+
+arrayvec 0.7.6 (Apache-2.0 OR MIT)
+https://github.com/bluss/arrayvec
+---------------------------------------------------------
+
+ash 0.38.0+1.3.281 (Apache-2.0 OR MIT)
+https://github.com/ash-rs/ash
 ---------------------------------------------------------
 
 async-channel 2.3.1 (Apache-2.0 OR MIT)
@@ -54,55 +62,55 @@ async-ffi 0.5.0 (MIT)
 https://github.com/oxalica/async-ffi
 ---------------------------------------------------------
 
-async-stream 0.3.5 (MIT)
+async-stream 0.3.6 (MIT)
 https://github.com/tokio-rs/async-stream
 ---------------------------------------------------------
 
-async-stream-impl 0.3.5 (MIT)
+async-stream-impl 0.3.6 (MIT)
 https://github.com/tokio-rs/async-stream
 ---------------------------------------------------------
 
-async-trait 0.1.81 (Apache-2.0 OR MIT)
+async-trait 0.1.83 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/async-trait
 ---------------------------------------------------------
 
-atomic-polyfill 1.0.3 (Apache-2.0 OR MIT)
-https://github.com/embassy-rs/atomic-polyfill
+atoi_simd 0.15.6 (Apache-2.0 OR MIT)
+https://github.com/RoDmitry/atoi_simd
 ---------------------------------------------------------
 
 atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 27.0.0 (MIT)
+autd3 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-backend-cuda 27.0.0 (MIT)
-https://github.com/shinolab/autd3-backend-cuda
----------------------------------------------------------
-
-autd3-derive 27.0.0 (MIT)
+autd3-derive 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 27.0.0 (MIT)
+autd3-driver 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 27.0.0 (MIT)
+autd3-emulator 28.0.0-rc.0 (MIT)
+https://github.com/shinolab/autd3-emulator
+---------------------------------------------------------
+
+autd3-firmware-emulator 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 27.0.0 (MIT)
+autd3-gain-holo 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 27.0.0 (MIT)
+autd3-link-simulator 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 27.0.0
+autd3-link-soem 28.0.0-rc.0 ()
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -168,7 +176,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 27.0.0
+autd3-link-twincat 28.0.0-rc.0 ()
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -220,67 +228,55 @@ SOFTWARE.
 
 ---------------------------------------------------------
 
-autd3-link-visualizer 27.0.0 (MIT)
-https://github.com/shinolab/autd3-link-visualizer
----------------------------------------------------------
-
-autd3-modulation-audio-file 27.0.0 (MIT)
+autd3-modulation-audio-file 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 27.0.0 (MIT)
+autd3-protobuf 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 27.0.0 (MIT)
+autd3capi 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-backend-cuda 27.0.0 (MIT)
+autd3capi-driver 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 27.0.0 (MIT)
+autd3capi-emulator 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 27.0.0 (MIT)
+autd3capi-gain-holo 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 27.0.0 (MIT)
+autd3capi-link-simulator 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-soem 27.0.0 (MIT)
+autd3capi-link-soem 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 27.0.0 (MIT)
+autd3capi-link-twincat 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-visualizer 27.0.0 (MIT)
+autd3capi-modulation-audio-file 28.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 27.0.0 (MIT)
-https://github.com/shinolab/autd3-capi
----------------------------------------------------------
-
-autocfg 1.3.0 (Apache-2.0 OR MIT)
-https://github.com/cuviper/autocfg
----------------------------------------------------------
-
-axum 0.7.5 (MIT)
+axum 0.7.7 (MIT)
 https://github.com/tokio-rs/axum
 ---------------------------------------------------------
 
-axum-core 0.4.3 (MIT)
+axum-core 0.4.5 (MIT)
 https://github.com/tokio-rs/axum
 ---------------------------------------------------------
 
-backtrace 0.3.73 (Apache-2.0 OR MIT)
+backtrace 0.3.74 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/backtrace-rs
 ---------------------------------------------------------
 
@@ -288,11 +284,19 @@ base64 0.22.1 (Apache-2.0 OR MIT)
 https://github.com/marshallpierce/rust-base64
 ---------------------------------------------------------
 
+bit-set 0.6.0 (Apache-2.0 OR MIT)
+https://github.com/contain-rs/bit-set
+---------------------------------------------------------
+
+bit-vec 0.7.0 (Apache-2.0 OR MIT)
+https://github.com/contain-rs/bit-vec
+---------------------------------------------------------
+
 bit-vec 0.8.0 (Apache-2.0 OR MIT)
 https://github.com/contain-rs/bit-vec
 ---------------------------------------------------------
 
-bitfield-struct 0.8.0 (MIT)
+bitfield-struct 0.9.0 (MIT)
 https://github.com/wrenger/bitfield-struct-rs.git
 ---------------------------------------------------------
 
@@ -304,15 +308,23 @@ bitflags 2.6.0 (Apache-2.0 OR MIT)
 https://github.com/bitflags/bitflags
 ---------------------------------------------------------
 
+block 0.1.6 (MIT)
+http://github.com/SSheldon/rust-block
+---------------------------------------------------------
+
 bumpalo 3.16.0 (Apache-2.0 OR MIT)
 https://github.com/fitzgen/bumpalo
 ---------------------------------------------------------
 
-bytemuck 1.16.3 (Apache-2.0 OR MIT OR Zlib)
+bvh 0.10.0 (MIT)
+https://github.com/svenstaro/bvh
+---------------------------------------------------------
+
+bytemuck 1.18.0 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/bytemuck
 ---------------------------------------------------------
 
-bytemuck_derive 1.7.0 (Apache-2.0 OR MIT OR Zlib)
+bytemuck_derive 1.7.1 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/bytemuck
 ---------------------------------------------------------
 
@@ -320,12 +332,12 @@ byteorder 1.5.0 (MIT OR Unlicense)
 https://github.com/BurntSushi/byteorder
 ---------------------------------------------------------
 
-bytes 1.7.1 (MIT)
+bytes 1.7.2 (MIT)
 https://github.com/tokio-rs/bytes
 ---------------------------------------------------------
 
-cc 1.1.8 (Apache-2.0 OR MIT)
-https://github.com/rust-lang/cc-rs
+castaway 0.2.3 (MIT)
+https://github.com/sagebind/castaway
 ---------------------------------------------------------
 
 cfg-if 1.0.0 (Apache-2.0 OR MIT)
@@ -336,31 +348,39 @@ chrono 0.4.38 (Apache-2.0 OR MIT)
 https://github.com/chronotope/chrono
 ---------------------------------------------------------
 
-cmake 0.1.50 (Apache-2.0 OR MIT)
-https://github.com/rust-lang/cmake-rs
+codespan-reporting 0.11.1 (Apache-2.0)
+https://github.com/brendanzab/codespan
 ---------------------------------------------------------
 
-color_quant 1.1.0 (MIT)
-https://github.com/image-rs/color_quant.git
+com 0.6.0 (MIT)
+https://github.com/microsoft/com-rs
+---------------------------------------------------------
+
+com_macros 0.6.0 (MIT)
+https://github.com/microsoft/com-rs
+---------------------------------------------------------
+
+com_macros_support 0.6.0 (MIT)
+https://github.com/microsoft/com-rs
+---------------------------------------------------------
+
+compact_str 0.8.0 (MIT)
+https://github.com/ParkMyCar/compact_str
 ---------------------------------------------------------
 
 concurrent-queue 2.5.0 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/concurrent-queue
 ---------------------------------------------------------
 
-convert_case 0.4.0 (MIT)
-https://github.com/rutrum/convert-case
+console 0.15.8 (MIT)
+https://github.com/console-rs/console
 ---------------------------------------------------------
 
 core-foundation 0.9.4 (Apache-2.0 OR MIT)
 https://github.com/servo/core-foundation-rs
 ---------------------------------------------------------
 
-core-foundation-sys 0.8.6 (Apache-2.0 OR MIT)
-https://github.com/servo/core-foundation-rs
----------------------------------------------------------
-
-core-graphics 0.23.2 (Apache-2.0 OR MIT)
+core-foundation-sys 0.8.7 (Apache-2.0 OR MIT)
 https://github.com/servo/core-foundation-rs
 ---------------------------------------------------------
 
@@ -368,16 +388,8 @@ core-graphics-types 0.1.3 (Apache-2.0 OR MIT)
 https://github.com/servo/core-foundation-rs
 ---------------------------------------------------------
 
-core-text 20.1.0 (Apache-2.0 OR MIT)
-https://github.com/servo/core-foundation-rs
----------------------------------------------------------
-
-crc32fast 1.4.2 (Apache-2.0 OR MIT)
-https://github.com/srijs/rust-crc32fast
----------------------------------------------------------
-
-critical-section 1.1.2 (Apache-2.0 OR MIT)
-https://github.com/rust-embedded/critical-section
+crossbeam-channel 0.5.13 (Apache-2.0 OR MIT)
+https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
 crossbeam-deque 0.8.5 (Apache-2.0 OR MIT)
@@ -396,13 +408,6 @@ crossbeam-utils 0.8.20 (Apache-2.0 OR MIT)
 https://github.com/crossbeam-rs/crossbeam
 ---------------------------------------------------------
 
-crunchy 0.2.2 (MIT)
----------------------------------------------------------
-
-cstr 0.2.12 (MIT)
-https://github.com/upsuper/cstr
----------------------------------------------------------
-
 csv 1.3.0 (MIT OR Unlicense)
 https://github.com/BurntSushi/rust-csv
 ---------------------------------------------------------
@@ -411,56 +416,48 @@ csv-core 0.1.11 (MIT OR Unlicense)
 https://github.com/BurntSushi/rust-csv
 ---------------------------------------------------------
 
-cuda-config 0.1.0 (Apache-2.0 OR MIT)
-https://github.com/rust-cuda/cuda-sys
----------------------------------------------------------
-
-cuda-sys 0.2.0 (MIT)
-https://github.com/termoshtt/accel
+d3d12 22.0.0 (Apache-2.0 OR MIT)
+https://github.com/gfx-rs/wgpu/tree/trunk/d3d12
 ---------------------------------------------------------
 
 deranged 0.3.11 (Apache-2.0 OR MIT)
 https://github.com/jhpratt/deranged
 ---------------------------------------------------------
 
-derivative 2.2.0 (Apache-2.0 OR MIT)
-https://github.com/mcarton/rust-derivative
----------------------------------------------------------
-
-derive_more 0.99.18 (MIT)
+derive_more 1.0.0 (MIT)
 https://github.com/JelteF/derive_more
 ---------------------------------------------------------
 
-dirs-next 2.0.0 (Apache-2.0 OR MIT)
-https://github.com/xdg-rs/dirs
+derive_more-impl 1.0.0 (MIT)
+https://github.com/JelteF/derive_more
 ---------------------------------------------------------
 
-dirs-sys-next 0.1.2 (Apache-2.0 OR MIT)
-https://github.com/xdg-rs/dirs/tree/master/dirs-sys
+document-features 0.2.10 (Apache-2.0 OR MIT)
+https://github.com/slint-ui/document-features
 ---------------------------------------------------------
 
-dlib 0.5.2 (MIT)
-https://github.com/elinorbgr/dlib
----------------------------------------------------------
-
-dwrote 0.11.0 (MPL-2.0)
-https://github.com/servo/dwrote-rs
----------------------------------------------------------
-
-earcutr 0.4.3 (ISC)
-https://github.com/frewsxcv/earcutr/
+dyn-clone 1.0.17 (Apache-2.0 OR MIT)
+https://github.com/dtolnay/dyn-clone
 ---------------------------------------------------------
 
 either 1.13.0 (Apache-2.0 OR MIT)
 https://github.com/rayon-rs/either
 ---------------------------------------------------------
 
+encode_unicode 0.3.6 (Apache-2.0 OR MIT)
+https://github.com/tormol/encode_unicode
+---------------------------------------------------------
+
+enum_dispatch 0.3.13 (Apache-2.0 OR MIT)
+https://gitlab.com/antonok/enum_dispatch
+---------------------------------------------------------
+
 equivalent 1.0.1 (Apache-2.0 OR MIT)
 https://github.com/cuviper/equivalent
 ---------------------------------------------------------
 
-errno 0.3.9 (Apache-2.0 OR MIT)
-https://github.com/lambda-fairy/rust-errno
+ethnum 1.5.0 (Apache-2.0 OR MIT)
+https://github.com/nlordell/ethnum-rs
 ---------------------------------------------------------
 
 event-listener 5.3.1 (Apache-2.0 OR MIT)
@@ -471,32 +468,20 @@ event-listener-strategy 0.5.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/event-listener-strategy
 ---------------------------------------------------------
 
-fdeflate 0.3.4 (Apache-2.0 OR MIT)
-https://github.com/image-rs/fdeflate
+fallible-streaming-iterator 0.1.9 (Apache-2.0 OR MIT)
+https://github.com/sfackler/fallible-streaming-iterator
 ---------------------------------------------------------
 
-flate2 1.0.31 (Apache-2.0 OR MIT)
-https://github.com/rust-lang/flate2-rs
+fast-float 0.2.0 (Apache-2.0 OR MIT)
+https://github.com/aldanor/fast-float-rust
 ---------------------------------------------------------
 
-float-cmp 0.9.0 (MIT)
-https://github.com/mikedilger/float-cmp
----------------------------------------------------------
-
-float-ord 0.3.2 (Apache-2.0 OR MIT)
-https://github.com/notriddle/rust-float-ord
----------------------------------------------------------
-
-float_next_after 1.0.0 (MIT)
-https://gitlab.com/bronsonbdevost/next_afterf
+flume 0.11.0 (Apache-2.0 OR MIT)
+https://github.com/zesterer/flume
 ---------------------------------------------------------
 
 fnv 1.0.7 (Apache-2.0 OR MIT)
 https://github.com/servo/rust-fnv
----------------------------------------------------------
-
-font-kit 0.13.2 (Apache-2.0 OR MIT)
-https://github.com/servo/font-kit
 ---------------------------------------------------------
 
 foreign-types 0.5.0 (Apache-2.0 OR MIT)
@@ -511,51 +496,31 @@ foreign-types-shared 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/sfackler/foreign-types
 ---------------------------------------------------------
 
-freetype-sys 0.20.1 (MIT)
-https://github.com/PistonDevelopers/freetype-sys.git
----------------------------------------------------------
-
-futures-channel 0.3.30 (Apache-2.0 OR MIT)
+futures-channel 0.3.31 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
-futures-core 0.3.30 (Apache-2.0 OR MIT)
+futures-core 0.3.31 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
-futures-sink 0.3.30 (Apache-2.0 OR MIT)
+futures-sink 0.3.31 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
-futures-task 0.3.30 (Apache-2.0 OR MIT)
+futures-task 0.3.31 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
 ---------------------------------------------------------
 
-futures-util 0.3.30 (Apache-2.0 OR MIT)
+futures-util 0.3.31 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/futures-rs
----------------------------------------------------------
-
-geo 0.25.1 (Apache-2.0 OR MIT)
-https://github.com/georust/geo
----------------------------------------------------------
-
-geo-types 0.7.13 (Apache-2.0 OR MIT)
-https://github.com/georust/geo
----------------------------------------------------------
-
-geographiclib-rs 0.2.4 (MIT)
-https://github.com/georust/geographiclib-rs
 ---------------------------------------------------------
 
 getrandom 0.2.15 (Apache-2.0 OR MIT)
 https://github.com/rust-random/getrandom
 ---------------------------------------------------------
 
-gif 0.12.0 (Apache-2.0 OR MIT)
-https://github.com/image-rs/image-gif
----------------------------------------------------------
-
-gimli 0.29.0 (Apache-2.0 OR MIT)
+gimli 0.31.1 (Apache-2.0 OR MIT)
 https://github.com/gimli-rs/gimli
 ---------------------------------------------------------
 
@@ -563,16 +528,36 @@ glob 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/glob
 ---------------------------------------------------------
 
-h2 0.4.5 (MIT)
+glow 0.13.1 (Apache-2.0 OR MIT OR Zlib)
+https://github.com/grovesNL/glow
+---------------------------------------------------------
+
+glutin_wgl_sys 0.6.0 (Apache-2.0)
+https://github.com/rust-windowing/glutin
+---------------------------------------------------------
+
+gpu-alloc 0.6.0 (Apache-2.0 OR MIT)
+https://github.com/zakarumych/gpu-alloc
+---------------------------------------------------------
+
+gpu-alloc-types 0.3.0 (Apache-2.0 OR MIT)
+https://github.com/zakarumych/gpu-alloc
+---------------------------------------------------------
+
+gpu-allocator 0.26.0 (Apache-2.0 OR MIT)
+https://github.com/Traverse-Research/gpu-allocator
+---------------------------------------------------------
+
+gpu-descriptor 0.3.0 (Apache-2.0 OR MIT)
+https://github.com/zakarumych/gpu-descriptor
+---------------------------------------------------------
+
+gpu-descriptor-types 0.2.0 (Apache-2.0 OR MIT)
+https://github.com/zakarumych/gpu-descriptor
+---------------------------------------------------------
+
+h2 0.4.6 (MIT)
 https://github.com/hyperium/h2
----------------------------------------------------------
-
-half 2.4.1 (Apache-2.0 OR MIT)
-https://github.com/starkat99/half-rs
----------------------------------------------------------
-
-hash32 0.2.1 (Apache-2.0 OR MIT)
-https://github.com/japaric/hash32
 ---------------------------------------------------------
 
 hashbrown 0.12.3 (Apache-2.0 OR MIT)
@@ -583,12 +568,12 @@ hashbrown 0.14.5 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/hashbrown
 ---------------------------------------------------------
 
-heapless 0.7.17 (Apache-2.0 OR MIT)
-https://github.com/japaric/heapless
+hashbrown 0.15.0 (Apache-2.0 OR MIT)
+https://github.com/rust-lang/hashbrown
 ---------------------------------------------------------
 
-heck 0.4.1 (Apache-2.0 OR MIT)
-https://github.com/withoutboats/heck
+hassle-rs 0.11.0 (MIT)
+https://github.com/Traverse-Research/hassle-rs
 ---------------------------------------------------------
 
 heck 0.5.0 (Apache-2.0 OR MIT)
@@ -597,6 +582,10 @@ https://github.com/withoutboats/heck
 
 hermit-abi 0.3.9 (Apache-2.0 OR MIT)
 https://github.com/hermit-os/hermit-rs
+---------------------------------------------------------
+
+hexf-parse 0.2.1 (CC0-1.0)
+https://github.com/lifthrasiir/hexf
 ---------------------------------------------------------
 
 home 0.5.9 (Apache-2.0 OR MIT)
@@ -619,7 +608,7 @@ http-body-util 0.1.2 (MIT)
 https://github.com/hyperium/http-body
 ---------------------------------------------------------
 
-httparse 1.9.4 (Apache-2.0 OR MIT)
+httparse 1.9.5 (Apache-2.0 OR MIT)
 https://github.com/seanmonstar/httparse
 ---------------------------------------------------------
 
@@ -635,36 +624,24 @@ hyper-timeout 0.5.1 (Apache-2.0 OR MIT)
 https://github.com/hjr3/hyper-timeout
 ---------------------------------------------------------
 
-hyper-util 0.1.7 (MIT)
+hyper-util 0.1.9 (MIT)
 https://github.com/hyperium/hyper-util
----------------------------------------------------------
-
-iana-time-zone 0.1.60 (Apache-2.0 OR MIT)
-https://github.com/strawlab/iana-time-zone
----------------------------------------------------------
-
-iana-time-zone-haiku 0.1.2 (Apache-2.0 OR MIT)
-https://github.com/strawlab/iana-time-zone
----------------------------------------------------------
-
-image 0.24.9 (Apache-2.0 OR MIT)
-https://github.com/image-rs/image
 ---------------------------------------------------------
 
 indexmap 1.9.3 (Apache-2.0 OR MIT)
 https://github.com/bluss/indexmap
 ---------------------------------------------------------
 
-indexmap 2.3.0 (Apache-2.0 OR MIT)
+indexmap 2.6.0 (Apache-2.0 OR MIT)
 https://github.com/indexmap-rs/indexmap
 ---------------------------------------------------------
 
-indoc 2.0.5 (Apache-2.0 OR MIT)
-https://github.com/dtolnay/indoc
+indicatif 0.17.8 (MIT)
+https://github.com/console-rs/indicatif
 ---------------------------------------------------------
 
-itertools 0.11.0 (Apache-2.0 OR MIT)
-https://github.com/rust-itertools/itertools
+instant 0.1.13 (BSD-3-Clause)
+https://github.com/sebcrozet/instant
 ---------------------------------------------------------
 
 itertools 0.13.0 (Apache-2.0 OR MIT)
@@ -675,28 +652,24 @@ itoa 1.0.11 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/itoa
 ---------------------------------------------------------
 
-jobserver 0.1.32 (Apache-2.0 OR MIT)
-https://github.com/rust-lang/jobserver-rs
+jni-sys 0.3.0 (Apache-2.0 OR MIT)
+https://github.com/sfackler/rust-jni-sys
 ---------------------------------------------------------
 
-jpeg-decoder 0.3.1 (Apache-2.0 OR MIT)
-https://github.com/image-rs/jpeg-decoder
----------------------------------------------------------
-
-js-sys 0.3.69 (Apache-2.0 OR MIT)
+js-sys 0.3.70 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/js-sys
+---------------------------------------------------------
+
+khronos-egl 6.0.0 (Apache-2.0 OR MIT)
+https://github.com/timothee-haudebourg/khronos-egl
 ---------------------------------------------------------
 
 lazy_static 1.5.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang-nursery/lazy-static.rs
 ---------------------------------------------------------
 
-libc 0.2.155 (Apache-2.0 OR MIT)
+libc 0.2.159 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/libc
----------------------------------------------------------
-
-libloading 0.7.4 (ISC)
-https://github.com/nagisa/rust_libloading/
 ---------------------------------------------------------
 
 libloading 0.8.5 (ISC)
@@ -707,12 +680,8 @@ libm 0.2.8 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/libm
 ---------------------------------------------------------
 
-libredox 0.1.3 (MIT)
-https://gitlab.redox-os.org/redox-os/libredox.git
----------------------------------------------------------
-
-linux-raw-sys 0.4.14 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
-https://github.com/sunfishcode/linux-raw-sys
+litrs 0.4.1 (Apache-2.0 OR MIT)
+https://github.com/LukasKalbertodt/litrs/
 ---------------------------------------------------------
 
 lock_api 0.4.12 (Apache-2.0 OR MIT)
@@ -723,12 +692,16 @@ log 0.4.22 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/log
 ---------------------------------------------------------
 
-malloc_buf 0.0.6 (MIT)
-https://github.com/SSheldon/malloc_buf
+lz4 1.28.0 (MIT)
+https://github.com/10xGenomics/lz4-rs
 ---------------------------------------------------------
 
-maplit 1.0.2 (Apache-2.0 OR MIT)
-https://github.com/bluss/maplit
+lz4-sys 1.11.1+lz4-1.10.0 (MIT)
+https://github.com/10xGenomics/lz4-rs
+---------------------------------------------------------
+
+malloc_buf 0.0.6 (MIT)
+https://github.com/SSheldon/malloc_buf
 ---------------------------------------------------------
 
 matchers 0.1.0 (MIT)
@@ -747,8 +720,12 @@ memchr 2.7.4 (MIT OR Unlicense)
 https://github.com/BurntSushi/memchr
 ---------------------------------------------------------
 
-memoffset 0.9.1 (MIT)
-https://github.com/Gilnaa/memoffset
+memmap2 0.7.1 (Apache-2.0 OR MIT)
+https://github.com/RazrFalcon/memmap2-rs
+---------------------------------------------------------
+
+metal 0.29.0 (Apache-2.0 OR MIT)
+https://github.com/gfx-rs/metal-rs
 ---------------------------------------------------------
 
 mime 0.3.17 (Apache-2.0 OR MIT)
@@ -759,16 +736,24 @@ minimal-lexical 0.2.1 (Apache-2.0 OR MIT)
 https://github.com/Alexhuszagh/minimal-lexical
 ---------------------------------------------------------
 
-miniz_oxide 0.7.4 (Apache-2.0 OR MIT OR Zlib)
+miniz_oxide 0.8.0 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide
 ---------------------------------------------------------
 
-mio 1.0.1 (MIT)
+mio 1.0.2 (MIT)
 https://github.com/tokio-rs/mio
 ---------------------------------------------------------
 
-nalgebra 0.32.6 (BSD-3-Clause)
-https://github.com/dimforge/nalgebra
+multiversion 0.7.4 (Apache-2.0 OR MIT)
+https://github.com/calebzulawski/multiversion
+---------------------------------------------------------
+
+multiversion-macros 0.7.4 (Apache-2.0 OR MIT)
+https://github.com/calebzulawski/multiversion
+---------------------------------------------------------
+
+naga 22.1.0 (Apache-2.0 OR MIT)
+https://github.com/gfx-rs/wgpu/tree/trunk/naga
 ---------------------------------------------------------
 
 nalgebra 0.33.0 (Apache-2.0)
@@ -779,8 +764,20 @@ nalgebra-macros 0.2.2 (Apache-2.0)
 https://github.com/dimforge/nalgebra
 ---------------------------------------------------------
 
+nanorand 0.7.0 (Zlib)
+https://github.com/Absolucy/nanorand-rs
+---------------------------------------------------------
+
+ndk-sys 0.5.0+25.2.9519653 (Apache-2.0 OR MIT)
+https://github.com/rust-mobile/ndk
+---------------------------------------------------------
+
 nom 7.1.3 (MIT)
 https://github.com/Geal/nom
+---------------------------------------------------------
+
+ntapi 0.4.1 (Apache-2.0 OR MIT)
+https://github.com/MSxDOS/ntapi
 ---------------------------------------------------------
 
 nu-ansi-term 0.46.0 (MIT)
@@ -819,15 +816,19 @@ num-traits 0.2.19 (Apache-2.0 OR MIT)
 https://github.com/rust-num/num-traits
 ---------------------------------------------------------
 
+number_prefix 0.4.0 (MIT)
+https://github.com/ogham/rust-number-prefix
+---------------------------------------------------------
+
 objc 0.2.7 (MIT)
 http://github.com/SSheldon/rust-objc
 ---------------------------------------------------------
 
-object 0.36.3 (Apache-2.0 OR MIT)
+object 0.36.5 (Apache-2.0 OR MIT)
 https://github.com/gimli-rs/object
 ---------------------------------------------------------
 
-once_cell 1.19.0 (Apache-2.0 OR MIT)
+once_cell 1.20.2 (Apache-2.0 OR MIT)
 https://github.com/matklad/once_cell
 ---------------------------------------------------------
 
@@ -835,7 +836,7 @@ overload 0.1.1 (MIT)
 https://github.com/danaugrs/overload
 ---------------------------------------------------------
 
-parking 2.2.0 (Apache-2.0 OR MIT)
+parking 2.2.1 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/parking
 ---------------------------------------------------------
 
@@ -847,27 +848,23 @@ parking_lot_core 0.9.10 (Apache-2.0 OR MIT)
 https://github.com/Amanieu/parking_lot
 ---------------------------------------------------------
 
+parquet-format-safe 0.2.4 (Apache-2.0 OR MIT)
+https://github.com/jorgecarleitao/parquet-format-safe
+---------------------------------------------------------
+
 paste 1.0.15 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/paste
----------------------------------------------------------
-
-pathfinder_geometry 0.5.1 (Apache-2.0 OR MIT)
-https://github.com/servo/pathfinder
----------------------------------------------------------
-
-pathfinder_simd 0.5.4 (Apache-2.0 OR MIT)
-https://github.com/servo/pathfinder
 ---------------------------------------------------------
 
 percent-encoding 2.3.1 (Apache-2.0 OR MIT)
 https://github.com/servo/rust-url/
 ---------------------------------------------------------
 
-pin-project 1.1.5 (Apache-2.0 OR MIT)
+pin-project 1.1.6 (Apache-2.0 OR MIT)
 https://github.com/taiki-e/pin-project
 ---------------------------------------------------------
 
-pin-project-internal 1.1.5 (Apache-2.0 OR MIT)
+pin-project-internal 1.1.6 (Apache-2.0 OR MIT)
 https://github.com/taiki-e/pin-project
 ---------------------------------------------------------
 
@@ -879,31 +876,79 @@ pin-utils 0.1.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang-nursery/pin-utils
 ---------------------------------------------------------
 
-pkg-config 0.3.30 (Apache-2.0 OR MIT)
-https://github.com/rust-lang/pkg-config-rs
+planus 0.3.1 (Apache-2.0 OR MIT)
+https://github.com/planus-org/planus
 ---------------------------------------------------------
 
-plotters 0.3.6 (MIT)
-https://github.com/plotters-rs/plotters
+polars 0.43.1 (MIT)
+https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-plotters-backend 0.3.6 (MIT)
-https://github.com/plotters-rs/plotters
+polars-arrow 0.43.1 (MIT AND Apache-2.0)
+https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-plotters-bitmap 0.3.6 (MIT)
-https://github.com/plotters-rs/plotters
+polars-arrow-format 0.1.0 (Apache-2.0)
+https://github.com/pola-rs/arrow-format
 ---------------------------------------------------------
 
-plotters-svg 0.3.6 (MIT)
-https://github.com/plotters-rs/plotters.git
+polars-compute 0.43.1 (MIT)
+https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-png 0.17.13 (Apache-2.0 OR MIT)
-https://github.com/image-rs/image-png
+polars-core 0.43.1 (MIT)
+https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-portable-atomic 1.7.0 (Apache-2.0 OR MIT)
+polars-error 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-expr 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-io 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-lazy 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-mem-engine 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-ops 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-parquet 0.43.1 (MIT AND Apache-2.0)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-pipe 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-plan 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-row 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-schema 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+polars-utils 0.43.1 (MIT)
+https://github.com/pola-rs/polars
+---------------------------------------------------------
+
+portable-atomic 1.9.0 (Apache-2.0 OR MIT)
 https://github.com/taiki-e/portable-atomic
 ---------------------------------------------------------
 
@@ -915,43 +960,31 @@ ppv-lite86 0.2.20 (Apache-2.0 OR MIT)
 https://github.com/cryptocorrosion/cryptocorrosion
 ---------------------------------------------------------
 
-proc-macro-crate 1.3.1 (Apache-2.0 OR MIT)
-https://github.com/bkchr/proc-macro-crate
+presser 0.3.1 (Apache-2.0 OR MIT)
+https://github.com/EmbarkStudios/presser
 ---------------------------------------------------------
 
 proc-macro2 1.0.86 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/proc-macro2
 ---------------------------------------------------------
 
-prost 0.13.1 (Apache-2.0)
+profiling 1.0.15 (Apache-2.0 OR MIT)
+https://github.com/aclysma/profiling
+---------------------------------------------------------
+
+prost 0.13.3 (Apache-2.0)
 https://github.com/tokio-rs/prost
 ---------------------------------------------------------
 
-prost-derive 0.13.1 (Apache-2.0)
+prost-derive 0.13.3 (Apache-2.0)
 https://github.com/tokio-rs/prost
 ---------------------------------------------------------
 
-pyo3 0.22.2 (Apache-2.0 OR MIT)
-https://github.com/pyo3/pyo3
+psm 0.1.23 (Apache-2.0 OR MIT)
+https://github.com/rust-lang/stacker/
 ---------------------------------------------------------
 
-pyo3-build-config 0.22.2 (Apache-2.0 OR MIT)
-https://github.com/pyo3/pyo3
----------------------------------------------------------
-
-pyo3-ffi 0.22.2 (Apache-2.0 OR MIT)
-https://github.com/pyo3/pyo3
----------------------------------------------------------
-
-pyo3-macros 0.22.2 (Apache-2.0 OR MIT)
-https://github.com/pyo3/pyo3
----------------------------------------------------------
-
-pyo3-macros-backend 0.22.2 (Apache-2.0 OR MIT)
-https://github.com/pyo3/pyo3
----------------------------------------------------------
-
-quote 1.0.36 (Apache-2.0 OR MIT)
+quote 1.0.37 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/quote
 ---------------------------------------------------------
 
@@ -967,7 +1000,19 @@ rand_core 0.6.4 (Apache-2.0 OR MIT)
 https://github.com/rust-random/rand
 ---------------------------------------------------------
 
-raw-window-handle 0.5.2 (Apache-2.0 OR MIT OR Zlib)
+rand_distr 0.4.3 (Apache-2.0 OR MIT)
+https://github.com/rust-random/rand
+---------------------------------------------------------
+
+range-alloc 0.1.3 (Apache-2.0 OR MIT)
+https://github.com/gfx-rs/range-alloc
+---------------------------------------------------------
+
+raw-cpuid 11.2.0 (MIT)
+https://github.com/gz/rust-cpuid
+---------------------------------------------------------
+
+raw-window-handle 0.6.2 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/rust-windowing/raw-window-handle
 ---------------------------------------------------------
 
@@ -983,15 +1028,19 @@ rayon-core 1.12.1 (Apache-2.0 OR MIT)
 https://github.com/rayon-rs/rayon
 ---------------------------------------------------------
 
-redox_syscall 0.5.3 (MIT)
+recursive 0.1.1 (MIT)
+https://github.com/orlp/recursive
+---------------------------------------------------------
+
+recursive-proc-macro-impl 0.1.1 (MIT)
+https://github.com/orlp/recursive
+---------------------------------------------------------
+
+redox_syscall 0.5.7 (MIT)
 https://gitlab.redox-os.org/redox-os/syscall
 ---------------------------------------------------------
 
-redox_users 0.4.5 (MIT)
-https://gitlab.redox-os.org/redox-os/users
----------------------------------------------------------
-
-regex 1.10.6 (Apache-2.0 OR MIT)
+regex 1.11.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/regex
 ---------------------------------------------------------
 
@@ -999,7 +1048,7 @@ regex-automata 0.1.10 (MIT OR Unlicense)
 https://github.com/BurntSushi/regex-automata
 ---------------------------------------------------------
 
-regex-automata 0.4.7 (Apache-2.0 OR MIT)
+regex-automata 0.4.8 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/regex/tree/master/regex-automata
 ---------------------------------------------------------
 
@@ -1007,31 +1056,20 @@ regex-syntax 0.6.29 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/regex
 ---------------------------------------------------------
 
-regex-syntax 0.8.4 (Apache-2.0 OR MIT)
+regex-syntax 0.8.5 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/regex/tree/master/regex-syntax
 ---------------------------------------------------------
 
-robust 0.2.3 (Apache-2.0 OR MIT)
----------------------------------------------------------
-
-roxmltree 0.14.1 (Apache-2.0 OR MIT)
-https://github.com/RazrFalcon/roxmltree
----------------------------------------------------------
-
-rstar 0.10.0 (Apache-2.0 OR MIT)
-https://github.com/georust/rstar
+renderdoc-sys 1.1.0 (Apache-2.0 OR MIT)
+https://github.com/ebkalderon/renderdoc-rs
 ---------------------------------------------------------
 
 rustc-demangle 0.1.24 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/rustc-demangle
 ---------------------------------------------------------
 
-rustc_version 0.4.0 (Apache-2.0 OR MIT)
-https://github.com/Kimundi/rustc-version-rs
----------------------------------------------------------
-
-rustix 0.38.34 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
-https://github.com/bytecodealliance/rustix
+rustc-hash 1.1.0 (Apache-2.0 OR MIT)
+https://github.com/rust-lang-nursery/rustc-hash
 ---------------------------------------------------------
 
 rustversion 1.0.17 (Apache-2.0 OR MIT)
@@ -1046,64 +1084,40 @@ safe_arch 0.7.2 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/safe_arch
 ---------------------------------------------------------
 
-same-file 1.0.6 (MIT OR Unlicense)
-https://github.com/BurntSushi/same-file
----------------------------------------------------------
-
-scarlet 1.2.0 (Apache-2.0)
-https://github.com/nicholas-miklaucic/scarlet
----------------------------------------------------------
-
 scopeguard 1.2.0 (Apache-2.0 OR MIT)
 https://github.com/bluss/scopeguard
----------------------------------------------------------
-
-semver 1.0.23 (Apache-2.0 OR MIT)
-https://github.com/dtolnay/semver
 ---------------------------------------------------------
 
 seq-macro 0.3.5 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/seq-macro
 ---------------------------------------------------------
 
-serde 1.0.205 (Apache-2.0 OR MIT)
+serde 1.0.210 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/serde
 ---------------------------------------------------------
 
-serde_derive 1.0.205 (Apache-2.0 OR MIT)
+serde_derive 1.0.210 (Apache-2.0 OR MIT)
 https://github.com/serde-rs/serde
----------------------------------------------------------
-
-serde_json 1.0.122 (Apache-2.0 OR MIT)
-https://github.com/serde-rs/json
----------------------------------------------------------
-
-shaderc 0.8.3 (Apache-2.0)
-https://github.com/google/shaderc-rs
----------------------------------------------------------
-
-shaderc-sys 0.8.3 (Apache-2.0)
-https://github.com/google/shaderc-rs
 ---------------------------------------------------------
 
 sharded-slab 0.1.7 (MIT)
 https://github.com/hawkw/sharded-slab
 ---------------------------------------------------------
 
-simba 0.8.1 (Apache-2.0)
-https://github.com/dimforge/simba
----------------------------------------------------------
-
 simba 0.9.0 (Apache-2.0)
 https://github.com/dimforge/simba
 ---------------------------------------------------------
 
-simd-adler32 0.3.7 (MIT)
-https://github.com/mcountryman/simd-adler32
+simdutf8 0.1.5 (Apache-2.0 OR MIT)
+https://github.com/rusticstuff/simdutf8
 ---------------------------------------------------------
 
 slab 0.4.9 (MIT)
 https://github.com/tokio-rs/slab
+---------------------------------------------------------
+
+slotmap 1.0.7 (Zlib)
+https://github.com/orlp/slotmap
 ---------------------------------------------------------
 
 smallvec 1.13.2 (Apache-2.0 OR MIT)
@@ -1118,15 +1132,39 @@ spin 0.9.8 (MIT)
 https://github.com/mvdnes/spin-rs.git
 ---------------------------------------------------------
 
-stable_deref_trait 1.2.0 (Apache-2.0 OR MIT)
-https://github.com/storyyeller/stable_deref_trait
+spirv 0.3.0+sdk-1.3.268.0 (Apache-2.0)
+https://github.com/gfx-rs/rspirv
+---------------------------------------------------------
+
+stacker 0.1.17 (Apache-2.0 OR MIT)
+https://github.com/rust-lang/stacker
+---------------------------------------------------------
+
+static_assertions 1.1.0 (Apache-2.0 OR MIT)
+https://github.com/nvzqz/static-assertions-rs
+---------------------------------------------------------
+
+streaming-decompression 0.1.2 (Apache-2.0)
+https://github.com/jorgecarleitao/streaming-decompressor
+---------------------------------------------------------
+
+streaming-iterator 0.1.9 (Apache-2.0 OR MIT)
+https://github.com/sfackler/streaming-iterator
+---------------------------------------------------------
+
+strength_reduce 0.2.4 (Apache-2.0 OR MIT)
+http://github.com/ejmahler/strength_reduce
+---------------------------------------------------------
+
+strum_macros 0.26.4 (MIT)
+https://github.com/Peternator7/strum
 ---------------------------------------------------------
 
 syn 1.0.109 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
-syn 2.0.72 (Apache-2.0 OR MIT)
+syn 2.0.79 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
@@ -1138,19 +1176,27 @@ sync_wrapper 1.0.1 (Apache-2.0)
 https://github.com/Actyx/sync_wrapper
 ---------------------------------------------------------
 
+sysinfo 0.31.4 (MIT)
+https://github.com/GuillaumeGomez/sysinfo
+---------------------------------------------------------
+
 ta 0.5.0 (MIT)
 https://github.com/greyblake/ta-rs
 ---------------------------------------------------------
 
-target-lexicon 0.12.16 (Apache-2.0 WITH LLVM-exception)
-https://github.com/bytecodealliance/target-lexicon
+target-features 0.1.6 (Apache-2.0 OR MIT)
+https://github.com/calebzulawski/target-features
 ---------------------------------------------------------
 
-thiserror 1.0.63 (Apache-2.0 OR MIT)
+termcolor 1.4.1 (MIT OR Unlicense)
+https://github.com/BurntSushi/termcolor
+---------------------------------------------------------
+
+thiserror 1.0.64 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
-thiserror-impl 1.0.63 (Apache-2.0 OR MIT)
+thiserror-impl 1.0.64 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
@@ -1174,7 +1220,7 @@ time-macros 0.2.18 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
-tokio 1.39.2 (MIT)
+tokio 1.40.0 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
@@ -1182,23 +1228,15 @@ tokio-macros 2.4.0 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
-tokio-stream 0.1.15 (MIT)
+tokio-stream 0.1.16 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
-tokio-util 0.7.11 (MIT)
+tokio-util 0.7.12 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
-toml_datetime 0.6.8 (Apache-2.0 OR MIT)
-https://github.com/toml-rs/toml
----------------------------------------------------------
-
-toml_edit 0.19.15 (Apache-2.0 OR MIT)
-https://github.com/toml-rs/toml
----------------------------------------------------------
-
-tonic 0.12.1 (MIT)
+tonic 0.12.3 (MIT)
 https://github.com/hyperium/tonic
 ---------------------------------------------------------
 
@@ -1206,11 +1244,15 @@ tower 0.4.13 (MIT)
 https://github.com/tower-rs/tower
 ---------------------------------------------------------
 
-tower-layer 0.3.2 (MIT)
+tower 0.5.1 (MIT)
 https://github.com/tower-rs/tower
 ---------------------------------------------------------
 
-tower-service 0.3.2 (MIT)
+tower-layer 0.3.3 (MIT)
+https://github.com/tower-rs/tower
+---------------------------------------------------------
+
+tower-service 0.3.3 (MIT)
 https://github.com/tower-rs/tower
 ---------------------------------------------------------
 
@@ -1238,10 +1280,6 @@ try-lock 0.2.5 (MIT)
 https://github.com/seanmonstar/try-lock
 ---------------------------------------------------------
 
-ttf-parser 0.20.0 (Apache-2.0 OR MIT)
-https://github.com/RazrFalcon/ttf-parser
----------------------------------------------------------
-
 tynm 0.1.10 (Apache-2.0 OR MIT)
 https://github.com/azriel91/tynm
 ---------------------------------------------------------
@@ -1250,40 +1288,31 @@ typenum 1.17.0 (Apache-2.0 OR MIT)
 https://github.com/paholg/typenum
 ---------------------------------------------------------
 
-unicode-ident 1.0.12 ((MIT OR Apache-2.0) AND Unicode-DFS-2016)
+unicode-ident 1.0.13 ((MIT OR Apache-2.0) AND Unicode-DFS-2016)
 https://github.com/dtolnay/unicode-ident
 ---------------------------------------------------------
 
-unindent 0.2.3 (Apache-2.0 OR MIT)
-https://github.com/dtolnay/indoc
+unicode-width 0.1.14 (Apache-2.0 OR MIT)
+https://github.com/unicode-rs/unicode-width
+---------------------------------------------------------
+
+unicode-xid 0.2.6 (Apache-2.0 OR MIT)
+https://github.com/unicode-rs/unicode-xid
+---------------------------------------------------------
+
+unzip3 1.0.0 (MIT)
+---------------------------------------------------------
+
+uuid 1.10.0 (Apache-2.0 OR MIT)
+https://github.com/uuid-rs/uuid
 ---------------------------------------------------------
 
 valuable 0.1.0 (MIT)
 https://github.com/tokio-rs/valuable
 ---------------------------------------------------------
 
-version_check 0.9.5 (Apache-2.0 OR MIT)
-https://github.com/SergioBenitez/version_check
----------------------------------------------------------
-
-vk-parse 0.12.0 (Apache-2.0 OR MIT)
-https://github.com/krolli/vk-parse
----------------------------------------------------------
-
-vulkano 0.34.1 (Apache-2.0 OR MIT)
-https://github.com/vulkano-rs/vulkano
----------------------------------------------------------
-
-vulkano-macros 0.34.0 (Apache-2.0 OR MIT)
-https://github.com/vulkano-rs/vulkano
----------------------------------------------------------
-
-vulkano-shaders 0.34.0 (Apache-2.0 OR MIT)
-https://github.com/vulkano-rs/vulkano
----------------------------------------------------------
-
-walkdir 2.5.0 (MIT OR Unlicense)
-https://github.com/BurntSushi/walkdir
+visibility 0.1.1 (Apache-2.0 OR MIT OR Zlib)
+https://github.com/danielhenrymantilla/visibility.rs
 ---------------------------------------------------------
 
 want 0.3.1 (MIT)
@@ -1294,40 +1323,56 @@ wasi 0.11.0+wasi-snapshot-preview1 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception
 https://github.com/bytecodealliance/wasi
 ---------------------------------------------------------
 
-wasm-bindgen 0.2.92 (Apache-2.0 OR MIT)
+wasm-bindgen 0.2.93 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen
 ---------------------------------------------------------
 
-wasm-bindgen-backend 0.2.92 (Apache-2.0 OR MIT)
+wasm-bindgen-backend 0.2.93 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/backend
 ---------------------------------------------------------
 
-wasm-bindgen-macro 0.2.92 (Apache-2.0 OR MIT)
+wasm-bindgen-futures 0.4.43 (Apache-2.0 OR MIT)
+https://github.com/rustwasm/wasm-bindgen/tree/master/crates/futures
+---------------------------------------------------------
+
+wasm-bindgen-macro 0.2.93 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro
 ---------------------------------------------------------
 
-wasm-bindgen-macro-support 0.2.92 (Apache-2.0 OR MIT)
+wasm-bindgen-macro-support 0.2.93 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro-support
 ---------------------------------------------------------
 
-wasm-bindgen-shared 0.2.92 (Apache-2.0 OR MIT)
+wasm-bindgen-shared 0.2.93 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/shared
 ---------------------------------------------------------
 
-web-sys 0.3.69 (Apache-2.0 OR MIT)
+web-sys 0.3.70 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/web-sys
 ---------------------------------------------------------
 
-weezl 0.1.8 (Apache-2.0 OR MIT)
-https://github.com/image-rs/lzw
+wgpu 22.1.0 (Apache-2.0 OR MIT)
+https://github.com/gfx-rs/wgpu
 ---------------------------------------------------------
 
-which 6.0.2 (MIT)
-https://github.com/harryfei/which-rs.git
+wgpu-core 22.1.0 (Apache-2.0 OR MIT)
+https://github.com/gfx-rs/wgpu
 ---------------------------------------------------------
 
-wide 0.7.26 (Apache-2.0 OR MIT OR Zlib)
+wgpu-hal 22.0.0 (Apache-2.0 OR MIT)
+https://github.com/gfx-rs/wgpu
+---------------------------------------------------------
+
+wgpu-types 22.0.0 (Apache-2.0 OR MIT)
+https://github.com/gfx-rs/wgpu
+---------------------------------------------------------
+
+wide 0.7.28 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/wide
+---------------------------------------------------------
+
+widestring 1.1.0 (Apache-2.0 OR MIT)
+https://github.com/starkat99/widestring-rs
 ---------------------------------------------------------
 
 winapi 0.3.9 (Apache-2.0 OR MIT)
@@ -1346,6 +1391,14 @@ winapi-x86_64-pc-windows-gnu 0.4.0 (Apache-2.0 OR MIT)
 https://github.com/retep998/winapi-rs
 ---------------------------------------------------------
 
+windows 0.52.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
+windows 0.57.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
 windows 0.58.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
@@ -1354,7 +1407,15 @@ windows-core 0.52.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
+windows-core 0.57.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
 windows-core 0.58.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
+windows-implement 0.57.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
@@ -1362,7 +1423,15 @@ windows-implement 0.58.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
+windows-interface 0.57.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
 windows-interface 0.58.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
+windows-result 0.1.2 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
@@ -1418,28 +1487,8 @@ windows_x86_64_msvc 0.52.6 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-winnow 0.5.40 (MIT)
-https://github.com/winnow-rs/winnow
----------------------------------------------------------
-
-winsafe 0.0.19 (MIT)
-https://github.com/rodrigocfd/winsafe
----------------------------------------------------------
-
-wio 0.2.2 (Apache-2.0 OR MIT)
-https://github.com/retep998/wio-rs
----------------------------------------------------------
-
-xml-rs 0.8.21 (MIT)
-https://github.com/kornelski/xml-rs
----------------------------------------------------------
-
-xmlparser 0.13.6 (Apache-2.0 OR MIT)
-https://github.com/RazrFalcon/xmlparser
----------------------------------------------------------
-
-yeslogic-fontconfig-sys 5.0.0 (MIT)
-https://github.com/yeslogic/fontconfig-rs
+xxhash-rust 0.8.12 (BSL-1.0)
+https://github.com/DoumanAsh/xxhash-rust
 ---------------------------------------------------------
 
 zerocopy 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
@@ -1448,6 +1497,18 @@ https://github.com/google/zerocopy
 
 zerocopy-derive 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
+---------------------------------------------------------
+
+zstd 0.13.2 (MIT)
+https://github.com/gyscos/zstd-rs
+---------------------------------------------------------
+
+zstd-safe 7.2.1 (Apache-2.0 OR MIT)
+https://github.com/gyscos/zstd-rs
+---------------------------------------------------------
+
+zstd-sys 2.0.13+zstd.1.5.6 (Apache-2.0 OR MIT)
+https://github.com/gyscos/zstd-rs
 
 ---------------------------------------------------------
 
@@ -1713,6 +1774,133 @@ The copyright notices in the Software and this entire statement, including the a
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR ANYONE DISTRIBUTING THE SOFTWARE BE LIABLE FOR ANY DAMAGES OR OTHER LIABILITY, WHETHER IN CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ---------------------------------------------------------
 
+CC0-1.0
+
+---
+
+Creative Commons Legal Code
+
+CC0 1.0 Universal
+
+    CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE
+    LEGAL SERVICES. DISTRIBUTION OF THIS DOCUMENT DOES NOT CREATE AN
+    ATTORNEY-CLIENT RELATIONSHIP. CREATIVE COMMONS PROVIDES THIS
+    INFORMATION ON AN "AS-IS" BASIS. CREATIVE COMMONS MAKES NO WARRANTIES
+    REGARDING THE USE OF THIS DOCUMENT OR THE INFORMATION OR WORKS
+    PROVIDED HEREUNDER, AND DISCLAIMS LIABILITY FOR DAMAGES RESULTING FROM
+    THE USE OF THIS DOCUMENT OR THE INFORMATION OR WORKS PROVIDED
+    HEREUNDER.
+
+Statement of Purpose
+
+The laws of most jurisdictions throughout the world automatically confer
+exclusive Copyright and Related Rights (defined below) upon the creator
+and subsequent owner(s) (each and all, an "owner") of an original work of
+authorship and/or a database (each, a "Work").
+
+Certain owners wish to permanently relinquish those rights to a Work for
+the purpose of contributing to a commons of creative, cultural and
+scientific works ("Commons") that the public can reliably and without fear
+of later claims of infringement build upon, modify, incorporate in other
+works, reuse and redistribute as freely as possible in any form whatsoever
+and for any purposes, including without limitation commercial purposes.
+These owners may contribute to the Commons to promote the ideal of a free
+culture and the further production of creative, cultural and scientific
+works, or to gain reputation or greater distribution for their Work in
+part through the use and efforts of others.
+
+For these and/or other purposes and motivations, and without any
+expectation of additional consideration or compensation, the person
+associating CC0 with a Work (the "Affirmer"), to the extent that he or she
+is an owner of Copyright and Related Rights in the Work, voluntarily
+elects to apply CC0 to the Work and publicly distribute the Work under its
+terms, with knowledge of his or her Copyright and Related Rights in the
+Work and the meaning and intended legal effect of CC0 on those rights.
+
+1. Copyright and Related Rights. A Work made available under CC0 may be
+protected by copyright and related or neighboring rights ("Copyright and
+Related Rights"). Copyright and Related Rights include, but are not
+limited to, the following:
+
+  i. the right to reproduce, adapt, distribute, perform, display,
+     communicate, and translate a Work;
+ ii. moral rights retained by the original author(s) and/or performer(s);
+iii. publicity and privacy rights pertaining to a person's image or
+     likeness depicted in a Work;
+ iv. rights protecting against unfair competition in regards to a Work,
+     subject to the limitations in paragraph 4(a), below;
+  v. rights protecting the extraction, dissemination, use and reuse of data
+     in a Work;
+ vi. database rights (such as those arising under Directive 96/9/EC of the
+     European Parliament and of the Council of 11 March 1996 on the legal
+     protection of databases, and under any national implementation
+     thereof, including any amended or successor version of such
+     directive); and
+vii. other similar, equivalent or corresponding rights throughout the
+     world based on applicable law or treaty, and any national
+     implementations thereof.
+
+2. Waiver. To the greatest extent permitted by, but not in contravention
+of, applicable law, Affirmer hereby overtly, fully, permanently,
+irrevocably and unconditionally waives, abandons, and surrenders all of
+Affirmer's Copyright and Related Rights and associated claims and causes
+of action, whether now known or unknown (including existing as well as
+future claims and causes of action), in the Work (i) in all territories
+worldwide, (ii) for the maximum duration provided by applicable law or
+treaty (including future time extensions), (iii) in any current or future
+medium and for any number of copies, and (iv) for any purpose whatsoever,
+including without limitation commercial, advertising or promotional
+purposes (the "Waiver"). Affirmer makes the Waiver for the benefit of each
+member of the public at large and to the detriment of Affirmer's heirs and
+successors, fully intending that such Waiver shall not be subject to
+revocation, rescission, cancellation, termination, or any other legal or
+equitable action to disrupt the quiet enjoyment of the Work by the public
+as contemplated by Affirmer's express Statement of Purpose.
+
+3. Public License Fallback. Should any part of the Waiver for any reason
+be judged legally invalid or ineffective under applicable law, then the
+Waiver shall be preserved to the maximum extent permitted taking into
+account Affirmer's express Statement of Purpose. In addition, to the
+extent the Waiver is so judged Affirmer hereby grants to each affected
+person a royalty-free, non transferable, non sublicensable, non exclusive,
+irrevocable and unconditional license to exercise Affirmer's Copyright and
+Related Rights in the Work (i) in all territories worldwide, (ii) for the
+maximum duration provided by applicable law or treaty (including future
+time extensions), (iii) in any current or future medium and for any number
+of copies, and (iv) for any purpose whatsoever, including without
+limitation commercial, advertising or promotional purposes (the
+"License"). The License shall be deemed effective as of the date CC0 was
+applied by Affirmer to the Work. Should any part of the License for any
+reason be judged legally invalid or ineffective under applicable law, such
+partial invalidity or ineffectiveness shall not invalidate the remainder
+of the License, and in such case Affirmer hereby affirms that he or she
+will not (i) exercise any of his or her remaining Copyright and Related
+Rights in the Work or (ii) assert any associated claims and causes of
+action with respect to the Work, in either case contrary to Affirmer's
+express Statement of Purpose.
+
+4. Limitations and Disclaimers.
+
+ a. No trademark or patent rights held by Affirmer are waived, abandoned,
+    surrendered, licensed or otherwise affected by this document.
+ b. Affirmer offers the Work as-is and makes no representations or
+    warranties of any kind concerning the Work, express, implied,
+    statutory or otherwise, including without limitation warranties of
+    title, merchantability, fitness for a particular purpose, non
+    infringement, or the absence of latent or other defects, accuracy, or
+    the present or absence of errors, whether or not discoverable, all to
+    the greatest extent permissible under applicable law.
+ c. Affirmer disclaims responsibility for clearing rights of other persons
+    that may apply to the Work or any use thereof, including without
+    limitation any person's Copyright and Related Rights in the Work.
+    Further, Affirmer disclaims responsibility for obtaining any necessary
+    consents, permissions or other rights required for any use of the
+    Work.
+ d. Affirmer understands and acknowledges that Creative Commons is not a
+    party to this document and has no duty or obligation with respect to
+    this CC0 or use of the Work.
+---------------------------------------------------------
+
 ISC
 
 ---
@@ -1806,385 +1994,6 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
----------------------------------------------------------
-
-MPL-2.0
-
----
-
-Mozilla Public License Version 2.0
-==================================
-
-1. Definitions
---------------
-
-1.1. "Contributor"
-    means each individual or legal entity that creates, contributes to
-    the creation of, or owns Covered Software.
-
-1.2. "Contributor Version"
-    means the combination of the Contributions of others (if any) used
-    by a Contributor and that particular Contributor's Contribution.
-
-1.3. "Contribution"
-    means Covered Software of a particular Contributor.
-
-1.4. "Covered Software"
-    means Source Code Form to which the initial Contributor has attached
-    the notice in Exhibit A, the Executable Form of such Source Code
-    Form, and Modifications of such Source Code Form, in each case
-    including portions thereof.
-
-1.5. "Incompatible With Secondary Licenses"
-    means
-
-    (a) that the initial Contributor has attached the notice described
-        in Exhibit B to the Covered Software; or
-
-    (b) that the Covered Software was made available under the terms of
-        version 1.1 or earlier of the License, but not also under the
-        terms of a Secondary License.
-
-1.6. "Executable Form"
-    means any form of the work other than Source Code Form.
-
-1.7. "Larger Work"
-    means a work that combines Covered Software with other material, in 
-    a separate file or files, that is not Covered Software.
-
-1.8. "License"
-    means this document.
-
-1.9. "Licensable"
-    means having the right to grant, to the maximum extent possible,
-    whether at the time of the initial grant or subsequently, any and
-    all of the rights conveyed by this License.
-
-1.10. "Modifications"
-    means any of the following:
-
-    (a) any file in Source Code Form that results from an addition to,
-        deletion from, or modification of the contents of Covered
-        Software; or
-
-    (b) any new file in Source Code Form that contains any Covered
-        Software.
-
-1.11. "Patent Claims" of a Contributor
-    means any patent claim(s), including without limitation, method,
-    process, and apparatus claims, in any patent Licensable by such
-    Contributor that would be infringed, but for the grant of the
-    License, by the making, using, selling, offering for sale, having
-    made, import, or transfer of either its Contributions or its
-    Contributor Version.
-
-1.12. "Secondary License"
-    means either the GNU General Public License, Version 2.0, the GNU
-    Lesser General Public License, Version 2.1, the GNU Affero General
-    Public License, Version 3.0, or any later versions of those
-    licenses.
-
-1.13. "Source Code Form"
-    means the form of the work preferred for making modifications.
-
-1.14. "You" (or "Your")
-    means an individual or a legal entity exercising rights under this
-    License. For legal entities, "You" includes any entity that
-    controls, is controlled by, or is under common control with You. For
-    purposes of this definition, "control" means (a) the power, direct
-    or indirect, to cause the direction or management of such entity,
-    whether by contract or otherwise, or (b) ownership of more than
-    fifty percent (50%) of the outstanding shares or beneficial
-    ownership of such entity.
-
-2. License Grants and Conditions
---------------------------------
-
-2.1. Grants
-
-Each Contributor hereby grants You a world-wide, royalty-free,
-non-exclusive license:
-
-(a) under intellectual property rights (other than patent or trademark)
-    Licensable by such Contributor to use, reproduce, make available,
-    modify, display, perform, distribute, and otherwise exploit its
-    Contributions, either on an unmodified basis, with Modifications, or
-    as part of a Larger Work; and
-
-(b) under Patent Claims of such Contributor to make, use, sell, offer
-    for sale, have made, import, and otherwise transfer either its
-    Contributions or its Contributor Version.
-
-2.2. Effective Date
-
-The licenses granted in Section 2.1 with respect to any Contribution
-become effective for each Contribution on the date the Contributor first
-distributes such Contribution.
-
-2.3. Limitations on Grant Scope
-
-The licenses granted in this Section 2 are the only rights granted under
-this License. No additional rights or licenses will be implied from the
-distribution or licensing of Covered Software under this License.
-Notwithstanding Section 2.1(b) above, no patent license is granted by a
-Contributor:
-
-(a) for any code that a Contributor has removed from Covered Software;
-    or
-
-(b) for infringements caused by: (i) Your and any other third party's
-    modifications of Covered Software, or (ii) the combination of its
-    Contributions with other software (except as part of its Contributor
-    Version); or
-
-(c) under Patent Claims infringed by Covered Software in the absence of
-    its Contributions.
-
-This License does not grant any rights in the trademarks, service marks,
-or logos of any Contributor (except as may be necessary to comply with
-the notice requirements in Section 3.4).
-
-2.4. Subsequent Licenses
-
-No Contributor makes additional grants as a result of Your choice to
-distribute the Covered Software under a subsequent version of this
-License (see Section 10.2) or under the terms of a Secondary License (if
-permitted under the terms of Section 3.3).
-
-2.5. Representation
-
-Each Contributor represents that the Contributor believes its
-Contributions are its original creation(s) or it has sufficient rights
-to grant the rights to its Contributions conveyed by this License.
-
-2.6. Fair Use
-
-This License is not intended to limit any rights You have under
-applicable copyright doctrines of fair use, fair dealing, or other
-equivalents.
-
-2.7. Conditions
-
-Sections 3.1, 3.2, 3.3, and 3.4 are conditions of the licenses granted
-in Section 2.1.
-
-3. Responsibilities
--------------------
-
-3.1. Distribution of Source Form
-
-All distribution of Covered Software in Source Code Form, including any
-Modifications that You create or to which You contribute, must be under
-the terms of this License. You must inform recipients that the Source
-Code Form of the Covered Software is governed by the terms of this
-License, and how they can obtain a copy of this License. You may not
-attempt to alter or restrict the recipients' rights in the Source Code
-Form.
-
-3.2. Distribution of Executable Form
-
-If You distribute Covered Software in Executable Form then:
-
-(a) such Covered Software must also be made available in Source Code
-    Form, as described in Section 3.1, and You must inform recipients of
-    the Executable Form how they can obtain a copy of such Source Code
-    Form by reasonable means in a timely manner, at a charge no more
-    than the cost of distribution to the recipient; and
-
-(b) You may distribute such Executable Form under the terms of this
-    License, or sublicense it under different terms, provided that the
-    license for the Executable Form does not attempt to limit or alter
-    the recipients' rights in the Source Code Form under this License.
-
-3.3. Distribution of a Larger Work
-
-You may create and distribute a Larger Work under terms of Your choice,
-provided that You also comply with the requirements of this License for
-the Covered Software. If the Larger Work is a combination of Covered
-Software with a work governed by one or more Secondary Licenses, and the
-Covered Software is not Incompatible With Secondary Licenses, this
-License permits You to additionally distribute such Covered Software
-under the terms of such Secondary License(s), so that the recipient of
-the Larger Work may, at their option, further distribute the Covered
-Software under the terms of either this License or such Secondary
-License(s).
-
-3.4. Notices
-
-You may not remove or alter the substance of any license notices
-(including copyright notices, patent notices, disclaimers of warranty,
-or limitations of liability) contained within the Source Code Form of
-the Covered Software, except that You may alter any license notices to
-the extent required to remedy known factual inaccuracies.
-
-3.5. Application of Additional Terms
-
-You may choose to offer, and to charge a fee for, warranty, support,
-indemnity or liability obligations to one or more recipients of Covered
-Software. However, You may do so only on Your own behalf, and not on
-behalf of any Contributor. You must make it absolutely clear that any
-such warranty, support, indemnity, or liability obligation is offered by
-You alone, and You hereby agree to indemnify every Contributor for any
-liability incurred by such Contributor as a result of warranty, support,
-indemnity or liability terms You offer. You may include additional
-disclaimers of warranty and limitations of liability specific to any
-jurisdiction.
-
-4. Inability to Comply Due to Statute or Regulation
----------------------------------------------------
-
-If it is impossible for You to comply with any of the terms of this
-License with respect to some or all of the Covered Software due to
-statute, judicial order, or regulation then You must: (a) comply with
-the terms of this License to the maximum extent possible; and (b)
-describe the limitations and the code they affect. Such description must
-be placed in a text file included with all distributions of the Covered
-Software under this License. Except to the extent prohibited by statute
-or regulation, such description must be sufficiently detailed for a
-recipient of ordinary skill to be able to understand it.
-
-5. Termination
---------------
-
-5.1. The rights granted under this License will terminate automatically
-if You fail to comply with any of its terms. However, if You become
-compliant, then the rights granted under this License from a particular
-Contributor are reinstated (a) provisionally, unless and until such
-Contributor explicitly and finally terminates Your grants, and (b) on an
-ongoing basis, if such Contributor fails to notify You of the
-non-compliance by some reasonable means prior to 60 days after You have
-come back into compliance. Moreover, Your grants from a particular
-Contributor are reinstated on an ongoing basis if such Contributor
-notifies You of the non-compliance by some reasonable means, this is the
-first time You have received notice of non-compliance with this License
-from such Contributor, and You become compliant prior to 30 days after
-Your receipt of the notice.
-
-5.2. If You initiate litigation against any entity by asserting a patent
-infringement claim (excluding declaratory judgment actions,
-counter-claims, and cross-claims) alleging that a Contributor Version
-directly or indirectly infringes any patent, then the rights granted to
-You by any and all Contributors for the Covered Software under Section
-2.1 of this License shall terminate.
-
-5.3. In the event of termination under Sections 5.1 or 5.2 above, all
-end user license agreements (excluding distributors and resellers) which
-have been validly granted by You or Your distributors under this License
-prior to termination shall survive termination.
-
-************************************************************************
-*                                                                      *
-*  6. Disclaimer of Warranty                                           *
-*  -------------------------                                           *
-*                                                                      *
-*  Covered Software is provided under this License on an "as is"       *
-*  basis, without warranty of any kind, either expressed, implied, or  *
-*  statutory, including, without limitation, warranties that the       *
-*  Covered Software is free of defects, merchantable, fit for a        *
-*  particular purpose or non-infringing. The entire risk as to the     *
-*  quality and performance of the Covered Software is with You.        *
-*  Should any Covered Software prove defective in any respect, You     *
-*  (not any Contributor) assume the cost of any necessary servicing,   *
-*  repair, or correction. This disclaimer of warranty constitutes an   *
-*  essential part of this License. No use of any Covered Software is   *
-*  authorized under this License except under this disclaimer.         *
-*                                                                      *
-************************************************************************
-
-************************************************************************
-*                                                                      *
-*  7. Limitation of Liability                                          *
-*  --------------------------                                          *
-*                                                                      *
-*  Under no circumstances and under no legal theory, whether tort      *
-*  (including negligence), contract, or otherwise, shall any           *
-*  Contributor, or anyone who distributes Covered Software as          *
-*  permitted above, be liable to You for any direct, indirect,         *
-*  special, incidental, or consequential damages of any character      *
-*  including, without limitation, damages for lost profits, loss of    *
-*  goodwill, work stoppage, computer failure or malfunction, or any    *
-*  and all other commercial damages or losses, even if such party      *
-*  shall have been informed of the possibility of such damages. This   *
-*  limitation of liability shall not apply to liability for death or   *
-*  personal injury resulting from such party's negligence to the       *
-*  extent applicable law prohibits such limitation. Some               *
-*  jurisdictions do not allow the exclusion or limitation of           *
-*  incidental or consequential damages, so this exclusion and          *
-*  limitation may not apply to You.                                    *
-*                                                                      *
-************************************************************************
-
-8. Litigation
--------------
-
-Any litigation relating to this License may be brought only in the
-courts of a jurisdiction where the defendant maintains its principal
-place of business and such litigation shall be governed by laws of that
-jurisdiction, without reference to its conflict-of-law provisions.
-Nothing in this Section shall prevent a party's ability to bring
-cross-claims or counter-claims.
-
-9. Miscellaneous
-----------------
-
-This License represents the complete agreement concerning the subject
-matter hereof. If any provision of this License is held to be
-unenforceable, such provision shall be reformed only to the extent
-necessary to make it enforceable. Any law or regulation which provides
-that the language of a contract shall be construed against the drafter
-shall not be used to construe this License against a Contributor.
-
-10. Versions of the License
----------------------------
-
-10.1. New Versions
-
-Mozilla Foundation is the license steward. Except as provided in Section
-10.3, no one other than the license steward has the right to modify or
-publish new versions of this License. Each version will be given a
-distinguishing version number.
-
-10.2. Effect of New Versions
-
-You may distribute the Covered Software under the terms of the version
-of the License under which You originally received the Covered Software,
-or under the terms of any subsequent version published by the license
-steward.
-
-10.3. Modified Versions
-
-If you create software not governed by this License, and you want to
-create a new license for such software, you may create and use a
-modified version of this License if you rename the license and remove
-any references to the name of the license steward (except to note that
-such modified license differs from this License).
-
-10.4. Distributing Source Code Form that is Incompatible With Secondary
-Licenses
-
-If You choose to distribute Source Code Form that is Incompatible With
-Secondary Licenses under the terms of this version of the License, the
-notice described in Exhibit B of this License must be attached.
-
-Exhibit A - Source Code Form License Notice
--------------------------------------------
-
-  This Source Code Form is subject to the terms of the Mozilla Public
-  License, v. 2.0. If a copy of the MPL was not distributed with this
-  file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-If it is not possible or desirable to put the notice in a particular
-file, then You may include the notice in a location (such as a LICENSE
-file in a relevant directory) where a recipient would be likely to look
-for such a notice.
-
-You may add additional accurate notices of copyright ownership.
-
-Exhibit B - "Incompatible With Secondary Licenses" Notice
----------------------------------------------------------
-
-  This Source Code Form is "Incompatible With Secondary Licenses", as
-  defined by the Mozilla Public License, v. 2.0.
 ---------------------------------------------------------
 
 Unicode-DFS-2016

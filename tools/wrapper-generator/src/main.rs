@@ -68,6 +68,9 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "ResultGainSTM",
         "ResultFociSTM",
         "ResultSamplingConfig",
+        "RuntimePtr",
+        "HandlePtr",
+        "DynSincInterpolator",
     ])
     .csharp_dll_name(dll_name)
     .csharp_class_name(format!("NativeMethods{}", class_name))
@@ -92,6 +95,9 @@ fn main() -> Result<()> {
     for entry in glob(&format!("{}/capi/*/Cargo.toml", home))? {
         let entry = entry?;
         let crate_path = Path::new(&entry).parent().unwrap();
+        if crate_path.file_name() == Some("autd3capi-emulator".as_ref()) {
+            continue;
+        }
         generate(&crate_path, "../../src/NativeMethods")?;
         generate(&crate_path, "../../unity/Assets/Scripts/NativeMethods")?;
     }

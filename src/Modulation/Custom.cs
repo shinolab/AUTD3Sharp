@@ -19,7 +19,7 @@ namespace AUTD3Sharp.Modulation
             unsafe
             {
                 fixed (byte* pBuf = &_buf[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_config.Inner, LoopBehavior, pBuf, (ushort)_buf.Length);
+                    return NativeMethodsBase.AUTDModulationCustom(_config.Inner, LoopBehavior, pBuf, (ushort)_buf.Length);
             }
         }
     }

@@ -3,7 +3,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Driver.Datagram.Modulation
 {
-    [Modulation(ConfigNoChange = true, NoTransform = true, NoRadiationPressure = true)]
+    [Modulation(ConfigNoChange = true)]
     public sealed partial class RadiationPressure<TM>
     where TM : IModulation
     {

@@ -40,20 +40,20 @@ namespace AUTD3Sharp.NativeMethods
         public static extern bool AUTDGainGreedyIsDefault(GainPtr greedy);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloGSSphere(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloGSSphere(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat_nonzero, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloGST4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloGST4010A1(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloGST4010A1(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat_nonzero, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGSIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDGainGSIsDefault(GainPtr gs);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSPATSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloGSPATSphere(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloGSPATSphere(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat_nonzero, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSPATT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloGSPATT4010A1(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloGSPATT4010A1(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat_nonzero, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGSPATIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -66,10 +66,10 @@ namespace AUTD3Sharp.NativeMethods
         public static extern float AUTDGainHoloPascalToSPL(float value);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloLMSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloLMSphere(BackendPtr backend, Vector3* points, float* amps, uint size, float eps_1, float eps_2, float tau, uint k_max, float* initial_ptr, uint initial_len, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloLMSphere(BackendPtr backend, Vector3* points, float* amps, uint size, float eps_1, float eps_2, float tau, uint k_max_nonzero, float* initial_ptr, uint initial_len, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloLMT4010A1", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainHoloLMT4010A1(BackendPtr backend, Vector3* points, float* amps, uint size, float eps_1, float eps_2, float tau, uint k_max, float* initial_ptr, uint initial_len, EmissionConstraintWrap constraint);
+        public static extern GainPtr AUTDGainHoloLMT4010A1(BackendPtr backend, Vector3* points, float* amps, uint size, float eps_1, float eps_2, float tau, uint k_max_nonzero, float* initial_ptr, uint initial_len, EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainLMIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]

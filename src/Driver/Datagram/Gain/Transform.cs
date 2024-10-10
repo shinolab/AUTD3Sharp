@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal unsafe delegate void GainTransformDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, Drive src, NativeMethods.Drive* dst);
 
-    [Gain(NoTransform = true)]
+    [Gain]
     public sealed partial class Transform<TG>
     where TG : IGain
     {

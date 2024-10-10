@@ -20,15 +20,17 @@ namespace AUTD3Sharp
 
         private bool _isDisposed;
         internal RuntimePtr Runtime;
+        internal HandlePtr Handle;
         internal ControllerPtr Ptr;
 
         #endregion
 
         #region Controller
 
-        internal Controller(Geometry geometry, RuntimePtr runtime, ControllerPtr ptr, T link)
+        internal Controller(Geometry geometry, RuntimePtr runtime, HandlePtr handle, ControllerPtr ptr, T link)
         {
             Runtime = runtime;
+            Handle = handle;
             Ptr = ptr;
             Geometry = geometry;
             Link = link;
@@ -50,7 +52,7 @@ namespace AUTD3Sharp
         public async Task<FirmwareVersion[]> FirmwareVersionAsync()
         {
             var future = NativeMethodsBase.AUTDControllerFirmwareVersionListPointer(Ptr);
-            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultFirmwareVersionList(Runtime, future));
+            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultFirmwareVersionList(Handle, future));
             var handle = result.Validate();
             var list = Enumerable.Range(0, Geometry.NumDevices).Select(i => GetFirmwareVersion(handle, (uint)i)).ToArray();
             NativeMethodsBase.AUTDControllerFirmwareVersionListPointerDelete(handle);
@@ -60,7 +62,7 @@ namespace AUTD3Sharp
         public FirmwareVersion[] FirmwareVersion()
         {
             var future = NativeMethodsBase.AUTDControllerFirmwareVersionListPointer(Ptr);
-            var result = NativeMethodsBase.AUTDWaitResultFirmwareVersionList(Runtime, future);
+            var result = NativeMethodsBase.AUTDWaitResultFirmwareVersionList(Handle, future);
             var handle = result.Validate();
             var list = Enumerable.Range(0, Geometry.NumDevices).Select(i => GetFirmwareVersion(handle, (uint)i)).ToArray();
             NativeMethodsBase.AUTDControllerFirmwareVersionListPointerDelete(handle);
@@ -69,15 +71,25 @@ namespace AUTD3Sharp
 
         public async Task CloseAsync()
         {
+            if (Ptr.Item1 == IntPtr.Zero) return;
             var future = NativeMethodsBase.AUTDControllerClose(Ptr);
-            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultI32(Runtime, future));
+            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultI32(Handle, future));
+            Ptr.Item1 = IntPtr.Zero;
+            NativeMethodsBase.AUTDDeleteRuntime(Runtime);
+            Runtime.Item1 = IntPtr.Zero;
+            Handle.Item1 = IntPtr.Zero;
             result.Validate();
         }
 
         public void Close()
         {
+            if (Ptr.Item1 == IntPtr.Zero) return;
             var future = NativeMethodsBase.AUTDControllerClose(Ptr);
-            var result = NativeMethodsBase.AUTDWaitResultI32(Runtime, future);
+            var result = NativeMethodsBase.AUTDWaitResultI32(Handle, future);
+            Ptr.Item1 = IntPtr.Zero;
+            NativeMethodsBase.AUTDDeleteRuntime(Runtime);
+            Runtime.Item1 = IntPtr.Zero;
+            Handle.Item1 = IntPtr.Zero;
             result.Validate();
         }
 
@@ -86,12 +98,6 @@ namespace AUTD3Sharp
             if (_isDisposed) return;
 
             Close();
-
-            if (Ptr.Item1 != IntPtr.Zero) NativeMethodsBase.AUTDControllerDelete(Ptr);
-            Ptr.Item1 = IntPtr.Zero;
-
-            if (Runtime.Item1 != IntPtr.Zero) NativeMethodsBase.AUTDDeleteRuntime(Runtime);
-            Runtime.Item1 = IntPtr.Zero;
 
             _isDisposed = true;
             GC.SuppressFinalize(this);
@@ -112,7 +118,7 @@ namespace AUTD3Sharp
         public FPGAState?[] FPGAState()
         {
             var future = NativeMethodsBase.AUTDControllerFPGAState(Ptr);
-            var result = NativeMethodsBase.AUTDWaitResultFPGAStateList(Runtime, future);
+            var result = NativeMethodsBase.AUTDWaitResultFPGAStateList(Handle, future);
             var p = result.Validate();
             var states = Enumerable.Range(0, Geometry.NumDevices).Select(i => NativeMethodsBase.AUTDControllerFPGAStateGet(p, (uint)i)).Select(
                 x => x < 0 ? null : new FPGAState((byte)x)).ToArray();
@@ -123,7 +129,7 @@ namespace AUTD3Sharp
         public async Task<FPGAState?[]> FPGAStateAsync()
         {
             var future = NativeMethodsBase.AUTDControllerFPGAState(Ptr);
-            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultFPGAStateList(Runtime, future));
+            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultFPGAStateList(Handle, future));
             var p = result.Validate();
             var states = Enumerable.Range(0, Geometry.NumDevices).Select(i => NativeMethodsBase.AUTDControllerFPGAStateGet(p, (uint)i)).Select(
                 x => x < 0 ? null : new FPGAState((byte)x)).ToArray();
@@ -139,7 +145,7 @@ namespace AUTD3Sharp
         where TD : IDatagram
         {
             var future = NativeMethodsBase.AUTDControllerSend(Ptr, d.Ptr(Geometry));
-            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultI32(Runtime, future));
+            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultI32(Handle, future));
             result.Validate();
         }
 
@@ -154,7 +160,7 @@ namespace AUTD3Sharp
         where TD : IDatagram
         {
             var future = NativeMethodsBase.AUTDControllerSend(Ptr, d.Ptr(Geometry));
-            var result = NativeMethodsBase.AUTDWaitResultI32(Runtime, future);
+            var result = NativeMethodsBase.AUTDWaitResultI32(Handle, future);
             result.Validate();
         }
 

@@ -1,5 +1,4 @@
 using AUTD3Sharp.Driver;
-using System.Reflection;
 
 namespace tests;
 
@@ -111,13 +110,13 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v9.0.0", FirmwareVersion.LatestVersion);
+        Assert.Equal("v10.0.0", FirmwareVersion.LatestVersion);
 
         {
             foreach (var (info, i) in (await autd.FirmwareVersionAsync()).Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v9.0.0, FPGA = v9.0.0 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v9.0.0, FPGA = v9.0.0 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v10.0.0, FPGA = v10.0.0 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v10.0.0, FPGA = v10.0.0 [Emulator]");
             }
         }
 
@@ -134,7 +133,7 @@ public class AUTDTest
         var autd = CreateControllerSync();
 
         foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v9.0.0, FPGA = v9.0.0 [Emulator]");
+            Assert.Equal(info.Info, $"{i}: CPU = v10.0.0, FPGA = v10.0.0 [Emulator]");
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersion().Last());
@@ -212,29 +211,19 @@ public class AUTDTest
         var autd = Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
             .WithParallelThreshold(0)
             .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
-        Assert.Equal(0xFFFF, AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerLastParallelThreshold(
-            (AUTD3Sharp.NativeMethods.ControllerPtr)typeof(Controller<Audit>).GetField("Ptr", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(autd)!
-        ));
+        Assert.Equal(0xFFFFFFFFFFFFFFFF, autd.Link.LastParallelThreshold());
 
         autd.Send(new Null());
-        Assert.Equal(0, AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerLastParallelThreshold(
-            (AUTD3Sharp.NativeMethods.ControllerPtr)typeof(Controller<Audit>).GetField("Ptr", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(autd)!
-        ));
+        Assert.Equal(0ul, autd.Link.LastParallelThreshold());
 
         autd.Send(new Static());
-        Assert.Equal(0xFFFF, AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerLastParallelThreshold(
-            (AUTD3Sharp.NativeMethods.ControllerPtr)typeof(Controller<Audit>).GetField("Ptr", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(autd)!
-        ));
+        Assert.Equal(0xFFFFFFFFFFFFFFFF, autd.Link.LastParallelThreshold());
 
         autd.Send(new Static().WithParallelThreshold(10));
-        Assert.Equal(10, AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerLastParallelThreshold(
-            (AUTD3Sharp.NativeMethods.ControllerPtr)typeof(Controller<Audit>).GetField("Ptr", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(autd)!
-        ));
+        Assert.Equal(10ul, autd.Link.LastParallelThreshold());
 
         autd.Send((new Static(), new Static()).WithParallelThreshold(5));
-        Assert.Equal(5, AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerLastParallelThreshold(
-            (AUTD3Sharp.NativeMethods.ControllerPtr)typeof(Controller<Audit>).GetField("Ptr", BindingFlags.NonPublic | BindingFlags.Instance)!.GetValue(autd)!
-        ));
+        Assert.Equal(5ul, autd.Link.LastParallelThreshold());
     }
 
     [Fact]
