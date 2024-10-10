@@ -17,7 +17,7 @@ namespace AUTD3Sharp
         internal DatagramPtr RawPtr(bool strictMode, SilencerTarget target);
     }
 
-    public struct FixedCompletionTime : ISilencer
+    public readonly struct FixedCompletionTime : ISilencer
     {
         public TimeSpan Intensity { get; init; }
         public TimeSpan Phase { get; init; }
@@ -29,7 +29,7 @@ namespace AUTD3Sharp
            => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(Intensity.TotalMilliseconds * 1000 * 1000), (ulong)(Phase.TotalMilliseconds * 1000 * 1000), strictMode, target.Into());
     }
 
-    public struct FixedUpdateRate : ISilencer
+    public readonly struct FixedUpdateRate : ISilencer
     {
         public ushort Intensity { get; init; }
         public ushort Phase { get; init; }
