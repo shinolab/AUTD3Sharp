@@ -43,7 +43,7 @@ public class SampleRunner
             Console.ReadKey(true);
 
             Console.WriteLine("finish.");
-            autd.Send((new Null(), Silencer.Default()));
+            autd.Send((new Null(), new Silencer()));
         }
 
         autd.Close();

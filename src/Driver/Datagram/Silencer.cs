@@ -11,33 +11,39 @@ namespace AUTD3Sharp
         internal SamplingConfig? SamplingConfigPhase();
     }
 
-    [Builder]
-    public sealed partial class SilencerFixedUpdateRate : IDatagram
+    public interface ISilencer
     {
-        private readonly byte _valueIntensity;
-        private readonly byte _valuePhase;
+        internal bool IsValid(IWithSampling c, bool strictMode, SilencerTarget target);
+        internal DatagramPtr RawPtr(bool strictMode, SilencerTarget target);
+    }
 
-        [Property]
-        public SilencerTarget Target { get; private set; }
+    public struct FixedCompletionTime : ISilencer
+    {
+        public TimeSpan Intensity { get; init; }
+        public TimeSpan Phase { get; init; }
 
-        public SilencerFixedUpdateRate(byte valueIntensity, byte valuePhase)
-        {
-            _valueIntensity = valueIntensity;
-            _valuePhase = valuePhase;
-            Target = SilencerTarget.Intensity;
-        }
+        bool ISilencer.IsValid(IWithSampling c, bool strictMode, SilencerTarget target)
+           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid(((ISilencer)this).RawPtr(strictMode, target), c.SamplingConfigIntensity().Inner, (c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
 
-        public bool IsValid(IWithSampling target) => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRateIsValid(RawPtr(), target.SamplingConfigIntensity().Inner, (target.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
+        DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target)
+           => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(Intensity.TotalMilliseconds * 1000 * 1000), (ulong)(Phase.TotalMilliseconds * 1000 * 1000), strictMode, target.Into());
+    }
 
-        private DatagramPtr RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(_valueIntensity, _valuePhase, Target.Into());
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => RawPtr();
+    public struct FixedUpdateRate : ISilencer
+    {
+        public ushort Intensity { get; init; }
+        public ushort Phase { get; init; }
+
+        bool ISilencer.IsValid(IWithSampling c, bool strictMode, SilencerTarget target)
+           => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRateIsValid(((ISilencer)this).RawPtr(strictMode, target), c.SamplingConfigIntensity().Inner, (c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
+
+        DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(Intensity, Phase, target.Into());
     }
 
     [Builder]
-    public sealed partial class SilencerFixedCompletionTime : IDatagram
+    public sealed partial class Silencer : IDatagram
     {
-        private readonly TimeSpan _valueIntensity;
-        private readonly TimeSpan _valuePhase;
+        private readonly ISilencer _silencer;
 
         [Property]
         public bool StrictMode { get; private set; }
@@ -45,26 +51,23 @@ namespace AUTD3Sharp
         [Property]
         public SilencerTarget Target { get; private set; }
 
-        public SilencerFixedCompletionTime(TimeSpan valueIntensity, TimeSpan valuePhase)
+        public Silencer(ISilencer silencer)
         {
-            _valueIntensity = valueIntensity;
-            _valuePhase = valuePhase;
+            _silencer = silencer;
             StrictMode = true;
             Target = SilencerTarget.Intensity;
         }
 
-        public bool IsValid(IWithSampling target) => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid(RawPtr(), target.SamplingConfigIntensity().Inner, (target.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
+        public Silencer() : this(new FixedCompletionTime
+        {
+            Intensity = TimeSpan.FromMilliseconds(250e-3),
+            Phase = TimeSpan.FromMilliseconds(1)
+        })
+        { }
 
-        private DatagramPtr RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(_valueIntensity.TotalMilliseconds * 1000 * 1000), (ulong)(_valuePhase.TotalMilliseconds * 1000 * 1000), StrictMode, Target.Into());
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => RawPtr();
-    }
+        public static Silencer Disable() => new(new FixedCompletionTime { Intensity = TimeSpan.FromMilliseconds(25e-3), Phase = TimeSpan.FromMilliseconds(25e-3) });
 
-    public sealed class Silencer
-    {
-
-        public static SilencerFixedUpdateRate FromUpdateRate(byte valueIntensity, byte valuePhase) => new(valueIntensity, valuePhase);
-        public static SilencerFixedCompletionTime FromCompletionTime(TimeSpan valueIntensity, TimeSpan valuePhase) => new(valueIntensity, valuePhase);
-        public static SilencerFixedCompletionTime Disable() => new(TimeSpan.FromMilliseconds(25e-3), TimeSpan.FromMilliseconds(25e-3));
-        public static SilencerFixedCompletionTime Default() => new(TimeSpan.FromMilliseconds(250e-3), TimeSpan.FromMilliseconds(1));
+        public bool IsValid(IWithSampling target) => _silencer.IsValid(target, StrictMode, Target);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => _silencer.RawPtr(StrictMode, Target);
     }
 }

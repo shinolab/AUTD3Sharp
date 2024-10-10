@@ -10,7 +10,7 @@ internal static class GainHoloTest
 {
     public static void Test<T>(Controller<T> autd)
     {
-        var config = Silencer.Default();
+        var config = new Silencer();
         autd.Send(config);
 
         var center = autd.Geometry.Center + new Vector3(0, 0, 150);

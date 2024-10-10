@@ -25,7 +25,7 @@ internal static class UserDefinedTest
 {
     public static void Test<T>(Controller<T> autd)
     {
-        var config = Silencer.Default();
+        var config = new Silencer();
         autd.Send(config);
 
         var m = new Sine(150 * Hz);
