@@ -28,7 +28,8 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
         {
             var deviceIndices = geometry.Devices().Select(d => d.Idx).ToArray();
             if (_cache.Count == deviceIndices.Length && deviceIndices.All(i => _cache.ContainsKey(i))) return;
-            var res = NativeMethodsBase.AUTDGainCalc(_g.GainPtr(geometry), geometry.Ptr).Validate();
+            var gainPtr = _g.GainPtr(geometry);
+            var res = NativeMethodsBase.AUTDGainCalc(gainPtr, geometry.Ptr).Validate();
             foreach (var dev in geometry.Devices())
             {
                 var drives = new Drive[dev.NumTransducers];
@@ -40,6 +41,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
                 _cache[dev.Idx] = drives;
             }
             NativeMethodsBase.AUTDGainCalcFreeResult(res);
+            NativeMethodsBase.AUTDGainFree(gainPtr);
         }
 
         private GainPtr GainPtr(Geometry geometry)
