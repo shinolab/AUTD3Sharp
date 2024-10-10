@@ -67,7 +67,7 @@ namespace AUTD3Sharp
                 }
             }
             var result = await Task.Run(() =>
-                NativeMethodsBase.AUTDWaitLocalResultI32(_controller.Runtime, future));
+                NativeMethodsBase.AUTDWaitLocalResultI32(_controller.Handle, future));
             result.Validate();
         }
 
@@ -81,7 +81,7 @@ namespace AUTD3Sharp
                     var future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
                         new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero },
                         _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count);
-                    var result = NativeMethodsBase.AUTDWaitLocalResultI32(_controller.Runtime, future);
+                    var result = NativeMethodsBase.AUTDWaitLocalResultI32(_controller.Handle, future);
                     result.Validate();
                 }
             }

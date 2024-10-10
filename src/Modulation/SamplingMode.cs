@@ -6,9 +6,8 @@ namespace AUTD3Sharp.Modulation
     internal interface ISamplingMode
     {
         internal ModulationPtr SinePtr(SamplingConfig config, byte intensity, byte offset,
-                                         Angle phase, NativeMethods.LoopBehavior loopBehavior);
-        internal unsafe ModulationPtr FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior);
-        internal unsafe ModulationPtr MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior);
+                                         Angle phase, bool clamp, NativeMethods.LoopBehavior loopBehavior);
+        internal unsafe ModulationPtr FourierPtr(ModulationPtr* p, uint len, bool clamp, float ?scaleFactor, NativeMethods.LoopBehavior loopBehavior);
         internal ModulationPtr SquarePtr(SamplingConfig config, byte low, byte high,
                                            float duty, NativeMethods.LoopBehavior loopBehavior);
         internal Freq<float> SineFreq(ModulationPtr ptr);
@@ -25,11 +24,9 @@ namespace AUTD3Sharp.Modulation
         internal Freq<uint> Freq { get; }
 
         ModulationPtr ISamplingMode.SinePtr(SamplingConfig config, byte intensity, byte offset,
-            Angle phase, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSineExact(Freq.Hz, config.Inner, intensity, offset, phase.Radian, loopBehavior).Validate();
+            Angle phase, bool clamp, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSineExact(Freq.Hz, config.Inner, intensity, offset, phase.Radian, clamp, loopBehavior).Validate();
 
-        unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExact(p, len, loopBehavior).Validate();
-
-        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationMixerExact(p, len, loopBehavior).Validate();
+        unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, bool clamp, float? scaleFactor, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExact(p, len, clamp, scaleFactor ?? float.NaN, loopBehavior).Validate();
 
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfig config, byte low, byte high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareExact(Freq.Hz, config.Inner, low, high, duty, loopBehavior).Validate();
@@ -48,12 +45,9 @@ namespace AUTD3Sharp.Modulation
         internal Freq<float> Freq { get; }
 
         ModulationPtr ISamplingMode.SinePtr(SamplingConfig config, byte intensity, byte offset,
-            Angle phase, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSineExactFloat(Freq.Hz, config.Inner, intensity, offset, phase.Radian, loopBehavior).Validate();
+            Angle phase, bool clamp, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSineExactFloat(Freq.Hz, config.Inner, intensity, offset, phase.Radian,clamp, loopBehavior).Validate();
 
-        unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExactFloat(p, len, loopBehavior).Validate();
-
-        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationMixerExactFloat(p, len, loopBehavior).Validate();
-
+        unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, bool clamp, float? scaleFactor, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierExactFloat(p, len, clamp, scaleFactor ?? float.NaN, loopBehavior).Validate();
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfig config, byte low, byte high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareExactFloat(Freq.Hz, config.Inner, low, high, duty, loopBehavior).Validate();
 
@@ -71,12 +65,9 @@ namespace AUTD3Sharp.Modulation
         internal Freq<float> Freq { get; }
 
         ModulationPtr ISamplingMode.SinePtr(SamplingConfig config, byte intensity, byte offset,
-            Angle phase, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSineNearest(Freq.Hz, config.Inner, intensity, offset, phase.Radian, loopBehavior).Validate();
+            Angle phase, bool clamp, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSineNearest(Freq.Hz, config.Inner, intensity, offset, phase.Radian,clamp, loopBehavior).Validate();
 
-        unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierNearest(p, len, loopBehavior).Validate();
-
-        unsafe ModulationPtr ISamplingMode.MixerPtr(ModulationPtr* p, uint len, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationMixerNearest(p, len, loopBehavior).Validate();
-
+        unsafe ModulationPtr ISamplingMode.FourierPtr(ModulationPtr* p, uint len, bool clamp, float? scaleFactor, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationFourierNearest(p, len, clamp, scaleFactor ?? float.NaN, loopBehavior).Validate();
         ModulationPtr ISamplingMode.SquarePtr(SamplingConfig config, byte low, byte high,
             float duty, NativeMethods.LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationSquareNearest(Freq.Hz, config.Inner, low, high, duty, loopBehavior).Validate();
 

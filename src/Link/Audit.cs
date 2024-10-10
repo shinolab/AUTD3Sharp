@@ -1,5 +1,6 @@
-using AUTD3Sharp.NativeMethods;
 using System;
+using System.Linq;
+using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver;
 
 #if UNITY_2020_2_OR_NEWER
@@ -48,16 +49,17 @@ namespace AUTD3Sharp.Link
 
         public TimeSpan Timeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0f);
         public TimeSpan LastTimeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditLastTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0f);
+        public ulong LastParallelThreshold() => NativeMethodsBase.AUTDLinkAuditLastParallelThreshold(_ptr);
         public void Down() => NativeMethodsBase.AUTDLinkAuditDown(_ptr);
         public void Up() => NativeMethodsBase.AUTDLinkAuditUp(_ptr);
         public bool IsOpen() => NativeMethodsBase.AUTDLinkAuditIsOpen(_ptr);
         public bool IsForceFan(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(_ptr, (ushort)idx);
         public void BreakDown() => NativeMethodsBase.AUTDLinkAuditBreakDown(_ptr);
         public void Repair() => NativeMethodsBase.AUTDLinkAuditRepair(_ptr);
-        public byte SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (ushort)idx);
-        public byte SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (ushort)idx);
-        public byte SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);
-        public byte SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (ushort)idx);
+        public ushort SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (ushort)idx);
+        public ushort SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (ushort)idx);
+        public ushort SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);
+        public ushort SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (ushort)idx);
         public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (ushort)idx);
         public bool SilencerStrictMode(int idx) => NativeMethodsBase.AUTDLinkAuditCpuSilencerStrictMode(_ptr, (ushort)idx);
 
@@ -74,12 +76,12 @@ namespace AUTD3Sharp.Link
             return ty;
         }
 
-        public ushort[] DebugValues(int idx)
+        public ulong[] DebugValues(int idx)
         {
-            var value = new ushort[4];
+            var value = new ulong[4];
             unsafe
             {
-                fixed (ushort* p = &value[0])
+                fixed (ulong* p = &value[0])
                     NativeMethodsBase.AUTDLinkAuditFpgaDebugValues(_ptr, (ushort)idx, p);
             }
             return value;
@@ -91,12 +93,12 @@ namespace AUTD3Sharp.Link
 
         public byte[] Modulation(int idx, Segment segment)
         {
-            var n = (int)NativeMethodsBase.AUTDLinkAuditFpgaModulationCycle(_ptr, segment, (ushort)idx);
+            var n = NativeMethodsBase.AUTDLinkAuditFpgaModulationCycle(_ptr, segment, (ushort)idx);
             var buf = new byte[n];
             unsafe
             {
                 fixed (byte* p = &buf[0])
-                    NativeMethodsBase.AUTDLinkAuditFpgaModulation(_ptr, segment, (ushort)idx, p);
+                    NativeMethodsBase.AUTDLinkAuditFpgaModulationBuffer(_ptr, segment, (ushort)idx, p, n);
             }
             return buf;
         }
@@ -111,16 +113,16 @@ namespace AUTD3Sharp.Link
         public (byte[], byte[]) Drives(int idx, Segment segment, int stmIdx)
         {
             var n = (int)NativeMethodsBase.AUTDLinkAuditCpuNumTransducers(_ptr, (ushort)idx);
-            var intensities = new byte[n];
-            var phases = new byte[n];
+            var drive = new Drive[n];
             unsafe
             {
-                fixed (byte* pd = &intensities[0])
-                fixed (byte* pp = &phases[0])
+                fixed (Drive* pd = &drive[0])
                 {
-                    NativeMethodsBase.AUTDLinkAuditFpgaDrives(_ptr, segment, (ushort)idx, (ushort)stmIdx, pd, pp);
+                    NativeMethodsBase.AUTDLinkAuditFpgaDrivesAt(_ptr, segment, (ushort)idx, (ushort)stmIdx, (NativeMethods.Drive*)pd);
                 }
             }
+            var intensities = drive.Select(d => d.Intensity.Value).ToArray();
+            var phases = drive.Select(d => d.Phase.Value).ToArray();
             return (intensities, phases);
         }
 

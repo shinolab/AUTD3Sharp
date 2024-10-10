@@ -6,7 +6,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Driver.Datagram.Modulation
 {
-    [Modulation(NoCache = true, ConfigNoChange = true, NoTransform = true, NoRadiationPressure = true)]
+    [Modulation(ConfigNoChange = true)]
     public sealed partial class Cache<TM> : IEnumerable<byte>
     where TM : IModulation
     {
@@ -43,7 +43,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             unsafe
             {
                 fixed (byte* pBuf = &_cache[0])
-                    return NativeMethodsBase.AUTDModulationRaw(_samplingConfig!.Value, LoopBehavior, pBuf, (ushort)_cache.Length);
+                    return NativeMethodsBase.AUTDModulationCustom(_samplingConfig!.Value, LoopBehavior, pBuf, (ushort)_cache.Length);
             }
         }
 

@@ -124,7 +124,6 @@ namespace AUTD3Sharp.NativeMethods
     {
         Sleep = 0,
         BusyWait = 1,
-        NativeTimer = 2,
     }
 
 

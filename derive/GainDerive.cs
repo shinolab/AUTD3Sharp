@@ -23,8 +23,6 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
         var attribute = source.Attributes.First(attr => attr!.AttributeClass!.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat) ==
                                                         "global::AUTD3Sharp.Derive.GainAttribute");
         var namedArguments = attribute.NamedArguments;
-        var noCache = namedArguments.Any(arg => arg.Key == "NoCache" && (bool)(arg.Value.Value ?? false));
-        var noTransform = namedArguments.Any(arg => arg.Key == "NoTransform" && (bool)(arg.Value.Value ?? false));
 
         var isCustom = typeSymbol.GetMembers("Calc").Length != 0;
 
@@ -64,8 +62,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
 
 """ : "";
 
-        var cacheCode = noCache ? "" :
-            $$"""
+        var cacheCode = $$"""
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Cache<{{typeName}}> WithCache()
         {
@@ -73,8 +70,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
         }
 
 """;
-        var transformCode = noTransform ? "" :
-            $$"""
+        var transformCode = $$"""
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}> WithTransform(Func<Device, Func<AUTD3Sharp.Transducer, AUTD3Sharp.Drive, AUTD3Sharp.Drive>> f)
         {

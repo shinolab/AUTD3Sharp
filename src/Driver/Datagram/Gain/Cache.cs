@@ -6,7 +6,7 @@ using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp.Driver.Datagram.Gain
 {
-    [Gain(NoCache = true, NoTransform = true)]
+    [Gain]
     public sealed partial class Cache<TG>
     where TG : IGain
     {

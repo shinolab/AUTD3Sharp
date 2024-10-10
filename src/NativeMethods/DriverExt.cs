@@ -113,7 +113,6 @@ namespace AUTD3Sharp
                 {
                     AUTD3Sharp.TimerStrategy.Sleep => TimerStrategy.Sleep,
                     AUTD3Sharp.TimerStrategy.BusyWait => TimerStrategy.BusyWait,
-                    AUTD3Sharp.TimerStrategy.NativeTimer => TimerStrategy.NativeTimer,
                     _ => throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null)
                 };
             }
@@ -216,7 +215,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static GainCalcDrivesMapPtr Validate(this ResultGainCalcDrivesMap res)
+            public static GainCalcPtr Validate(this ResultGainCalcDrivesMap res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
@@ -270,26 +269,6 @@ namespace AUTD3Sharp
                 }
                 throw new AUTDException(err);
             }
-            public static PlotConfigPtr Validate(this ResultPlotConfig res)
-            {
-                if (res.result.Item1 != IntPtr.Zero) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-            public static PyPlotConfigPtr Validate(this ResultPyPlotConfig res)
-            {
-                if (res.result.Item1 != IntPtr.Zero) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
 
             public static ModulationCalcPtr Validate(this ResultModulationCalc res)
             {
@@ -313,7 +292,6 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-
             public static FociSTMPtr Validate(this ResultFociSTM res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
@@ -324,7 +302,6 @@ namespace AUTD3Sharp
                 }
                 throw new AUTDException(err);
             }
-
         }
     }
 }
