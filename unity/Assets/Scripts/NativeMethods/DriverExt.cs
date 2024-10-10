@@ -13,7 +13,6 @@ namespace AUTD3Sharp
     {
         Sleep = 0,
         BusyWait = 1,
-        NativeTimer = 2
     }
 
     public enum SyncMode : byte
