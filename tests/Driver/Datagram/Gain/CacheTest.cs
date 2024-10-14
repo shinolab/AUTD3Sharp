@@ -27,6 +27,8 @@ public class CacheTest
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }
+
+        _ = new Uniform((new EmitIntensity(0x80), new Phase(0x90))).WithCache();
     }
 
     [Fact]

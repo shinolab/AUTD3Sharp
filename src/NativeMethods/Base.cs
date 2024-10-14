@@ -555,7 +555,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ModulationPtr AUTDModulationCache(ModulationPtr m);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationCacheClone", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ModulationPtr AUTDModulationCacheClone(ModulationPtr m);
+        public static extern ModulationPtr AUTDModulationCacheClone(ModulationPtr m, LoopBehavior loop_behavior);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationCacheFree", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDModulationCacheFree(ModulationPtr m);
