@@ -24,7 +24,7 @@ namespace AUTD3Sharp
             _f = (_, geometryPtr, devIdx, idx) =>
             {
                 var dev = new Device(devIdx, geometryPtr);
-                var tr = new Transducer(idx, dev.Ptr);
+                var tr = new Transducer(idx, devIdx, dev.Ptr);
                 var h = _cache.GetOrAdd(devIdx, f(dev));
                 return h(tr).Value;
             };
