@@ -61,9 +61,6 @@ public class CacheTest
         var gc = g.WithCache();
         await autd.SendAsync(gc);
 
-        Assert.False(gc.Drives().ContainsKey(0));
-        Assert.True(gc.Drives().ContainsKey(1));
-
         {
             var (intensities, phases) = autd.Link.Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));

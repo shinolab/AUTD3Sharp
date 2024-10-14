@@ -214,17 +214,6 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static GainCalcPtr Validate(this ResultGainCalcDrivesMap res)
-            {
-                if (res.result.Item1 != IntPtr.Zero) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-
             public static FirmwareVersionListPtr Validate(this ResultFirmwareVersionList res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
@@ -259,17 +248,6 @@ namespace AUTD3Sharp
             }
 
             public static BackendPtr Validate(this ResultBackend res)
-            {
-                if (res.result.Item1 != IntPtr.Zero) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-
-            public static ModulationCalcPtr Validate(this ResultModulationCalc res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];

@@ -82,15 +82,15 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 28.0.0 (MIT)
+autd3 28.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-derive 28.0.0 (MIT)
+autd3-derive 28.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 28.0.0 (MIT)
+autd3-driver 28.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -98,19 +98,19 @@ autd3-emulator 28.0.0 (MIT)
 https://github.com/shinolab/autd3-emulator
 ---------------------------------------------------------
 
-autd3-firmware-emulator 28.0.0 (MIT)
+autd3-firmware-emulator 28.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 28.0.0 (MIT)
+autd3-gain-holo 28.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 28.0.0 (MIT)
+autd3-link-simulator 28.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 28.0.0
+autd3-link-soem 28.0.1
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -176,7 +176,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 28.0.0
+autd3-link-twincat 28.0.1
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -228,43 +228,43 @@ SOFTWARE.
 
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 28.0.0 (MIT)
+autd3-modulation-audio-file 28.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 28.0.0 (MIT)
+autd3-protobuf 28.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 28.0.0 (MIT)
+autd3capi 28.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 28.0.0 (MIT)
+autd3capi-driver 28.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-emulator 28.0.0 (MIT)
+autd3capi-emulator 28.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 28.0.0 (MIT)
+autd3capi-gain-holo 28.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 28.0.0 (MIT)
+autd3capi-link-simulator 28.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-soem 28.0.0 (MIT)
+autd3capi-link-soem 28.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 28.0.0 (MIT)
+autd3capi-link-twincat 28.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 28.0.0 (MIT)
+autd3capi-modulation-audio-file 28.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
@@ -296,7 +296,7 @@ bit-vec 0.8.0 (Apache-2.0 OR MIT)
 https://github.com/contain-rs/bit-vec
 ---------------------------------------------------------
 
-bitfield-struct 0.9.0 (MIT)
+bitfield-struct 0.9.1 (MIT)
 https://github.com/wrenger/bitfield-struct-rs.git
 ---------------------------------------------------------
 
@@ -320,7 +320,7 @@ bvh 0.10.0 (MIT)
 https://github.com/svenstaro/bvh
 ---------------------------------------------------------
 
-bytemuck 1.18.0 (Apache-2.0 OR MIT OR Zlib)
+bytemuck 1.19.0 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/bytemuck
 ---------------------------------------------------------
 

@@ -35,27 +35,6 @@ public class CacheTest
     }
 
     [Fact]
-    public void CacheBuffer()
-    {
-        var autd = Controller.Builder([new AUTD3(Vector3.Zero)]).Open(Audit.Builder());
-
-        var m = new Static().WithCache();
-        Assert.Equal(0, m.Buffer.Length);
-
-        m.Init();
-        Assert.Equal(0xFF, m[0]);
-        Assert.Equal(0xFF, m[1]);
-        var buffer = m.Buffer;
-        Assert.Equal(0xFF, buffer[0]);
-        Assert.Equal(0xFF, buffer[1]);
-
-        foreach (var buf in m)
-        {
-            Assert.Equal(0xFF, buf);
-        }
-    }
-
-    [Fact]
     public async Task CacheCheckOnce()
     {
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());

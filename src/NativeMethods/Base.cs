@@ -285,6 +285,15 @@ namespace AUTD3Sharp.NativeMethods
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDGainBesselIsDefault(GainPtr bessel);
 
+        [DllImport(__DllName, EntryPoint = "AUTDGainCache", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainCache(GainPtr g);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainCacheClone", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern GainPtr AUTDGainCacheClone(GainPtr g);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGainCacheFree", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDGainCacheFree(GainPtr g);
+
         [DllImport(__DllName, EntryPoint = "AUTDGainCustom", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainCustom(ConstPtr f, ConstPtr context, GeometryPtr geometry);
 
@@ -310,18 +319,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGainIntoDatagram", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDGainIntoDatagram(GainPtr gain);
 
-        [DllImport(__DllName, EntryPoint = "AUTDGainCalc", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultGainCalcDrivesMap AUTDGainCalc(GainPtr gain, GeometryPtr geometry);
-
-        [DllImport(__DllName, EntryPoint = "AUTDGainFree", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDGainFree(GainPtr gain);
-
-        [DllImport(__DllName, EntryPoint = "AUTDGainCalcGetResult", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDGainCalcGetResult(GainCalcPtr src, Drive* dst, DevicePtr device);
-
-        [DllImport(__DllName, EntryPoint = "AUTDGainCalcFreeResult", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDGainCalcFreeResult(GainCalcPtr src);
-
         [DllImport(__DllName, EntryPoint = "AUTDGainNull", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainNull();
 
@@ -331,12 +328,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGainPlanelIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDGainPlanelIsDefault(GainPtr plane);
-
-        [DllImport(__DllName, EntryPoint = "AUTDGainRaw", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainRaw();
-
-        [DllImport(__DllName, EntryPoint = "AUTDGainRawSet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainRawSet(GainPtr custom, ushort dev_idx, Drive* ptr, byte len);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainWithTransform", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainWithTransform(GainPtr g, ConstPtr f, ConstPtr context, GeometryPtr geometry);
@@ -560,6 +551,15 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkNop", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkBuilderPtr AUTDLinkNop();
 
+        [DllImport(__DllName, EntryPoint = "AUTDModulationCache", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ModulationPtr AUTDModulationCache(ModulationPtr m);
+
+        [DllImport(__DllName, EntryPoint = "AUTDModulationCacheClone", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ModulationPtr AUTDModulationCacheClone(ModulationPtr m);
+
+        [DllImport(__DllName, EntryPoint = "AUTDModulationCacheFree", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDModulationCacheFree(ModulationPtr m);
+
         [DllImport(__DllName, EntryPoint = "AUTDModulationCustom", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ModulationPtr AUTDModulationCustom(SamplingConfig config, LoopBehavior loop_behavior, byte* ptr, ushort len);
 
@@ -589,18 +589,6 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationIntoDatagram", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDModulationIntoDatagram(ModulationPtr m);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationCalc", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulationCalc AUTDModulationCalc(ModulationPtr m);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationCalcGetResult", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDModulationCalcGetResult(ModulationCalcPtr src, byte* dst);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationCalcGetSize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ushort AUTDModulationCalcGetSize(ModulationCalcPtr src);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationCalcFreeResult", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDModulationCalcFreeResult(ModulationCalcPtr src);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationWithRadiationPressure", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ModulationPtr AUTDModulationWithRadiationPressure(ModulationPtr m, LoopBehavior loop_behavior);
@@ -711,38 +699,9 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct GainCalcPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultGainCalcDrivesMap
-    {
-        public GainCalcPtr result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct LinkAuditBuilderPtr
     {
         public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ModulationCalcPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultModulationCalc
-    {
-        public ModulationCalcPtr result;
-        public SamplingConfig config;
-        public uint err_len;
-        public ConstPtr err;
     }
 
 
