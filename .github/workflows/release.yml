@@ -6,26 +6,6 @@ on:
     - 'v*'
 
 jobs:
-  publish_unity-npmjs:
-    name: publish-unity
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: python3 build.py unity build --release
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
-      - continue-on-error: true
-        run: |
-          mv unity/Assets/Samples unity/Assets/Samples~
-          rm -f unity/Assets/Samples.meta
-          cd unity/Assets
-          npm install
-          npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
   publish_unity-github:
     name: publish-unity-github
     runs-on: ubuntu-latest
