@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,39 +11,23 @@ using AUTD3Sharp.Derive;
 namespace AUTD3Sharp.Driver.Datagram.Gain
 {
     [Gain]
-    public sealed partial class Cache<TG> : IDisposable
+    public sealed partial class Cache<TG>
     where TG : IGain
     {
         private readonly TG _g;
         private GainPtr? _ptr;
-        private bool _isDisposed;
 
         public Cache(TG g)
         {
             _g = g;
             _ptr = null;
-            _isDisposed = false;
         }
 
         ~Cache()
         {
-            Dispose();
-
-        }
-
-        public void Dispose()
-        {
-            if (_isDisposed) return;
-
-            if (_ptr.HasValue)
-            {
-                NativeMethodsBase.AUTDGainCacheFree(_ptr.Value);
-                _ptr = null;
-            }
-
-            _isDisposed = true;
-            GC.SuppressFinalize(this);
-
+            if (!_ptr.HasValue) return;
+            NativeMethodsBase.AUTDGainCacheFree(_ptr.Value);
+            _ptr = null;
         }
 
         private GainPtr GainPtr(Geometry geometry)

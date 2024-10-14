@@ -30,8 +30,12 @@ public class CacheTest
             var modExpect = autd1.Link.Modulation(dev.Idx, Segment.S0);
             var mod = autd2.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);
+            Assert.Equal(LoopBehavior.Infinite, autd1.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
+            Assert.Equal(LoopBehavior.Once, autd2.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
             Assert.Equal(autd1.Link.ModulationFreqDivision(dev.Idx, Segment.S0), autd2.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
         }
+
+        _ = m.WithCache();
     }
 
     [Fact]
