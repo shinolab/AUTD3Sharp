@@ -7,13 +7,16 @@ namespace AUTD3Sharp
     {
         internal readonly TransducerPtr Ptr;
 
-        internal Transducer(byte trIdx, DevicePtr ptr)
+        internal Transducer(byte trIdx, ushort devIdx, DevicePtr ptr)
         {
             Idx = trIdx;
+            DevIdx = devIdx;
             Ptr = NativeMethodsBase.AUTDTransducer(ptr, trIdx);
         }
 
         public int Idx { get; }
+
+        public int DevIdx { get; }
 
         public Vector3 Position => NativeMethodsBase.AUTDTransducerPosition(Ptr);
     }

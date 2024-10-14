@@ -239,6 +239,19 @@ public class GeometryTest
     }
 
     [Fact]
+    public async Task TestTransducerDevIdx()
+    {
+        var autd = await AUTDTest.CreateController();
+        foreach (var dev in autd.Geometry)
+        {
+            foreach (var tr in dev)
+            {
+                Assert.Equal(dev.Idx, tr.DevIdx);
+            }
+        }
+    }
+
+    [Fact]
     public async Task TestTransducerPosition()
     {
         var autd = await AUTDTest.CreateController();

@@ -44,7 +44,7 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
                 {   
                     var devPtr = NativeMethodsBase.AUTDDevice(geometryPtr, devIdx);
                     var dev = ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetDevice(devIdx, geometryPtr);
-                    var tr = ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetTransducer(trIdx, devPtr);
+                    var tr = ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetTransducer(trIdx, devIdx, devPtr);
                     var d = f(dev)(tr);
                     dst->intensity = d.Intensity.Value;
                     dst->phase = d.Phase.Value;

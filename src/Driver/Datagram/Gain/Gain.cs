@@ -13,7 +13,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public Device GetDevice(ushort devIdx, GeometryPtr ptr) => new(devIdx, ptr);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Transducer GetTransducer(byte trIdx, DevicePtr ptr) => new(trIdx, ptr);
+        public Transducer GetTransducer(byte trIdx, ushort devIdx, DevicePtr ptr) => new(trIdx, devIdx, ptr);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public GeometryPtr GetGeometryPtr(Geometry geometry) => geometry.Ptr;
     }

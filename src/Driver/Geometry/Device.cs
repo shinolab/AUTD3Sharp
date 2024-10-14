@@ -17,7 +17,7 @@ namespace AUTD3Sharp
             Idx = idx;
             GeoPtr = ptr;
             Ptr = NativeMethodsBase.AUTDDevice(ptr, idx);
-            _transducers = Enumerable.Range(0, (int)NativeMethodsBase.AUTDDeviceNumTransducers(Ptr)).Select(i => new Transducer((byte)i, Ptr)).ToList();
+            _transducers = Enumerable.Range(0, (int)NativeMethodsBase.AUTDDeviceNumTransducers(Ptr)).Select(i => new Transducer((byte)i, idx, Ptr)).ToList();
         }
 
         public int Idx { get; }
