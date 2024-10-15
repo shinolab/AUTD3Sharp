@@ -17,9 +17,6 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
-        [DllImport(__DllName, EntryPoint = "AUTDAUTDLinkSOEMTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDAUTDLinkSOEMTracingInit();
-
         [DllImport(__DllName, EntryPoint = "AUTDAdapterPointer", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern EthernetAdaptersPtr AUTDAdapterPointer();
 
@@ -31,6 +28,9 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDAdapterPointerDelete", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDAdapterPointerDelete(EthernetAdaptersPtr adapters);
+
+        [DllImport(__DllName, EntryPoint = "AUTDAUTDLinkSOEMTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDAUTDLinkSOEMTracingInit();
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEM();
@@ -71,6 +71,12 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithTimeout(LinkSOEMBuilderPtr soem, ulong timeout_ns);
 
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithProcessPriority", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithProcessPriority(LinkSOEMBuilderPtr soem, ProcessPriority priority);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithThreadPriority", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithThreadPriority(LinkSOEMBuilderPtr soem, ThreadPriorityPtr priority);
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMIntoBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkBuilderPtr AUTDLinkSOEMIntoBuilder(LinkSOEMBuilderPtr soem);
 
@@ -82,6 +88,15 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteSOEMIntoBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LinkBuilderPtr AUTDLinkRemoteSOEMIntoBuilder(LinkRemoteSOEMBuilderPtr soem);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMThreadPriorityMin", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ThreadPriorityPtr AUTDLinkSOEMThreadPriorityMin();
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMThreadPriorityCrossplatform", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ThreadPriorityPtr AUTDLinkSOEMThreadPriorityCrossplatform(byte value);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMThreadPriorityMax", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ThreadPriorityPtr AUTDLinkSOEMThreadPriorityMax();
 
 
     }
@@ -112,6 +127,22 @@ namespace AUTD3Sharp.NativeMethods
         public ConstPtr err;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ThreadPriorityPtr
+    {
+        public IntPtr Item1;
+    }
+
+
+    public enum ProcessPriority : byte
+    {
+        Idle = 0,
+        BelowNormal = 1,
+        Normal = 2,
+        AboveNormal = 3,
+        High = 4,
+        Realtime = 5,
+    }
 
     public enum Status : byte
     {

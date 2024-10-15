@@ -17,6 +17,9 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDLinkSimulatorTracingInit();
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkSimulator", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultLinkSimulatorBuilder AUTDLinkSimulator(byte* addr);
 

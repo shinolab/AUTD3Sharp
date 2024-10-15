@@ -10,6 +10,9 @@ namespace AUTD3Sharp
         public static void Init()
         {
             NativeMethodsBase.AUTDTracingInit();
+            NativeMethodsLinkSimulator.AUTDLinkSimulatorTracingInit();
+            NativeMethodsModulationAudioFile.AUTDModulationAudioFileTracingInit();
+            NativeMethodsLinkTwinCAT.AUTDAUTDLinkTwinCATTracingInit();
             try
             {
                 NativeMethodsLinkSOEM.AUTDAUTDLinkSOEMTracingInit();

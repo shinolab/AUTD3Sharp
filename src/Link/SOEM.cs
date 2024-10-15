@@ -101,13 +101,25 @@ namespace AUTD3Sharp.Link
                     }
                     handler((int)slave, status.Into(), System.Text.Encoding.UTF8.GetString(msgBytes).TrimEnd('\0'));
                 };
-                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithErrHandler(_ptr, new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_errHandler)}, new ConstPtr { Item1 = IntPtr.Zero});
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithErrHandler(_ptr, new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_errHandler) }, new ConstPtr { Item1 = IntPtr.Zero });
                 return this;
             }
 
             public SOEMBuilder WithStateCheckInterval(TimeSpan interval)
             {
                 _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithStateCheckInterval(_ptr, (uint)interval.TotalMilliseconds);
+                return this;
+            }
+
+            public SOEMBuilder WithProcessPriority(ProcessPriority priority)
+            {
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithProcessPriority(_ptr, priority.Into());
+                return this;
+            }
+
+            public SOEMBuilder WithThreadPriority(ThreadPriorityPtr priority)
+            {
+                _ptr = NativeMethodsLinkSOEM.AUTDLinkSOEMWithThreadPriority(_ptr, priority);
                 return this;
             }
 
@@ -217,6 +229,17 @@ namespace AUTD3Sharp.Link
         public static bool operator !=(EtherCATAdapter left, EtherCATAdapter right) => !left.Equals(right);
         public override bool Equals(object? obj) => obj is EtherCATAdapter adapter && Equals(adapter);
         public override int GetHashCode() => Desc.GetHashCode() ^ Name.GetHashCode();
+    }
+
+    public static class ThreadPriority
+    {
+        public static ThreadPriorityPtr Min = NativeMethodsLinkSOEM.AUTDLinkSOEMThreadPriorityMin();
+        public static ThreadPriorityPtr Max = NativeMethodsLinkSOEM.AUTDLinkSOEMThreadPriorityMax();
+        public static ThreadPriorityPtr Crossplatform(byte value)
+        {
+            if (value > 99) throw new ArgumentOutOfRangeException(nameof(value), "value must be between 0 and 99");
+            return NativeMethodsLinkSOEM.AUTDLinkSOEMThreadPriorityCrossplatform(value);
+        }
     }
 }
 

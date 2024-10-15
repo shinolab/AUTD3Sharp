@@ -17,6 +17,9 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
+        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDModulationAudioFileTracingInit();
+
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileWav", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultModulation AUTDModulationAudioFileWav(byte* path, LoopBehavior loop_behavior);
 

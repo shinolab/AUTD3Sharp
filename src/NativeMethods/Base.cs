@@ -393,8 +393,11 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGeometryNumDevices", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDGeometryNumDevices(GeometryPtr geo);
 
+        [DllImport(__DllName, EntryPoint = "AUTDRotationFromEulerXYZ", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern Quaternion AUTDRotationFromEulerXYZ(float x, float y, float z);
+
         [DllImport(__DllName, EntryPoint = "AUTDRotationFromEulerZYZ", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern Quaternion AUTDRotationFromEulerZYZ(float x, float y, float z);
+        public static extern Quaternion AUTDRotationFromEulerZYZ(float z1, float y, float z2);
 
         [DllImport(__DllName, EntryPoint = "AUTDTransducer", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern TransducerPtr AUTDTransducer(DevicePtr dev, byte idx);
@@ -570,13 +573,13 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ModulationPtr AUTDModulationWithFir(ModulationPtr m, LoopBehavior loop_behavior, float* coef, uint n_tap);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationFourierExact", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationFourierExact(ModulationPtr* components, uint size, [MarshalAs(UnmanagedType.U1)] bool clamp, float scale_factor, LoopBehavior loop_behavior);
+        public static extern ResultModulation AUTDModulationFourierExact(ModulationPtr* components, uint size, [MarshalAs(UnmanagedType.U1)] bool clamp, float scale_factor, byte offset, LoopBehavior loop_behavior);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationFourierExactFloat", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationFourierExactFloat(ModulationPtr* components, uint size, [MarshalAs(UnmanagedType.U1)] bool clamp, float scale_factor, LoopBehavior loop_behavior);
+        public static extern ResultModulation AUTDModulationFourierExactFloat(ModulationPtr* components, uint size, [MarshalAs(UnmanagedType.U1)] bool clamp, float scale_factor, byte offset, LoopBehavior loop_behavior);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationFourierNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationFourierNearest(ModulationPtr* components, uint size, [MarshalAs(UnmanagedType.U1)] bool clamp, float scale_factor, LoopBehavior loop_behavior);
+        public static extern ResultModulation AUTDModulationFourierNearest(ModulationPtr* components, uint size, [MarshalAs(UnmanagedType.U1)] bool clamp, float scale_factor, byte offset, LoopBehavior loop_behavior);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationSamplingConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern SamplingConfig AUTDModulationSamplingConfig(ModulationPtr m);

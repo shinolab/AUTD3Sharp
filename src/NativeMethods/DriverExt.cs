@@ -21,6 +21,19 @@ namespace AUTD3Sharp
         DC = 1
     }
 
+    namespace Link
+    {
+        public enum ProcessPriority : byte
+        {
+            Idle = 0,
+            BelowNormal = 1,
+            Normal = 2,
+            AboveNormal = 3,
+            High = 4,
+            Realtime = 5,
+        }
+    }
+
     public enum Segment : byte
     {
         S0 = 0,
@@ -113,6 +126,23 @@ namespace AUTD3Sharp
                     AUTD3Sharp.TimerStrategy.Sleep => TimerStrategy.Sleep,
                     AUTD3Sharp.TimerStrategy.BusyWait => TimerStrategy.BusyWait,
                     _ => throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null)
+                };
+            }
+        }
+
+        public static class ProcessPriorityExt
+        {
+            public static ProcessPriority Into(this AUTD3Sharp.Link.ProcessPriority priority)
+            {
+                return priority switch
+                {
+                    AUTD3Sharp.Link.ProcessPriority.Idle => ProcessPriority.Idle,
+                    AUTD3Sharp.Link.ProcessPriority.BelowNormal => ProcessPriority.BelowNormal,
+                    AUTD3Sharp.Link.ProcessPriority.Normal => ProcessPriority.Normal,
+                    AUTD3Sharp.Link.ProcessPriority.AboveNormal => ProcessPriority.AboveNormal,
+                    AUTD3Sharp.Link.ProcessPriority.High => ProcessPriority.High,
+                    AUTD3Sharp.Link.ProcessPriority.Realtime => ProcessPriority.Realtime,
+                    _ => throw new ArgumentOutOfRangeException(nameof(priority), priority, null)
                 };
             }
         }
