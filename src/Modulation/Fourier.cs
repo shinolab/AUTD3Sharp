@@ -24,13 +24,16 @@ namespace AUTD3Sharp.Modulation
         [Property]
         public float? ScaleFactor { get; private set; }
 
+        [Property]
+        public byte Offset { get; private set; }
+
         private ModulationPtr ModulationPtr()
         {
             var components = _components.Select(m => ((Driver.Datagram.Modulation.IModulation)m).ModulationPtr()).ToArray();
             unsafe
             {
                 fixed (ModulationPtr* p = &components[0])
-                    return _components[0].Mode.FourierPtr(p, (uint)components.Length, Clamp, ScaleFactor, LoopBehavior);
+                    return _components[0].Mode.FourierPtr(p, (uint)components.Length, Clamp, ScaleFactor, Offset, LoopBehavior);
             }
         }
     }
