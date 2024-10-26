@@ -30,6 +30,7 @@ public class SilencerTest
         }
 
         Assert.True(new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
+        Assert.True(new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).IsValid(new FociSTM(new SamplingConfig(1), [Vector3.Zero, Vector3.Zero])));
     }
 
     [Fact]

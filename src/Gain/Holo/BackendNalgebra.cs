@@ -55,6 +55,7 @@ namespace AUTD3Sharp.Gain.Holo
             }
         }
 
+        [ExcludeFromCodeCoverage]
         internal override GainPtr Lm(Vector3[] foci, Amplitude[] amps, uint size, float eps1, float eps2, float tau, uint kMax, float[] initial, EmissionConstraintWrap constraint)
         {
             unsafe

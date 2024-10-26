@@ -16,9 +16,12 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Timer
 {
-    public readonly struct StdSleeper
+    public class StdSleeper
     {
-        public uint? TimerResolution { get; init; } = 1;
+        public uint? TimerResolution { get; init; }
+
+        [ExcludeFromCodeCoverage]
+        public StdSleeper() : this(1) { }
 
         [ExcludeFromCodeCoverage]
         public StdSleeper(uint? timerResolution)
@@ -27,9 +30,12 @@ namespace AUTD3Sharp.Timer
         }
     }
 
-    public readonly struct AsyncSleeper
+    public class AsyncSleeper
     {
-        public uint? TimerResolution { get; init; } = 1;
+        public uint? TimerResolution { get; init; }
+
+        [ExcludeFromCodeCoverage]
+        public AsyncSleeper() : this(1) { }
 
         [ExcludeFromCodeCoverage]
         public AsyncSleeper(uint? timerResolution)
@@ -51,6 +57,7 @@ namespace AUTD3Sharp.Timer
         [Property]
         public SpinStrategyTag SpinStrategy { get; private set; }
 
+        [ExcludeFromCodeCoverage]
         public SpinSleeper(uint nativeAccuracyNs)
         {
             NativeAccuracyNs = nativeAccuracyNs;
