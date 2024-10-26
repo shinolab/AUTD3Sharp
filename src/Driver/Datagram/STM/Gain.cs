@@ -11,14 +11,14 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp
 {
-    public sealed class GainSTM : IDatagramST<GainSTMPtr>, IDatagram, IWithSampling
+    public sealed class GainSTM : IDatagramS<GainSTMPtr>, IDatagram, IWithSampling
     {
         private readonly STMSamplingConfig _config;
 
         private readonly IGain[] _gains;
         private GainSTMMode _mode = GainSTMMode.PhaseIntensityFull;
 
-        public NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
+        public LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
 
         public GainSTM(STMSamplingConfig config, IEnumerable<IGain> iter)
         {
@@ -38,7 +38,7 @@ namespace AUTD3Sharp
             return this;
         }
 
-        public GainSTM WithLoopBehavior(NativeMethods.LoopBehavior loopBehavior)
+        public GainSTM WithLoopBehavior(LoopBehavior loopBehavior)
         {
             LoopBehavior = loopBehavior;
             return this;
@@ -47,9 +47,7 @@ namespace AUTD3Sharp
         public DatagramPtr Ptr(Geometry geometry) => NativeMethodsBase.AUTDSTMGainIntoDatagram(RawPtr(geometry));
 
         public DatagramPtr IntoSegmentTransition(GainSTMPtr p, Segment segment, TransitionModeWrap? transitionMode) =>
-            transitionMode.HasValue
-                ? NativeMethodsBase.AUTDSTMGainIntoDatagramWithSegmentTransition(p, segment, transitionMode.Value)
-                : NativeMethodsBase.AUTDSTMGainIntoDatagramWithSegment(p, segment);
+                NativeMethodsBase.AUTDSTMGainIntoDatagramWithSegment(p, segment, transitionMode ?? TransitionMode.None);
 
         public GainSTMPtr RawPtr(Geometry geometry)
         {
@@ -58,15 +56,12 @@ namespace AUTD3Sharp
             {
                 fixed (GainPtr* gp = &gains[0])
                 {
-                    var ptr = NativeMethodsBase.AUTDSTMGain(_config.SamplingConfig(_gains.Length), gp, (ushort)gains.Length).Validate();
-                    ptr = NativeMethodsBase.AUTDSTMGainWithLoopBehavior(ptr, LoopBehavior);
-                    ptr = NativeMethodsBase.AUTDSTMGainWithMode(ptr, _mode);
-                    return ptr;
+                    return NativeMethodsBase.AUTDSTMGain(_config.SamplingConfig(_gains.Length), gp, (ushort)gains.Length, _mode, LoopBehavior).Validate();
                 }
             }
         }
 
-        public DatagramWithSegmentTransition<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
+        public DatagramWithSegment<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
 
         public Freq<float> Freq => _config.Freq(_gains.Length);
         public TimeSpan Period => _config.Period(_gains.Length);

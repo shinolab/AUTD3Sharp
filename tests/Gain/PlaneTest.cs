@@ -25,12 +25,11 @@ public class PlaneTest
     }
 
     [Fact]
-    public async Task PlaneDefault()
+    public void PlaneDefault()
     {
-#pragma warning disable CS8602, CS8605
-        var autd = await AUTDTest.CreateController();
         var g = new Plane(new Vector3(0, 0, 0));
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainPlanelIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(Plane).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g, new object[] { autd.Geometry })));
-#pragma warning restore CS8602, CS8605
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainPlanelIsDefault(
+            g.Intensity.Value, g.PhaseOffset.Value
+            ));
     }
 }

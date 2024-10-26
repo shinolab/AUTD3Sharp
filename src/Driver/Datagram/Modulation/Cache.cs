@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
@@ -14,7 +13,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
     where TM : IModulation
     {
         private readonly TM _m;
-        private ModulationPtr? _ptr;
+        private ModulationCachePtr? _ptr;
 
         public Cache(TM m)
         {
@@ -23,6 +22,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             _loopBehavior = m.LoopBehavior;
         }
 
+        [ExcludeFromCodeCoverage]
         ~Cache()
         {
             if (!_ptr.HasValue) return;
@@ -32,9 +32,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
 
         private ModulationPtr ModulationPtr()
         {
-            if (!_ptr.HasValue)
-                _ptr = NativeMethodsBase.AUTDModulationCache(_m
-                .ModulationPtr());
+            _ptr ??= NativeMethodsBase.AUTDModulationCache(_m.ModulationPtr());
             return NativeMethodsBase.AUTDModulationCacheClone(_ptr.Value, _loopBehavior);
         }
     }

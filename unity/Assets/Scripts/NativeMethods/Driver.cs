@@ -7,6 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.Utils;
+using AUTD3Sharp.Link;
 
 
 namespace AUTD3Sharp.NativeMethods
@@ -21,8 +22,6 @@ namespace AUTD3Sharp.NativeMethods
         public const float TRANS_SPACING_MM = 10.16f;
         public const float DEVICE_HEIGHT_MM = 151.4f;
         public const float DEVICE_WIDTH_MM = 192f;
-        public const int AUTD3_TRUE = 1;
-        public const int AUTD3_FALSE = 0;
 
 
 
@@ -33,19 +32,6 @@ namespace AUTD3Sharp.NativeMethods
     {
         public DebugTypeTag ty;
         public ulong value;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct Drive
-    {
-        public byte phase;
-        public byte intensity;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LoopBehavior
-    {
-        public ushort rep;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -62,18 +48,6 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkBuilderPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct ControllerPtr
     {
         public IntPtr Item1;
@@ -83,14 +57,6 @@ namespace AUTD3Sharp.NativeMethods
     public unsafe partial struct DatagramPtr
     {
         public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultDatagram
-    {
-        public DatagramPtr result;
-        public uint err_len;
-        public ConstPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -115,6 +81,40 @@ namespace AUTD3Sharp.NativeMethods
     public unsafe partial struct TransducerPtr
     {
         public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct LinkBuilderPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct LinkPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultLinkBuilder
+    {
+        public LinkBuilderPtr result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct SyncLinkBuilderPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultSyncLinkBuilder
+    {
+        public SyncLinkBuilderPtr result;
+        public uint err_len;
+        public ConstPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -179,9 +179,9 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultI32
+    public unsafe partial struct ResultStatus
     {
-        public int result;
+        public AUTDStatus result;
         public uint err_len;
         public ConstPtr err;
     }
@@ -194,12 +194,14 @@ namespace AUTD3Sharp.NativeMethods
         public ConstPtr err;
     }
 
-
-    public enum SilencerTarget : byte
+    [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct TimerStrategyWrap
     {
-        Intensity = 0,
-        PulseWidth = 1,
+        public TimerStrategyTag tag;
+        public uint value;
+        public SpinStrategyTag spin_strategy;
     }
+
 
     public enum DebugTypeTag : byte
     {
@@ -218,22 +220,6 @@ namespace AUTD3Sharp.NativeMethods
         SysTimeEq = 12,
     }
 
-    public enum GPIOIn : byte
-    {
-        I0 = 0,
-        I1 = 1,
-        I2 = 2,
-        I3 = 3,
-    }
-
-    public enum GPIOOut : byte
-    {
-        O0 = 0,
-        O1 = 1,
-        O2 = 2,
-        O3 = 3,
-    }
-
     public enum TransitionModeTag : byte
     {
         SyncIdx = 0,
@@ -241,6 +227,7 @@ namespace AUTD3Sharp.NativeMethods
         Gpio = 2,
         Ext = 3,
         Immediate = 4,
+        None = 255,
     }
 
     public enum DynWindow : uint
@@ -249,6 +236,26 @@ namespace AUTD3Sharp.NativeMethods
         Blackman = 1,
     }
 
+    public enum AUTDStatus : byte
+    {
+        TRUE = 0,
+        FALSE = 1,
+        ERR = 2,
+    }
+
+    public enum TimerStrategyTag : byte
+    {
+        Std = 0,
+        Spin = 1,
+        Async = 2,
+        Waitable = 3,
+    }
+
+    public enum SpinStrategyTag : byte
+    {
+        YieldThread = 0,
+        SpinLoopHint = 1,
+    }
+
 
 }
-    

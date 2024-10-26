@@ -26,14 +26,12 @@ public class GSTest
     }
 
     [Fact]
-    public async Task GSDefault()
+    public void GSDefault()
     {
-#pragma warning disable CS8602, CS8605
-        var autd = await AUTDTest.CreateController();
         var backend = new NalgebraBackend();
-        var g = new GS(backend, [(autd.Geometry.Center, 5e3f * Pa), (autd.Geometry.Center, 5e3f * Pa)]);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGSIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(GS).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g,
-            [autd.Geometry])));
-#pragma warning restore CS8602, CS8605
+        var g = new GS(backend, [(Vector3.Zero, 5e3f * Pa), (Vector3.Zero, 5e3f * Pa)]);
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGSIsDefault(
+            g.Constraint, g.Repeat
+            ));
     }
 }

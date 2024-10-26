@@ -7,6 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.Utils;
+using AUTD3Sharp.Link;
 
 
 namespace AUTD3Sharp.NativeMethods
@@ -29,65 +30,24 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDAdapterPointerDelete", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDAdapterPointerDelete(EthernetAdaptersPtr adapters);
 
-        [DllImport(__DllName, EntryPoint = "AUTDAUTDLinkSOEMTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDAUTDLinkSOEMTracingInit();
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDLinkSOEMTracingInit();
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMTracingInitWithFile", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultStatus AUTDLinkSOEMTracingInitWithFile(byte* path);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEM();
+        public static extern ResultSyncLinkBuilder AUTDLinkSOEM(byte* ifname, uint buf_size, ulong send_cycle_ns, ulong sync0_cycle_ns, ConstPtr err_handler, ConstPtr err_context, SyncMode mode, ProcessPriority process_priority, ThreadPriorityPtr thread_priority, ulong state_check_interval_ns, TimerStrategy timer_strategy, ulong tolerance_ns, ulong sync_timeout_ns);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSendCycle", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSendCycle(LinkSOEMBuilderPtr soem, ulong cycle);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSync0Cycle", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSync0Cycle(LinkSOEMBuilderPtr soem, ulong cycle);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithBufSize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithBufSize(LinkSOEMBuilderPtr soem, uint buf_size);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithTimerStrategy", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithTimerStrategy(LinkSOEMBuilderPtr soem, TimerStrategy timer_strategy);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSyncMode", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSyncMode(LinkSOEMBuilderPtr soem, SyncMode mode);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSyncTolerance", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSyncTolerance(LinkSOEMBuilderPtr soem, ulong tolerance_ns);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithSyncTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithSyncTimeout(LinkSOEMBuilderPtr soem, ulong timeout_ns);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithIfname", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithIfname(LinkSOEMBuilderPtr soem, byte* ifname);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithStateCheckInterval", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithStateCheckInterval(LinkSOEMBuilderPtr soem, uint interval_ms);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool AUTDLinkSOEMIsDefault(uint buf_size, ulong send_cycle_ns, ulong sync0_cycle_ns, SyncMode mode, ProcessPriority process_priority, ThreadPriorityPtr thread_priority, ulong state_check_interval_ns, TimerStrategy timer_strategy, ulong tolerance_ns, ulong sync_timeout_ns);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMStatusGetMsg", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDLinkSOEMStatusGetMsg(Status src, byte* dst);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithErrHandler", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithErrHandler(LinkSOEMBuilderPtr soem, ConstPtr handler, ConstPtr context);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithTimeout(LinkSOEMBuilderPtr soem, ulong timeout_ns);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithProcessPriority", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithProcessPriority(LinkSOEMBuilderPtr soem, ProcessPriority priority);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMWithThreadPriority", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSOEMBuilderPtr AUTDLinkSOEMWithThreadPriority(LinkSOEMBuilderPtr soem, ThreadPriorityPtr priority);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMIntoBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkBuilderPtr AUTDLinkSOEMIntoBuilder(LinkSOEMBuilderPtr soem);
-
         [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteSOEM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultLinkRemoteSOEMBuilder AUTDLinkRemoteSOEM(byte* addr);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteSOEMWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkRemoteSOEMBuilderPtr AUTDLinkRemoteSOEMWithTimeout(LinkRemoteSOEMBuilderPtr soem, ulong timeout_ns);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteSOEMIntoBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkBuilderPtr AUTDLinkRemoteSOEMIntoBuilder(LinkRemoteSOEMBuilderPtr soem);
+        public static extern ResultSyncLinkBuilder AUTDLinkRemoteSOEM(byte* addr);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkSOEMThreadPriorityMin", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ThreadPriorityPtr AUTDLinkSOEMThreadPriorityMin();
@@ -108,41 +68,11 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkSOEMBuilderPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkRemoteSOEMBuilderPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultLinkRemoteSOEMBuilder
-    {
-        public LinkRemoteSOEMBuilderPtr result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct ThreadPriorityPtr
     {
         public IntPtr Item1;
     }
 
-
-    public enum ProcessPriority : byte
-    {
-        Idle = 0,
-        BelowNormal = 1,
-        Normal = 2,
-        AboveNormal = 3,
-        High = 4,
-        Realtime = 5,
-    }
 
     public enum Status : byte
     {
@@ -151,12 +81,5 @@ namespace AUTD3Sharp.NativeMethods
         Lost = 2,
     }
 
-    public enum TimerStrategy : byte
-    {
-        Sleep = 0,
-        BusyWait = 1,
-    }
-
 
 }
-    

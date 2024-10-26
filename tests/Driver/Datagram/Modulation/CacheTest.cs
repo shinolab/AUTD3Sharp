@@ -1,17 +1,5 @@
 namespace tests.Driver.Datagram.Modulation;
 
-[Modulation]
-public partial class ForCacheTest
-{
-    internal int CalcCnt;
-
-    private byte[] Calc()
-    {
-        CalcCnt++;
-        return [0xFF, 0xFF];
-    }
-}
-
 public class CacheTest
 {
     [Fact]
@@ -40,41 +28,5 @@ public class CacheTest
         }
 
         GC.Collect();
-    }
-
-    [Fact]
-    public async Task CacheCheckOnce()
-    {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
-
-        {
-            var m = new ForCacheTest();
-            await autd.SendAsync(m);
-            Assert.Equal(1, m.CalcCnt);
-            await autd.SendAsync(m);
-            Assert.Equal(2, m.CalcCnt);
-        }
-
-        {
-            var m = new ForCacheTest();
-            var mc = m.WithCache();
-            await autd.SendAsync(mc);
-            Assert.Equal(1, m.CalcCnt);
-            await autd.SendAsync(mc);
-            Assert.Equal(1, m.CalcCnt);
-        }
-    }
-
-    [Fact]
-    public async Task CacheCheckFree()
-    {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
-
-        var mc = new ForCacheTest().WithCache();
-        {
-            await autd.SendAsync(mc);
-        }
-
-        await autd.SendAsync(mc);
     }
 }

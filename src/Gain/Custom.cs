@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Gain
     [Gain]
     public sealed partial class Custom
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void TransducerTestDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, NativeMethods.Drive* raw);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void TransducerTestDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, Drive* raw);
 
         private readonly TransducerTestDelegate _f;
 
@@ -20,9 +20,7 @@ namespace AUTD3Sharp.Gain
                 {
                     var dev = new Device(devIdx, geometryPtr);
                     var tr = new Transducer(trIdx, devIdx, dev.Ptr);
-                    var d = f(dev)(tr);
-                    raw->phase = d.Phase.Value;
-                    raw->intensity = d.Intensity.Value;
+                    *raw = f(dev)(tr);
                 };
             }
         }

@@ -1,5 +1,4 @@
 using System;
-using System.ComponentModel;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Derive;
@@ -9,6 +8,8 @@ using AUTD3Sharp.Derive;
 #endif
 
 #if UNITY_2018_3_OR_NEWER
+using System.ComponentModel;
+
 namespace System.Runtime.CompilerServices
 {
     [EditorBrowsable(EditorBrowsableState.Never)]
@@ -28,7 +29,7 @@ namespace AUTD3Sharp
 
     public interface ISilencer
     {
-        internal bool IsValid(IWithSampling c, bool strictMode, SilencerTarget target);
+        internal bool IsValid(IWithSampling c, bool strictMode);
         internal DatagramPtr RawPtr(bool strictMode, SilencerTarget target);
     }
 
@@ -37,11 +38,13 @@ namespace AUTD3Sharp
         public TimeSpan Intensity { get; init; }
         public TimeSpan Phase { get; init; }
 
-        bool ISilencer.IsValid(IWithSampling c, bool strictMode, SilencerTarget target)
-           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid(((ISilencer)this).RawPtr(strictMode, target), c.SamplingConfigIntensity().Inner, (c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
+        bool ISilencer.IsValid(IWithSampling c, bool strictMode)
+           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid((ulong)(Intensity.TotalMilliseconds * 1000 * 1000), (ulong)(Phase.TotalMilliseconds * 1000 * 1000), strictMode,
+               c.SamplingConfigIntensity(), c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)
+               );
 
         DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target)
-           => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(Intensity.TotalMilliseconds * 1000 * 1000), (ulong)(Phase.TotalMilliseconds * 1000 * 1000), strictMode, target.Into());
+           => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(Intensity.TotalMilliseconds * 1000 * 1000), (ulong)(Phase.TotalMilliseconds * 1000 * 1000), strictMode, target);
     }
 
     public readonly struct FixedUpdateRate : ISilencer
@@ -49,16 +52,17 @@ namespace AUTD3Sharp
         public ushort Intensity { get; init; }
         public ushort Phase { get; init; }
 
-        bool ISilencer.IsValid(IWithSampling c, bool strictMode, SilencerTarget target)
-           => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRateIsValid(((ISilencer)this).RawPtr(strictMode, target), c.SamplingConfigIntensity().Inner, (c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)).Inner);
-
-        DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(Intensity, Phase, target.Into());
+        bool ISilencer.IsValid(IWithSampling c, bool strictMode)
+            => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRateIsValid(Intensity, Phase,
+                c.SamplingConfigIntensity(), c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)
+            );
+        DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(Intensity, Phase, target);
     }
 
     [Builder]
     public sealed partial class Silencer : IDatagram
     {
-        private readonly ISilencer _silencer;
+        public ISilencer Inner { get; init; }
 
         [Property]
         public bool StrictMode { get; private set; }
@@ -68,7 +72,7 @@ namespace AUTD3Sharp
 
         public Silencer(ISilencer silencer)
         {
-            _silencer = silencer;
+            Inner = silencer;
             StrictMode = true;
             Target = SilencerTarget.Intensity;
         }
@@ -82,8 +86,8 @@ namespace AUTD3Sharp
 
         public static Silencer Disable() => new(new FixedCompletionTime { Intensity = TimeSpan.FromMilliseconds(25e-3), Phase = TimeSpan.FromMilliseconds(25e-3) });
 
-        public bool IsValid(IWithSampling target) => _silencer.IsValid(target, StrictMode, Target);
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => _silencer.RawPtr(StrictMode, Target);
+        public bool IsValid(IWithSampling target) => Inner.IsValid(target, StrictMode);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => Inner.RawPtr(StrictMode, Target);
     }
 }
 

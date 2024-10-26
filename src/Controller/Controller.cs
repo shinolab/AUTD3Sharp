@@ -73,7 +73,7 @@ namespace AUTD3Sharp
         {
             if (Ptr.Item1 == IntPtr.Zero) return;
             var future = NativeMethodsBase.AUTDControllerClose(Ptr);
-            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultI32(Handle, future));
+            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultStatus(Handle, future));
             Ptr.Item1 = IntPtr.Zero;
             NativeMethodsBase.AUTDDeleteRuntime(Runtime);
             Runtime.Item1 = IntPtr.Zero;
@@ -85,7 +85,7 @@ namespace AUTD3Sharp
         {
             if (Ptr.Item1 == IntPtr.Zero) return;
             var future = NativeMethodsBase.AUTDControllerClose(Ptr);
-            var result = NativeMethodsBase.AUTDWaitResultI32(Handle, future);
+            var result = NativeMethodsBase.AUTDWaitResultStatus(Handle, future);
             Ptr.Item1 = IntPtr.Zero;
             NativeMethodsBase.AUTDDeleteRuntime(Runtime);
             Runtime.Item1 = IntPtr.Zero;
@@ -145,7 +145,7 @@ namespace AUTD3Sharp
         where TD : IDatagram
         {
             var future = NativeMethodsBase.AUTDControllerSend(Ptr, d.Ptr(Geometry));
-            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultI32(Handle, future));
+            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultStatus(Handle, future));
             result.Validate();
         }
 
@@ -160,7 +160,7 @@ namespace AUTD3Sharp
         where TD : IDatagram
         {
             var future = NativeMethodsBase.AUTDControllerSend(Ptr, d.Ptr(Geometry));
-            var result = NativeMethodsBase.AUTDWaitResultI32(Handle, future);
+            var result = NativeMethodsBase.AUTDWaitResultStatus(Handle, future);
             result.Validate();
         }
 

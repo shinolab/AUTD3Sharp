@@ -70,7 +70,7 @@ public class DebugTest
         foreach (var dev in autd.Geometry)
         {
             Assert.Equal([0x60, 0x00, 0x00, 0x00], autd.Link.DebugTypes(dev.Idx));
-            Assert.Equal([(sysTime.SysTime / 25000) << 8, 0x0000, 0x0000, 0x0000], autd.Link.DebugValues(dev.Idx));
+            Assert.Equal([(sysTime.SysTime / 3125) << 5, 0x0000, 0x0000, 0x0000], autd.Link.DebugValues(dev.Idx));
         }
     }
 }

@@ -1,4 +1,5 @@
 using AUTD3Sharp.Driver;
+using AUTD3Sharp.Timer;
 
 namespace tests;
 
@@ -6,22 +7,45 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithReceiveInterval(TimeSpan.FromMilliseconds(1)).WithTimerResolution(1).OpenAsync(Audit.Builder());
+        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithReceiveInterval(TimeSpan.FromMilliseconds(1)).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithReceiveInterval(TimeSpan.FromMilliseconds(1)).WithTimerResolution(1).Open(Audit.Builder());
+        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithReceiveInterval(TimeSpan.FromMilliseconds(1)).Open(Audit.Builder());
     }
 
     [Fact]
-    public async Task TestOoenWithTimeout()
+    public void TestControllerIsDefault()
+    {
+        var builder = Controller.Builder([]);
+        Assert.True(
+            AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerBuilderIsDefault(
+                builder.FallbackParallelThreshold,
+                (ulong)builder.FallbackTimeout.TotalNanoseconds,
+                (ulong)builder.SendInterval.TotalNanoseconds,
+                (ulong)builder.ReceiveInterval.TotalNanoseconds,
+                builder.TimerStrategy
+            )
+        );
+    }
+
+    [Fact]
+    public async Task TestWithTimerStrategy()
+    {
+        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Std(new StdSleeper { })).OpenAsync(Audit.Builder());
+        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Spin(new SpinSleeper())).OpenAsync(Audit.Builder());
+        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Async(new AsyncSleeper { })).OpenAsync(Audit.Builder());
+    }
+
+    [Fact]
+    public async Task TestWithTimeout()
     {
         _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder(), TimeSpan.FromMilliseconds(200));
     }
 
     [Fact]
-    public void TestOoenWithTimeoutSync()
+    public void TestWithTimeoutSync()
     {
         _ = Controller.Builder([new AUTD3(Vector3.Zero)]).Open(Audit.Builder(), TimeSpan.FromMilliseconds(200));
     }
@@ -110,13 +134,13 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        Assert.Equal("v10.0.0", FirmwareVersion.LatestVersion);
+        Assert.Equal("v10.0.1", FirmwareVersion.LatestVersion);
 
         {
             foreach (var (info, i) in (await autd.FirmwareVersionAsync()).Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v10.0.0, FPGA = v10.0.0 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v10.0.0, FPGA = v10.0.0 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v10.0.1, FPGA = v10.0.1 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v10.0.1, FPGA = v10.0.1 [Emulator]");
             }
         }
 
@@ -133,7 +157,7 @@ public class AUTDTest
         var autd = CreateControllerSync();
 
         foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v10.0.0, FPGA = v10.0.0 [Emulator]");
+            Assert.Equal(info.Info, $"{i}: CPU = v10.0.1, FPGA = v10.0.1 [Emulator]");
 
         autd.Link.BreakDown();
         Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersion().Last());
@@ -177,45 +201,6 @@ public class AUTDTest
             autd.Link.BreakDown();
             Assert.Throws<AUTDException>(() => autd.Close());
         }
-    }
-
-    [Fact]
-    public void TestSendTimeout()
-    {
-        var autd = Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
-            .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
-        Assert.Equal(TimeSpan.FromMicroseconds(0), autd.Link.Timeout());
-        Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
-
-        autd.Send(new Null());
-        Assert.Equal(TimeSpan.FromMilliseconds(0), autd.Link.LastTimeout());
-
-        autd.Send(new Null().WithTimeout(TimeSpan.FromMicroseconds(1)));
-        Assert.Equal(TimeSpan.FromMicroseconds(1), autd.Link.LastTimeout());
-
-        autd.Send((new Null(), new Null()).WithTimeout(TimeSpan.FromMicroseconds(2)));
-        Assert.Equal(TimeSpan.FromMicroseconds(2), autd.Link.LastTimeout());
-    }
-
-    [Fact]
-    public void TestParallelThreshold()
-    {
-        var autd = Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)])
-            .WithParallelThreshold(0)
-            .Open(Audit.Builder().WithTimeout(TimeSpan.FromMicroseconds(0)));
-        Assert.Equal(0xFFFFFFFFFFFFFFFF, autd.Link.LastParallelThreshold());
-
-        autd.Send(new Null());
-        Assert.Equal(0ul, autd.Link.LastParallelThreshold());
-
-        autd.Send(new Static());
-        Assert.Equal(0xFFFFFFFFFFFFFFFF, autd.Link.LastParallelThreshold());
-
-        autd.Send(new Static().WithParallelThreshold(10));
-        Assert.Equal(10ul, autd.Link.LastParallelThreshold());
-
-        autd.Send((new Static(), new Static()).WithParallelThreshold(5));
-        Assert.Equal(5ul, autd.Link.LastParallelThreshold());
     }
 
     [Fact]

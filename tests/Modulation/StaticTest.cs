@@ -42,10 +42,7 @@ public class StaticTest
     [Fact]
     public void StaticDefault()
     {
-#pragma warning disable CS8602, CS8605
         var m = new Static();
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationStaticIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Static).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
-            [])));
-#pragma warning restore CS8602, CS8605
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationStaticIsDefault(m.Intensity));
     }
 }

@@ -7,6 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.Utils;
+using AUTD3Sharp.Link;
 
 
 namespace AUTD3Sharp.NativeMethods
@@ -20,33 +21,15 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDLinkSimulatorTracingInit();
 
+        [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorTracingInitWithFile", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultStatus AUTDLinkSimulatorTracingInitWithFile(byte* path);
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkSimulator", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultLinkSimulatorBuilder AUTDLinkSimulator(byte* addr);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkSimulatorBuilderPtr AUTDLinkSimulatorWithTimeout(LinkSimulatorBuilderPtr simulator, ulong timeout_ns);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkSimulatorIntoBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkBuilderPtr AUTDLinkSimulatorIntoBuilder(LinkSimulatorBuilderPtr simulator);
+        public static extern ResultSyncLinkBuilder AUTDLinkSimulator(byte* addr);
 
 
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkSimulatorBuilderPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultLinkSimulatorBuilder
-    {
-        public LinkSimulatorBuilderPtr result;
-        public uint err_len;
-        public ConstPtr err;
     }
 
 
 
 }
-    

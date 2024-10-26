@@ -7,6 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.Utils;
+using AUTD3Sharp.Link;
 
 
 namespace AUTD3Sharp.NativeMethods
@@ -17,57 +18,21 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
-        [DllImport(__DllName, EntryPoint = "AUTDAUTDLinkTwinCATTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDAUTDLinkTwinCATTracingInit();
+        [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCATTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern void AUTDLinkTwinCATTracingInit();
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCATTracingInitWithFile", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultStatus AUTDLinkTwinCATTracingInitWithFile(byte* path);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkTwinCATBuilderPtr AUTDLinkTwinCAT();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCATWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkTwinCATBuilderPtr AUTDLinkTwinCATWithTimeout(LinkTwinCATBuilderPtr twincat, ulong timeout_ns);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCATIntoBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkBuilderPtr AUTDLinkTwinCATIntoBuilder(LinkTwinCATBuilderPtr twincat);
+        public static extern LinkBuilderPtr AUTDLinkTwinCAT();
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteTwinCAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultLinkRemoteTwinCATBuilder AUTDLinkRemoteTwinCAT(byte* server_ams_net_id);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteTwinCATWithServerIP", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkRemoteTwinCATBuilderPtr AUTDLinkRemoteTwinCATWithServerIP(LinkRemoteTwinCATBuilderPtr twincat, byte* addr);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteTwinCATWithClientAmsNetId", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkRemoteTwinCATBuilderPtr AUTDLinkRemoteTwinCATWithClientAmsNetId(LinkRemoteTwinCATBuilderPtr twincat, byte* id);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteTwinCATWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkRemoteTwinCATBuilderPtr AUTDLinkRemoteTwinCATWithTimeout(LinkRemoteTwinCATBuilderPtr twincat, ulong timeout_ns);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteTwinCATIntoBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkBuilderPtr AUTDLinkRemoteTwinCATIntoBuilder(LinkRemoteTwinCATBuilderPtr twincat);
+        public static extern ResultLinkBuilder AUTDLinkRemoteTwinCAT(byte* server_ams_net_id, byte* server_ip, byte* client_ams_net_id);
 
 
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkTwinCATBuilderPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkRemoteTwinCATBuilderPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultLinkRemoteTwinCATBuilder
-    {
-        public LinkRemoteTwinCATBuilderPtr result;
-        public uint err_len;
-        public ConstPtr err;
     }
 
 
 
 }
-    

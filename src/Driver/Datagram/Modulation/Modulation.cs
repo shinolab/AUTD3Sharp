@@ -11,7 +11,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
     public interface IModulation : IWithSampling
     {
         public ModulationPtr ModulationPtr();
-        public NativeMethods.LoopBehavior LoopBehavior { get; }
+        public LoopBehavior LoopBehavior { get; }
         public SamplingConfig SamplingConfig { get; }
         SamplingConfig IWithSampling.SamplingConfigIntensity() => SamplingConfig;
         SamplingConfig? IWithSampling.SamplingConfigPhase() => null;

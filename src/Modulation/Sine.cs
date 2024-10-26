@@ -11,7 +11,7 @@ namespace AUTD3Sharp.Modulation
         private Sine(ISamplingMode mode)
         {
             Intensity = 0xFF;
-            Offset = 0xFF;
+            Offset = 0x80;
             Phase = 0 * rad;
             Clamp = false;
             Mode = mode;

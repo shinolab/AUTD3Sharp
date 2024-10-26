@@ -3,11 +3,12 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Driver.Datagram
 {
+
     [ComVisible(false)]
     public interface IDatagramS<TP>
     {
         public TP RawPtr(Geometry geometry);
-        public DatagramPtr IntoSegment(TP p, Segment segment, bool updateSegment);
+        public DatagramPtr IntoSegmentTransition(TP p, Segment segment, TransitionModeWrap? transitionMode);
     }
 
     public sealed class DatagramWithSegment<T, TP> : IDatagram
@@ -15,19 +16,15 @@ namespace AUTD3Sharp.Driver.Datagram
     {
         private readonly T _datagram;
         private readonly Segment _segment;
-        private readonly bool _updateSegment;
+        private readonly TransitionModeWrap? _transitionMode;
 
-        public DatagramWithSegment(T datagram, Segment segment, bool updateSegment)
+        public DatagramWithSegment(T datagram, Segment segment, TransitionModeWrap? transitionMode)
         {
             _datagram = datagram;
             _segment = segment;
-            _updateSegment = updateSegment;
+            _transitionMode = transitionMode;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry)
-        {
-            var rawPtr = _datagram.RawPtr(geometry);
-            return _datagram.IntoSegment(rawPtr, _segment, _updateSegment);
-        }
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => _datagram.IntoSegmentTransition(_datagram.RawPtr(geometry), _segment, _transitionMode);
     }
 }

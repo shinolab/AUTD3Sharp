@@ -16,28 +16,48 @@ public class SOEMTest()
     }
 
     [Fact, Trait("require", "soem")]
-    public async Task TestSOEM()
+    public void TestStatus()
     {
-        await Assert.ThrowsAsync<AUTDException>(async () => _ = await Controller.Builder([new AUTD3(Vector3.Zero)])
-             .OpenAsync(SOEM.Builder()
-                 .WithIfname("ifname")
-                 .WithBufSize(32)
-                 .WithSendCycle(2)
-                 .WithSync0Cycle(2)
-                 .WithErrHandler((slave, status, msg) => { })
-                 .WithTimerStrategy(TimerStrategy.Sleep)
-                 .WithSyncTolerance(TimeSpan.FromMilliseconds(1e-3))
-                 .WithSyncTimeout(TimeSpan.FromSeconds(10))
-                 .WithStateCheckInterval(TimeSpan.FromMilliseconds(100))
-                 .WithThreadPriority(AUTD3Sharp.Link.ThreadPriority.Max)
-                 .WithProcessPriority(ProcessPriority.High)
-                 .WithTimeout(TimeSpan.FromMilliseconds(200))));
+        var lost = Status.Lost;
+        var stateChanged = Status.StateChanged;
+        var error = Status.Error;
+
+        Assert.Equal(lost, Status.Lost);
+        Assert.NotEqual(lost, stateChanged);
+        Assert.NotEqual(lost, error);
+        Assert.Equal(stateChanged, Status.StateChanged);
+        Assert.NotEqual(stateChanged, lost);
+        Assert.NotEqual(stateChanged, error);
+        Assert.Equal(error, Status.Error);
+        Assert.NotEqual(error, lost);
+        Assert.NotEqual(error, stateChanged);
+
+        Assert.Equal("", lost.ToString());
+    }
+
+    [Fact, Trait("require", "soem")]
+    public void TestSOEM()
+    {
+        var builder = SOEM.Builder();
+        Assert.True(
+            AUTD3Sharp.NativeMethods.NativeMethodsLinkSOEM.AUTDLinkSOEMIsDefault(
+                builder.BufSize,
+                (ulong)builder.SendCycle.TotalNanoseconds,
+                (ulong)builder.Sync0Cycle.TotalNanoseconds,
+                builder.SyncMode,
+                builder.ProcessPriority,
+                builder.ThreadPriority,
+                (ulong)builder.StateCheckInterval.TotalNanoseconds,
+                builder.TimerStrategy,
+                (ulong)builder.SyncTolerance.TotalNanoseconds,
+                (ulong)builder.SyncTimeout.TotalNanoseconds
+            )
+        );
     }
 
     [Fact, Trait("require", "soem")]
     public void TestRemoteSOEM()
     {
-        _ = RemoteSOEM.Builder(new IPEndPoint(IPAddress.Parse("172.0.0.1"), 8080))
-            .WithTimeout(TimeSpan.FromMilliseconds(200));
+        _ = RemoteSOEM.Builder(new IPEndPoint(IPAddress.Parse("172.0.0.1"), 8080));
     }
 }

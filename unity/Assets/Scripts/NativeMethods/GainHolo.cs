@@ -7,6 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.Utils;
+using AUTD3Sharp.Link;
 
 
 namespace AUTD3Sharp.NativeMethods
@@ -37,7 +38,7 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGreedyIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDGainGreedyIsDefault(GainPtr greedy);
+        public static extern bool AUTDGainGreedyIsDefault(EmissionConstraintWrap constraint, byte phase_div);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainHoloGSSphere(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat_nonzero, EmissionConstraintWrap constraint);
@@ -47,7 +48,7 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGSIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDGainGSIsDefault(GainPtr gs);
+        public static extern bool AUTDGainGSIsDefault(EmissionConstraintWrap constraint, uint repeat);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloGSPATSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainHoloGSPATSphere(BackendPtr backend, Vector3* points, float* amps, uint size, uint repeat_nonzero, EmissionConstraintWrap constraint);
@@ -57,7 +58,7 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGSPATIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDGainGSPATIsDefault(GainPtr gs);
+        public static extern bool AUTDGainGSPATIsDefault(EmissionConstraintWrap constraint, uint repeat);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloSPLToPascal", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern float AUTDGainHoloSPLToPascal(float value);
@@ -73,7 +74,7 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDGainLMIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDGainLMIsDefault(GainPtr gs);
+        public static extern bool AUTDGainLMIsDefault(EmissionConstraintWrap constraint, float eps_1, float eps_2, float tau, uint k_max, float* initial_ptr, uint initial_len);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloNaiveSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern GainPtr AUTDGainHoloNaiveSphere(BackendPtr backend, Vector3* points, float* amps, uint size, EmissionConstraintWrap constraint);
@@ -83,7 +84,7 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDGainNaiveIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDGainNaiveIsDefault(GainPtr gs);
+        public static extern bool AUTDGainNaiveIsDefault(EmissionConstraintWrap constraint);
 
         [DllImport(__DllName, EntryPoint = "AUTDNalgebraBackendSphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern BackendPtr AUTDNalgebraBackendSphere();
@@ -126,14 +127,6 @@ namespace AUTD3Sharp.NativeMethods
         public IntPtr Item1;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultBackend
-    {
-        public BackendPtr result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
 
     public enum EmissionConstraintTag : byte
     {
@@ -145,4 +138,3 @@ namespace AUTD3Sharp.NativeMethods
 
 
 }
-    

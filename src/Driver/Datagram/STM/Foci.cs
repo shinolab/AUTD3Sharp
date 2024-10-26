@@ -13,7 +13,7 @@ namespace AUTD3Sharp
 {
     internal interface IControlPointsArray
     {
-        internal FociSTMPtr Ptr(NativeMethods.SamplingConfig config);
+        internal FociSTMPtr Ptr(SamplingConfig config, LoopBehavior loopBehavior);
         internal byte N();
         internal int Length();
     }
@@ -25,11 +25,11 @@ namespace AUTD3Sharp
         {
             _points = points;
         }
-        FociSTMPtr IControlPointsArray.Ptr(NativeMethods.SamplingConfig config)
+        FociSTMPtr IControlPointsArray.Ptr(SamplingConfig config, LoopBehavior loopBehavior)
         {
             unsafe
             {
-                fixed (ControlPoints1* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 1).Validate();
+                fixed (ControlPoints1* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 1, loopBehavior).Validate();
             }
         }
         byte IControlPointsArray.N() => 1;
@@ -43,11 +43,11 @@ namespace AUTD3Sharp
         {
             _points = points;
         }
-        FociSTMPtr IControlPointsArray.Ptr(NativeMethods.SamplingConfig config)
+        FociSTMPtr IControlPointsArray.Ptr(SamplingConfig config, LoopBehavior loopBehavior)
         {
             unsafe
             {
-                fixed (ControlPoints2* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 2).Validate();
+                fixed (ControlPoints2* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 2, loopBehavior).Validate();
             }
         }
         byte IControlPointsArray.N() => 2;
@@ -61,11 +61,11 @@ namespace AUTD3Sharp
         {
             _points = points;
         }
-        FociSTMPtr IControlPointsArray.Ptr(NativeMethods.SamplingConfig config)
+        FociSTMPtr IControlPointsArray.Ptr(SamplingConfig config, LoopBehavior loopBehavior)
         {
             unsafe
             {
-                fixed (ControlPoints3* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 3).Validate();
+                fixed (ControlPoints3* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 3, loopBehavior).Validate();
             }
         }
         byte IControlPointsArray.N() => 3;
@@ -79,11 +79,11 @@ namespace AUTD3Sharp
         {
             _points = points;
         }
-        FociSTMPtr IControlPointsArray.Ptr(NativeMethods.SamplingConfig config)
+        FociSTMPtr IControlPointsArray.Ptr(SamplingConfig config, LoopBehavior loopBehavior)
         {
             unsafe
             {
-                fixed (ControlPoints4* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 4).Validate();
+                fixed (ControlPoints4* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 4, loopBehavior).Validate();
             }
         }
         byte IControlPointsArray.N() => 4;
@@ -97,11 +97,11 @@ namespace AUTD3Sharp
         {
             _points = points;
         }
-        FociSTMPtr IControlPointsArray.Ptr(NativeMethods.SamplingConfig config)
+        FociSTMPtr IControlPointsArray.Ptr(SamplingConfig config, LoopBehavior loopBehavior)
         {
             unsafe
             {
-                fixed (ControlPoints5* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 5).Validate();
+                fixed (ControlPoints5* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 5, loopBehavior).Validate();
             }
         }
         byte IControlPointsArray.N() => 5;
@@ -115,11 +115,11 @@ namespace AUTD3Sharp
         {
             _points = points;
         }
-        FociSTMPtr IControlPointsArray.Ptr(NativeMethods.SamplingConfig config)
+        FociSTMPtr IControlPointsArray.Ptr(SamplingConfig config, LoopBehavior loopBehavior)
         {
             unsafe
             {
-                fixed (ControlPoints6* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 6).Validate();
+                fixed (ControlPoints6* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 6, loopBehavior).Validate();
             }
         }
         byte IControlPointsArray.N() => 6;
@@ -133,11 +133,11 @@ namespace AUTD3Sharp
         {
             _points = points;
         }
-        FociSTMPtr IControlPointsArray.Ptr(NativeMethods.SamplingConfig config)
+        FociSTMPtr IControlPointsArray.Ptr(SamplingConfig config, LoopBehavior loopBehavior)
         {
             unsafe
             {
-                fixed (ControlPoints7* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 7).Validate();
+                fixed (ControlPoints7* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 7, loopBehavior).Validate();
             }
         }
         byte IControlPointsArray.N() => 7;
@@ -151,24 +151,24 @@ namespace AUTD3Sharp
         {
             _points = points;
         }
-        FociSTMPtr IControlPointsArray.Ptr(NativeMethods.SamplingConfig config)
+        FociSTMPtr IControlPointsArray.Ptr(SamplingConfig config, LoopBehavior loopBehavior)
         {
             unsafe
             {
-                fixed (ControlPoints8* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 8).Validate();
+                fixed (ControlPoints8* pp = &_points[0]) return NativeMethodsBase.AUTDSTMFoci(config, new ConstPtr { Item1 = (IntPtr)pp }, (ushort)_points.Length, 8, loopBehavior).Validate();
             }
         }
         byte IControlPointsArray.N() => 8;
         int IControlPointsArray.Length() => _points.Length;
     }
 
-    public sealed class FociSTM : IDatagramST<FociSTMPtr>, IDatagram, IWithSampling
+    public sealed class FociSTM : IDatagramS<FociSTMPtr>, IDatagram, IWithSampling
     {
         private readonly STMSamplingConfig _config;
 
         private readonly IControlPointsArray _points;
 
-        public NativeMethods.LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
+        public LoopBehavior LoopBehavior { get; private set; } = AUTD3Sharp.LoopBehavior.Infinite;
 
         public FociSTM(STMSamplingConfig config, IEnumerable<ControlPoints1> points)
         {
@@ -290,24 +290,18 @@ namespace AUTD3Sharp
 
         public DatagramPtr Ptr(Geometry geometry) => NativeMethodsBase.AUTDSTMFociIntoDatagram(RawPtr(geometry), _points.N());
 
-        public FociSTM WithLoopBehavior(NativeMethods.LoopBehavior loopBehavior)
+        public FociSTM WithLoopBehavior(LoopBehavior loopBehavior)
         {
             LoopBehavior = loopBehavior;
             return this;
         }
 
         public DatagramPtr IntoSegmentTransition(FociSTMPtr p, Segment segment, TransitionModeWrap? transitionMode) =>
-        transitionMode.HasValue
-            ? NativeMethodsBase.AUTDSTMFociIntoDatagramWithSegmentTransition(p, _points.N(), segment, transitionMode.Value)
-            : NativeMethodsBase.AUTDSTMFociIntoDatagramWithSegment(p, _points.N(), segment);
+            NativeMethodsBase.AUTDSTMFociIntoDatagramWithSegment(p, _points.N(), segment, transitionMode ?? TransitionMode.None);
 
-        public FociSTMPtr RawPtr(Geometry geometry)
-        {
-            var ptr = _points.Ptr(_config.SamplingConfig(_points.Length()));
-            return NativeMethodsBase.AUTDSTMFociWithLoopBehavior(ptr, _points.N(), LoopBehavior);
-        }
+        public FociSTMPtr RawPtr(Geometry geometry) => _points.Ptr(_config.SamplingConfig(_points.Length()), LoopBehavior);
 
-        public DatagramWithSegmentTransition<FociSTM, FociSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
+        public DatagramWithSegment<FociSTM, FociSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
 
         public Freq<float> Freq => _config.Freq(_points.Length());
         public TimeSpan Period => _config.Period(_points.Length());
