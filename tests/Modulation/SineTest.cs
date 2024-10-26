@@ -8,16 +8,16 @@ public class SineTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
-            var m = new Sine(150 * Hz).WithIntensity(0xFF / 2).WithOffset(0xFF / 2).WithPhase(MathF.PI / 2.0f * rad);
+            var m = new Sine(150 * Hz).WithIntensity(0x80).WithOffset(0x40).WithPhase(MathF.PI / 2.0f * rad);
             Assert.Equal(150.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
-                var modExpect = new byte[] {127, 125, 120, 112, 101, 88, 73, 59, 44, 30, 19, 9, 3, 0, 1, 5, 12, 22, 35, 49, 64, 78, 92,  105, 115, 122, 126,
-                    127, 124, 118, 108, 97,  83, 68, 54, 39, 26, 15, 7, 2, 0, 2, 7, 15, 26, 39, 54, 68, 83, 97,  108, 118, 124, 127,
-                    126, 122, 115, 105, 92,  78, 64, 49, 35, 22, 12, 5, 1, 0, 3, 9, 19, 30, 44, 59, 73, 88, 101, 112, 120, 125};
+                var modExpect = new byte[] {128, 126, 121, 112, 101, 88, 74, 58, 44, 30, 18, 9, 3, 0, 0, 4, 12, 22, 34, 49, 64, 78, 93,  105, 115, 123, 127,
+                    127, 124, 118, 109, 97,  83, 69, 53, 39, 26, 15, 6, 1, 0, 1, 6, 15, 26, 39, 53, 69, 83, 97,  109, 118, 124, 127,
+                    127, 123, 115, 105, 93,  78, 64, 49, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 44, 58, 74, 88, 101, 112, 121, 126};
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
@@ -42,16 +42,16 @@ public class SineTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         {
-            var m = new Sine(150.0f * Hz).WithIntensity(0xFF / 2).WithOffset(0xFF / 2).WithPhase(MathF.PI / 2.0f * rad);
+            var m = new Sine(150.0f * Hz).WithIntensity(0x80).WithOffset(0x40).WithPhase(MathF.PI / 2.0f * rad);
             Assert.Equal(150.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd.Geometry)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
-                var modExpect = new byte[] {127, 125, 120, 112, 101, 88, 73, 59, 44, 30, 19, 9, 3, 0, 1, 5, 12, 22, 35, 49, 64, 78, 92,  105, 115, 122, 126,
-                    127, 124, 118, 108, 97,  83, 68, 54, 39, 26, 15, 7, 2, 0, 2, 7, 15, 26, 39, 54, 68, 83, 97,  108, 118, 124, 127,
-                    126, 122, 115, 105, 92,  78, 64, 49, 35, 22, 12, 5, 1, 0, 3, 9, 19, 30, 44, 59, 73, 88, 101, 112, 120, 125};
+                var modExpect = new byte[] {128, 126, 121, 112, 101, 88, 74, 58, 44, 30, 18, 9, 3, 0, 0, 4, 12, 22, 34, 49, 64, 78, 93,  105, 115, 123, 127,
+                    127, 124, 118, 109, 97,  83, 69, 53, 39, 26, 15, 6, 1, 0, 1, 6, 15, 26, 39, 53, 69, 83, 97,  109, 118, 124, 127,
+                    127, 123, 115, 105, 93,  78, 64, 49, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 44, 58, 74, 88, 101, 112, 121, 126};
                 Assert.Equal(modExpect, mod);
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
@@ -82,10 +82,7 @@ public class SineTest
     [Fact]
     public void SineDefault()
     {
-#pragma warning disable CS8602, CS8605
         var m = new Sine(0.0f * Hz);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSineIsDefault((AUTD3Sharp.NativeMethods.ModulationPtr)typeof(Sine).GetMethod("ModulationPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(m,
-            [])));
-#pragma warning restore CS8602, CS8605
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSineIsDefault(m.SamplingConfig, m.Intensity, m.Offset, m.Phase.Radian, m.Clamp, m.LoopBehavior));
     }
 }

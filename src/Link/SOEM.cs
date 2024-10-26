@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Net;
 using System.Runtime.InteropServices;
@@ -41,7 +42,7 @@ namespace AUTD3Sharp.Link
         public TimeSpan SyncTolerance { get; private set; } = TimeSpan.FromMilliseconds(0.001);
 
         [Property]
-        public TimeSpan SyncTimeout { get; private set; } = TimeSpan.FromMilliseconds(10);
+        public TimeSpan SyncTimeout { get; private set; } = TimeSpan.FromSeconds(10);
 
         [Property]
         public TimeSpan StateCheckInterval { get; private set; } = TimeSpan.FromMilliseconds(100);
@@ -78,22 +79,22 @@ namespace AUTD3Sharp.Link
             var ifnameBytes = System.Text.Encoding.UTF8.GetBytes(Ifname);
             unsafe
             {
-                fixed (byte* ifnamePtr = &ifnameBytes[0])
+                fixed (byte* ifnamePtr = ifnameBytes)
                 {
                     return NativeMethodsLinkSOEM.AUTDLinkSOEM(
                         ifnamePtr,
                         BufSize,
-                        (ulong)SendCycle.TotalMilliseconds * 1000 * 1000,
-                        (ulong)Sync0Cycle.TotalMilliseconds * 1000 * 1000,
+                        (ulong)(SendCycle.TotalMilliseconds * 1000 * 1000),
+                        (ulong)(Sync0Cycle.TotalMilliseconds * 1000 * 1000),
                         new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_errHandler) },
                         new ConstPtr { Item1 = IntPtr.Zero },
                         SyncMode,
                         ProcessPriority,
                         ThreadPriority,
-                        (ulong)StateCheckInterval.TotalMilliseconds * 1000 * 1000,
+                        (ulong)(StateCheckInterval.TotalMilliseconds * 1000 * 1000),
                         TimerStrategy,
-                        (ulong)SyncTolerance.TotalMilliseconds * 1000 * 1000,
-                        (ulong)SyncTimeout.TotalMilliseconds * 1000 * 1000
+                        (ulong)(SyncTolerance.TotalMilliseconds * 1000 * 1000),
+                        (ulong)(SyncTimeout.TotalMilliseconds * 1000 * 1000)
                     ).Validate();
                 }
             }
@@ -225,12 +226,12 @@ namespace AUTD3Sharp.Link
         public static Status StateChanged => new Status(NativeMethods.Status.StateChanged, "");
         public static Status Error => new Status(NativeMethods.Status.Error, "");
 
-
         public override string ToString()
         {
             return _msg;
         }
 
+        [ExcludeFromCodeCoverage]
         public bool Equals(Status? other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -238,6 +239,7 @@ namespace AUTD3Sharp.Link
             return _inner == other._inner;
         }
 
+        [ExcludeFromCodeCoverage]
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -246,6 +248,7 @@ namespace AUTD3Sharp.Link
             return Equals((Status)obj);
         }
 
+        [ExcludeFromCodeCoverage]
         public override int GetHashCode()
         {
             return HashCode.Combine((int)_inner);

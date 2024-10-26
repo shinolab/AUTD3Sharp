@@ -21,13 +21,9 @@ public class FocusTest
     }
 
     [Fact]
-    public async Task FocusDefault()
+    public void FocusDefault()
     {
-#pragma warning disable CS8602, CS8605
-        var autd = await AUTDTest.CreateController();
         var g = new Focus(Vector3.Zero);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainFocusIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(Focus).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g,
-            [autd.Geometry])));
-#pragma warning restore CS8602, CS8605
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainFocusIsDefault(g.Intensity.Value, g.PhaseOffset.Value));
     }
 }

@@ -45,8 +45,8 @@ namespace AUTD3Sharp.Link
         public RemoteTwinCATBuilder(string serverAmsNetId)
         {
             ServerAmsNetId = serverAmsNetId;
-            ServerIp = "";
-            ClientAmsNetId = "";
+            ServerIp = string.Empty;
+            ClientAmsNetId = string.Empty;
         }
 
         LinkBuilderPtr ILinkBuilder<RemoteTwinCAT>.Ptr()
@@ -57,8 +57,8 @@ namespace AUTD3Sharp.Link
             unsafe
             {
                 fixed (byte* sp = &serverAmsNetIdBytes[0])
-                fixed (byte* ip = &serverIpBytes[0])
-                fixed (byte* cp = &clientAmsNetIdBytes[0])
+                fixed (byte* ip = serverIpBytes)
+                fixed (byte* cp = clientAmsNetIdBytes)
                     return NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCAT(sp, ip, cp).Validate();
             }
         }

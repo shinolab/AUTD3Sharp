@@ -50,9 +50,9 @@ namespace AUTD3Sharp
                 {
                     return NativeMethodsBase.AUTDControllerBuilder(pp, rp, (ushort)pos.Length,
                         FallbackParallelThreshold,
-                        (ulong)FallbackTimeout.TotalMilliseconds * 1000 * 1000,
-                        (ulong)SendInterval.TotalMilliseconds * 1000 * 1000,
-                        (ulong)ReceiveInterval.TotalMilliseconds * 1000 * 1000,
+                        (ulong)(FallbackTimeout.TotalMilliseconds * 1000 * 1000),
+                        (ulong)(SendInterval.TotalMilliseconds * 1000 * 1000),
+                        (ulong)(ReceiveInterval.TotalMilliseconds * 1000 * 1000),
                         TimerStrategy
                         );
                 }

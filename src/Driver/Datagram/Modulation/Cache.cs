@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
@@ -21,6 +22,7 @@ namespace AUTD3Sharp.Driver.Datagram.Modulation
             _loopBehavior = m.LoopBehavior;
         }
 
+        [ExcludeFromCodeCoverage]
         ~Cache()
         {
             if (!_ptr.HasValue) return;

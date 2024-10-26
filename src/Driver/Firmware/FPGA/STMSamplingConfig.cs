@@ -31,14 +31,12 @@ namespace AUTD3Sharp
         {
             _tag = STMSamplingConfigTag.Freq;
             _f = f;
-            _config = new SamplingConfig(0);
         }
 
         private STMSamplingConfig(TimeSpan period)
         {
             _tag = STMSamplingConfigTag.Period;
             _period = period;
-            _config = new SamplingConfig(0);
         }
 
         private STMSamplingConfig(SamplingConfig config)

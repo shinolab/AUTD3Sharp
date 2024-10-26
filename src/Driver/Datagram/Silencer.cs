@@ -39,7 +39,7 @@ namespace AUTD3Sharp
         public TimeSpan Phase { get; init; }
 
         bool ISilencer.IsValid(IWithSampling c, bool strictMode)
-           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid((ulong)Intensity.TotalMilliseconds * 1000 * 1000, (ulong)Phase.TotalMilliseconds * 1000 * 1000, strictMode,
+           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid((ulong)(Intensity.TotalMilliseconds * 1000 * 1000), (ulong)(Phase.TotalMilliseconds * 1000 * 1000), strictMode,
                c.SamplingConfigIntensity(), c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)
                );
 
@@ -62,7 +62,7 @@ namespace AUTD3Sharp
     [Builder]
     public sealed partial class Silencer : IDatagram
     {
-        private readonly ISilencer _silencer;
+        public ISilencer Inner { get; init; }
 
         [Property]
         public bool StrictMode { get; private set; }
@@ -72,7 +72,7 @@ namespace AUTD3Sharp
 
         public Silencer(ISilencer silencer)
         {
-            _silencer = silencer;
+            Inner = silencer;
             StrictMode = true;
             Target = SilencerTarget.Intensity;
         }
@@ -86,8 +86,8 @@ namespace AUTD3Sharp
 
         public static Silencer Disable() => new(new FixedCompletionTime { Intensity = TimeSpan.FromMilliseconds(25e-3), Phase = TimeSpan.FromMilliseconds(25e-3) });
 
-        public bool IsValid(IWithSampling target) => _silencer.IsValid(target, StrictMode);
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => _silencer.RawPtr(StrictMode, Target);
+        public bool IsValid(IWithSampling target) => Inner.IsValid(target, StrictMode);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => Inner.RawPtr(StrictMode, Target);
     }
 }
 

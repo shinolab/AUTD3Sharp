@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -20,6 +21,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
             _ptr = null;
         }
 
+        [ExcludeFromCodeCoverage]
         ~Cache()
         {
             if (!_ptr.HasValue) return;

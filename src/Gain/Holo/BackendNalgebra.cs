@@ -59,17 +59,9 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                if (initial.Length == 0)
-                {
-                    fixed (Vector3* pf = &foci[0])
-                    fixed (Amplitude* pa = &amps[0])
-                    {
-                        return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, (float*)IntPtr.Zero, 0u, constraint);
-                    }
-                }
                 fixed (Vector3* pf = &foci[0])
                 fixed (Amplitude* pa = &amps[0])
-                fixed (float* pInitial = &initial[0])
+                fixed (float* pInitial = initial)
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, pInitial, (uint)initial.Length, constraint);
                 }

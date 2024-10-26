@@ -10,6 +10,6 @@ namespace AUTD3Sharp
         public static TransitionModeWrap Ext = NativeMethodsBase.AUTDTransitionModeExt();
         public static TransitionModeWrap Immediate = NativeMethodsBase.AUTDTransitionModeImmediate();
 
-        internal static TransitionModeWrap None = NativeMethodsBase.AUTDTransitionModeNone();
+        public static TransitionModeWrap None = NativeMethodsBase.AUTDTransitionModeNone();
     }
 }

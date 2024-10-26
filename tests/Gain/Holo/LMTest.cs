@@ -34,14 +34,20 @@ public class LMTest
     }
 
     [Fact]
-    public async Task LMDefault()
+    public void LMDefault()
     {
-#pragma warning disable CS8602, CS8605
-        var autd = await AUTDTest.CreateController();
         var backend = new NalgebraBackend();
-        var g = new LM(backend, [(autd.Geometry.Center, 5e3f * Pa), (autd.Geometry.Center, 5e3f * Pa)]);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainLMIsDefault((AUTD3Sharp.NativeMethods.GainPtr)typeof(LM).GetMethod("GainPtr", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Invoke(g,
-            [autd.Geometry])));
-#pragma warning restore CS8602, CS8605
+        var g = new LM(backend, [(Vector3.Zero, 5e3f * Pa), (Vector3.Zero, 5e3f * Pa)]);
+        var initial = g.Initial;
+        unsafe
+        {
+            fixed (float* p = initial)
+                Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainLMIsDefault(
+                    g.Constraint, g.Eps1, g.Eps2, g.Tau, g.KMax,
+        p, (uint)initial.Length
+                ));
+
+        }
+
     }
 }

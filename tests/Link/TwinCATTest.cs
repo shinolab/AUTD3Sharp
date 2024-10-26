@@ -14,7 +14,7 @@ public class TwinCATTest
     public void TestRemoteTwinCAT()
     {
         _ = RemoteTwinCAT.Builder("xxx.Xxx.Xxx.Xxx.Xxx.Xxx")
-            .WithServerIp(IPAddress.Parse("127.0.0.1"))
+            .WithServerIp("127.0.0.1")
             .WithClientAmsNetId("xxx.Xxx.Xxx.Xxx.Xxx.Xxx");
     }
 }

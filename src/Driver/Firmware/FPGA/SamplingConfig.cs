@@ -8,7 +8,7 @@ namespace AUTD3Sharp
     [StructLayout(LayoutKind.Sequential)]
     public struct SamplingConfig
     {
-        internal ushort Division;
+        public ushort Division { get; init; }
 
         internal SamplingConfig(SamplingConfig config)
         {
