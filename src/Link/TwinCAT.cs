@@ -1,6 +1,7 @@
 using AUTD3Sharp.NativeMethods;
 using System;
 using System.Net;
+using AUTD3Sharp.Derive;
 using AUTD3Sharp.Driver;
 
 namespace AUTD3Sharp.Link
@@ -9,22 +10,13 @@ namespace AUTD3Sharp.Link
     {
         public sealed class TwinCATBuilder : ILinkBuilder<TwinCAT>
         {
-            private LinkTwinCATBuilderPtr _ptr;
-
             internal TwinCATBuilder()
             {
-                _ptr = NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT();
-            }
-
-            public TwinCATBuilder WithTimeout(TimeSpan timeout)
-            {
-                _ptr = NativeMethodsLinkTwinCAT.AUTDLinkTwinCATWithTimeout(_ptr, (ulong)(timeout.TotalMilliseconds * 1000 * 1000));
-                return this;
             }
 
             LinkBuilderPtr ILinkBuilder<TwinCAT>.Ptr()
             {
-                return NativeMethodsLinkTwinCAT.AUTDLinkTwinCATIntoBuilder(_ptr);
+                return NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT();
             }
 
             TwinCAT ILinkBuilder<TwinCAT>.ResolveLink(RuntimePtr _, LinkPtr ptr)
@@ -39,64 +31,46 @@ namespace AUTD3Sharp.Link
         }
     }
 
-    public sealed class RemoteTwinCAT
+    [Builder]
+    public sealed partial class RemoteTwinCATBuilder : ILinkBuilder<RemoteTwinCAT>
     {
-        public sealed class RemoteTwinCATBuilder : ILinkBuilder<RemoteTwinCAT>
+        public string ServerAmsNetId { get; }
+
+        [Property]
+        public string ServerIp { get; private set; }
+
+        [Property]
+        public string ClientAmsNetId { get; private set; }
+
+        public RemoteTwinCATBuilder(string serverAmsNetId)
         {
-            private LinkRemoteTwinCATBuilderPtr _ptr;
+            ServerAmsNetId = serverAmsNetId;
+            ServerIp = "";
+            ClientAmsNetId = "";
+        }
 
-            public RemoteTwinCATBuilder(string serverAmsNetId)
+        LinkBuilderPtr ILinkBuilder<RemoteTwinCAT>.Ptr()
+        {
+            var serverAmsNetIdBytes = System.Text.Encoding.UTF8.GetBytes(ServerAmsNetId);
+            var serverIpBytes = System.Text.Encoding.UTF8.GetBytes(ServerIp);
+            var clientAmsNetIdBytes = System.Text.Encoding.UTF8.GetBytes(ClientAmsNetId);
+            unsafe
             {
-                var serverAmsNetIdBytes = System.Text.Encoding.UTF8.GetBytes(serverAmsNetId);
-                unsafe
-                {
-                    fixed (byte* ap = &serverAmsNetIdBytes[0])
-                    {
-                        _ptr = NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCAT(ap).Validate();
-                    }
-                }
-            }
-
-            public RemoteTwinCATBuilder WithServerIp(IPAddress serverIp)
-            {
-                var serverIpBytes = serverIp.GetAddressBytes();
-                unsafe
-                {
-                    fixed (byte* ap = &serverIpBytes[0])
-                        _ptr = NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCATWithServerIP(_ptr, ap);
-                }
-
-                return this;
-            }
-
-            public RemoteTwinCATBuilder WithClientAmsNetId(string clientAmsNetId)
-            {
-                var clientAmsNetIdBytes = System.Text.Encoding.UTF8.GetBytes(clientAmsNetId);
-                unsafe
-                {
-                    fixed (byte* ap = &clientAmsNetIdBytes[0])
-                        _ptr = NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCATWithClientAmsNetId(_ptr, ap);
-                }
-                return this;
-            }
-
-            public RemoteTwinCATBuilder WithTimeout(TimeSpan timeout)
-            {
-                _ptr = NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCATWithTimeout(_ptr, (ulong)(timeout.TotalMilliseconds * 1000 * 1000));
-                return this;
-            }
-
-            LinkBuilderPtr ILinkBuilder<RemoteTwinCAT>.Ptr()
-            {
-                return NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCATIntoBuilder(_ptr);
-            }
-
-            RemoteTwinCAT ILinkBuilder<RemoteTwinCAT>.ResolveLink(RuntimePtr _, LinkPtr ptr)
-            {
-                return new RemoteTwinCAT();
+                fixed (byte* sp = &serverAmsNetIdBytes[0])
+                fixed (byte* ip = &serverIpBytes[0])
+                fixed (byte* cp = &clientAmsNetIdBytes[0])
+                    return NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCAT(sp, ip, cp).Validate();
             }
         }
 
+        RemoteTwinCAT ILinkBuilder<RemoteTwinCAT>.ResolveLink(RuntimePtr _, LinkPtr ptr)
+        {
+            return new RemoteTwinCAT();
+        }
+    }
+
+    public sealed class RemoteTwinCAT
+    {
         public static RemoteTwinCATBuilder Builder(string serverAmsNetId)
         {
             return new RemoteTwinCATBuilder(serverAmsNetId);

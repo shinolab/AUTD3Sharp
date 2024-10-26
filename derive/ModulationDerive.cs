@@ -25,25 +25,7 @@ public partial class ModulationDeriveGenerator : IIncrementalGenerator
         var namedArguments = attribute.NamedArguments;
         var configNoChange = namedArguments.Any(arg => arg.Key == "ConfigNoChange" && (bool)(arg.Value.Value ?? false));
 
-        var isCustom = typeSymbol.GetMembers("Calc").Length != 0;
-
         var ns = typeSymbol.ContainingNamespace.IsGlobalNamespace ? "" : $"namespace {typeSymbol.ContainingNamespace}";
-
-        var customCode = isCustom ?
-            $$"""
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private ModulationPtr ModulationPtr()
-        {
-            var data = Calc();
-            unsafe
-            {
-                fixed (byte* ptr = &data[0])
-                    return NativeMethodsBase.AUTDModulationCustom((AUTD3Sharp.NativeMethods.SamplingConfig)_config, LoopBehavior, (byte*)ptr, (ushort)data.Length);
-            }
-        }
-
-""" : "";
 
         var cacheCode = $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}> WithCache() => new AUTD3Sharp.Driver.Datagram.Modulation.Cache<{typeName}>(this);";
         var radiationPressureCode = $"        [MethodImpl(MethodImplOptions.AggressiveInlining)][ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}> WithRadiationPressure() => new AUTD3Sharp.Driver.Datagram.Modulation.RadiationPressure<{typeName}>(this);";
@@ -84,19 +66,19 @@ using AUTD3Sharp.Driver.Datagram.Modulation;
 using AUTD3Sharp.NativeMethods;
 
 {{nsBegin}}
-    partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagramST<ModulationPtr>, IDatagram
+    partial class {{typeName}} : AUTD3Sharp.Driver.Datagram.Modulation.IModulation, IDatagramS<ModulationPtr>, IDatagram
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
     
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] 
-        DatagramPtr IDatagramST<ModulationPtr>.IntoSegmentTransition(ModulationPtr p, Segment segment, TransitionModeWrap? transitionMode) 
-        => transitionMode.HasValue ? NativeMethodsBase.AUTDModulationIntoDatagramWithSegmentTransition(p, segment, transitionMode.Value) : NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(p, segment);
+        DatagramPtr IDatagramS<ModulationPtr>.IntoSegmentTransition(ModulationPtr p, Segment segment, TransitionModeWrap? transitionMode) 
+        => NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(p, segment, transitionMode ?? TransitionMode.None);
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage]
-        ModulationPtr IDatagramST<ModulationPtr>.RawPtr(Geometry geometry) => ModulationPtr();
+        ModulationPtr IDatagramS<ModulationPtr>.RawPtr(Geometry geometry) => ModulationPtr();
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage]
@@ -104,26 +86,25 @@ using AUTD3Sharp.NativeMethods;
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage]
-        public DatagramWithSegmentTransition<{{typeName}}, ModulationPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new DatagramWithSegmentTransition<{{typeName}}, ModulationPtr>(this, segment, transitionMode);
+        public DatagramWithSegment<{{typeName}}, ModulationPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new DatagramWithSegment<{{typeName}}, ModulationPtr>(this, segment, transitionMode);
         
         [ExcludeFromCodeCoverage]
         public AUTD3Sharp.SamplingConfig SamplingConfig => new(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
 
         private AUTD3Sharp.SamplingConfig _config = new(10);
 
-        public AUTD3Sharp.NativeMethods.LoopBehavior LoopBehavior => _loopBehavior;
+        public AUTD3Sharp.LoopBehavior LoopBehavior => _loopBehavior;
 
-        private AUTD3Sharp.NativeMethods.LoopBehavior _loopBehavior = AUTD3Sharp.LoopBehavior.Infinite;
+        private AUTD3Sharp.LoopBehavior _loopBehavior = AUTD3Sharp.LoopBehavior.Infinite;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage]
-        public {{typeName}} WithLoopBehavior(AUTD3Sharp.NativeMethods.LoopBehavior loopBehavior)
+        public {{typeName}} WithLoopBehavior(AUTD3Sharp.LoopBehavior loopBehavior)
         {
             _loopBehavior = loopBehavior;
             return this;
         }
 
-{{customCode}}
 {{cacheCode}}
 {{configCode}}
 {{radiationPressureCode}}

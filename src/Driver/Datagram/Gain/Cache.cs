@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Derive;
 
@@ -15,7 +12,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
     where TG : IGain
     {
         private readonly TG _g;
-        private GainPtr? _ptr;
+        private GainCachePtr? _ptr;
 
         public Cache(TG g)
         {
@@ -32,8 +29,7 @@ namespace AUTD3Sharp.Driver.Datagram.Gain
 
         private GainPtr GainPtr(Geometry geometry)
         {
-            if (!_ptr.HasValue)
-                _ptr = NativeMethodsBase.AUTDGainCache(_g.GainPtr(geometry));
+            _ptr ??= NativeMethodsBase.AUTDGainCache(_g.GainPtr(geometry));
             return NativeMethodsBase.AUTDGainCacheClone(_ptr.Value);
         }
     }

@@ -1,3 +1,6 @@
 [submodule "tools/wrapper-generator/capi"]
 	path = tools/wrapper-generator/capi
 	url = https://github.com/shinolab/autd3-capi
+[submodule "tools/wrapper-generator/autd3"]
+	path = tools/wrapper-generator/autd3
+	url = https://github.com/shinolab/autd3-rs.git

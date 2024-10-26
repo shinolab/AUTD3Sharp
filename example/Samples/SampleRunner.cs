@@ -17,7 +17,6 @@ public class SampleRunner
             (FociSTMTest.Test, "FociSTM test"),
             (GainSTMTest.Test, "GainSTM test"),
             (GainHoloTest.Test, "Multiple foci test"),
-            (UserDefinedTest.Test, "User-defined Gain & Modulation test"),
             (FlagTest.Test, "Flag test"),
             (CustomGain.Test, "Custom gain test"),
             (GroupByTransducerTest.Test, "Group (by Transducer) test")

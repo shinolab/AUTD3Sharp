@@ -23,26 +23,16 @@ public class SimpleAUTDController : MonoBehaviour
         {
             _autd = Controller.Builder(new[] { new AUTD3(gameObject.transform.position).WithRotation(gameObject.transform.rotation) })
                 .Open(SOEM.Builder()
-                    .WithErrHandler((slave, status, msg) =>
+                    .WithErrHandler((slave, status) =>
                     {
-                        switch (status)
-                        {
-                            case Status.Error:
-                                UnityEngine.Debug.LogError($"Error [{slave}]: {msg}");
-                                break;
-                            case Status.Lost:
-                                UnityEngine.Debug.LogError($"Lost [{slave}]: {msg}");
-                                // You can also wait for the link to recover, without exiting
+                        UnityEngine.Debug.LogError($"slave [{slave}]: {status}");
+                        if (status == Status.Lost)
+                            // You can also wait for the link to recover, without exiting
 #if UNITY_EDITOR
                                 UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_STANDALONE
                                 UnityEngine.Application.Quit();
 #endif
-                                break;
-                            case Status.StateChanged:
-                                UnityEngine.Debug.LogError($"StateChanged [{slave}]: {msg}");
-                                break;
-                        };
                     }));
         }
         catch (Exception)

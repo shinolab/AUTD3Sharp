@@ -29,8 +29,8 @@ namespace AUTD3Sharp.Modulation.AudioFile
             {
                 fixed (byte* fp = &filenameBytes[0])
                 {
-                    return _resample.HasValue ? NativeMethodsModulationAudioFile.AUTDModulationAudioFileRawPCMWithResample(fp, LoopBehavior, _resample.Value.Item1, _config.Inner, _resample.Value.Item2).Validate()
-                    : NativeMethodsModulationAudioFile.AUTDModulationAudioFileRawPCM(fp, _config.Inner, LoopBehavior).Validate();
+                    return _resample.HasValue ? NativeMethodsModulationAudioFile.AUTDModulationAudioFileRawPCMWithResample(fp, LoopBehavior, _resample.Value.Item1, _config, _resample.Value.Item2).Validate()
+                    : NativeMethodsModulationAudioFile.AUTDModulationAudioFileRawPCM(fp, _config, LoopBehavior).Validate();
                 }
             }
         }

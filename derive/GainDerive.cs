@@ -24,57 +24,13 @@ public partial class GainDeriveGenerator : IIncrementalGenerator
                                                         "global::AUTD3Sharp.Derive.GainAttribute");
         var namedArguments = attribute.NamedArguments;
 
-        var isCustom = typeSymbol.GetMembers("Calc").Length != 0;
-
         var ns = typeSymbol.ContainingNamespace.IsGlobalNamespace ? "" : $"namespace {typeSymbol.ContainingNamespace}";
-
-        var customCode = isCustom ?
-            $$"""
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        private unsafe delegate void GainDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, AUTD3Sharp.NativeMethods.Drive* dst);
-
-        private GainDelegate _f = null;
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private GainPtr GainPtr(Geometry geometry)
-        {
-            unsafe{
-                var f = Calc(geometry);
-                _f = (context, geometryPtr, devIdx, trIdx, dst) =>
-                {   
-                    var devPtr = NativeMethodsBase.AUTDDevice(geometryPtr, devIdx);
-                    var dev = ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetDevice(devIdx, geometryPtr);
-                    var tr = ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetTransducer(trIdx, devIdx, devPtr);
-                    var d = f(dev)(tr);
-                    dst->intensity = d.Intensity.Value;
-                    dst->phase = d.Phase.Value;
-                };
-
-                return NativeMethodsBase.AUTDGainCustom(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, ((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GetGeometryPtr(geometry));
-            }
-        }
-        
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [ExcludeFromCodeCoverage] private static Func<Device, Func<Transducer, AUTD3Sharp.Drive>> Transform(Func<Device, Func<Transducer, AUTD3Sharp.Drive>> f)
-        {
-            return f;
-        }
-
-""" : "";
 
         var cacheCode = $$"""
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Cache<{{typeName}}> WithCache()
         {
             return new AUTD3Sharp.Driver.Datagram.Gain.Cache<{{typeName}}>(this);
-        }
-
-""";
-        var transformCode = $$"""
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        [ExcludeFromCodeCoverage] public AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}> WithTransform(Func<Device, Func<AUTD3Sharp.Transducer, AUTD3Sharp.Drive, AUTD3Sharp.Drive>> f)
-        {
-            return new AUTD3Sharp.Driver.Datagram.Gain.Transform<{{typeName}}>(this, f);
         }
 
 """;
@@ -107,7 +63,7 @@ using AUTD3Sharp.NativeMethods;
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDGainIntoDatagram(((AUTD3Sharp.Driver.Datagram.Gain.IGain)this).GainPtr(geometry));
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] 
-        DatagramPtr IDatagramS<GainPtr>.IntoSegment(GainPtr p, Segment segment, bool updateSegment) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(p, segment, updateSegment);
+        DatagramPtr IDatagramS<GainPtr>.IntoSegmentTransition(GainPtr p, Segment segment, TransitionModeWrap? transitionMode) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(p, segment, transitionMode ?? TransitionMode.None);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] 
         GainPtr IDatagramS<GainPtr>.RawPtr(Geometry geometry) => GainPtr(geometry);
@@ -115,11 +71,9 @@ using AUTD3Sharp.NativeMethods;
         GainPtr AUTD3Sharp.Driver.Datagram.Gain.IGain.GainPtr(Geometry geometry) => GainPtr(geometry);
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         [ExcludeFromCodeCoverage] 
-        public DatagramWithSegment<{{typeName}}, GainPtr> WithSegment(Segment segment, bool updateSegment) => new DatagramWithSegment<{{typeName}}, GainPtr>(this, segment, updateSegment);
+        public DatagramWithSegment<{{typeName}}, GainPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new DatagramWithSegment<{{typeName}}, GainPtr>(this, segment, transitionMode);
 
-{{customCode}}
 {{cacheCode}}
-{{transformCode}}
     }
 {{nsEnd}}
 """;

@@ -25,31 +25,33 @@ namespace AUTD3Sharp
         private readonly TimeSpan _period;
 
         [FieldOffset(8)]
-        private readonly NativeMethods.SamplingConfig _config;
+        private readonly SamplingConfig _config;
 
         private STMSamplingConfig(Freq<float> f)
         {
             _tag = STMSamplingConfigTag.Freq;
             _f = f;
+            _config = new SamplingConfig(0);
         }
 
         private STMSamplingConfig(TimeSpan period)
         {
             _tag = STMSamplingConfigTag.Period;
             _period = period;
+            _config = new SamplingConfig(0);
         }
 
         private STMSamplingConfig(SamplingConfig config)
         {
             _tag = STMSamplingConfigTag.Config;
-            _config = config.Inner;
+            _config = config;
         }
 
         public static implicit operator STMSamplingConfig(Freq<float> f) => new(f);
         public static implicit operator STMSamplingConfig(TimeSpan period) => new(period);
         public static implicit operator STMSamplingConfig(SamplingConfig config) => new(config);
 
-        internal NativeMethods.SamplingConfig SamplingConfig(int n) => _tag switch
+        internal SamplingConfig SamplingConfig(int n) => _tag switch
         {
             STMSamplingConfigTag.Freq => NativeMethodsBase.AUTDSTMConfigFromFreq(_f.Hz, (ushort)n).Validate(),
             STMSamplingConfigTag.Period => NativeMethodsBase.AUTDSTMConfigFromPeriod((ulong)(_period.TotalMilliseconds * 1000 * 1000), (ushort)n).Validate(),

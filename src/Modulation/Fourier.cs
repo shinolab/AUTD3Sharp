@@ -29,12 +29,7 @@ namespace AUTD3Sharp.Modulation
 
         private ModulationPtr ModulationPtr()
         {
-            var components = _components.Select(m => ((Driver.Datagram.Modulation.IModulation)m).ModulationPtr()).ToArray();
-            unsafe
-            {
-                fixed (ModulationPtr* p = &components[0])
-                    return _components[0].Mode.FourierPtr(p, (uint)components.Length, Clamp, ScaleFactor, Offset, LoopBehavior);
-            }
+            return _components[0].Mode.FourierPtr(_components, Clamp, ScaleFactor, Offset, LoopBehavior);
         }
     }
 }

@@ -29,8 +29,8 @@ namespace AUTD3Sharp.Modulation
             {
                 fixed (byte* pBuf = &_buf[0])
                     return _resample.HasValue ?
-                    NativeMethodsBase.AUTDModulationCustomWithResample(LoopBehavior, pBuf, (ushort)_buf.Length, _resample.Value.Item1, _config.Inner, _resample.Value.Item2)
-                     : NativeMethodsBase.AUTDModulationCustom(_config.Inner, LoopBehavior, pBuf, (ushort)_buf.Length);
+                    NativeMethodsBase.AUTDModulationCustomWithResample(LoopBehavior, pBuf, (ushort)_buf.Length, _resample.Value.Item1, _config, _resample.Value.Item2)
+                     : NativeMethodsBase.AUTDModulationCustom(_config, LoopBehavior, pBuf, (ushort)_buf.Length);
             }
         }
     }

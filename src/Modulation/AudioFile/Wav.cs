@@ -29,7 +29,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
                 fixed (byte* fp = &filenameBytes[0])
                 {
                     return _resample.HasValue ?
-                        NativeMethodsModulationAudioFile.AUTDModulationAudioFileWavWithResample(fp, LoopBehavior, _resample.Value.Item1.Inner, _resample.Value.Item2).Validate()
+                        NativeMethodsModulationAudioFile.AUTDModulationAudioFileWavWithResample(fp, LoopBehavior, _resample.Value.Item1, _resample.Value.Item2).Validate()
                     : NativeMethodsModulationAudioFile.AUTDModulationAudioFileWav(fp, LoopBehavior).Validate();
                 }
             }

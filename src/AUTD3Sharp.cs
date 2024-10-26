@@ -12,10 +12,10 @@ namespace AUTD3Sharp
             NativeMethodsBase.AUTDTracingInit();
             NativeMethodsLinkSimulator.AUTDLinkSimulatorTracingInit();
             NativeMethodsModulationAudioFile.AUTDModulationAudioFileTracingInit();
-            NativeMethodsLinkTwinCAT.AUTDAUTDLinkTwinCATTracingInit();
+            NativeMethodsLinkTwinCAT.AUTDLinkTwinCATTracingInit();
             try
             {
-                NativeMethodsLinkSOEM.AUTDAUTDLinkSOEMTracingInit();
+                NativeMethodsLinkSOEM.AUTDLinkSOEMTracingInit();
             }
             catch (Exception)
             {

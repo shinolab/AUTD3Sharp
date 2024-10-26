@@ -7,6 +7,7 @@
 using System;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.Utils;
+using AUTD3Sharp.Link;
 
 
 namespace AUTD3Sharp.NativeMethods
@@ -19,6 +20,9 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDModulationAudioFileTracingInit();
+
+        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileTracingInitWithFile", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern ResultStatus AUTDModulationAudioFileTracingInitWithFile(byte* path);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileWav", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultModulation AUTDModulationAudioFileWav(byte* path, LoopBehavior loop_behavior);
@@ -44,4 +48,3 @@ namespace AUTD3Sharp.NativeMethods
 
 
 }
-    

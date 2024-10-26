@@ -13,22 +13,13 @@ namespace AUTD3Sharp.Link
     {
         public sealed class AuditBuilder : ILinkBuilder<Audit>
         {
-            private LinkAuditBuilderPtr _ptr;
-
             internal AuditBuilder()
             {
-                _ptr = NativeMethodsBase.AUTDLinkAudit();
-            }
-
-            public AuditBuilder WithTimeout(TimeSpan timeout)
-            {
-                _ptr = NativeMethodsBase.AUTDLinkAuditWithTimeout(_ptr, (ulong)(timeout.TotalMilliseconds * 1000 * 1000));
-                return this;
             }
 
             LinkBuilderPtr ILinkBuilder<Audit>.Ptr()
             {
-                return NativeMethodsBase.AUTDLinkAuditIntoBuilder(_ptr);
+                return NativeMethodsBase.AUTDLinkAudit();
             }
 
             Audit ILinkBuilder<Audit>.ResolveLink(RuntimePtr _, LinkPtr ptr)
@@ -47,9 +38,6 @@ namespace AUTD3Sharp.Link
             return new AuditBuilder();
         }
 
-        public TimeSpan Timeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0f);
-        public TimeSpan LastTimeout() => TimeSpan.FromSeconds(NativeMethodsBase.AUTDLinkAuditLastTimeoutNs(_ptr) / 1000.0 / 1000.0 / 1000.0f);
-        public ulong LastParallelThreshold() => NativeMethodsBase.AUTDLinkAuditLastParallelThreshold(_ptr);
         public void Down() => NativeMethodsBase.AUTDLinkAuditDown(_ptr);
         public void Up() => NativeMethodsBase.AUTDLinkAuditUp(_ptr);
         public bool IsOpen() => NativeMethodsBase.AUTDLinkAuditIsOpen(_ptr);
@@ -63,7 +51,7 @@ namespace AUTD3Sharp.Link
         public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (ushort)idx);
         public bool SilencerStrictMode(int idx) => NativeMethodsBase.AUTDLinkAuditCpuSilencerStrictMode(_ptr, (ushort)idx);
 
-        public NativeMethods.SilencerTarget SilencerTarget(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerTarget(_ptr, (ushort)idx);
+        public SilencerTarget SilencerTarget(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerTarget(_ptr, (ushort)idx);
 
         public byte[] DebugTypes(int idx)
         {
@@ -105,7 +93,7 @@ namespace AUTD3Sharp.Link
 
         public ushort ModulationFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivision(_ptr, segment, (ushort)idx);
 
-        public NativeMethods.LoopBehavior ModulationLoopBehavior(int idx, Segment segment) =>
+        public LoopBehavior ModulationLoopBehavior(int idx, Segment segment) =>
             NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopBehavior(_ptr, segment, (ushort)idx);
 
         public Segment CurrentModulationSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentModSegment(_ptr, (ushort)idx);
@@ -118,7 +106,7 @@ namespace AUTD3Sharp.Link
             {
                 fixed (Drive* pd = &drive[0])
                 {
-                    NativeMethodsBase.AUTDLinkAuditFpgaDrivesAt(_ptr, segment, (ushort)idx, (ushort)stmIdx, (NativeMethods.Drive*)pd);
+                    NativeMethodsBase.AUTDLinkAuditFpgaDrivesAt(_ptr, segment, (ushort)idx, (ushort)stmIdx, (Drive*)pd);
                 }
             }
             var intensities = drive.Select(d => d.Intensity.Value).ToArray();
@@ -130,7 +118,7 @@ namespace AUTD3Sharp.Link
         public bool IsStmGainMode(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaIsStmGainMode(_ptr, segment, (ushort)idx);
         public ushort StmFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmFreqDivision(_ptr, segment, (ushort)idx);
         public ushort StmSoundSpeed(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(_ptr, segment, (ushort)idx);
-        public NativeMethods.LoopBehavior StmLoopBehavior(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(_ptr, segment, (ushort)idx);
+        public LoopBehavior StmLoopBehavior(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(_ptr, segment, (ushort)idx);
         public Segment CurrentStmSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(_ptr, (ushort)idx);
 
         public byte[] PulseWidthEncoderTable(int idx)
