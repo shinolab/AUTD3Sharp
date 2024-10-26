@@ -82,15 +82,15 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 29.0.0-rc.0 (MIT)
+autd3 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-derive 29.0.0-rc.0 (MIT)
+autd3-derive 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 29.0.0-rc.0 (MIT)
+autd3-driver 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -98,19 +98,19 @@ autd3-emulator 29.0.0-rc.0 (MIT)
 https://github.com/shinolab/autd3-emulator
 ---------------------------------------------------------
 
-autd3-firmware-emulator 29.0.0-rc.0 (MIT)
+autd3-firmware-emulator 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 29.0.0-rc.0 (MIT)
+autd3-gain-holo 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 29.0.0-rc.0 (MIT)
+autd3-link-simulator 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-soem 29.0.0-rc.0
+autd3-link-soem 29.0.0-rc.1
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -176,7 +176,7 @@ SOEM write to Beckhoff Automation GmbH, Eiserstrasse 5, D-33415 Verl, Germany
 
 ---------------------------------------------------------
 
-autd3-link-twincat 29.0.0-rc.0
+autd3-link-twincat 29.0.0-rc.1
 https://github.com/shinolab/autd3-rs
 
 ---
@@ -228,43 +228,43 @@ SOFTWARE.
 
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 29.0.0-rc.0 (MIT)
+autd3-modulation-audio-file 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 29.0.0-rc.0 (MIT)
+autd3-protobuf 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 29.0.0-rc.0 (MIT)
+autd3capi 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 29.0.0-rc.0 (MIT)
+autd3capi-driver 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-emulator 29.0.0-rc.0 (MIT)
+autd3capi-emulator 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 29.0.0-rc.0 (MIT)
+autd3capi-gain-holo 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 29.0.0-rc.0 (MIT)
+autd3capi-link-simulator 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-soem 29.0.0-rc.0 (MIT)
+autd3capi-link-soem 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 29.0.0-rc.0 (MIT)
+autd3capi-link-twincat 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 29.0.0-rc.0 (MIT)
+autd3capi-modulation-audio-file 29.0.0-rc.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
@@ -684,7 +684,7 @@ libloading 0.8.5 (ISC)
 https://github.com/nagisa/rust_libloading/
 ---------------------------------------------------------
 
-libm 0.2.8 (Apache-2.0 OR MIT)
+libm 0.2.9 (Apache-2.0) OR MIT AND (MIT)
 https://github.com/rust-lang/libm
 ---------------------------------------------------------
 
