@@ -20,7 +20,7 @@ public class GeometryTest
     public async Task GeometryNumDevices()
     {
         var autd = await AUTDTest.CreateController();
-        Assert.Equal(2, autd.Geometry.NumDevices);
+        Assert.Equal(2, autd.NumDevices);
     }
 
 
@@ -28,45 +28,45 @@ public class GeometryTest
     public async Task GeometryNumTransducers()
     {
         var autd = await AUTDTest.CreateController();
-        Assert.Equal(2 * 249, autd.Geometry.NumTransducers);
+        Assert.Equal(2 * 249, autd.NumTransducers);
     }
 
     [Fact]
     public async Task TestGeometrySoundSpeed()
     {
         var autd = await AUTDTest.CreateController();
-        autd.Geometry.SetSoundSpeed(350e3f);
-        foreach (var dev in autd.Geometry) Assert.Equal(350e3f, dev.SoundSpeed);
+        autd.SetSoundSpeed(350e3f);
+        foreach (var dev in autd) Assert.Equal(350e3f, dev.SoundSpeed);
     }
 
     [Fact]
     public async Task TestGeometrySetSoundSpeedFromTemp()
     {
         var autd = await AUTDTest.CreateController();
-        autd.Geometry.SetSoundSpeedFromTemp(15);
-        foreach (var dev in autd.Geometry) Assert.Equal(340.29525e3f, dev.SoundSpeed);
+        autd.SetSoundSpeedFromTemp(15);
+        foreach (var dev in autd) Assert.Equal(340.29525e3f, dev.SoundSpeed);
     }
 
     [Fact]
     public async Task GeometryCenter()
     {
         var autd = await AUTDTest.CreateController();
-        Assert.Equal(new Vector3(86.625267028808594f, 66.71319580078125f, 0), autd.Geometry.Center);
+        Assert.Equal(new Vector3(86.625267028808594f, 66.71319580078125f, 0), autd.Center);
     }
 
     [Fact]
     public async Task TestDeviceIdx()
     {
         var autd = await AUTDTest.CreateController();
-        Assert.Equal(0, autd.Geometry[0].Idx);
-        Assert.Equal(1, autd.Geometry[1].Idx);
+        Assert.Equal(0, autd[0].Idx);
+        Assert.Equal(1, autd[1].Idx);
     }
 
     [Fact]
     public async Task TestDeviceSoundSpeed()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(340e3f, dev.SoundSpeed);
             dev.SoundSpeed = 350e3f;
@@ -78,7 +78,7 @@ public class GeometryTest
     public async Task TestDeviceSetSoundSpeedFromTemp()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             dev.SetSoundSpeedFromTemp(15);
             Assert.Equal(340.29525e3f, dev.SoundSpeed);
@@ -89,7 +89,7 @@ public class GeometryTest
     public async Task TestDeviceEnable()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.True(dev.Enable);
             dev.Enable = false;
@@ -101,7 +101,7 @@ public class GeometryTest
     public async Task TestDeviceNumTransducers()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(249, dev.NumTransducers);
         }
@@ -111,7 +111,7 @@ public class GeometryTest
     public async Task TestDeviceCenter()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var center = dev.Center;
             Assert.Equal(86.625267f, center.X);
@@ -124,7 +124,7 @@ public class GeometryTest
     public async Task TestDeviceTranslate()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var originalPos = dev.Select(tr => tr.Position).ToArray();
             var t = new Vector3(1, 2, 3);
@@ -140,7 +140,7 @@ public class GeometryTest
     public async Task TestDeviceRotate()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var r = new Quaternion(0.707106829f, 0, 0, 0.707106829f);
             dev.Rotate(r);
@@ -153,7 +153,7 @@ public class GeometryTest
     public async Task TestDeviceAffine()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var originalPos = dev.Select(tr => tr.Position).ToArray();
             var t = new Vector3(1, 2, 3);
@@ -175,7 +175,7 @@ public class GeometryTest
     public async Task TestDeviceWavelength()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(340e3f / 40e3f, dev.Wavelength);
         }
@@ -185,7 +185,7 @@ public class GeometryTest
     public async Task TestDeviceWavenumber()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(2.0f * MathF.PI * 40e3f / 340e3f, dev.Wavenumber);
         }
@@ -197,7 +197,7 @@ public class GeometryTest
     public async Task TestDeviceRotation()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
             Assert.Equal(dev.Rotation, new Quaternion(1.0f, 0.0f, 0.0f, 0.0f));
     }
 
@@ -205,7 +205,7 @@ public class GeometryTest
     public async Task TestDeviceXDirection()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
             Assert.Equal(dev.XDirection, new Vector3(1.0f, 0.0f, 0.0f));
     }
 
@@ -213,7 +213,7 @@ public class GeometryTest
     public async Task TestDeviceYDirection()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
             Assert.Equal(dev.YDirection, new Vector3(0.0f, 1.0f, 0.0f));
     }
 
@@ -221,7 +221,7 @@ public class GeometryTest
     public async Task TestDeviceAxialDirection()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
             Assert.Equal(dev.AxialDirection, new Vector3(0.0f, 0.0f, 1.0f));
     }
 
@@ -229,7 +229,7 @@ public class GeometryTest
     public async Task TestTransducerIdx()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             foreach (var (tr, i) in dev.Select((tr, i) => (tr, i)))
             {
@@ -242,7 +242,7 @@ public class GeometryTest
     public async Task TestTransducerDevIdx()
     {
         var autd = await AUTDTest.CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             foreach (var tr in dev)
             {
@@ -255,12 +255,12 @@ public class GeometryTest
     public async Task TestTransducerPosition()
     {
         var autd = await AUTDTest.CreateController();
-        Assert.Equal(autd.Geometry[0][0].Position, new Vector3(0.0f, 0.0f, 0.0f));
-        Assert.Equal(autd.Geometry[0][AUTD3.NumTransInUnit - 1].Position,
+        Assert.Equal(autd[0][0].Position, new Vector3(0.0f, 0.0f, 0.0f));
+        Assert.Equal(autd[0][AUTD3.NumTransInUnit - 1].Position,
             new Vector3((AUTD3.NumTransInX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransInY - 1) * AUTD3.TransSpacing, 0.0f));
 
-        Assert.Equal(autd.Geometry[1][0].Position, new Vector3(0.0f, 0.0f, 0.0f));
-        Assert.Equal(autd.Geometry[1][AUTD3.NumTransInUnit - 1].Position,
+        Assert.Equal(autd[1][0].Position, new Vector3(0.0f, 0.0f, 0.0f));
+        Assert.Equal(autd[1][AUTD3.NumTransInUnit - 1].Position,
             new Vector3((AUTD3.NumTransInX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransInY - 1) * AUTD3.TransSpacing, 0.0f));
     }
 }

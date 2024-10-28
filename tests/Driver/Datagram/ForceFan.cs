@@ -10,7 +10,7 @@ public class ForceFanTest
     public async Task TestConfigForceFan()
     {
         var autd = await CreateController();
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
             Assert.False(autd.Link.IsForceFan(dev.Idx));
 
         await autd.SendAsync(new ForceFan(dev => dev.Idx == 0));

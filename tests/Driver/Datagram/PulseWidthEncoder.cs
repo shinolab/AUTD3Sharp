@@ -12,7 +12,7 @@ public class PulseWidthEncoderTest
         var buf = Enumerable.Range(0, 256).Select(_ => (byte)rnd.Next(0, 256)).ToArray();
 
         await autd.SendAsync(new AUTD3Sharp.PulseWidthEncoder(dev => i => buf[i]));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(buf, autd.Link.PulseWidthEncoderTable(dev.Idx));
         }
@@ -29,7 +29,7 @@ public class PulseWidthEncoderTest
         ).ToArray();
 
         await autd.SendAsync(new AUTD3Sharp.PulseWidthEncoder());
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(buf, autd.Link.PulseWidthEncoderTable(dev.Idx));
         }

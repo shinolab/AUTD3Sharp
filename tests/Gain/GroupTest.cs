@@ -7,14 +7,14 @@ public class GroupTest
     {
         var autd = await AUTDTest.CreateController();
 
-        var cx = autd.Geometry.Center.X;
+        var cx = autd.Center.X;
 
         await autd.SendAsync(new Group(_ => tr => tr.Position.X switch
         {
             var x when x < cx => "uniform",
             _ => "null"
         }).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             foreach (var tr in dev)
@@ -37,7 +37,7 @@ public class GroupTest
             var x when x > cx => "uniform",
             _ => null
         }).Set("uniform", new Uniform((new EmitIntensity(0x81), new Phase(0x91)))));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             foreach (var tr in dev)
@@ -61,14 +61,14 @@ public class GroupTest
     {
         var autd = await AUTDTest.CreateController();
 
-        var cx = autd.Geometry.Center.X;
+        var cx = autd.Center.X;
 
         await autd.SendAsync(new AUTD3Sharp.Gain.Group(_ => tr => tr.Position.X switch
         {
             var x when x < cx => "uniform",
             _ => "null"
         }).WithParallel(true).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             foreach (var tr in dev)
@@ -106,9 +106,9 @@ public class GroupTest
     public async Task GroupCheckOnlyForEnabled()
     {
         var autd = await AUTDTest.CreateController();
-        autd.Geometry[0].Enable = false;
+        autd[0].Enable = false;
 
-        var check = new bool[autd.Geometry.NumDevices];
+        var check = new bool[autd.NumDevices];
         await autd.SendAsync(new Group(dev => _ =>
         {
             check[dev.Idx] = true;

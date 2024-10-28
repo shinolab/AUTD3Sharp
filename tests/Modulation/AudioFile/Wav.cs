@@ -95,7 +95,7 @@ public class WavTest
             var m = new Wav("sin150.wav");
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 Assert.Equal(modExpect, mod);
@@ -115,7 +115,7 @@ public class WavTest
         var m = new Wav("custom.wav", 4 * kHz, new SincInterpolation());
         Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
         await autd.SendAsync(m);
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);

@@ -11,7 +11,7 @@ public class RadiationPressureTest
         var mr = m.WithRadiationPressure().WithLoopBehavior(LoopBehavior.Once);
         Assert.Equal(LoopBehavior.Once, mr.LoopBehavior);
         await autd.SendAsync(mr);
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             var modExpect = new byte[] {  181, 200, 217, 231, 243, 250, 254, 255, 252, 245, 236, 222, 206, 188, 166, 142, 116, 89, 60, 32, 0,  32, 60, 89,  116, 142, 166,

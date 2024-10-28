@@ -54,6 +54,12 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ControllerBuilderPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct DatagramPtr
     {
         public IntPtr Item1;
@@ -238,9 +244,9 @@ namespace AUTD3Sharp.NativeMethods
 
     public enum AUTDStatus : byte
     {
-        TRUE = 0,
-        FALSE = 1,
-        ERR = 2,
+        AUTDTrue = 0,
+        AUTDFalse = 1,
+        AUTDErr = 2,
     }
 
     public enum TimerStrategyTag : byte

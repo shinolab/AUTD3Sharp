@@ -42,7 +42,7 @@ namespace AUTD3Sharp
         where TD : IDatagram
         {
             if (_keymap.ContainsKey(key)) throw new AUTDException("Key already exists");
-            _datagrams.Add(d.Ptr(_controller.Geometry));
+            _datagrams.Add(d.Ptr(_controller));
             _keys.Add(_k);
             _keymap[key] = _k++;
             return this;
@@ -63,7 +63,7 @@ namespace AUTD3Sharp
                 {
                     future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
                         new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero },
-                        _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count);
+                        _controller.GeometryPtr, kp, dp, (ushort)_keys.Count);
                 }
             }
             var result = await Task.Run(() =>
@@ -80,7 +80,7 @@ namespace AUTD3Sharp
                 {
                     var future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
                         new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero },
-                        _controller.Geometry.Ptr, kp, dp, (ushort)_keys.Count);
+                        _controller.GeometryPtr, kp, dp, (ushort)_keys.Count);
                     var result = NativeMethodsBase.AUTDWaitLocalResultStatus(_controller.Handle, future);
                     result.Validate();
                 }

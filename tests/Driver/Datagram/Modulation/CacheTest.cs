@@ -14,7 +14,7 @@ public class CacheTest
             Assert.Equal(LoopBehavior.Once, mc.LoopBehavior);
             await autd1.SendAsync(m);
             await autd2.SendAsync(mc);
-            foreach (var dev in autd2.Geometry)
+            foreach (var dev in autd2)
             {
                 var modExpect = autd1.Link.Modulation(dev.Idx, Segment.S0);
                 var mod = autd2.Link.Modulation(dev.Idx, Segment.S0);

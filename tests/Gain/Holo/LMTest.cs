@@ -11,7 +11,7 @@ public class LMTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
-        var g = new LM(backend, new float[] { -40, 40 }.Select(x => (autd.Geometry.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
+        var g = new LM(backend, new float[] { -40, 40 }.Select(x => (autd.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
             .WithEps1(1e-3f)
             .WithEps2(1e-3f)
             .WithTau(1e-3f)
@@ -25,7 +25,7 @@ public class LMTest
         Assert.Equal([1.0f], g.Initial.ToArray());
         await autd.SendAsync(g);
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));

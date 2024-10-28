@@ -14,7 +14,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp
 {
-    public sealed class Controller<T> : IDisposable
+    public sealed class Controller<T> : Geometry, IDisposable
     {
         #region field
 
@@ -27,12 +27,11 @@ namespace AUTD3Sharp
 
         #region Controller
 
-        internal Controller(Geometry geometry, RuntimePtr runtime, HandlePtr handle, ControllerPtr ptr, T link)
+        internal Controller(GeometryPtr geometry, RuntimePtr runtime, HandlePtr handle, ControllerPtr ptr, T link) : base(geometry)
         {
             Runtime = runtime;
             Handle = handle;
             Ptr = ptr;
-            Geometry = geometry;
             Link = link;
         }
 
@@ -113,7 +112,7 @@ namespace AUTD3Sharp
 
         #region Property
 
-        public Geometry Geometry { get; }
+        public Geometry Geometry => this;
 
         public FPGAState?[] FPGAState()
         {

@@ -8,7 +8,7 @@ public class UniformTest
         var autd = await AUTDTest.CreateController();
 
         await autd.SendAsync(new Uniform((new EmitIntensity(0x80), new Phase(0x90))));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
@@ -16,7 +16,7 @@ public class UniformTest
         }
 
         await autd.SendAsync(new Uniform((new EmitIntensity(0x81), new Phase(0x91))));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x81, d));

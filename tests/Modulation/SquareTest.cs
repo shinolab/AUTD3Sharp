@@ -12,7 +12,7 @@ public class SquareTest
             Assert.Equal(200.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
 #pragma warning disable IDE0230
@@ -28,7 +28,7 @@ public class SquareTest
             var m = new Square(150 * Hz).WithSamplingConfig(new SamplingConfig(20)).WithLoopBehavior(LoopBehavior.Once);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(20u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
@@ -46,7 +46,7 @@ public class SquareTest
             Assert.Equal(200.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
 #pragma warning disable IDE0230
@@ -67,7 +67,7 @@ public class SquareTest
         var m = Square.Nearest(150.0f * Hz);
         await autd.SendAsync(m);
         Assert.Equal(150.0f * Hz, m.Freq);
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             var modExpect = new byte[] { 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };

@@ -111,7 +111,7 @@ public class FirTest
         ]).WithLoopBehavior(LoopBehavior.Once);
         Assert.Equal(LoopBehavior.Once, mr.LoopBehavior);
         await autd.SendAsync(mr);
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             var modExpect = new byte[] { 127, 131, 136, 140, 145, 149, 153, 157, 161, 164, 168, 171, 173, 176, 178, 180, 182, 183, 184, 184, 184, 184, 184, 183, 182, 180, 178,

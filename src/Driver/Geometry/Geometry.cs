@@ -6,27 +6,21 @@ using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
-    public sealed class Geometry : IEnumerable<Device>
+    public class Geometry : IEnumerable<Device>
     {
-        internal readonly GeometryPtr Ptr;
+        internal readonly GeometryPtr GeometryPtr;
         private readonly List<Device> _devices;
 
-        internal Geometry(GeometryPtr ptr)
+        internal Geometry(GeometryPtr geometryPtr)
         {
-            Ptr = ptr;
-            _devices = Enumerable.Range(0, (int)NativeMethodsBase.AUTDGeometryNumDevices(Ptr)).Select(x => new Device((ushort)x, Ptr)).ToList();
+            GeometryPtr = geometryPtr;
+            _devices = Enumerable.Range(0, (int)NativeMethodsBase.AUTDGeometryNumDevices(GeometryPtr)).Select(x => new Device((ushort)x, GeometryPtr)).ToList();
         }
 
-        public int NumDevices => _devices.Count;
-        public int NumTransducers => _devices.Sum(d => d.NumTransducers);
+        public int NumDevices => (int)NativeMethodsBase.AUTDGeometryNumDevices(GeometryPtr);
+        public int NumTransducers => (int)NativeMethodsBase.AUTDGeometryNumTransducers(GeometryPtr);
 
-        public Vector3 Center
-        {
-            get
-            {
-                return _devices.Aggregate(Vector3.Zero, (current, device) => current + device.Center) / _devices.Count;
-            }
-        }
+        public Vector3 Center => NativeMethodsBase.AUTDGeometrCenter(GeometryPtr);
 
         public Device this[int index] => _devices[index];
         public IEnumerator<Device> GetEnumerator() => _devices.GetEnumerator();

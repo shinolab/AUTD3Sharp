@@ -9,7 +9,7 @@ public class NullTest
 
         await autd.SendAsync(new Null());
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));

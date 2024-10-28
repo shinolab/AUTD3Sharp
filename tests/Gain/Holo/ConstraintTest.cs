@@ -11,12 +11,12 @@ public class ConstraintTest
         var autd = await AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
-        var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+        var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
         await autd.SendAsync(g);
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
@@ -30,12 +30,12 @@ public class ConstraintTest
         var autd = await AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
-        var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+        var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Normalize);
 
         await autd.SendAsync(g);
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.Contains(intensities, d => d != 0);
@@ -50,12 +50,12 @@ public class ConstraintTest
             var autd = await AUTDTest.CreateController();
 
             var backend = new NalgebraBackend();
-            var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+            var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
                 .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(67), new EmitIntensity(85)));
 
             await autd.SendAsync(g);
 
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
                 Assert.All(intensities, d => Assert.True(67 <= d));
@@ -68,12 +68,12 @@ public class ConstraintTest
             var autd = await AUTDTest.CreateController();
 
             var backend = new NalgebraBackend();
-            var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+            var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
                 .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(10), new EmitIntensity(20)));
 
             await autd.SendAsync(g);
 
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
                 Assert.All(intensities, d => Assert.True(10 <= d));
@@ -89,12 +89,12 @@ public class ConstraintTest
         var autd = await AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
-        var g = new Naive(backend, [(autd.Geometry.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Geometry.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
+        var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Multiply(0));
 
         await autd.SendAsync(g);
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
