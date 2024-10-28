@@ -454,9 +454,10 @@ public class AUTDTest
     public async Task TestGroupCheckOnlyForEnabled()
     {
         using var autd = await CreateController();
+        var check = new bool[autd.NumDevices];
+
         autd[0].Enable = false;
 
-        var check = new bool[autd.NumDevices];
         await autd.Group(dev =>
         {
             check[dev.Idx] = true;
