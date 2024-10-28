@@ -19,7 +19,7 @@ public class CsvTest
             var m = new Csv("sin150.csv", 4000 * Hz);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 Assert.Equal(modExpect, mod);
@@ -32,7 +32,7 @@ public class CsvTest
             var m = new Csv("sin150.csv", 2000 * Hz).WithDeliminator(',').WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(20u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
@@ -50,7 +50,7 @@ public class CsvTest
         var m = new Csv("custom.csv", 2.0f * kHz, 4 * kHz, new SincInterpolation());
         Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
         await autd.SendAsync(m);
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);

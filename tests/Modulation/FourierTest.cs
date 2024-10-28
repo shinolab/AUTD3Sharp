@@ -15,7 +15,7 @@ public class FourierTest
             var m = new Fourier([new Sine(50 * Hz), new Sine(100 * Hz), new Sine(150 * Hz), new Sine(200 * Hz), new Sine(250 * Hz)]);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 Assert.Equal(modExpect, mod);
@@ -38,7 +38,7 @@ public class FourierTest
             var m = new Fourier([new Sine(50.0f * Hz), new Sine(100.0f * Hz), new Sine(150.0f * Hz), new Sine(200.0f * Hz), new Sine(250.0f * Hz)]);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 Assert.Equal(modExpect, mod);
@@ -61,7 +61,7 @@ public class FourierTest
             var m = new Fourier([Sine.Nearest(50.0f * Hz), Sine.Nearest(100.0f * Hz)]);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 Assert.Equal(modExpect, mod);

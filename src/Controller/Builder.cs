@@ -67,9 +67,7 @@ namespace AUTD3Sharp
                 (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1));
             var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultController(handle, future));
             var ptr = result.Validate();
-            var geometry = new Geometry(NativeMethodsBase.AUTDGeometry(ptr));
-            var link = linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr));
-            return new Controller<T>(geometry, runtime, handle, ptr, link);
+            return new Controller<T>(NativeMethodsBase.AUTDGeometry(ptr), runtime, handle, ptr, linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr)));
         }
 
         public Controller<T> Open<T>(ILinkBuilder<T> linkBuilder, TimeSpan? timeout = null)
@@ -79,9 +77,7 @@ namespace AUTD3Sharp
             var future = NativeMethodsBase.AUTDControllerOpen(Ptr(), linkBuilder.Ptr(),
                 (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1));
             var ptr = NativeMethodsBase.AUTDWaitResultController(handle, future).Validate();
-            var geometry = new Geometry(NativeMethodsBase.AUTDGeometry(ptr));
-            var link = linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr));
-            return new Controller<T>(geometry, runtime, handle, ptr, link);
+            return new Controller<T>(NativeMethodsBase.AUTDGeometry(ptr), runtime, handle, ptr, linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr)));
         }
     }
 }

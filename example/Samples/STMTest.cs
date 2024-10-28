@@ -15,7 +15,7 @@ internal static class GainSTMTest
 
         var m = new Static();
 
-        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var center = autd.Center + new Vector3(0, 0, 150);
         const int pointNum = 50;
         const float radius = 30.0f;
         var stm = new GainSTM(1.0f * Hz, Enumerable.Range(0, pointNum).Select(i =>
@@ -38,7 +38,7 @@ internal static class FociSTMTest
         var mod = new Static();
         autd.Send(mod);
 
-        var center = autd.Geometry.Center + new Vector3(0, 0, 150);
+        var center = autd.Center + new Vector3(0, 0, 150);
         const int pointNum = 200;
         const float radius = 30.0f;
         var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, pointNum).Select(i =>

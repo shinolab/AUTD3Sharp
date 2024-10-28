@@ -32,7 +32,7 @@ namespace AUTD3Sharp
 
         DatagramPtr IDatagram.Ptr(Geometry geometry)
         {
-            return NativeMethodsBase.AUTDDatagramPhaseCorr(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.Ptr);
+            return NativeMethodsBase.AUTDDatagramPhaseCorr(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
         }
     }
 }

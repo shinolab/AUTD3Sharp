@@ -10,7 +10,7 @@ public class CustomTest
 
         var modExpect = new byte[] { 255, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         await autd.SendAsync(new AUTD3Sharp.Modulation.Custom(modExpect, new SamplingConfig(10)));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(modExpect, mod);
@@ -24,7 +24,7 @@ public class CustomTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new AUTD3Sharp.Modulation.Custom([127, 255, 127, 0], 2.0f * kHz, 4 * kHz, new SincInterpolation()));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(new byte[] { 127, 217, 255, 217, 127, 37, 0, 37 }, mod);
@@ -32,7 +32,7 @@ public class CustomTest
         }
 
         await autd.SendAsync(new AUTD3Sharp.Modulation.Custom([127, 255, 127, 0], 2.0f * kHz, 4 * kHz, new SincInterpolation(new Rectangular(32))));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.Equal(new byte[] { 127, 217, 255, 223, 127, 42, 0, 37 }, mod);

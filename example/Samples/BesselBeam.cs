@@ -15,7 +15,7 @@ internal static class BesselBeamTest
 
         var m = new Sine(150 * Hz); // AM sin 150 Hz
 
-        var start = autd.Geometry.Center;
+        var start = autd.Center;
         var dir = Vector3.UnitZ;
         var g = new Bessel(start, dir, 13.0f / 180.0f * MathF.PI * rad); // BesselBeam from (x, y, 0), theta = 13 deg
 

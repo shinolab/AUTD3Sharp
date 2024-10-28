@@ -82,7 +82,7 @@ namespace AUTD3Sharp
         {
             public static AUTDStatus Validate(this ResultStatus res)
             {
-                if (res.result != AUTDStatus.ERR) return res.result;
+                if (res.result != AUTDStatus.AUTDErr) return res.result;
                 var err = new byte[res.err_len];
                 unsafe
                 {

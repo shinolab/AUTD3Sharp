@@ -208,14 +208,14 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
         await autd.SendAsync(new Static());
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
@@ -235,14 +235,14 @@ public class AUTDTest
     {
         var autd = CreateControllerSync();
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
         autd.Send(new Static());
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
@@ -262,7 +262,7 @@ public class AUTDTest
     {
         using var autd = await CreateController();
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
@@ -271,7 +271,7 @@ public class AUTDTest
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         await autd.SendAsync((new Static(), new Uniform(EmitIntensity.Max)));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
@@ -294,7 +294,7 @@ public class AUTDTest
     {
         var autd = CreateControllerSync();
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
@@ -303,7 +303,7 @@ public class AUTDTest
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         autd.Send((new Static(), new Uniform(EmitIntensity.Max)));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
@@ -454,9 +454,10 @@ public class AUTDTest
     public async Task TestGroupCheckOnlyForEnabled()
     {
         using var autd = await CreateController();
-        autd.Geometry[0].Enable = false;
+        var check = new bool[autd.NumDevices];
 
-        var check = new bool[autd.Geometry.NumDevices];
+        autd[0].Enable = false;
+
         await autd.Group(dev =>
         {
             check[dev.Idx] = true;

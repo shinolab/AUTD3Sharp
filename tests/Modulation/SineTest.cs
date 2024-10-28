@@ -12,7 +12,7 @@ public class SineTest
             Assert.Equal(150.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 var modExpect = new byte[] {128, 126, 121, 112, 101, 88, 74, 58, 44, 30, 18, 9, 3, 0, 0, 4, 12, 22, 34, 49, 64, 78, 93,  105, 115, 123, 127,
@@ -28,7 +28,7 @@ public class SineTest
             var m = new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(20)).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(20u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
@@ -46,7 +46,7 @@ public class SineTest
             Assert.Equal(150.0f * Hz, m.Freq);
             await autd.SendAsync(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 var modExpect = new byte[] {128, 126, 121, 112, 101, 88, 74, 58, 44, 30, 18, 9, 3, 0, 0, 4, 12, 22, 34, 49, 64, 78, 93,  105, 115, 123, 127,
@@ -67,7 +67,7 @@ public class SineTest
         var m = Sine.Nearest(150.0f * Hz);
         await autd.SendAsync(m);
         Assert.Equal(150.0f * Hz, m.Freq);
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
             var modExpect = new byte[] { 128, 157, 185, 209, 230, 245, 253, 255, 250, 238, 220, 198, 171, 142,

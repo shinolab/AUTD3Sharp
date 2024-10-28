@@ -24,10 +24,10 @@ public class CustomTest
 
         {
             var (intensities, phases) = autd.Link.Drives(1, Segment.S0, 0);
-            Assert.Equal(0x81, intensities[autd.Geometry[1].NumTransducers - 1]);
-            Assert.Equal(0x91, phases[autd.Geometry[1].NumTransducers - 1]);
-            Assert.All(intensities.Take(autd.Geometry[1].NumTransducers - 1), d => Assert.Equal(0, d));
-            Assert.All(phases.Take(autd.Geometry[1].NumTransducers - 1), p => Assert.Equal(0, p));
+            Assert.Equal(0x81, intensities[autd[1].NumTransducers - 1]);
+            Assert.Equal(0x91, phases[autd[1].NumTransducers - 1]);
+            Assert.All(intensities.Take(autd[1].NumTransducers - 1), d => Assert.Equal(0, d));
+            Assert.All(phases.Take(autd[1].NumTransducers - 1), p => Assert.Equal(0, p));
         }
     }
 }

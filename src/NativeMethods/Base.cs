@@ -386,6 +386,12 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDGeometryNumDevices", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDGeometryNumDevices(GeometryPtr geo);
 
+        [DllImport(__DllName, EntryPoint = "AUTDGeometryNumTransducers", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern uint AUTDGeometryNumTransducers(GeometryPtr geo);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGeometrCenter", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern Vector3 AUTDGeometrCenter(GeometryPtr geo);
+
         [DllImport(__DllName, EntryPoint = "AUTDRotationFromEulerXYZ", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern Quaternion AUTDRotationFromEulerXYZ(float x, float y, float z);
 
@@ -629,12 +635,6 @@ namespace AUTD3Sharp.NativeMethods
         public static extern void AUTDGetErr(ConstPtr src, byte* dst);
 
 
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ControllerBuilderPtr
-    {
-        public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]

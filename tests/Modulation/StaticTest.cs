@@ -11,7 +11,7 @@ public class StaticTest
             var m = new AUTD3Sharp.Modulation.Static();
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
                 var modExpect = new byte[] { 0xFF, 0xFF };
@@ -25,7 +25,7 @@ public class StaticTest
             var m = AUTD3Sharp.Modulation.Static.WithIntensity(32).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             await autd.SendAsync(m);
-            foreach (var dev in autd.Geometry)
+            foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
 #pragma warning disable IDE0230

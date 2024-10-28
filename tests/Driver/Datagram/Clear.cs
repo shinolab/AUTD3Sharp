@@ -12,7 +12,7 @@ public class ClearTest
     {
         using var autd = await CreateController();
         await autd.SendAsync(new Uniform((new Phase(0x90), EmitIntensity.Max)));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
@@ -22,7 +22,7 @@ public class ClearTest
         }
 
         await autd.SendAsync(new Clear());
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));

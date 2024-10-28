@@ -23,7 +23,7 @@ internal static class GroupByDeviceTest
                };
            })
            .Set("null", (new Static(), new Null()))
-           .Set("focus", (new Sine(150 * Hz), new Focus(autd.Geometry.Center + new Vector3(0, 0, 150))))
+           .Set("focus", (new Sine(150 * Hz), new Focus(autd.Center + new Vector3(0, 0, 150))))
            .Send();
     }
 }
@@ -36,8 +36,8 @@ internal static class GroupByTransducerTest
         var config = new Silencer();
         autd.Send(config);
 
-        var cx = autd.Geometry.Center.X;
-        var g1 = new Focus(autd.Geometry.Center + new Vector3(0, 0, 150));
+        var cx = autd.Center.X;
+        var g1 = new Focus(autd.Center + new Vector3(0, 0, 150));
         var g2 = new Null();
 
         var g = new Group(

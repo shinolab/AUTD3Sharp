@@ -12,7 +12,7 @@ public class SilencerTest
     {
         using var autd = await CreateController();
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
@@ -21,7 +21,7 @@ public class SilencerTest
         }
 
         await autd.SendAsync(new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).WithTarget(AUTD3Sharp.SilencerTarget.PulseWidth));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(1, autd.Link.SilencerUpdateRateIntensity(dev.Idx));
             Assert.Equal(2, autd.Link.SilencerUpdateRatePhase(dev.Idx));
@@ -46,7 +46,7 @@ public class SilencerTest
                 s.Target));
 
         await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = TimeSpan.FromMicroseconds(25), Phase = TimeSpan.FromMicroseconds(50) }).WithTarget(AUTD3Sharp.SilencerTarget.PulseWidth));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(2, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
@@ -62,7 +62,7 @@ public class SilencerTest
         using var autd = await CreateController();
 
         await autd.SendAsync(Silencer.Disable());
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(1, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
@@ -82,7 +82,7 @@ public class SilencerTest
     {
         using var autd = await CreateController();
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
@@ -94,7 +94,7 @@ public class SilencerTest
 
         Assert.True(new Silencer().WithStrictMode(false).IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
         await autd.SendAsync(new Silencer().WithStrictMode(false));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
@@ -110,7 +110,7 @@ public class SilencerTest
     {
         using var autd = await CreateController();
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
@@ -121,7 +121,7 @@ public class SilencerTest
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new GainSTM(new SamplingConfig(1), [new Null(), new Null()])));
 
         await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = TimeSpan.FromMicroseconds(250), Phase = TimeSpan.FromMicroseconds(1000) }).WithStrictMode(false));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
@@ -140,7 +140,7 @@ public class SilencerTest
     {
         using var autd = await CreateController();
 
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
@@ -151,7 +151,7 @@ public class SilencerTest
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new FociSTM(new SamplingConfig(1), [Vector3.Zero, Vector3.Zero])));
 
         await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = TimeSpan.FromMicroseconds(250), Phase = TimeSpan.FromMicroseconds(1000) }).WithStrictMode(false));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));

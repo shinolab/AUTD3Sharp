@@ -14,7 +14,7 @@ internal static class FocusTest
         autd.Send(config);
 
         var m = new Sine(150 * Hz);
-        var g = new Focus(autd.Geometry.Center + new Vector3(0, 0, 150));
+        var g = new Focus(autd.Center + new Vector3(0, 0, 150));
         autd.Send((m, g));
     }
 }

@@ -8,7 +8,7 @@ public class PhaseCorrectionTest
         var autd = await AUTDTest.CreateController();
 
         await autd.SendAsync(new AUTD3Sharp.PhaseCorrection(dev => tr => new Phase((byte)(dev.Idx + tr.Idx))));
-        foreach (var dev in autd.Geometry)
+        foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x00, d));

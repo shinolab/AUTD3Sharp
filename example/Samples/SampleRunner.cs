@@ -21,7 +21,7 @@ public class SampleRunner
             (CustomGain.Test, "Custom gain test"),
             (GroupByTransducerTest.Test, "Group (by Transducer) test")
         };
-        if (autd.Geometry.NumDevices >= 2) examples.Add((GroupByDeviceTest.Test, "Group (by Device) test"));
+        if (autd.NumDevices >= 2) examples.Add((GroupByDeviceTest.Test, "Group (by Device) test"));
 
         Console.WriteLine("======== AUTD3 firmware information ========");
         Console.WriteLine(string.Join("\n", autd.FirmwareVersion()));
