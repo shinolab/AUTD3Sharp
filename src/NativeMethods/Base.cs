@@ -307,7 +307,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern GroupGainMapPtr AUTDGainGroupMapSet(GroupGainMapPtr map, ushort dev_idx, int* map_data);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainGroup(GroupGainMapPtr map, int* keys_ptr, GainPtr* values_ptr, uint kv_len, [MarshalAs(UnmanagedType.U1)] bool parallel);
+        public static extern GainPtr AUTDGainGroup(GroupGainMapPtr map, int* keys_ptr, GainPtr* values_ptr, uint kv_len);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainIntoDatagramWithSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDGainIntoDatagramWithSegment(GainPtr gain, Segment segment, TransitionModeWrap transition_mode);

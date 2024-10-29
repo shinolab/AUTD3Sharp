@@ -11,7 +11,6 @@ using AUTD3Sharp.Derive;
 namespace AUTD3Sharp.Gain
 {
     [Gain]
-    [Builder]
     public sealed partial class Group
     {
         private readonly Func<Device, Func<Transducer, object?>> _f;
@@ -21,11 +20,7 @@ namespace AUTD3Sharp.Gain
         {
             _f = f;
             _map = new();
-            Parallel = false;
         }
-
-        [Property]
-        public bool Parallel { get; private set; }
 
         public Group Set(object key, Driver.Datagram.Gain.IGain gain)
         {
@@ -77,7 +72,7 @@ namespace AUTD3Sharp.Gain
                             map,
                             keysPtr,
                             valuesPtr,
-                            (uint)values.Length, Parallel);
+                            (uint)values.Length);
                 }
             }
         }
