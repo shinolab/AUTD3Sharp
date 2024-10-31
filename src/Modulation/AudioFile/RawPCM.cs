@@ -1,5 +1,6 @@
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp.Modulation.AudioFile
 {
@@ -24,7 +25,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
 
         private ModulationPtr ModulationPtr()
         {
-            var filenameBytes = System.Text.Encoding.UTF8.GetBytes(_filename);
+            var filenameBytes = Ffi.toNullTerminatedUtf8(_filename);
             unsafe
             {
                 fixed (byte* fp = &filenameBytes[0])

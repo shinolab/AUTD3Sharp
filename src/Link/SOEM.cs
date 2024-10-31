@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.Driver;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -76,7 +77,7 @@ namespace AUTD3Sharp.Link
                 }
                 ErrHandler((int)slave, new Link.Status(status, System.Text.Encoding.UTF8.GetString(msgBytes).TrimEnd('\0')));
             };
-            var ifnameBytes = System.Text.Encoding.UTF8.GetBytes(Ifname);
+            var ifnameBytes = Ffi.toNullTerminatedUtf8(Ifname);
             unsafe
             {
                 fixed (byte* ifnamePtr = ifnameBytes)
@@ -159,7 +160,7 @@ namespace AUTD3Sharp.Link
             LinkBuilderPtr ILinkBuilder<RemoteSOEM>.Ptr()
             {
                 var ipStr = Ip.ToString();
-                var ipBytes = System.Text.Encoding.UTF8.GetBytes(ipStr);
+                var ipBytes = Ffi.toNullTerminatedUtf8(ipStr);
                 unsafe
                 {
                     fixed (byte* ipPtr = &ipBytes[0])

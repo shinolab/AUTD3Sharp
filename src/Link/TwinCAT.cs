@@ -3,6 +3,7 @@ using System;
 using System.Net;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.Driver;
+using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp.Link
 {
@@ -51,9 +52,9 @@ namespace AUTD3Sharp.Link
 
         LinkBuilderPtr ILinkBuilder<RemoteTwinCAT>.Ptr()
         {
-            var serverAmsNetIdBytes = System.Text.Encoding.UTF8.GetBytes(ServerAmsNetId);
-            var serverIpBytes = System.Text.Encoding.UTF8.GetBytes(ServerIp);
-            var clientAmsNetIdBytes = System.Text.Encoding.UTF8.GetBytes(ClientAmsNetId);
+            var serverAmsNetIdBytes = Ffi.toNullTerminatedUtf8(ServerAmsNetId);
+            var serverIpBytes = Ffi.toNullTerminatedUtf8(ServerIp);
+            var clientAmsNetIdBytes = Ffi.toNullTerminatedUtf8(ClientAmsNetId);
             unsafe
             {
                 fixed (byte* sp = &serverAmsNetIdBytes[0])
