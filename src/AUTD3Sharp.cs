@@ -1,6 +1,7 @@
 using System;
 using AUTD3Sharp.NativeMethods;
 using System.Diagnostics.CodeAnalysis;
+using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
@@ -10,7 +11,7 @@ namespace AUTD3Sharp
         [ExcludeFromCodeCoverage]
         public static void Init(string path)
         {
-            var pathBytes = System.Text.Encoding.UTF8.GetBytes(path);
+            var pathBytes = Ffi.toNullTerminatedUtf8(path);
             unsafe
             {
                 fixed (byte* pathPtr = &pathBytes[0])

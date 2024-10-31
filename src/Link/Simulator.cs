@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using AUTD3Sharp.Driver;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp.Link
 {
@@ -19,7 +20,7 @@ namespace AUTD3Sharp.Link
             LinkBuilderPtr ILinkBuilder<Simulator>.Ptr()
             {
                 var addrStr = Addr.ToString();
-                var addrBytes = System.Text.Encoding.UTF8.GetBytes(addrStr);
+                var addrBytes = Ffi.toNullTerminatedUtf8(addrStr);
                 unsafe
                 {
                     fixed (byte* ap = &addrBytes[0])
