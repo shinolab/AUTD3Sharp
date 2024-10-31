@@ -8,3 +8,6 @@ UserSettings/
 autd3.csproj
 unity.sln
 obj/
+*.csproj
+Settings
+settings.meta
