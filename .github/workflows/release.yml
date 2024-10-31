@@ -18,6 +18,10 @@ jobs:
           git config --global user.email 'github-bot@users.noreply.github.com'
           git mv unity/Assets/Samples unity/Assets/Samples~
           rm -f unity/Assets/Samples.meta
+          rm -f unity/Assets/DefaultVolumeProfile.*
+          rm -f unity/Assets/UniversalRenderPipelineAsset.*
+          rm -f unity/Assets/UniversalRenderPipelineAsset_Renderer.*
+          rm -f unity/Assets/UniversalRenderPipelineGlobalSettings.*
           rm -rf tools .github
           find unity/Assets -name .gitignore -type f -delete
           find unity/Assets -name .npmignore -type f -delete
