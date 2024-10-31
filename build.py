@@ -73,17 +73,12 @@ def rmtree_f(path):
 
 
 def glob_norm(path, recursive):
-    return list(
-        map(lambda p: os.path.normpath(p), glob.glob(path, recursive=recursive))
-    )
+    return list(map(lambda p: os.path.normpath(p), glob.glob(path, recursive=recursive)))
 
 
 def rm_glob_f(path, exclude=None, recursive=True):
     if exclude is not None:
-        for f in list(
-            set(glob_norm(path, recursive=recursive))
-            - set(glob_norm(exclude, recursive=recursive))
-        ):
+        for f in list(set(glob_norm(path, recursive=recursive)) - set(glob_norm(exclude, recursive=recursive))):
             rm_f(f)
     else:
         for f in glob.glob(path, recursive=recursive):
@@ -135,31 +130,21 @@ class Config:
     def is_pcap_available(self):
         if not self.is_windows():
             return True
-        wpcap_exists = os.path.isfile(
-            "C:\\Windows\\System32\\wpcap.dll"
-        ) and os.path.isfile("C:\\Windows\\System32\\Npcap\\wpcap.dll")
-        packet_exists = os.path.isfile(
-            "C:\\Windows\\System32\\Packet.dll"
-        ) and os.path.isfile("C:\\Windows\\System32\\Npcap\\Packet.dll")
+        wpcap_exists = os.path.isfile("C:\\Windows\\System32\\wpcap.dll") and os.path.isfile("C:\\Windows\\System32\\Npcap\\wpcap.dll")
+        packet_exists = os.path.isfile("C:\\Windows\\System32\\Packet.dll") and os.path.isfile("C:\\Windows\\System32\\Npcap\\Packet.dll")
 
         return wpcap_exists and packet_exists
 
 
 def should_update_dll(config: Config, version: str) -> bool:
     if config.is_windows():
-        if not os.path.isfile(
-            "src/native/windows/x64/autd3capi.dll"
-        ) or not os.path.isfile("tests/autd3capi.dll"):
+        if not os.path.isfile("src/native/windows/x64/autd3capi.dll") or not os.path.isfile("tests/autd3capi.dll"):
             return True
     elif config.is_macos():
-        if not os.path.isfile(
-            "src/native/osx/universal/libautd3capi.dylib"
-        ) or not os.path.isfile("tests/libautd3capi.dylib"):
+        if not os.path.isfile("src/native/osx/universal/libautd3capi.dylib") or not os.path.isfile("tests/libautd3capi.dylib"):
             return True
     elif config.is_linux():
-        if not os.path.isfile(
-            "src/native/linux/x64/libautd3capi.so"
-        ) or not os.path.isfile("tests/libautd3capi.so"):
+        if not os.path.isfile("src/native/linux/x64/libautd3capi.so") or not os.path.isfile("tests/libautd3capi.so"):
             return True
 
     if not os.path.isfile("VERSION"):
@@ -175,9 +160,7 @@ def copy_dll(config: Config):
     with open("src/AUTD3Sharp.csproj", "r") as f:
         content = f.read()
         version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
-        version = (
-            ".".join(version) if version[2].endswith("rc") else ".".join(version[:3])
-        )
+        version = ".".join(version[:4]) if version[2].endswith("rc") else ".".join(version[:3])
 
     if not should_update_dll(config, version):
         return
@@ -328,17 +311,12 @@ def check_if_all_native_methods_called():
                 if result:
                     defined_methods.add(result.group(1))
     defined_methods = set(filter(lambda x: not x.endswith("T4010A1"), defined_methods))
-    defined_methods = set(
-        filter(lambda x: not x == "AUTDSamplingConfigDivision", defined_methods)
-    )
+    defined_methods = set(filter(lambda x: not x == "AUTDSamplingConfigDivision", defined_methods))
 
     used_methods = set()
     pattern = re.compile("NativeMethods.*?\\.(AUTD.*?)\\(")
     for file in (
-        list(
-            set(glob_norm("src/**/*.cs", recursive=True))
-            - set(glob_norm("src/NativeMethods/*.cs", recursive=True))
-        )
+        list(set(glob_norm("src/**/*.cs", recursive=True)) - set(glob_norm("src/NativeMethods/*.cs", recursive=True)))
         + list(set(glob_norm("tests/**/*.cs", recursive=True)))
         + ["src/NativeMethods/DriverExt.cs"]
     ):
@@ -451,11 +429,9 @@ def copy_dll_unity(config: Config):
         version_tokens = version.split(".")
         version: str
         if version_tokens[2].endswith("rc"):
-            version = ".".join(version_tokens)
+            version = ".".join(version_tokens[:4])
         elif "-" in version_tokens[2]:
-            version = (
-                ".".join(version_tokens[:2]) + "." + version_tokens[2].split("-")[0]
-            )
+            version = ".".join(version_tokens[:2]) + "." + version_tokens[2].split("-")[0]
         else:
             ".".join(version_tokens[:3])
 
@@ -652,37 +628,25 @@ if __name__ == "__main__":
 
         # cs build
         parser_cs_build = subparsers_cs.add_parser("build", help="see `cs build -h`")
-        parser_cs_build.add_argument(
-            "--release", action="store_true", help="release build"
-        )
-        parser_cs_build.add_argument(
-            "--no-examples", action="store_true", help="skip building examples"
-        )
+        parser_cs_build.add_argument("--release", action="store_true", help="release build")
+        parser_cs_build.add_argument("--no-examples", action="store_true", help="skip building examples")
         parser_cs_build.set_defaults(handler=cs_build)
 
         # cs test
         parser_cs_test = subparsers_cs.add_parser("test", help="see `cs test -h`")
-        parser_cs_test.add_argument(
-            "--release", action="store_true", help="release build"
-        )
+        parser_cs_test.add_argument("--release", action="store_true", help="release build")
         parser_cs_test.set_defaults(handler=cs_test)
 
         # cs cov
         parser_cs_cov = subparsers_cs.add_parser("cov", help="see `cs cov -h`")
-        parser_cs_cov.add_argument(
-            "--release", action="store_true", help="release build"
-        )
-        parser_cs_cov.add_argument(
-            "--html", action="store_true", help="generate html report", default=False
-        )
+        parser_cs_cov.add_argument("--release", action="store_true", help="release build")
+        parser_cs_cov.add_argument("--html", action="store_true", help="generate html report", default=False)
         parser_cs_cov.set_defaults(handler=cs_cov)
 
         # cs run
         parser_cs_run = subparsers_cs.add_parser("run", help="see `cs run -h`")
         parser_cs_run.add_argument("target", help="binary target")
-        parser_cs_run.add_argument(
-            "--release", action="store_true", help="release build"
-        )
+        parser_cs_run.add_argument("--release", action="store_true", help="release build")
         parser_cs_run.set_defaults(handler=cs_run)
 
         # cs clear
@@ -694,18 +658,12 @@ if __name__ == "__main__":
         subparsers_unity = parser_unity.add_subparsers()
 
         # unity build
-        parser_unity_build = subparsers_unity.add_parser(
-            "build", help="see `unity build -h`"
-        )
-        parser_unity_build.add_argument(
-            "--release", action="store_true", help="release build"
-        )
+        parser_unity_build = subparsers_unity.add_parser("build", help="see `unity build -h`")
+        parser_unity_build.add_argument("--release", action="store_true", help="release build")
         parser_unity_build.set_defaults(handler=unity_build)
 
         # unity clear
-        parser_unity_clear = subparsers_unity.add_parser(
-            "clear", help="see `unity clear -h`"
-        )
+        parser_unity_clear = subparsers_unity.add_parser("clear", help="see `unity clear -h`")
         parser_unity_clear.set_defaults(handler=unity_clear)
 
         # util
@@ -713,16 +671,12 @@ if __name__ == "__main__":
         subparsers_util = parser_util.add_subparsers()
 
         # util update version
-        parser_util_upver = subparsers_util.add_parser(
-            "upver", help="see `util upver -h`"
-        )
+        parser_util_upver = subparsers_util.add_parser("upver", help="see `util upver -h`")
         parser_util_upver.add_argument("version", help="version")
         parser_util_upver.set_defaults(handler=util_update_ver)
 
         # util update version
-        parser_util_gen_wrap = subparsers_util.add_parser(
-            "gen_wrap", help="see `util gen_wrap -h`"
-        )
+        parser_util_gen_wrap = subparsers_util.add_parser("gen_wrap", help="see `util gen_wrap -h`")
         parser_util_gen_wrap.set_defaults(handler=util_gen_wrapper)
 
         # help
