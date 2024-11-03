@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
       - run: python3 build.py unity build --release
       - run: |
           git fetch origin upm/latest:upm/latest
@@ -50,6 +52,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+        with:
+          submodules: true
     - uses: actions/setup-dotnet@v4
       with:
         dotnet-version: '8.0.x'
