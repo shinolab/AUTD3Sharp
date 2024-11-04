@@ -1,14 +1,20 @@
-using System;
 using AUTD3Sharp.NativeMethods;
-using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
     public static class Tracing
     {
+        public static TraceInitAction ExtTracing;
+
 #if UNITY_2020_2_OR_NEWER
-        [ExcludeFromCodeCoverage]
+        public delegate void TraceInitAction(byte[] pathBytes);
+
+        static Tracing()
+        {
+            ExtTracing = (_) => { };
+        }
+
         public static void Init(string path)
         {
             var pathBytes = Ffi.toNullTerminatedUtf8(path);
@@ -22,15 +28,23 @@ namespace AUTD3Sharp
                     NativeMethodsLinkTwinCAT.AUTDLinkTwinCATTracingInitWithFile(pathPtr);
                 }
             }
+            ExtTracing(pathBytes);
         }
 #else
-        [ExcludeFromCodeCoverage]
+        public delegate void TraceInitAction();
+
+        static Tracing()
+        {
+            ExtTracing = () => { };
+        }
+
         public static void Init()
         {
             NativeMethodsBase.AUTDTracingInit();
             NativeMethodsLinkSimulator.AUTDLinkSimulatorTracingInit();
             NativeMethodsModulationAudioFile.AUTDModulationAudioFileTracingInit();
             NativeMethodsLinkTwinCAT.AUTDLinkTwinCATTracingInit();
+            ExtTracing();
         }
 #endif
     }

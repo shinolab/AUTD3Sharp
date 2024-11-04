@@ -16,6 +16,12 @@ public class AUTDTest
     }
 
     [Fact]
+    public void TestTracingInit()
+    {
+        AUTD3Sharp.Tracing.Init();
+    }
+
+    [Fact]
     public void TestControllerIsDefault()
     {
         var builder = Controller.Builder([]);
