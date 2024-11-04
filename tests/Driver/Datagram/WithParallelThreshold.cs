@@ -12,7 +12,13 @@ public class WithParallelThresholdTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)])
             .OpenAsync(Audit.Builder());
 
-        await autd.SendAsync(new Null().WithParallelThreshold(4));
-        await autd.SendAsync((new Static(), new Null()).WithParallelThreshold(null));
+        await autd.SendAsync(new Null().WithParallelThreshold(null));
+        Assert.Null(autd.Link.LastParallelThreshold());
+
+        await autd.SendAsync(new Null().WithParallelThreshold(10));
+        Assert.Equal(10, autd.Link.LastParallelThreshold());
+
+        await autd.SendAsync((new Static(), new Null()).WithParallelThreshold(20));
+        Assert.Equal(20, autd.Link.LastParallelThreshold());
     }
 }
