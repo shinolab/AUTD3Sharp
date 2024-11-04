@@ -64,6 +64,9 @@ def download_and_extract(url: str, *dest_dirs: str) -> None:
             tar.extractall(filter="fully_trusted")
     tmp_file.unlink()
 
+    for dest_dir in dest_dirs:
+        Path(dest_dir).mkdir(parents=True, exist_ok=True)
+
     for dll in Path("bin").glob("*.dll"):
         for dest_dir in dest_dirs:
             shutil.copy(dll, dest_dir)
