@@ -194,15 +194,16 @@ def check_if_all_native_methods_called() -> None:
     defined_methods = set(filter(lambda x: not x.endswith("T4010A1"), defined_methods))
     defined_methods = set(filter(lambda x: x != "AUTDSamplingConfigDivision", defined_methods))
 
-    used_methods: set[Path] = set()
+    used_methods = set()
     pattern = re.compile("NativeMethods.*?\\.(AUTD.*?)\\(")
 
-    used_methods |= set(Path("src").rglob("*.cs"))
-    used_methods -= set(Path("src/NativeMethods").rglob("*.cs"))
-    used_methods |= set(Path("tests").rglob("*.cs"))
-    used_methods.add(Path("src/NativeMethods/DriverExt.cs"))
+    paths: set[Path] = set()
+    paths |= set(Path("src").rglob("*.cs"))
+    paths -= set(Path("src/NativeMethods").rglob("*.cs"))
+    paths |= set(Path("tests").rglob("*.cs"))
+    paths.add(Path("src/NativeMethods/DriverExt.cs"))
 
-    for file in used_methods:
+    for file in paths:
         with file.open(encoding="utf-8") as f:
             for line in f.readlines():
                 result = pattern.findall(line)

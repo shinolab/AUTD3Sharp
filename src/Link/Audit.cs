@@ -44,6 +44,18 @@ namespace AUTD3Sharp.Link
         public bool IsForceFan(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(_ptr, (ushort)idx);
         public void BreakDown() => NativeMethodsBase.AUTDLinkAuditBreakDown(_ptr);
         public void Repair() => NativeMethodsBase.AUTDLinkAuditRepair(_ptr);
+
+        public long? LastParallelThreshold()
+        {
+            var threshold = NativeMethodsBase.AUTDLinkAuditLastParallelThreshold(_ptr);
+            return threshold < 0 ? null : threshold;
+        }
+        public TimeSpan? LastTimeout()
+        {
+            var timeout = NativeMethodsBase.AUTDLinkAuditLastTimeout(_ptr);
+            return timeout < 0 ? null : TimeSpan.FromMilliseconds((double)timeout / 1000 / 1000);
+        }
+
         public ushort SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (ushort)idx);
         public ushort SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (ushort)idx);
         public ushort SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);

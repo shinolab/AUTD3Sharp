@@ -12,7 +12,13 @@ public class WithTimeoutTest
         var autd = await Controller.Builder([new AUTD3(Vector3.Zero)])
             .OpenAsync(Audit.Builder());
 
+        await autd.SendAsync(new Null().WithTimeout(null));
+        Assert.Null(autd.Link.LastTimeout());
+
         await autd.SendAsync(new Null().WithTimeout(TimeSpan.FromMilliseconds(100)));
-        await autd.SendAsync((new Static(), new Null()).WithTimeout(null));
+        Assert.Equal(TimeSpan.FromMilliseconds(100), autd.Link.LastTimeout());
+
+        await autd.SendAsync((new Static(), new Null()).WithTimeout(TimeSpan.FromMilliseconds(200)));
+        Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
     }
 }
