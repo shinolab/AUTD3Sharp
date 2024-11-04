@@ -1,1 +1,4 @@
 LICENSE.txt
+*.dll
+*.dylib
+*.so
