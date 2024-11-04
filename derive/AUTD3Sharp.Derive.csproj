@@ -12,7 +12,7 @@
 
     <Platforms>AnyCPU</Platforms>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>29.0.0-rc.4</Version>
+    <Version>29.0.0-rc.4.1</Version>
     <Authors>Shun Suzuki</Authors>
     <Company>Shinolab</Company>
     <Description>AUTD3 derive helper for AUTD3Sharp</Description>
