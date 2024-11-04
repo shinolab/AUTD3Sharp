@@ -15,8 +15,6 @@
 
 * Please refer to [example](./example).
 
-* If you are using Linux/macOS, you may need to run as root (e.g. `sudo dotnet run`).
-
 ## Unity
 
 * Please install via Unity Package Manager
