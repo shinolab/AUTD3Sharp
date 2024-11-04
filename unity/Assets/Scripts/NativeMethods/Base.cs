@@ -453,6 +453,12 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditRepair", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDLinkAuditRepair(LinkPtr audit);
 
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditLastTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern long AUTDLinkAuditLastTimeout(LinkPtr audit);
+
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditLastParallelThreshold", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern long AUTDLinkAuditLastParallelThreshold(LinkPtr audit);
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditCpuNumTransducers", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern uint AUTDLinkAuditCpuNumTransducers(LinkPtr audit, ushort idx);
 

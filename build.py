@@ -262,6 +262,9 @@ def cs_run(args) -> None:  # noqa: ANN001
 
 
 def cs_clear(_) -> None:  # noqa: ANN001
+    remove("derive/bin")
+    remove("derive/obj")
+
     remove("src/bin")
     remove("src/obj")
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using AUTD3Sharp;
 using AUTD3Sharp.Link;
 using UnityEngine;
@@ -10,7 +11,7 @@ using static AUTD3Sharp.Units;
 
 public class SimpleAUTDController : MonoBehaviour
 {
-    private Controller<AUTD3Sharp.Link.SOEM>? _autd = null;
+    private Controller<AUTD3Sharp.Link.Simulator>? _autd = null;
     public GameObject? Target = null;
 
     private Vector3 _oldPosition;
@@ -22,22 +23,12 @@ public class SimpleAUTDController : MonoBehaviour
         try
         {
             _autd = Controller.Builder(new[] { new AUTD3(gameObject.transform.position).WithRotation(gameObject.transform.rotation) })
-                .Open(SOEM.Builder()
-                    .WithErrHandler((slave, status) =>
-                    {
-                        UnityEngine.Debug.LogError($"slave [{slave}]: {status}");
-                        if (status == Status.Lost)
-                            // You can also wait for the link to recover, without exiting
-#if UNITY_EDITOR
-                                UnityEditor.EditorApplication.isPlaying = false;
-#elif UNITY_STANDALONE
-                                UnityEngine.Application.Quit();
-#endif
-                    }));
+                .Open(AUTD3Sharp.Link.Simulator.Builder(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080)));
         }
         catch (Exception)
         {
-            UnityEngine.Debug.LogError("Failed to open AUTD3 controller!");
+
+            UnityEngine.Debug.LogError("Before running this sample, install autd3-server (https://github.com/shinolab/autd3-server) and run simulator with unity option.");
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
 #elif UNITY_STANDALONE

@@ -20,14 +20,6 @@ namespace AUTD3Sharp
                     NativeMethodsLinkSimulator.AUTDLinkSimulatorTracingInitWithFile(pathPtr);
                     NativeMethodsModulationAudioFile.AUTDModulationAudioFileTracingInitWithFile(pathPtr);
                     NativeMethodsLinkTwinCAT.AUTDLinkTwinCATTracingInitWithFile(pathPtr);
-                    try
-                    {
-                        NativeMethodsLinkSOEM.AUTDLinkSOEMTracingInitWithFile(pathPtr);
-                    }
-                    catch (Exception)
-                    {
-                        // ignored
-                    }
                 }
             }
         }
@@ -39,14 +31,6 @@ namespace AUTD3Sharp
             NativeMethodsLinkSimulator.AUTDLinkSimulatorTracingInit();
             NativeMethodsModulationAudioFile.AUTDModulationAudioFileTracingInit();
             NativeMethodsLinkTwinCAT.AUTDLinkTwinCATTracingInit();
-            try
-            {
-                NativeMethodsLinkSOEM.AUTDLinkSOEMTracingInit();
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
         }
 #endif
     }

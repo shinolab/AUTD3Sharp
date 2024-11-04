@@ -4,7 +4,7 @@
     <DataCollectors>
       <DataCollector friendlyName="XPlat code coverage">
         <Configuration>
-          <Exclude>[*]AUTD3Sharp.Link.Simulator,[*]AUTD3Sharp.Link.SOEM,[*]AUTD3Sharp.Link.EtherCATAdapter,[*]AUTD3Sharp.Link.RemoteSOEM,[*]AUTD3Sharp.Link.TwinCAT,[*]AUTD3Sharp.Link.RemoteTwinCAT,[*]AUTD3Sharp.NativeMethods.*,[*]AUTD3Sharp.Derive.*,[*]AUTD3Sharp.Link.SOEMBuilder,[*]AUTD3Sharp.Link.RemoteTwinCATBuilder</Exclude>
+          <Exclude>[*]AUTD3Sharp.Link.Simulator,[*]AUTD3Sharp.Link.EtherCATAdapter,[*]AUTD3Sharp.Link.TwinCAT,[*]AUTD3Sharp.Link.RemoteTwinCAT,[*]AUTD3Sharp.NativeMethods.*,[*]AUTD3Sharp.Derive.*,[*]AUTD3Sharp.Link.RemoteTwinCATBuilder</Exclude>
         </Configuration>
       </DataCollector>
     </DataCollectors>
