@@ -7,13 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Samples", "Samples\Samples.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulator", "Simulator\Simulator.csproj", "{7CAEFB7B-8EE6-46CE-B2A2-403624349D1C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SOEM", "SOEM\SOEM.csproj", "{49FF50B0-F32B-43D5-8C48-47713CB90FF8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwinCAT", "TwinCAT\TwinCAT.csproj", "{15EB7722-FE8F-4780-A471-5707E94EB419}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoveTwinCAT", "RemoveTwinCAT\RemoveTwinCAT.csproj", "{34B5F5DE-B9E9-455B-B810-408996B4F1A2}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoteSOEM", "RemoteSOEM\RemoteSOEM.csproj", "{55F1A21E-45F4-4AEA-BE2D-A57E77D2892A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +25,6 @@ Global
 		{7CAEFB7B-8EE6-46CE-B2A2-403624349D1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CAEFB7B-8EE6-46CE-B2A2-403624349D1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CAEFB7B-8EE6-46CE-B2A2-403624349D1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{49FF50B0-F32B-43D5-8C48-47713CB90FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{49FF50B0-F32B-43D5-8C48-47713CB90FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{49FF50B0-F32B-43D5-8C48-47713CB90FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{49FF50B0-F32B-43D5-8C48-47713CB90FF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{15EB7722-FE8F-4780-A471-5707E94EB419}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{15EB7722-FE8F-4780-A471-5707E94EB419}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15EB7722-FE8F-4780-A471-5707E94EB419}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -41,10 +33,6 @@ Global
 		{34B5F5DE-B9E9-455B-B810-408996B4F1A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34B5F5DE-B9E9-455B-B810-408996B4F1A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34B5F5DE-B9E9-455B-B810-408996B4F1A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{55F1A21E-45F4-4AEA-BE2D-A57E77D2892A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{55F1A21E-45F4-4AEA-BE2D-A57E77D2892A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{55F1A21E-45F4-4AEA-BE2D-A57E77D2892A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{55F1A21E-45F4-4AEA-BE2D-A57E77D2892A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

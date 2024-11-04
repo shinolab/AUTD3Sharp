@@ -7,8 +7,7 @@ use glob::glob;
 use convert_case::{Case, Casing};
 
 fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Result<()> {
-    let sub_abbr =
-        |str: String| -> String { str.replace("Twincat", "TwinCAT").replace("Soem", "SOEM") };
+    let sub_abbr = |str: String| -> String { str.replace("Twincat", "TwinCAT") };
 
     let to_pascal = |name: &str| -> String {
         let res = name.to_case(Case::Pascal);
