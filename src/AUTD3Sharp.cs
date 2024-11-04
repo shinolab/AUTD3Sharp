@@ -1,5 +1,4 @@
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
