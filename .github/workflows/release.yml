@@ -29,8 +29,8 @@ jobs:
           rm -f unity/Assets/UniversalRenderPipelineAsset_Renderer.*
           rm -f unity/Assets/UniversalRenderPipelineGlobalSettings.*
           rm -rf tools .github
-          find unity/Assets -name .gitignore -type f -delete
-          find unity/Assets -name .npmignore -type f -delete
+          find ./ -name .gitignore -type f -delete
+          find ./ -name .npmignore -type f -delete
           git add .
           git commit -am "prepare for Unity Package Release"
           git branch -D upm/latest
