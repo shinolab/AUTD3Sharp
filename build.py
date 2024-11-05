@@ -303,9 +303,9 @@ def should_update_dll_unity(config: Config, version: str) -> bool:
 
 
 def copy_dll_unity(config: Config) -> None:
-    with Path("unity/Assets/package.json").open() as f:
+    with Path("src/AUTD3Sharp.csproj").open() as f:
         content = f.read()
-        version = re.search(r'"version": "(.*)"', content).group(1).split(".")
+        version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
         version = ".".join(version[:4]) if version[2].endswith("rc") else ".".join(version[:3])
 
     if not should_update_dll_unity(config, version):
@@ -432,11 +432,18 @@ def util_update_ver(args) -> None:  # noqa: ANN001
     nuspec.write_text(content)
 
     with working_dir("unity"):
+        version_tokens = version.split(".")
+        if "-" in version_tokens[2]:
+            version_tokens[2] = version_tokens[2].split("-")[0]
+            unity_version = ".".join(version_tokens[:3])
+        else:
+            unity_version = version
+
         package_json = Path("Assets/package.json")
         content = package_json.read_text()
         content = re.sub(
             r'"version": "(.*)"',
-            f'"version": "{version}"',
+            f'"version": "{unity_version}"',
             content,
             flags=re.MULTILINE,
         )
