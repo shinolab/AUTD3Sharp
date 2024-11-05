@@ -78,71 +78,71 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 29.0.0-rc.4 (MIT)
+autd3 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-derive 29.0.0-rc.4 (MIT)
+autd3-derive 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 29.0.0-rc.4 (MIT)
+autd3-driver 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-emulator 29.0.0-rc.4 (MIT)
+autd3-emulator 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-emulator
 ---------------------------------------------------------
 
-autd3-firmware-emulator 29.0.0-rc.4 (MIT)
+autd3-firmware-emulator 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 29.0.0-rc.4 (MIT)
+autd3-gain-holo 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 29.0.0-rc.4 (MIT)
+autd3-link-simulator 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-twincat 29.0.0-rc.4 (MIT)
+autd3-link-twincat 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 29.0.0-rc.4 (MIT)
+autd3-modulation-audio-file 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 29.0.0-rc.4 (MIT)
+autd3-protobuf 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 29.0.0-rc.4.1 (MIT)
+autd3capi 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 29.0.0-rc.4.1 (MIT)
+autd3capi-driver 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-emulator 29.0.0-rc.4.1 (MIT)
+autd3capi-emulator 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 29.0.0-rc.4.1 (MIT)
+autd3capi-gain-holo 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 29.0.0-rc.4.1 (MIT)
+autd3capi-link-simulator 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 29.0.0-rc.4.1 (MIT)
+autd3capi-link-twincat 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 29.0.0-rc.4.1 (MIT)
+autd3capi-modulation-audio-file 29.0.0-rc.5 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
@@ -162,12 +162,8 @@ base64 0.22.1 (Apache-2.0 OR MIT)
 https://github.com/marshallpierce/rust-base64
 ---------------------------------------------------------
 
-bit-set 0.6.0 (Apache-2.0 OR MIT)
+bit-set 0.8.0 (Apache-2.0 OR MIT)
 https://github.com/contain-rs/bit-set
----------------------------------------------------------
-
-bit-vec 0.7.0 (Apache-2.0 OR MIT)
-https://github.com/contain-rs/bit-vec
 ---------------------------------------------------------
 
 bit-vec 0.8.0 (Apache-2.0 OR MIT)
@@ -230,18 +226,6 @@ codespan-reporting 0.11.1 (Apache-2.0)
 https://github.com/brendanzab/codespan
 ---------------------------------------------------------
 
-com 0.6.0 (MIT)
-https://github.com/microsoft/com-rs
----------------------------------------------------------
-
-com_macros 0.6.0 (MIT)
-https://github.com/microsoft/com-rs
----------------------------------------------------------
-
-com_macros_support 0.6.0 (MIT)
-https://github.com/microsoft/com-rs
----------------------------------------------------------
-
 compact_str 0.8.0 (MIT)
 https://github.com/ParkMyCar/compact_str
 ---------------------------------------------------------
@@ -288,10 +272,6 @@ https://github.com/BurntSushi/rust-csv
 
 csv-core 0.1.11 (MIT OR Unlicense)
 https://github.com/BurntSushi/rust-csv
----------------------------------------------------------
-
-d3d12 22.0.0 (Apache-2.0 OR MIT)
-https://github.com/gfx-rs/wgpu/tree/trunk/d3d12
 ---------------------------------------------------------
 
 deranged 0.3.11 (Apache-2.0 OR MIT)
@@ -406,7 +386,7 @@ glob 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/glob
 ---------------------------------------------------------
 
-glow 0.13.1 (Apache-2.0 OR MIT OR Zlib)
+glow 0.14.2 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/grovesNL/glow
 ---------------------------------------------------------
 
@@ -422,7 +402,7 @@ gpu-alloc-types 0.3.0 (Apache-2.0 OR MIT)
 https://github.com/zakarumych/gpu-alloc
 ---------------------------------------------------------
 
-gpu-allocator 0.26.0 (Apache-2.0 OR MIT)
+gpu-allocator 0.27.0 (Apache-2.0 OR MIT)
 https://github.com/Traverse-Research/gpu-allocator
 ---------------------------------------------------------
 
@@ -446,12 +426,8 @@ hashbrown 0.14.5 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/hashbrown
 ---------------------------------------------------------
 
-hashbrown 0.15.0 (Apache-2.0 OR MIT)
+hashbrown 0.15.1 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/hashbrown
----------------------------------------------------------
-
-hassle-rs 0.11.0 (MIT)
-https://github.com/Traverse-Research/hassle-rs
 ---------------------------------------------------------
 
 heck 0.5.0 (Apache-2.0 OR MIT)
@@ -498,7 +474,7 @@ hyper 1.5.0 (MIT)
 https://github.com/hyperium/hyper
 ---------------------------------------------------------
 
-hyper-timeout 0.5.1 (Apache-2.0 OR MIT)
+hyper-timeout 0.5.2 (Apache-2.0 OR MIT)
 https://github.com/hjr3/hyper-timeout
 ---------------------------------------------------------
 
@@ -630,7 +606,7 @@ multiversion-macros 0.7.4 (Apache-2.0 OR MIT)
 https://github.com/calebzulawski/multiversion
 ---------------------------------------------------------
 
-naga 22.1.0 (Apache-2.0 OR MIT)
+naga 23.0.0 (Apache-2.0 OR MIT)
 https://github.com/gfx-rs/wgpu/tree/trunk/naga
 ---------------------------------------------------------
 
@@ -750,11 +726,11 @@ planus 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/planus-org/planus
 ---------------------------------------------------------
 
-polars 0.44.1 (MIT)
+polars 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-arrow 0.44.1 (MIT AND Apache-2.0)
+polars-arrow 0.44.2 (MIT AND Apache-2.0)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
@@ -762,39 +738,39 @@ polars-arrow-format 0.1.0 (Apache-2.0)
 https://github.com/pola-rs/arrow-format
 ---------------------------------------------------------
 
-polars-compute 0.44.1 (MIT)
+polars-compute 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-core 0.44.1 (MIT)
+polars-core 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-error 0.44.1 (MIT)
+polars-error 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-expr 0.44.1 (MIT)
+polars-expr 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-io 0.44.1 (MIT)
+polars-io 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-lazy 0.44.1 (MIT)
+polars-lazy 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-mem-engine 0.44.1 (MIT)
+polars-mem-engine 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-ops 0.44.1 (MIT)
+polars-ops 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-parquet 0.44.1 (MIT AND Apache-2.0)
+polars-parquet 0.44.2 (MIT AND Apache-2.0)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
@@ -802,23 +778,23 @@ polars-parquet-format 0.1.0 (MIT AND Apache-2.0)
 https://github.com/pola-rs/parquet-format
 ---------------------------------------------------------
 
-polars-pipe 0.44.1 (MIT)
+polars-pipe 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-plan 0.44.1 (MIT)
+polars-plan 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-row 0.44.1 (MIT)
+polars-row 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-schema 0.44.1 (MIT)
+polars-schema 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-utils 0.44.1 (MIT)
+polars-utils 0.44.2 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
@@ -1042,7 +1018,7 @@ syn 1.0.109 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
-syn 2.0.86 (Apache-2.0 OR MIT)
+syn 2.0.87 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
@@ -1066,11 +1042,11 @@ termcolor 1.4.1 (MIT OR Unlicense)
 https://github.com/BurntSushi/termcolor
 ---------------------------------------------------------
 
-thiserror 1.0.66 (Apache-2.0 OR MIT)
+thiserror 1.0.68 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
-thiserror-impl 1.0.66 (Apache-2.0 OR MIT)
+thiserror-impl 1.0.68 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
@@ -1221,28 +1197,24 @@ web-sys 0.3.72 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/web-sys
 ---------------------------------------------------------
 
-wgpu 22.1.0 (Apache-2.0 OR MIT)
+wgpu 23.0.0 (Apache-2.0 OR MIT)
 https://github.com/gfx-rs/wgpu
 ---------------------------------------------------------
 
-wgpu-core 22.1.0 (Apache-2.0 OR MIT)
+wgpu-core 23.0.0 (Apache-2.0 OR MIT)
 https://github.com/gfx-rs/wgpu
 ---------------------------------------------------------
 
-wgpu-hal 22.0.0 (Apache-2.0 OR MIT)
+wgpu-hal 23.0.0 (Apache-2.0 OR MIT)
 https://github.com/gfx-rs/wgpu
 ---------------------------------------------------------
 
-wgpu-types 22.0.0 (Apache-2.0 OR MIT)
+wgpu-types 23.0.0 (Apache-2.0 OR MIT)
 https://github.com/gfx-rs/wgpu
 ---------------------------------------------------------
 
 wide 0.7.28 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/wide
----------------------------------------------------------
-
-widestring 1.1.0 (Apache-2.0 OR MIT)
-https://github.com/starkat99/widestring-rs
 ---------------------------------------------------------
 
 winapi 0.3.9 (Apache-2.0 OR MIT)
@@ -1261,19 +1233,11 @@ winapi-x86_64-pc-windows-gnu 0.4.0 (Apache-2.0 OR MIT)
 https://github.com/retep998/winapi-rs
 ---------------------------------------------------------
 
-windows 0.52.0 (Apache-2.0 OR MIT)
-https://github.com/microsoft/windows-rs
----------------------------------------------------------
-
 windows 0.57.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
 windows 0.58.0 (Apache-2.0 OR MIT)
-https://github.com/microsoft/windows-rs
----------------------------------------------------------
-
-windows-core 0.52.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
@@ -1365,7 +1329,7 @@ zerocopy 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
-zerocopy 0.8.8 (Apache-2.0 OR BSD-2-Clause OR MIT)
+zerocopy 0.8.9 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
@@ -1373,7 +1337,7 @@ zerocopy-derive 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
-zerocopy-derive 0.8.8 (Apache-2.0 OR BSD-2-Clause OR MIT)
+zerocopy-derive 0.8.9 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
