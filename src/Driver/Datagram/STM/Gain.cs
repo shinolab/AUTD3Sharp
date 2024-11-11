@@ -64,7 +64,7 @@ namespace AUTD3Sharp
         public DatagramWithSegment<GainSTM, GainSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
 
         public Freq<float> Freq => _config.Freq(_gains.Length);
-        public TimeSpan Period => _config.Period(_gains.Length);
+        public Duration Period => _config.Period(_gains.Length);
         public SamplingConfig SamplingConfig => new(_config.SamplingConfig(_gains.Length));
 
         SamplingConfig IWithSampling.SamplingConfigIntensity() => SamplingConfig;

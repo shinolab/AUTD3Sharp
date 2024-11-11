@@ -17,7 +17,7 @@ public class FociSTMTest
         var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
                 center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         Assert.Equal(1.0f * Hz, stm.Freq);
-        Assert.Equal(TimeSpan.FromSeconds(1), stm.Period);
+        Assert.Equal(Duration.FromSecs(1), stm.Period);
         Assert.Equal(20000u, stm.SamplingConfig.Division);
         await autd.SendAsync(stm);
 
@@ -37,7 +37,7 @@ public class FociSTMTest
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = new FociSTM(TimeSpan.FromSeconds(1), Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        stm = new FociSTM(Duration.FromSecs(1), Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
               center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         await autd.SendAsync(stm);
         foreach (var dev in autd)
@@ -46,7 +46,7 @@ public class FociSTMTest
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = FociSTM.Nearest(TimeSpan.FromSeconds(1), Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
+        stm = FociSTM.Nearest(Duration.FromSecs(1), Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
               center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0)));
         await autd.SendAsync(stm);
         foreach (var dev in autd)

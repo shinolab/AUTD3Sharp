@@ -2,7 +2,6 @@
 #nullable enable
 #endif
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,19 +16,19 @@ namespace AUTD3Sharp
     [Builder]
     public partial class ControllerBuilder
     {
-        private AUTD3[] _devices;
+        private readonly AUTD3[] _devices;
 
         [Property]
         public ushort FallbackParallelThreshold { get; private set; } = 4;
 
         [Property]
-        public TimeSpan FallbackTimeout { get; private set; } = TimeSpan.FromMilliseconds(20);
+        public Duration FallbackTimeout { get; private set; } = Duration.FromMillis(20);
 
         [Property]
-        public TimeSpan SendInterval { get; private set; } = TimeSpan.FromMilliseconds(1);
+        public Duration SendInterval { get; private set; } = Duration.FromMillis(1);
 
         [Property]
-        public TimeSpan ReceiveInterval { get; private set; } = TimeSpan.FromMilliseconds(1);
+        public Duration ReceiveInterval { get; private set; } = Duration.FromMillis(1);
 
         [Property]
         public TimerStrategyWrap TimerStrategy { get; private set; } = Timer.TimerStrategy.Spin(new SpinSleeper());
@@ -50,32 +49,30 @@ namespace AUTD3Sharp
                 {
                     return NativeMethodsBase.AUTDControllerBuilder(pp, rp, (ushort)pos.Length,
                         FallbackParallelThreshold,
-                        (ulong)(FallbackTimeout.TotalMilliseconds * 1000 * 1000),
-                        (ulong)(SendInterval.TotalMilliseconds * 1000 * 1000),
-                        (ulong)(ReceiveInterval.TotalMilliseconds * 1000 * 1000),
+                        FallbackTimeout,
+                        SendInterval,
+                        ReceiveInterval,
                         TimerStrategy
                         );
                 }
             }
         }
 
-        public async Task<Controller<T>> OpenAsync<T>(ILinkBuilder<T> linkBuilder, TimeSpan? timeout = null)
+        public async Task<Controller<T>> OpenAsync<T>(ILinkBuilder<T> linkBuilder, Duration? timeout = null)
         {
             var runtime = NativeMethodsBase.AUTDCreateRuntime();
             var handle = NativeMethodsBase.AUTDGetRuntimeHandle(runtime);
-            var future = NativeMethodsBase.AUTDControllerOpen(Ptr(), linkBuilder.Ptr(),
-                (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1));
+            var future = NativeMethodsBase.AUTDControllerOpen(Ptr(), linkBuilder.Ptr(), timeout.Into());
             var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultController(handle, future));
             var ptr = result.Validate();
             return new Controller<T>(NativeMethodsBase.AUTDGeometry(ptr), runtime, handle, ptr, linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr)));
         }
 
-        public Controller<T> Open<T>(ILinkBuilder<T> linkBuilder, TimeSpan? timeout = null)
+        public Controller<T> Open<T>(ILinkBuilder<T> linkBuilder, Duration? timeout = null)
         {
             var runtime = NativeMethodsBase.AUTDCreateRuntime();
             var handle = NativeMethodsBase.AUTDGetRuntimeHandle(runtime);
-            var future = NativeMethodsBase.AUTDControllerOpen(Ptr(), linkBuilder.Ptr(),
-                (long)(timeout?.TotalMilliseconds * 1000 * 1000 ?? -1));
+            var future = NativeMethodsBase.AUTDControllerOpen(Ptr(), linkBuilder.Ptr(), timeout.Into());
             var ptr = NativeMethodsBase.AUTDWaitResultController(handle, future).Validate();
             return new Controller<T>(NativeMethodsBase.AUTDGeometry(ptr), runtime, handle, ptr, linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr)));
         }

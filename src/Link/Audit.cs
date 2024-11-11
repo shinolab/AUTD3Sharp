@@ -50,16 +50,15 @@ namespace AUTD3Sharp.Link
             var threshold = NativeMethodsBase.AUTDLinkAuditLastParallelThreshold(_ptr);
             return threshold < 0 ? null : threshold;
         }
-        public TimeSpan? LastTimeout()
+        public Duration? LastTimeout()
         {
-            var timeout = NativeMethodsBase.AUTDLinkAuditLastTimeout(_ptr);
-            return timeout < 0 ? null : TimeSpan.FromMilliseconds((double)timeout / 1000 / 1000);
+            return NativeMethodsBase.AUTDLinkAuditLastTimeout(_ptr).Into();
         }
 
         public ushort SilencerUpdateRateIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRateIntensity(_ptr, (ushort)idx);
         public ushort SilencerUpdateRatePhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerUpdateRatePhase(_ptr, (ushort)idx);
-        public ushort SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);
-        public ushort SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (ushort)idx);
+        public Duration SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(_ptr, (ushort)idx);
+        public Duration SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(_ptr, (ushort)idx);
         public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(_ptr, (ushort)idx);
         public bool SilencerStrictMode(int idx) => NativeMethodsBase.AUTDLinkAuditCpuSilencerStrictMode(_ptr, (ushort)idx);
 

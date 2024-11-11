@@ -86,6 +86,9 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
     let content = std::fs::read_to_string(&out_file)?;
     let content = content.replace("void*", "IntPtr");
     let content = content.replace("void @null", "byte @null");
+    let content = content.replace("public DcSysTime sys_time;", "public ulong sys_time;");
+    let content = content.replace("public GPIOIn gpio_in;", "public byte gpio_in;");
+    let content = content.replace("public DebugTypeValue value;", "public ulong value;");
 
     std::fs::write(&out_file, content)?;
 

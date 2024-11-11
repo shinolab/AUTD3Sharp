@@ -19,18 +19,17 @@ from tools.autd3_build_utils.autd3_build_utils import (
     remove,
     rremove,
     run_command,
+    substitute_in_file,
     working_dir,
 )
 
 
 class Config(BaseConfig):
-    release: bool
     no_examples: bool
 
     def __init__(self, args) -> None:  # noqa: ANN001
-        super().__init__()
+        super().__init__(args)
 
-        self.release = getattr(args, "release", False)
         self.no_examples = getattr(args, "no_examples", False)
 
 
@@ -44,13 +43,10 @@ def should_update_dll(config: Config, version: str) -> bool:
     elif config.is_linux():  # noqa: SIM102
         if not Path("src/native/linux/x64/libautd3capi.so").is_file() or not Path("tests/libautd3capi.so").is_file():
             return True
-
     if not Path("VERSION").is_file():
         return True
-
     with Path("VERSION").open("r") as f:
         old_version = f.read().strip()
-
     return old_version != version
 
 
@@ -63,10 +59,8 @@ def download_and_extract(url: str, *dest_dirs: str) -> None:
         with tarfile.open(tmp_file, "r:gz") as tar:
             tar.extractall(filter="fully_trusted")
     tmp_file.unlink()
-
     for dest_dir in dest_dirs:
         Path(dest_dir).mkdir(parents=True, exist_ok=True)
-
     for dll in Path("bin").glob("*.dll"):
         for dest_dir in dest_dirs:
             shutil.copy(dll, dest_dir)
@@ -84,23 +78,18 @@ def copy_dll(config: Config) -> None:
         content = f.read()
         version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
         version = ".".join(version[:4]) if version[2].endswith("rc") else ".".join(version[:3])
-
     if not should_update_dll(config, version):
         return
-
     base_url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}"
     download_and_extract(f"{base_url}/autd3-v{version}-win-x64-shared.zip", "src/native/windows/x64", "tests")
     download_and_extract(f"{base_url}/autd3-v{version}-win-aarch64-shared.zip", "src/native/windows/arm")
     download_and_extract(f"{base_url}/autd3-v{version}-macos-aarch64-shared.tar.gz", "src/native/osx/aarch64", "tests")
     download_and_extract(f"{base_url}/autd3-v{version}-linux-x64-shared.tar.gz", "src/native/linux/x64", "tests")
-
     shutil.copyfile("LICENSE", "src/LICENSE.txt")
     with Path("src/LICENSE.txt").open("a") as f:
         f.write("\n=========================================================\n")
         f.write(Path("ThirdPartyNotice.txt").read_text())
-
     remove("lib")
-
     Path("VERSION").write_text(version)
 
 
@@ -124,17 +113,13 @@ def rm_tmp_source() -> None:
 
 def cs_build(args) -> None:  # noqa: ANN001
     config = Config(args)
-
     copy_dll(config)
-
     rm_tmp_source()
-
     with working_dir("derive"):
         command = ["dotnet", "build"]
         if config.release:
             command.append("-c:Release")
         run_command(command)
-
         bin_dir = "Release" if config.release else "Debug"
         run_command(
             [
@@ -147,13 +132,11 @@ def cs_build(args) -> None:  # noqa: ANN001
                 "autd3sharp_local_derive",
             ],
         )
-
     with working_dir("src"):
         command = ["dotnet", "build"]
         if config.release:
             command.append("-c:Release")
         run_command(command)
-
         bin_dir = "Release" if config.release else "Debug"
         run_command(
             [
@@ -166,7 +149,6 @@ def cs_build(args) -> None:  # noqa: ANN001
                 "autd3sharp_local",
             ],
         )
-
     if not config.no_examples:
         info("Building examples...")
         with working_dir("example"):
@@ -178,9 +160,7 @@ def cs_build(args) -> None:  # noqa: ANN001
 
 def cs_test(args) -> None:  # noqa: ANN001
     args.no_examples = True
-
     cs_build(args)
-
     with working_dir("tests"):
         run_command(["dotnet", "test"])
 
@@ -196,16 +176,13 @@ def check_if_all_native_methods_called() -> None:
                     defined_methods.add(result.group(1))
     defined_methods = set(filter(lambda x: not x.endswith("T4010A1"), defined_methods))
     defined_methods = set(filter(lambda x: x != "AUTDSamplingConfigDivision", defined_methods))
-
     used_methods = set()
     pattern = re.compile("NativeMethods.*?\\.(AUTD.*?)\\(")
-
     paths: set[Path] = set()
     paths |= set(Path("src").rglob("*.cs"))
     paths -= set(Path("src/NativeMethods").rglob("*.cs"))
     paths |= set(Path("tests").rglob("*.cs"))
     paths.add(Path("src/NativeMethods/DriverExt.cs"))
-
     for file in paths:
         with file.open(encoding="utf-8") as f:
             for line in f.readlines():
@@ -223,9 +200,7 @@ def check_if_all_native_methods_called() -> None:
 
 def cs_cov(args) -> None:  # noqa: ANN001
     cs_build(args)
-
     check_if_all_native_methods_called()
-
     with working_dir("tests"):
         run_command(
             [
@@ -236,7 +211,6 @@ def cs_cov(args) -> None:  # noqa: ANN001
                 "coverlet.runsettings",
             ],
         )
-
         if args.html:
             cov_res = sorted(
                 Path("TestResults").rglob("coverage.cobertura.xml"),
@@ -255,11 +229,8 @@ def cs_cov(args) -> None:  # noqa: ANN001
 def cs_run(args) -> None:  # noqa: ANN001
     args.no_examples = False
     cs_build(args)
-
     with working_dir("example"):
-        command = ["dotnet", "run"]
-        command.append("--project")
-        command.append(args.target)
+        command = ["dotnet", "run", "--project", args.target]
         if args.release:
             command.append("-c:Release")
         run_command(command)
@@ -268,16 +239,13 @@ def cs_run(args) -> None:  # noqa: ANN001
 def cs_clear(_) -> None:  # noqa: ANN001
     remove("derive/bin")
     remove("derive/obj")
-
     remove("src/bin")
     remove("src/obj")
-
     remove("tests/bin")
     rremove("tests/*.dll")
     rremove("tests/*.dylib")
     rremove("tests/*.so")
     remove("tests/obj")
-
     rremove("example/**/bin")
     rremove("example/**/obj")
 
@@ -292,13 +260,10 @@ def should_update_dll_unity(config: Config, version: str) -> bool:
     elif config.is_linux():  # noqa: SIM102
         if not Path("unity/Assets/Plugins/x86_64/libautd3capi.so").is_file():
             return True
-
     if not Path("UNITY_VERSION").is_file():
         return True
-
     with Path("UNITY_VERSION").open("r") as f:
         old_version = f.read().strip()
-
     return old_version != version
 
 
@@ -307,33 +272,26 @@ def copy_dll_unity(config: Config) -> None:
         content = f.read()
         version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
         version = ".".join(version[:4]) if version[2].endswith("rc") else ".".join(version[:3])
-
     if not should_update_dll_unity(config, version):
         return
-
     base_url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}"
     download_and_extract(f"{base_url}/autd3-v{version}-win-x64-unity.zip", "unity/Assets/Plugins/x86_64")
     download_and_extract(f"{base_url}/autd3-v{version}-win-aarch64-unity.zip", "unity/Assets/Plugins/ARM64")
     download_and_extract(f"{base_url}/autd3-v{version}-macos-aarch64-unity.tar.gz", "unity/Assets/Plugins/aarch64")
     download_and_extract(f"{base_url}/autd3-v{version}-linux-x64-unity.tar.gz", "unity/Assets/Plugins/x86_64")
-
     shutil.copy("LICENSE", "unity/Assets/LICENSE.md")
     with Path("unity/Assets/LICENSE.md").open("a") as f:
         f.write("\n=========================================================\n")
         f.write(Path("ThirdPartyNotice.txt").read_text())
     shutil.copy("CHANGELOG.md", "unity/Assets/CHANGELOG.md")
-
     remove("lib")
-
     Path("UNITY_VERSION").write_text(version)
 
 
 def unity_build(args) -> None:  # noqa: ANN001
     cs_build(args)
-
     config = Config(args)
     copy_dll_unity(config)
-
     ignore = shutil.ignore_patterns("NativeMethods", ".vs", "bin", "obj")
     shutil.copytree(
         "src",
@@ -392,45 +350,14 @@ def util_update_ver(args) -> None:  # noqa: ANN001
     version = args.version
 
     for proj in Path("example").rglob("*.csproj"):
-        content = proj.read_text()
-        content = re.sub(
-            r'"AUTD3Sharp" Version="(.*)"',
-            f'"AUTD3Sharp" Version="{version}"',
-            content,
-            flags=re.MULTILINE,
-        )
-        proj.write_text(content)
-
-    src_proj = Path("src/AUTD3Sharp.csproj")
-    content = src_proj.read_text()
-    content = re.sub(
-        r"<Version>(.*)</Version>",
-        f"<Version>{version}</Version>",
-        content,
+        substitute_in_file(proj, [(r'"AUTD3Sharp" Version="(.*)"', f'"AUTD3Sharp" Version="{version}"')], flags=re.MULTILINE)
+    substitute_in_file("src/AUTD3Sharp.csproj", [(r"<Version>(.*)</Version>", f"<Version>{version}</Version>")], flags=re.MULTILINE)
+    substitute_in_file("derive/AUTD3Sharp.Derive.csproj", [(r"<Version>(.*)</Version>", f"<Version>{version}</Version>")], flags=re.MULTILINE)
+    substitute_in_file(
+        "src/AUTD3Sharp.nuspec",
+        [(r'"AUTD3Sharp\.Derive" version="(.*)"', f'"AUTD3Sharp.Derive" version="{version}"')],
         flags=re.MULTILINE,
     )
-    src_proj.write_text(content)
-
-    derive_proj = Path("derive/AUTD3Sharp.Derive.csproj")
-    content = derive_proj.read_text(encoding="UTF-8")
-    content = re.sub(
-        r"<Version>(.*)</Version>",
-        f"<Version>{version}</Version>",
-        content,
-        flags=re.MULTILINE,
-    )
-    derive_proj.write_text(content, encoding="UTF-8")
-
-    nuspec = Path("src/AUTD3Sharp.nuspec")
-    content = nuspec.read_text()
-    content = re.sub(
-        r'"AUTD3Sharp\.Derive" version="(.*)"',
-        f'"AUTD3Sharp.Derive" version="{version}"',
-        content,
-        flags=re.MULTILINE,
-    )
-    nuspec.write_text(content)
-
     with working_dir("unity"):
         version_tokens = version.split(".")
         if "-" in version_tokens[2]:
@@ -438,21 +365,15 @@ def util_update_ver(args) -> None:  # noqa: ANN001
             unity_version = ".".join(version_tokens[:3])
         else:
             unity_version = version
-
-        package_json = Path("Assets/package.json")
-        content = package_json.read_text()
-        content = re.sub(
-            r'"version": "(.*)"',
-            f'"version": "{unity_version}"',
-            content,
+        substitute_in_file(
+            "Assets/package.json",
+            [(r'"version": "(.*)"', f'"version": "{unity_version}"')],
             flags=re.MULTILINE,
         )
-        package_json.write_text(content)
 
 
 def util_gen_wrapper(_) -> None:  # noqa: ANN001
     fetch_submodule()
-
     if shutil.which("cargo") is not None:
         with working_dir("tools/wrapper-generator"):
             run_command(["cargo", "run"])

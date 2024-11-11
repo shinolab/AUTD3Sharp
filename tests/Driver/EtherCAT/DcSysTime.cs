@@ -13,13 +13,13 @@ public class DcSysTimeTest
     public void DcSysTimeAdd()
     {
         var now = DcSysTime.Now;
-        Assert.Equal(now.SysTime + 1ul * 1000 * 1000, (now + TimeSpan.FromMilliseconds(1)).SysTime);
+        Assert.Equal(now.SysTime + 1ul * 1000 * 1000, (now + Duration.FromMillis(1)).SysTime);
     }
 
     [Fact]
     public void DcSysTimeSub()
     {
         var now = DcSysTime.Now;
-        Assert.Equal(now.SysTime - 1ul * 1000 * 1000, (now - TimeSpan.FromMilliseconds(1)).SysTime);
+        Assert.Equal(now.SysTime - 1ul * 1000 * 1000, (now - Duration.FromMillis(1)).SysTime);
     }
 }

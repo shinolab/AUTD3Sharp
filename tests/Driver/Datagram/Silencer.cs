@@ -14,8 +14,8 @@ public class SilencerTest
 
         foreach (var dev in autd)
         {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(250ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(1000ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
             Assert.Equal(AUTD3Sharp.SilencerTarget.Intensity, autd.Link.SilencerTarget(dev.Idx));
         }
@@ -40,16 +40,16 @@ public class SilencerTest
 
         var s = new Silencer();
         Assert.True(NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsDefault(
-            (ulong)((FixedCompletionTime)s.Inner).Intensity.TotalNanoseconds,
-            (ulong)((FixedCompletionTime)s.Inner).Phase.TotalNanoseconds
+            ((FixedCompletionTime)s.Inner).Intensity,
+            ((FixedCompletionTime)s.Inner).Phase
             , s.StrictMode,
                 s.Target));
 
-        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = TimeSpan.FromMicroseconds(25), Phase = TimeSpan.FromMicroseconds(50) }).WithTarget(AUTD3Sharp.SilencerTarget.PulseWidth));
+        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(25), Phase = Duration.FromMicros(50) }).WithTarget(AUTD3Sharp.SilencerTarget.PulseWidth));
         foreach (var dev in autd)
         {
-            Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(2, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(25ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(50ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
             Assert.True(autd.Link.SilencerStrictMode(dev.Idx));
             Assert.Equal(AUTD3Sharp.SilencerTarget.PulseWidth, autd.Link.SilencerTarget(dev.Idx));
@@ -64,8 +64,8 @@ public class SilencerTest
         await autd.SendAsync(Silencer.Disable());
         foreach (var dev in autd)
         {
-            Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(1, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(25ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(25ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
             Assert.True(autd.Link.SilencerStrictMode(dev.Idx));
         }
@@ -73,8 +73,8 @@ public class SilencerTest
         Assert.True(Silencer.Disable().IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
         await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
 
-        Assert.False(new Silencer(new FixedCompletionTime { Intensity = TimeSpan.FromMicroseconds(250), Phase = TimeSpan.FromMicroseconds(1000) }).IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = TimeSpan.FromMicroseconds(250), Phase = TimeSpan.FromMicroseconds(1000) })));
+        Assert.False(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) })));
     }
 
     [Fact]
@@ -84,8 +84,8 @@ public class SilencerTest
 
         foreach (var dev in autd)
         {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(250ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(1000ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
@@ -96,8 +96,8 @@ public class SilencerTest
         await autd.SendAsync(new Silencer().WithStrictMode(false));
         foreach (var dev in autd)
         {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(250ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(1000ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
             Assert.False(autd.Link.SilencerStrictMode(dev.Idx));
         }
@@ -112,19 +112,19 @@ public class SilencerTest
 
         foreach (var dev in autd)
         {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(250ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(1000ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
         Assert.False(new Silencer().IsValid(new GainSTM(new SamplingConfig(1), [new Null(), new Null()])));
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new GainSTM(new SamplingConfig(1), [new Null(), new Null()])));
 
-        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = TimeSpan.FromMicroseconds(250), Phase = TimeSpan.FromMicroseconds(1000) }).WithStrictMode(false));
+        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).WithStrictMode(false));
         foreach (var dev in autd)
         {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(250ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(1000ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
             Assert.False(autd.Link.SilencerStrictMode(dev.Idx));
         }
@@ -142,19 +142,19 @@ public class SilencerTest
 
         foreach (var dev in autd)
         {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(250ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(1000ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
         Assert.False(new Silencer().IsValid(new FociSTM(new SamplingConfig(1), [Vector3.Zero, Vector3.Zero])));
         await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new FociSTM(new SamplingConfig(1), [Vector3.Zero, Vector3.Zero])));
 
-        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = TimeSpan.FromMicroseconds(250), Phase = TimeSpan.FromMicroseconds(1000) }).WithStrictMode(false));
+        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).WithStrictMode(false));
         foreach (var dev in autd)
         {
-            Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
-            Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
+            Assert.Equal(250ul, autd.Link.SilencerCompletionStepsIntensity(dev.Idx).AsMicros());
+            Assert.Equal(1000ul, autd.Link.SilencerCompletionStepsPhase(dev.Idx).AsMicros());
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
         await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));

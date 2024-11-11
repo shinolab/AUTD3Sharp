@@ -1,4 +1,3 @@
-using System;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Derive;
@@ -35,16 +34,16 @@ namespace AUTD3Sharp
 
     public readonly struct FixedCompletionTime : ISilencer
     {
-        public TimeSpan Intensity { get; init; }
-        public TimeSpan Phase { get; init; }
+        public Duration Intensity { get; init; }
+        public Duration Phase { get; init; }
 
         bool ISilencer.IsValid(IWithSampling c, bool strictMode)
-           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid((ulong)(Intensity.TotalMilliseconds * 1000 * 1000), (ulong)(Phase.TotalMilliseconds * 1000 * 1000), strictMode,
+           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid(Intensity, Phase, strictMode,
                c.SamplingConfigIntensity(), c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)
                );
 
         DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target)
-           => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime((ulong)(Intensity.TotalMilliseconds * 1000 * 1000), (ulong)(Phase.TotalMilliseconds * 1000 * 1000), strictMode, target);
+           => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(Intensity, Phase, strictMode, target);
     }
 
     public readonly struct FixedUpdateRate : ISilencer
@@ -79,12 +78,12 @@ namespace AUTD3Sharp
 
         public Silencer() : this(new FixedCompletionTime
         {
-            Intensity = TimeSpan.FromMilliseconds(250e-3),
-            Phase = TimeSpan.FromMilliseconds(1)
+            Intensity = Duration.FromMicros(250),
+            Phase = Duration.FromMillis(1)
         })
         { }
 
-        public static Silencer Disable() => new(new FixedCompletionTime { Intensity = TimeSpan.FromMilliseconds(25e-3), Phase = TimeSpan.FromMilliseconds(25e-3) });
+        public static Silencer Disable() => new(new FixedCompletionTime { Intensity = Duration.FromMicros(25), Phase = Duration.FromMicros(25) });
 
         public bool IsValid(IWithSampling target) => Inner.IsValid(target, StrictMode);
         DatagramPtr IDatagram.Ptr(Geometry geometry) => Inner.RawPtr(StrictMode, Target);
