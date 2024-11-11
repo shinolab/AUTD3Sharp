@@ -27,6 +27,19 @@ namespace AUTD3Sharp.NativeMethods
 
     }
 
+    [StructLayout(LayoutKind.Explicit)]
+    public unsafe partial struct DebugTypeValue
+    {
+        [FieldOffset(0)]
+        public ulong @null;
+        [FieldOffset(0)]
+        public ulong sys_time;
+        [FieldOffset(0)]
+        public ushort idx;
+        [FieldOffset(0)]
+        [MarshalAs(UnmanagedType.U1)] public bool direct;
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct DebugTypeWrap
     {
@@ -34,11 +47,22 @@ namespace AUTD3Sharp.NativeMethods
         public ulong value;
     }
 
+    [StructLayout(LayoutKind.Explicit)]
+    public unsafe partial struct TransitionModeValue
+    {
+        [FieldOffset(0)]
+        public ulong @null;
+        [FieldOffset(0)]
+        public ulong sys_time;
+        [FieldOffset(0)]
+        public byte gpio_in;
+    }
+
     [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct TransitionModeWrap
     {
         public TransitionModeTag tag;
-        public ulong value;
+        public TransitionModeValue value;
     }
 
     [StructLayout(LayoutKind.Sequential)]

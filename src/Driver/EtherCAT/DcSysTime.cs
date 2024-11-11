@@ -1,20 +1,21 @@
-using System;
+using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp
 {
-    public class DcSysTime
+    [StructLayout(LayoutKind.Sequential)]
+    public struct DcSysTime
     {
         public ulong SysTime { get; }
-
-        public static DcSysTime Now => new(NativeMethodsBase.AUTDDcSysTimeNow());
-
-        public static DcSysTime operator +(DcSysTime a, TimeSpan b) => new(a.SysTime + (ulong)(b.TotalSeconds * 1000 * 1000 * 1000));
-        public static DcSysTime operator -(DcSysTime a, TimeSpan b) => new(a.SysTime - (ulong)(b.TotalSeconds * 1000 * 1000 * 1000));
 
         private DcSysTime(ulong sysTime)
         {
             SysTime = sysTime;
         }
+
+        public static DcSysTime Now => NativeMethodsBase.AUTDDcSysTimeNow();
+
+        public static DcSysTime operator +(DcSysTime a, Duration b) => new(a.SysTime + b.AsNanos());
+        public static DcSysTime operator -(DcSysTime a, Duration b) => new(a.SysTime - b.AsNanos());
     }
 }

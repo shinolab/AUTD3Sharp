@@ -7,12 +7,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithReceiveInterval(TimeSpan.FromMilliseconds(1)).OpenAsync(Audit.Builder());
+        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(Duration.FromMillis(1)).WithReceiveInterval(Duration.FromMillis(1)).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(TimeSpan.FromMilliseconds(1)).WithReceiveInterval(TimeSpan.FromMilliseconds(1)).Open(Audit.Builder());
+        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(Duration.FromMillis(1)).WithReceiveInterval(Duration.FromMillis(1)).Open(Audit.Builder());
     }
 
     [Fact]
@@ -28,9 +28,9 @@ public class AUTDTest
         Assert.True(
             AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerBuilderIsDefault(
                 builder.FallbackParallelThreshold,
-                (ulong)builder.FallbackTimeout.TotalNanoseconds,
-                (ulong)builder.SendInterval.TotalNanoseconds,
-                (ulong)builder.ReceiveInterval.TotalNanoseconds,
+                builder.FallbackTimeout,
+                builder.SendInterval,
+                builder.ReceiveInterval,
                 builder.TimerStrategy
             )
         );
@@ -47,13 +47,13 @@ public class AUTDTest
     [Fact]
     public async Task TestWithTimeout()
     {
-        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder(), TimeSpan.FromMilliseconds(200));
+        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder(), Duration.FromMillis(200));
     }
 
     [Fact]
     public void TestWithTimeoutSync()
     {
-        _ = Controller.Builder([new AUTD3(Vector3.Zero)]).Open(Audit.Builder(), TimeSpan.FromMilliseconds(200));
+        _ = Controller.Builder([new AUTD3(Vector3.Zero)]).Open(Audit.Builder(), Duration.FromMillis(200));
     }
 
     [Fact]

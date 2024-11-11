@@ -18,7 +18,7 @@ public class GainSTMTest
         var stm = new GainSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
                 new Focus(center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0))));
         Assert.Equal(1.0f * Hz, stm.Freq);
-        Assert.Equal(TimeSpan.FromSeconds(1), stm.Period);
+        Assert.Equal(Duration.FromSecs(1), stm.Period);
         Assert.Equal(20000u, stm.SamplingConfig.Division);
         await autd.SendAsync(stm);
 
@@ -36,7 +36,7 @@ public class GainSTMTest
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = new GainSTM(TimeSpan.FromSeconds(1), [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]);
+        stm = new GainSTM(Duration.FromSecs(1), [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]);
         await autd.SendAsync(stm);
         foreach (var dev in autd)
         {
@@ -44,7 +44,7 @@ public class GainSTMTest
             Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
         }
 
-        stm = GainSTM.Nearest(TimeSpan.FromSeconds(1), [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]);
+        stm = GainSTM.Nearest(Duration.FromSecs(1), [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]);
         await autd.SendAsync(stm);
         foreach (var dev in autd)
         {

@@ -19,14 +19,14 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ControllerBuilderPtr AUTDControllerBuilder(Vector3* pos, Quaternion* rot, ushort len, ushort fallback_parallel_threshold, ulong fallback_timeout, ulong send_interval_ns, ulong receive_interval_ns, TimerStrategyWrap timer_strategy);
+        public static extern ControllerBuilderPtr AUTDControllerBuilder(Vector3* pos, Quaternion* rot, ushort len, ushort fallback_parallel_threshold, Duration fallback_timeout, Duration send_interval, Duration receive_interval, TimerStrategyWrap timer_strategy);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilderIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDControllerBuilderIsDefault(ushort fallback_parallel_threshold, ulong fallback_timeout, ulong send_interval_ns, ulong receive_interval_ns, TimerStrategyWrap timer_strategy);
+        public static extern bool AUTDControllerBuilderIsDefault(ushort fallback_parallel_threshold, Duration fallback_timeout, Duration send_interval_ns, Duration receive_interval, TimerStrategyWrap timer_strategy);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerOpen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern FfiFuture AUTDControllerOpen(ControllerBuilderPtr builder, LinkBuilderPtr link_builder, long timeout_ns);
+        public static extern FfiFuture AUTDControllerOpen(ControllerBuilderPtr builder, LinkBuilderPtr link_builder, OptionDuration timeout);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LocalFfiFuture AUTDControllerGroup(ControllerPtr cnt, ConstPtr f, ConstPtr context, GeometryPtr geometry, int* keys, DatagramPtr* d, ushort n);
@@ -117,15 +117,15 @@ namespace AUTD3Sharp.NativeMethods
         public static extern bool AUTDDatagramSilencerFixedUpdateRateIsValid(ushort intensity, ushort phase, SamplingConfig config_intensity, SamplingConfig config_phase);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromCompletionTime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern DatagramPtr AUTDDatagramSilencerFromCompletionTime(ulong intensity, ulong phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
+        public static extern DatagramPtr AUTDDatagramSilencerFromCompletionTime(Duration intensity, Duration phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFixedCompletionTimeIsValid", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDDatagramSilencerFixedCompletionTimeIsValid(ulong intensity, ulong phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SamplingConfig config_intensity, SamplingConfig config_phase);
+        public static extern bool AUTDDatagramSilencerFixedCompletionTimeIsValid(Duration intensity, Duration phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SamplingConfig config_intensity, SamplingConfig config_phase);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFixedCompletionTimeIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDDatagramSilencerFixedCompletionTimeIsDefault(ulong intensity, ulong phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
+        public static extern bool AUTDDatagramSilencerFixedCompletionTimeIsDefault(Duration intensity, Duration phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMFoci", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultFociSTM AUTDSTMFoci(SamplingConfig config, ConstPtr points, ushort size, byte n, LoopBehavior loop_behavior);
@@ -149,19 +149,19 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ResultSamplingConfig AUTDSTMConfigFromFreq(float f, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMConfigFromPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultSamplingConfig AUTDSTMConfigFromPeriod(ulong p, ushort n);
+        public static extern ResultSamplingConfig AUTDSTMConfigFromPeriod(Duration p, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMConfigFromFreqNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultSamplingConfig AUTDSTMConfigFromFreqNearest(float f, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMConfigFromPeriodNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultSamplingConfig AUTDSTMConfigFromPeriodNearest(ulong p, ushort n);
+        public static extern ResultSamplingConfig AUTDSTMConfigFromPeriodNearest(Duration p, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern float AUTDSTMFreq(SamplingConfig c, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ulong AUTDSTMPeriod(SamplingConfig c, ushort n);
+        public static extern Duration AUTDSTMPeriod(SamplingConfig c, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSynchronize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramSynchronize();
@@ -170,10 +170,10 @@ namespace AUTD3Sharp.NativeMethods
         public static extern DatagramPtr AUTDDatagramWithParallelThreshold(DatagramPtr d, int threshold);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramWithTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern DatagramPtr AUTDDatagramWithTimeout(DatagramPtr d, long timeout_ns);
+        public static extern DatagramPtr AUTDDatagramWithTimeout(DatagramPtr d, OptionDuration timeout);
 
         [DllImport(__DllName, EntryPoint = "AUTDDcSysTimeNow", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ulong AUTDDcSysTimeNow();
+        public static extern DcSysTime AUTDDcSysTimeNow();
 
         [DllImport(__DllName, EntryPoint = "AUTDDebugTypeNone", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DebugTypeWrap AUTDDebugTypeNone();
@@ -212,7 +212,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern DebugTypeWrap AUTDDebugTypeDirect([MarshalAs(UnmanagedType.U1)] bool value);
 
         [DllImport(__DllName, EntryPoint = "AUTDDebugTypeSysTimeEq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern DebugTypeWrap AUTDDebugTypeSysTimeEq(ulong sys_time);
+        public static extern DebugTypeWrap AUTDDebugTypeSysTimeEq(DcSysTime sys_time);
 
         [DllImport(__DllName, EntryPoint = "AUTDLoopBehaviorInfinite", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern LoopBehavior AUTDLoopBehaviorInfinite();
@@ -242,10 +242,10 @@ namespace AUTD3Sharp.NativeMethods
         public static extern SamplingConfig AUTDSamplingConfigFromFreqNearest(float f);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultSamplingConfig AUTDSamplingConfigFromPeriod(ulong p);
+        public static extern ResultSamplingConfig AUTDSamplingConfigFromPeriod(Duration p);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromPeriodNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern SamplingConfig AUTDSamplingConfigFromPeriodNearest(ulong p);
+        public static extern SamplingConfig AUTDSamplingConfigFromPeriodNearest(Duration p);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ushort AUTDSamplingConfigDivision(SamplingConfig c);
@@ -254,13 +254,13 @@ namespace AUTD3Sharp.NativeMethods
         public static extern float AUTDSamplingConfigFreq(SamplingConfig c);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ulong AUTDSamplingConfigPeriod(SamplingConfig c);
+        public static extern Duration AUTDSamplingConfigPeriod(SamplingConfig c);
 
         [DllImport(__DllName, EntryPoint = "AUTDTransitionModeSyncIdx", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern TransitionModeWrap AUTDTransitionModeSyncIdx();
 
         [DllImport(__DllName, EntryPoint = "AUTDTransitionModeSysTime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern TransitionModeWrap AUTDTransitionModeSysTime(ulong sys_time);
+        public static extern TransitionModeWrap AUTDTransitionModeSysTime(DcSysTime sys_time);
 
         [DllImport(__DllName, EntryPoint = "AUTDTransitionModeGPIO", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern TransitionModeWrap AUTDTransitionModeGPIO(GPIOIn gpio);
@@ -454,7 +454,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern void AUTDLinkAuditRepair(LinkPtr audit);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditLastTimeout", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern long AUTDLinkAuditLastTimeout(LinkPtr audit);
+        public static extern OptionDuration AUTDLinkAuditLastTimeout(LinkPtr audit);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditLastParallelThreshold", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern long AUTDLinkAuditLastParallelThreshold(LinkPtr audit);
@@ -493,10 +493,10 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ushort AUTDLinkAuditFpgaSilencerUpdateRatePhase(LinkPtr audit, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSilencerCompletionStepsIntensity", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ushort AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(LinkPtr audit, ushort idx);
+        public static extern Duration AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(LinkPtr audit, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSilencerCompletionStepsPhase", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ushort AUTDLinkAuditFpgaSilencerCompletionStepsPhase(LinkPtr audit, ushort idx);
+        public static extern Duration AUTDLinkAuditFpgaSilencerCompletionStepsPhase(LinkPtr audit, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]

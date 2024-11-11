@@ -15,10 +15,10 @@ public class WithTimeoutTest
         await autd.SendAsync(new Null().WithTimeout(null));
         Assert.Null(autd.Link.LastTimeout());
 
-        await autd.SendAsync(new Null().WithTimeout(TimeSpan.FromMilliseconds(100)));
-        Assert.Equal(TimeSpan.FromMilliseconds(100), autd.Link.LastTimeout());
+        await autd.SendAsync(new Null().WithTimeout(Duration.FromMillis(100)));
+        Assert.Equal(Duration.FromMillis(100), autd.Link.LastTimeout());
 
-        await autd.SendAsync((new Static(), new Null()).WithTimeout(TimeSpan.FromMilliseconds(200)));
-        Assert.Equal(TimeSpan.FromMilliseconds(200), autd.Link.LastTimeout());
+        await autd.SendAsync((new Static(), new Null()).WithTimeout(Duration.FromMillis(200)));
+        Assert.Equal(Duration.FromMillis(200), autd.Link.LastTimeout());
     }
 }
