@@ -10,7 +10,7 @@
     <description>$description$</description>
     <dependencies>
       <group targetFramework="net8.0">
-        <dependency id="AUTD3Sharp.Derive" version="29.0.0-rc.8" >
+        <dependency id="AUTD3Sharp.Derive" version="29.0.0-rc.9" >
         	<OutputItemType>Analyzer</OutputItemType>
 			    <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
         </dependency>
