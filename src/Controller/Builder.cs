@@ -19,10 +19,10 @@ namespace AUTD3Sharp
         private readonly AUTD3[] _devices;
 
         [Property]
-        public ushort FallbackParallelThreshold { get; private set; } = 4;
+        public ushort DefaultParallelThreshold { get; private set; } = 4;
 
         [Property]
-        public Duration FallbackTimeout { get; private set; } = Duration.FromMillis(20);
+        public Duration DefaultTimeout { get; private set; } = Duration.FromMillis(20);
 
         [Property]
         public Duration SendInterval { get; private set; } = Duration.FromMillis(1);
@@ -48,8 +48,8 @@ namespace AUTD3Sharp
                 fixed (Quaternion* rp = &rot[0])
                 {
                     return NativeMethodsBase.AUTDControllerBuilder(pp, rp, (ushort)pos.Length,
-                        FallbackParallelThreshold,
-                        FallbackTimeout,
+                        DefaultParallelThreshold,
+                        DefaultTimeout,
                         SendInterval,
                         ReceiveInterval,
                         TimerStrategy

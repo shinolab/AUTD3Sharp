@@ -27,8 +27,8 @@ public class AUTDTest
         var builder = Controller.Builder([]);
         Assert.True(
             AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDControllerBuilderIsDefault(
-                builder.FallbackParallelThreshold,
-                builder.FallbackTimeout,
+                builder.DefaultParallelThreshold,
+                builder.DefaultTimeout,
                 builder.SendInterval,
                 builder.ReceiveInterval,
                 builder.TimerStrategy

@@ -19,11 +19,11 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ControllerBuilderPtr AUTDControllerBuilder(Vector3* pos, Quaternion* rot, ushort len, ushort fallback_parallel_threshold, Duration fallback_timeout, Duration send_interval, Duration receive_interval, TimerStrategyWrap timer_strategy);
+        public static extern ControllerBuilderPtr AUTDControllerBuilder(Vector3* pos, Quaternion* rot, ushort len, ushort default_parallel_threshold, Duration default_timeout, Duration send_interval, Duration receive_interval, TimerStrategyWrap timer_strategy);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilderIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDControllerBuilderIsDefault(ushort fallback_parallel_threshold, Duration fallback_timeout, Duration send_interval_ns, Duration receive_interval, TimerStrategyWrap timer_strategy);
+        public static extern bool AUTDControllerBuilderIsDefault(ushort default_parallel_threshold, Duration default_timeout, Duration send_interval_ns, Duration receive_interval, TimerStrategyWrap timer_strategy);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerOpen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern FfiFuture AUTDControllerOpen(ControllerBuilderPtr builder, LinkBuilderPtr link_builder, OptionDuration timeout);
@@ -307,7 +307,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern GroupGainMapPtr AUTDGainGroupMapSet(GroupGainMapPtr map, ushort dev_idx, int* map_data);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainGroup(GroupGainMapPtr map, int* keys_ptr, GainPtr* values_ptr, uint kv_len);
+        public static extern ResultGain AUTDGainGroup(GroupGainMapPtr map, int* keys_ptr, GainPtr* values_ptr, uint kv_len);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainIntoDatagramWithSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDGainIntoDatagramWithSegment(GainPtr gain, Segment segment, TransitionModeWrap transition_mode);
