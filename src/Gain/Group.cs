@@ -72,7 +72,7 @@ namespace AUTD3Sharp.Gain
                             map,
                             keysPtr,
                             valuesPtr,
-                            (uint)values.Length);
+                            (uint)values.Length).Validate();
                 }
             }
         }

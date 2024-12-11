@@ -22,7 +22,7 @@ aho-corasick 1.1.3 (MIT OR Unlicense)
 https://github.com/BurntSushi/aho-corasick
 ---------------------------------------------------------
 
-allocator-api2 0.2.20 (Apache-2.0 OR MIT)
+allocator-api2 0.2.21 (Apache-2.0 OR MIT)
 https://github.com/zakarumych/allocator-api2
 ---------------------------------------------------------
 
@@ -30,7 +30,7 @@ android_system_properties 0.1.5 (Apache-2.0 OR MIT)
 https://github.com/nical/android_system_properties
 ---------------------------------------------------------
 
-anyhow 1.0.93 (Apache-2.0 OR MIT)
+anyhow 1.0.94 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/anyhow
 ---------------------------------------------------------
 
@@ -70,7 +70,7 @@ async-trait 0.1.83 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/async-trait
 ---------------------------------------------------------
 
-atoi_simd 0.15.6 (Apache-2.0 OR MIT)
+atoi_simd 0.16.0 (Apache-2.0 OR MIT)
 https://github.com/RoDmitry/atoi_simd
 ---------------------------------------------------------
 
@@ -78,71 +78,71 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 29.0.0-rc.10 (MIT)
+autd3 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-derive 29.0.0-rc.10 (MIT)
+autd3-derive 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 29.0.0-rc.10 (MIT)
+autd3-driver 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-emulator 29.0.0-rc.10 (MIT)
+autd3-emulator 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-emulator
 ---------------------------------------------------------
 
-autd3-firmware-emulator 29.0.0-rc.10 (MIT)
+autd3-firmware-emulator 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 29.0.0-rc.10 (MIT)
+autd3-gain-holo 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 29.0.0-rc.10 (MIT)
+autd3-link-simulator 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-twincat 29.0.0-rc.10 (MIT)
+autd3-link-twincat 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 29.0.0-rc.10 (MIT)
+autd3-modulation-audio-file 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 29.0.0-rc.10 (MIT)
+autd3-protobuf 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 29.0.0-rc.10 (MIT)
+autd3capi 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 29.0.0-rc.10 (MIT)
+autd3capi-driver 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-emulator 29.0.0-rc.10 (MIT)
+autd3capi-emulator 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 29.0.0-rc.10 (MIT)
+autd3capi-gain-holo 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 29.0.0-rc.10 (MIT)
+autd3capi-link-simulator 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 29.0.0-rc.10 (MIT)
+autd3capi-link-twincat 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 29.0.0-rc.10 (MIT)
+autd3capi-modulation-audio-file 29.0.0-rc.11 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
@@ -170,7 +170,7 @@ bit-vec 0.8.0 (Apache-2.0 OR MIT)
 https://github.com/contain-rs/bit-vec
 ---------------------------------------------------------
 
-bitfield-struct 0.9.2 (MIT)
+bitfield-struct 0.9.3 (MIT)
 https://github.com/wrenger/bitfield-struct-rs.git
 ---------------------------------------------------------
 
@@ -218,8 +218,12 @@ cfg-if 1.0.0 (Apache-2.0 OR MIT)
 https://github.com/alexcrichton/cfg-if
 ---------------------------------------------------------
 
-chrono 0.4.38 (Apache-2.0 OR MIT)
+chrono 0.4.39 (Apache-2.0 OR MIT)
 https://github.com/chronotope/chrono
+---------------------------------------------------------
+
+chrono-tz 0.10.0 (Apache-2.0 OR MIT)
+https://github.com/chronotope/chrono-tz
 ---------------------------------------------------------
 
 codespan-reporting 0.11.1 (Apache-2.0)
@@ -322,8 +326,8 @@ fallible-streaming-iterator 0.1.9 (Apache-2.0 OR MIT)
 https://github.com/sfackler/fallible-streaming-iterator
 ---------------------------------------------------------
 
-fast-float 0.2.0 (Apache-2.0 OR MIT)
-https://github.com/aldanor/fast-float-rust
+fast-float2 0.2.3 (Apache-2.0 OR MIT)
+https://github.com/Alexhuszagh/fast-float-rust
 ---------------------------------------------------------
 
 flume 0.11.1 (Apache-2.0 OR MIT)
@@ -430,10 +434,6 @@ heck 0.5.0 (Apache-2.0 OR MIT)
 https://github.com/withoutboats/heck
 ---------------------------------------------------------
 
-hermit-abi 0.3.9 (Apache-2.0 OR MIT)
-https://github.com/hermit-os/hermit-rs
----------------------------------------------------------
-
 hexf-parse 0.2.1 (CC0-1.0)
 https://github.com/lifthrasiir/hexf
 ---------------------------------------------------------
@@ -446,7 +446,7 @@ hound 3.5.1 (Apache-2.0)
 https://github.com/ruuda/hound
 ---------------------------------------------------------
 
-http 1.1.0 (Apache-2.0 OR MIT)
+http 1.2.0 (Apache-2.0 OR MIT)
 https://github.com/hyperium/http
 ---------------------------------------------------------
 
@@ -482,7 +482,7 @@ indexmap 1.9.3 (Apache-2.0 OR MIT)
 https://github.com/bluss/indexmap
 ---------------------------------------------------------
 
-indexmap 2.6.0 (Apache-2.0 OR MIT)
+indexmap 2.7.0 (Apache-2.0 OR MIT)
 https://github.com/indexmap-rs/indexmap
 ---------------------------------------------------------
 
@@ -498,11 +498,15 @@ itoa 1.0.14 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/itoa
 ---------------------------------------------------------
 
+itoap 1.0.1 (MIT)
+https://github.com/Kogia-sima/itoap
+---------------------------------------------------------
+
 jni-sys 0.3.0 (Apache-2.0 OR MIT)
 https://github.com/sfackler/rust-jni-sys
 ---------------------------------------------------------
 
-js-sys 0.3.72 (Apache-2.0 OR MIT)
+js-sys 0.3.76 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/js-sys
 ---------------------------------------------------------
 
@@ -514,11 +518,11 @@ lazy_static 1.5.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang-nursery/lazy-static.rs
 ---------------------------------------------------------
 
-libc 0.2.166 (Apache-2.0 OR MIT)
+libc 0.2.168 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/libc
 ---------------------------------------------------------
 
-libloading 0.8.5 (ISC)
+libloading 0.8.6 (ISC)
 https://github.com/nagisa/rust_libloading/
 ---------------------------------------------------------
 
@@ -566,7 +570,7 @@ memchr 2.7.4 (MIT OR Unlicense)
 https://github.com/BurntSushi/memchr
 ---------------------------------------------------------
 
-memmap2 0.7.1 (Apache-2.0 OR MIT)
+memmap2 0.9.5 (Apache-2.0 OR MIT)
 https://github.com/RazrFalcon/memmap2-rs
 ---------------------------------------------------------
 
@@ -586,7 +590,7 @@ miniz_oxide 0.8.0 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide
 ---------------------------------------------------------
 
-mio 1.0.2 (MIT)
+mio 1.0.3 (MIT)
 https://github.com/tokio-rs/mio
 ---------------------------------------------------------
 
@@ -694,6 +698,14 @@ percent-encoding 2.3.1 (Apache-2.0 OR MIT)
 https://github.com/servo/rust-url/
 ---------------------------------------------------------
 
+phf 0.11.2 (MIT)
+https://github.com/rust-phf/rust-phf
+---------------------------------------------------------
+
+phf_shared 0.11.2 (MIT)
+https://github.com/rust-phf/rust-phf
+---------------------------------------------------------
+
 pin-project 1.1.7 (Apache-2.0 OR MIT)
 https://github.com/taiki-e/pin-project
 ---------------------------------------------------------
@@ -714,11 +726,11 @@ planus 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/planus-org/planus
 ---------------------------------------------------------
 
-polars 0.44.2 (MIT)
+polars 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-arrow 0.44.2 (MIT AND Apache-2.0)
+polars-arrow 0.45.1 (MIT AND Apache-2.0)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
@@ -726,39 +738,39 @@ polars-arrow-format 0.1.0 (Apache-2.0)
 https://github.com/pola-rs/arrow-format
 ---------------------------------------------------------
 
-polars-compute 0.44.2 (MIT)
+polars-compute 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-core 0.44.2 (MIT)
+polars-core 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-error 0.44.2 (MIT)
+polars-error 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-expr 0.44.2 (MIT)
+polars-expr 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-io 0.44.2 (MIT)
+polars-io 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-lazy 0.44.2 (MIT)
+polars-lazy 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-mem-engine 0.44.2 (MIT)
+polars-mem-engine 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-ops 0.44.2 (MIT)
+polars-ops 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-parquet 0.44.2 (MIT AND Apache-2.0)
+polars-parquet 0.45.1 (MIT AND Apache-2.0)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
@@ -766,23 +778,23 @@ polars-parquet-format 0.1.0 (MIT AND Apache-2.0)
 https://github.com/pola-rs/parquet-format
 ---------------------------------------------------------
 
-polars-pipe 0.44.2 (MIT)
+polars-pipe 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-plan 0.44.2 (MIT)
+polars-plan 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-row 0.44.2 (MIT)
+polars-row 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-schema 0.44.2 (MIT)
+polars-schema 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
-polars-utils 0.44.2 (MIT)
+polars-utils 0.45.1 (MIT)
 https://github.com/pola-rs/polars
 ---------------------------------------------------------
 
@@ -810,11 +822,11 @@ profiling 1.0.16 (Apache-2.0 OR MIT)
 https://github.com/aclysma/profiling
 ---------------------------------------------------------
 
-prost 0.13.3 (Apache-2.0)
+prost 0.13.4 (Apache-2.0)
 https://github.com/tokio-rs/prost
 ---------------------------------------------------------
 
-prost-derive 0.13.3 (Apache-2.0)
+prost-derive 0.13.4 (Apache-2.0)
 https://github.com/tokio-rs/prost
 ---------------------------------------------------------
 
@@ -950,6 +962,10 @@ simdutf8 0.1.5 (Apache-2.0 OR MIT)
 https://github.com/rusticstuff/simdutf8
 ---------------------------------------------------------
 
+siphasher 0.3.11 (Apache-2.0 OR MIT)
+https://github.com/jedisct1/rust-siphash
+---------------------------------------------------------
+
 slab 0.4.9 (MIT)
 https://github.com/tokio-rs/slab
 ---------------------------------------------------------
@@ -1006,7 +1022,7 @@ syn 1.0.109 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
-syn 2.0.89 (Apache-2.0 OR MIT)
+syn 2.0.90 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
@@ -1018,7 +1034,7 @@ sync_wrapper 1.0.2 (Apache-2.0)
 https://github.com/Actyx/sync_wrapper
 ---------------------------------------------------------
 
-sysinfo 0.31.4 (MIT)
+sysinfo 0.32.1 (MIT)
 https://github.com/GuillaumeGomez/sysinfo
 ---------------------------------------------------------
 
@@ -1034,7 +1050,7 @@ thiserror 1.0.69 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
-thiserror 2.0.3 (Apache-2.0 OR MIT)
+thiserror 2.0.6 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
@@ -1042,7 +1058,7 @@ thiserror-impl 1.0.69 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
-thiserror-impl 2.0.3 (Apache-2.0 OR MIT)
+thiserror-impl 2.0.6 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
@@ -1050,7 +1066,7 @@ thread_local 1.1.8 (Apache-2.0 OR MIT)
 https://github.com/Amanieu/thread_local-rs
 ---------------------------------------------------------
 
-time 0.3.36 (Apache-2.0 OR MIT)
+time 0.3.37 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
@@ -1058,11 +1074,11 @@ time-core 0.1.2 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
-time-macros 0.2.18 (Apache-2.0 OR MIT)
+time-macros 0.2.19 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
-tokio 1.41.1 (MIT)
+tokio 1.42.0 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
@@ -1070,11 +1086,11 @@ tokio-macros 2.4.0 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
-tokio-stream 0.1.16 (MIT)
+tokio-stream 0.1.17 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
-tokio-util 0.7.12 (MIT)
+tokio-util 0.7.13 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
@@ -1110,7 +1126,7 @@ tracing-core 0.1.33 (MIT)
 https://github.com/tokio-rs/tracing
 ---------------------------------------------------------
 
-tracing-subscriber 0.3.18 (MIT)
+tracing-subscriber 0.3.19 (MIT)
 https://github.com/tokio-rs/tracing
 ---------------------------------------------------------
 
@@ -1157,31 +1173,31 @@ wasi 0.11.0+wasi-snapshot-preview1 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception
 https://github.com/bytecodealliance/wasi
 ---------------------------------------------------------
 
-wasm-bindgen 0.2.95 (Apache-2.0 OR MIT)
+wasm-bindgen 0.2.99 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen
 ---------------------------------------------------------
 
-wasm-bindgen-backend 0.2.95 (Apache-2.0 OR MIT)
+wasm-bindgen-backend 0.2.99 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/backend
 ---------------------------------------------------------
 
-wasm-bindgen-futures 0.4.45 (Apache-2.0 OR MIT)
+wasm-bindgen-futures 0.4.49 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/futures
 ---------------------------------------------------------
 
-wasm-bindgen-macro 0.2.95 (Apache-2.0 OR MIT)
+wasm-bindgen-macro 0.2.99 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro
 ---------------------------------------------------------
 
-wasm-bindgen-macro-support 0.2.95 (Apache-2.0 OR MIT)
+wasm-bindgen-macro-support 0.2.99 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/macro-support
 ---------------------------------------------------------
 
-wasm-bindgen-shared 0.2.95 (Apache-2.0 OR MIT)
+wasm-bindgen-shared 0.2.99 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/shared
 ---------------------------------------------------------
 
-web-sys 0.3.72 (Apache-2.0 OR MIT)
+web-sys 0.3.76 (Apache-2.0 OR MIT)
 https://github.com/rustwasm/wasm-bindgen/tree/master/crates/web-sys
 ---------------------------------------------------------
 
@@ -1321,7 +1337,7 @@ zerocopy 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
-zerocopy 0.8.11 (Apache-2.0 OR BSD-2-Clause OR MIT)
+zerocopy 0.8.13 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
@@ -1329,7 +1345,7 @@ zerocopy-derive 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
-zerocopy-derive 0.8.11 (Apache-2.0 OR BSD-2-Clause OR MIT)
+zerocopy-derive 0.8.13 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 

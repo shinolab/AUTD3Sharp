@@ -96,6 +96,14 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    public unsafe partial struct ResultGain
+    {
+        public GainPtr result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct GeometryPtr
     {
         public IntPtr Item1;
