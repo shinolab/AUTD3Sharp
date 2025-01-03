@@ -202,6 +202,6 @@ public class Vector3Test
 
         var result = vector.ToString();
 
-        Assert.Equal("3D Column Vector:\n1                   \n2                   \n3                   ", result);
+        Assert.Equal("(1, 2, 3)", result);
     }
 }

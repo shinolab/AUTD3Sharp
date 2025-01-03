@@ -1,4 +1,4 @@
-﻿#if UNITY_2020_2_OR_NEWER
+#if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif
 
@@ -121,7 +121,7 @@ namespace AUTD3Sharp.Utils
         #region util
         public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
         [ExcludeFromCodeCoverage] IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
-        public string ToString(string format) => $"3D Column Vector:\n{string.Format(CultureInfo.CurrentCulture, format, X)}\n{string.Format(CultureInfo.CurrentCulture, format, Y)}\n{string.Format(CultureInfo.CurrentCulture, format, Z)}";
+        public string ToString(string format) => $"({string.Format(CultureInfo.CurrentCulture, format, X)}, {string.Format(CultureInfo.CurrentCulture, format, Y)}, {string.Format(CultureInfo.CurrentCulture, format, Z)})";
 
         public IEnumerator<float> GetEnumerator()
         {
@@ -130,7 +130,7 @@ namespace AUTD3Sharp.Utils
             yield return Z;
         }
 
-        public override string ToString() => ToString("{0,-20}");
+        public override string ToString() => ToString("{0}");
         #endregion
 
 #if UNITY_2018_3_OR_NEWER

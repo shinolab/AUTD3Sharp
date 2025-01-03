@@ -1,4 +1,4 @@
-﻿#if UNITY_2020_2_OR_NEWER
+#if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif
 
@@ -110,7 +110,7 @@ namespace AUTD3Sharp.Utils
             yield return Z;
         }
 
-        public override string ToString() => ToString("{0,-20}");
+        public override string ToString() => ToString("{0}");
         #endregion
 
 #if UNITY_2018_3_OR_NEWER
