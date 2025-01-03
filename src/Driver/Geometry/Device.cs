@@ -42,7 +42,7 @@ namespace AUTD3Sharp
         public Vector3 YDirection => NativeMethodsBase.AUTDDeviceDirectionY(Ptr);
         public Vector3 AxialDirection => NativeMethodsBase.AUTDDeviceDirectionAxial(Ptr);
 
-        public Vector3 Center => NativeMethodsBase.AUTDDeviceCenter(Ptr);
+        public Point3 Center => NativeMethodsBase.AUTDDeviceCenter(Ptr);
 
         public void Translate(Vector3 t)
         {

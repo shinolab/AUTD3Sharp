@@ -51,7 +51,7 @@ public class RotationTest
         return;
 
         async Task<Controller<Audit>> Open(Quaternion q) =>
-            await Controller.Builder([new AUTD3(Vector3.Zero).WithRotation(q)])
+            await Controller.Builder([new AUTD3(Point3.Origin).WithRotation(q)])
                 .OpenAsync(Audit.Builder());
 
         void AssertNearVec3(Vector3 expected, Vector3 x)
@@ -98,7 +98,7 @@ public class RotationTest
         return;
 
         async Task<Controller<Audit>> Open(Quaternion q) =>
-            await Controller.Builder([new AUTD3(Vector3.Zero).WithRotation(q)])
+            await Controller.Builder([new AUTD3(Point3.Origin).WithRotation(q)])
                 .OpenAsync(Audit.Builder());
 
         void AssertNearVec3(Vector3 expected, Vector3 x)

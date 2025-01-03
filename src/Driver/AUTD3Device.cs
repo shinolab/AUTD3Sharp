@@ -27,11 +27,11 @@ namespace AUTD3Sharp
         public const float DeviceWidth = NativeMethodsDriver.DEVICE_WIDTH_MM * Millimeter;
         #endregion
 
-        public Vector3 Pos { get; }
+        public Point3 Pos { get; }
         [Property]
         public Quaternion Rotation { get; private set; }
 
-        public AUTD3(Vector3 pos)
+        public AUTD3(Point3 pos)
         {
             Pos = pos;
             Rotation = Quaternion.Identity;

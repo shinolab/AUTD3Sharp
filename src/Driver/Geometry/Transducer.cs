@@ -18,6 +18,6 @@ namespace AUTD3Sharp
 
         public int DevIdx { get; }
 
-        public Vector3 Position => NativeMethodsBase.AUTDTransducerPosition(Ptr);
+        public Point3 Position => NativeMethodsBase.AUTDTransducerPosition(Ptr);
     }
 }

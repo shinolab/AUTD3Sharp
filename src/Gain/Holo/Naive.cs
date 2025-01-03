@@ -10,7 +10,7 @@ namespace AUTD3Sharp.Gain.Holo
     {
         private readonly Backend _backend;
 
-        public Naive(Backend backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        public Naive(Backend backend, IEnumerable<(Point3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
         {
             _backend = backend;
         }

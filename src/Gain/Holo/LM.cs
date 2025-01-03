@@ -13,7 +13,7 @@ namespace AUTD3Sharp.Gain.Holo
         private readonly Backend _backend;
         private float[] _initial;
 
-        public LM(Backend backend, IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        public LM(Backend backend, IEnumerable<(Point3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
         {
             _backend = backend;
             Eps1 = 1e-8f;

@@ -78,3 +78,7 @@ namespace AUTD3Sharp.Timer
         public static TimerStrategyWrap Waitable(WaitableSleeper sleeper) => NativeMethodsBase.AUTDTimerStrategyWaitable();
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

@@ -29,8 +29,8 @@ public class SilencerTest
             Assert.Equal(AUTD3Sharp.SilencerTarget.PulseWidth, autd.Link.SilencerTarget(dev.Idx));
         }
 
-        Assert.True(new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
-        Assert.True(new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).IsValid(new FociSTM(new SamplingConfig(1), [Vector3.Zero, Vector3.Zero])));
+        Assert.Throws<NotImplementedException>(() => new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
+        Assert.Throws<NotImplementedException>(() => new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).IsValid(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin])));
     }
 
     [Fact]
@@ -147,8 +147,8 @@ public class SilencerTest
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
 
-        Assert.False(new Silencer().IsValid(new FociSTM(new SamplingConfig(1), [Vector3.Zero, Vector3.Zero])));
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new FociSTM(new SamplingConfig(1), [Vector3.Zero, Vector3.Zero])));
+        Assert.False(new Silencer().IsValid(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin])));
+        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin])));
 
         await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).WithStrictMode(false));
         foreach (var dev in autd)
@@ -159,6 +159,6 @@ public class SilencerTest
         }
         await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
 
-        await autd.SendAsync(new FociSTM(new SamplingConfig(1), [Vector3.Zero, Vector3.Zero]));
+        await autd.SendAsync(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin]));
     }
 }

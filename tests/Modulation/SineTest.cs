@@ -5,7 +5,7 @@ public class SineTest
     [Fact]
     public async Task SineExact()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         {
             var m = new Sine(150 * Hz).WithIntensity(0x80).WithOffset(0x40).WithPhase(MathF.PI / 2.0f * rad);
@@ -39,7 +39,7 @@ public class SineTest
     [Fact]
     public async Task SineExactFloat()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         {
             var m = new Sine(150.0f * Hz).WithIntensity(0x80).WithOffset(0x40).WithPhase(MathF.PI / 2.0f * rad);
@@ -62,7 +62,7 @@ public class SineTest
     [Fact]
     public async Task SineNearest()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var m = Sine.Nearest(150.0f * Hz);
         await autd.SendAsync(m);

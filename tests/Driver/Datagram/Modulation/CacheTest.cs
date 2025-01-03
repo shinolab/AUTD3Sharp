@@ -6,8 +6,8 @@ public class CacheTest
     public async Task Cache()
     {
         {
-            var autd1 = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
-            var autd2 = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+            var autd1 = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+            var autd2 = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
             var m = new Sine(150 * Hz);
             var mc = m.WithCache().WithLoopBehavior(LoopBehavior.Once);

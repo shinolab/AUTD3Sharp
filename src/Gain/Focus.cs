@@ -8,14 +8,14 @@ namespace AUTD3Sharp.Gain
     [Builder]
     public sealed partial class Focus
     {
-        public Focus(Vector3 pos)
+        public Focus(Point3 pos)
         {
             Pos = pos;
             Intensity = EmitIntensity.Max;
             PhaseOffset = new Phase(0);
         }
 
-        public Vector3 Pos { get; }
+        public Point3 Pos { get; }
 
         [Property(EmitIntensity = true)]
         public EmitIntensity Intensity { get; private set; }

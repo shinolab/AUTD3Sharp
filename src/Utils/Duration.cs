@@ -1,3 +1,7 @@
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 using System;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -83,3 +87,7 @@ namespace AUTD3Sharp
         public static OptionDuration Into(this Duration? duration) => new OptionDuration { has_value = duration.HasValue, value = duration ?? Duration.Zero };
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

@@ -1,3 +1,4 @@
+using System;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Derive;
@@ -51,10 +52,7 @@ namespace AUTD3Sharp
         public ushort Intensity { get; init; }
         public ushort Phase { get; init; }
 
-        bool ISilencer.IsValid(IWithSampling c, bool strictMode)
-            => NativeMethodsBase.AUTDDatagramSilencerFixedUpdateRateIsValid(Intensity, Phase,
-                c.SamplingConfigIntensity(), c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)
-            );
+        bool ISilencer.IsValid(IWithSampling c, bool strictMode) => throw new NotImplementedException();
         DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(Intensity, Phase, target);
     }
 

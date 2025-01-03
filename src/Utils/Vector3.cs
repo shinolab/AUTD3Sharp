@@ -70,14 +70,14 @@ namespace AUTD3Sharp.Utils
             var v1 = left.X + right.X;
             var v2 = left.Y + right.Y;
             var v3 = left.Z + right.Z;
-            return new Vector3(v1, v2, v3);
+            return new(v1, v2, v3);
         }
         public static Vector3 Subtract(Vector3 left, Vector3 right)
         {
             var v1 = left.X - right.X;
             var v2 = left.Y - right.Y;
             var v3 = left.Z - right.Z;
-            return new Vector3(v1, v2, v3);
+            return new(v1, v2, v3);
         }
 
         public static Vector3 Divide(Vector3 left, float right)
@@ -85,7 +85,7 @@ namespace AUTD3Sharp.Utils
             var v1 = left.X / right;
             var v2 = left.Y / right;
             var v3 = left.Z / right;
-            return new Vector3(v1, v2, v3);
+            return new(v1, v2, v3);
         }
 
         public static Vector3 Multiply(Vector3 left, float right)
@@ -93,7 +93,7 @@ namespace AUTD3Sharp.Utils
             var v1 = left.X * right;
             var v2 = left.Y * right;
             var v3 = left.Z * right;
-            return new Vector3(v1, v2, v3);
+            return new(v1, v2, v3);
         }
 
         public static Vector3 Multiply(float left, Vector3 right) => Multiply(right, left);
@@ -134,8 +134,8 @@ namespace AUTD3Sharp.Utils
         #endregion
 
 #if UNITY_2018_3_OR_NEWER
-    public static implicit operator UnityEngine.Vector3(Vector3 v) => new UnityEngine.Vector3(v.X, v.Y, v.Z);
-    public static implicit operator Vector3(UnityEngine.Vector3 v) => new Vector3(v.x, v.y, v.z);
+    public static implicit operator UnityEngine.Vector3(Vector3 v) => new(v.X, v.Y, v.Z);
+    public static implicit operator Vector3(UnityEngine.Vector3 v) => new(v.x, v.y, v.z);
 #endif
     }
 }

@@ -19,7 +19,7 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilder", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ControllerBuilderPtr AUTDControllerBuilder(Vector3* pos, Quaternion* rot, ushort len, ushort default_parallel_threshold, Duration default_timeout, Duration send_interval, Duration receive_interval, TimerStrategyWrap timer_strategy);
+        public static extern ControllerBuilderPtr AUTDControllerBuilder(Point3* pos, Quaternion* rot, ushort len, ushort default_parallel_threshold, Duration default_timeout, Duration send_interval, Duration receive_interval, TimerStrategyWrap timer_strategy);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerBuilderIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -111,10 +111,6 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromUpdateRate", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramSilencerFromUpdateRate(ushort intensity, ushort phase, SilencerTarget target);
-
-        [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFixedUpdateRateIsValid", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDDatagramSilencerFixedUpdateRateIsValid(ushort intensity, ushort phase, SamplingConfig config_intensity, SamplingConfig config_phase);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromCompletionTime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramSilencerFromCompletionTime(Duration intensity, Duration phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
@@ -275,7 +271,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern TransitionModeWrap AUTDTransitionModeNone();
 
         [DllImport(__DllName, EntryPoint = "AUTDGainBessel", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainBessel(Vector3 p, Vector3 n, float theta_z, byte intensity, byte phase_offset);
+        public static extern GainPtr AUTDGainBessel(Point3 p, Vector3 n, float theta_z, byte intensity, byte phase_offset);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainBesselIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -294,7 +290,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern GainPtr AUTDGainCustom(ConstPtr f, ConstPtr context, GeometryPtr geometry);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainFocus", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern GainPtr AUTDGainFocus(Vector3 p, byte intensity, byte phase_offset);
+        public static extern GainPtr AUTDGainFocus(Point3 p, byte intensity, byte phase_offset);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainFocusIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -344,7 +340,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern void AUTDDeviceSetSoundSpeedFromTemp(GeometryPtr geo, ushort dev_idx, float temp, float k, float r, float m);
 
         [DllImport(__DllName, EntryPoint = "AUTDDeviceCenter", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern Vector3 AUTDDeviceCenter(DevicePtr dev);
+        public static extern Point3 AUTDDeviceCenter(DevicePtr dev);
 
         [DllImport(__DllName, EntryPoint = "AUTDDeviceTranslate", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDDeviceTranslate(GeometryPtr geo, ushort dev_idx, Vector3 t);
@@ -390,7 +386,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern uint AUTDGeometryNumTransducers(GeometryPtr geo);
 
         [DllImport(__DllName, EntryPoint = "AUTDGeometrCenter", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern Vector3 AUTDGeometrCenter(GeometryPtr geo);
+        public static extern Point3 AUTDGeometrCenter(GeometryPtr geo);
 
         [DllImport(__DllName, EntryPoint = "AUTDRotationFromEulerXYZ", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern Quaternion AUTDRotationFromEulerXYZ(float x, float y, float z);
@@ -402,7 +398,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern TransducerPtr AUTDTransducer(DevicePtr dev, byte idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDTransducerPosition", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern Vector3 AUTDTransducerPosition(TransducerPtr tr);
+        public static extern Point3 AUTDTransducerPosition(TransducerPtr tr);
 
         [DllImport(__DllName, EntryPoint = "AUTDCreateRuntime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern RuntimePtr AUTDCreateRuntime();

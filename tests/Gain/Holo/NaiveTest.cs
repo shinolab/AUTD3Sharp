@@ -8,7 +8,7 @@ public class NaiveTest
     [Fact]
     public async Task Naive()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new Naive(backend, new float[] { -40, 40 }.Select(x => (autd.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
@@ -28,7 +28,7 @@ public class NaiveTest
     public void NaiveDefault()
     {
         var backend = new NalgebraBackend();
-        var g = new Naive(backend, [(Vector3.Zero, 5e3f * Pa), (Vector3.Zero, 5e3f * Pa)]);
+        var g = new Naive(backend, [(Point3.Origin, 5e3f * Pa), (Point3.Origin, 5e3f * Pa)]);
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainNaiveIsDefault(
             g.Constraint
             ));

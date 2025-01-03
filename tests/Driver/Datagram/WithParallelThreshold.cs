@@ -9,7 +9,7 @@ public class WithParallelThresholdTest
     [Fact]
     public async Task TestWithParallelThreshold()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)])
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)])
             .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new Null().WithParallelThreshold(null));
