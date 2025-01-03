@@ -111,6 +111,11 @@ using AUTD3Sharp.NativeMethods;
 {{firCode}}
     }
 {{nsEnd}}
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif
+
 """;
         context.AddSource($"{fullType}.ModulationDerive.g.cs", code);
     }

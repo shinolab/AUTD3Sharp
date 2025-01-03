@@ -23,7 +23,7 @@ public class FocusTest
     [Fact]
     public void FocusDefault()
     {
-        var g = new Focus(Vector3.Zero);
+        var g = new Focus(Point3.Origin);
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainFocusIsDefault(g.Intensity.Value, g.PhaseOffset.Value));
     }
 }

@@ -6,7 +6,7 @@ public class GainSTMTest
     public async Task TestGainSTM()
     {
         var autd = await Controller.Builder([
-                new AUTD3(Vector3.Zero),new AUTD3(Vector3.Zero)
+                new AUTD3(Point3.Origin),new AUTD3(Point3.Origin)
             ])
             .OpenAsync(Audit.Builder());
 
@@ -114,7 +114,7 @@ public class GainSTMTest
     [Fact]
     public async Task TestChangeGainSTMSegment()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)])
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)])
          .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new ReadsFPGAState(_ => true));

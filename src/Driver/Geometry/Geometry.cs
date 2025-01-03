@@ -20,7 +20,7 @@ namespace AUTD3Sharp
         public int NumDevices => (int)NativeMethodsBase.AUTDGeometryNumDevices(GeometryPtr);
         public int NumTransducers => (int)NativeMethodsBase.AUTDGeometryNumTransducers(GeometryPtr);
 
-        public Vector3 Center => NativeMethodsBase.AUTDGeometrCenter(GeometryPtr);
+        public Point3 Center => NativeMethodsBase.AUTDGeometrCenter(GeometryPtr);
 
         public Device this[int index] => _devices[index];
         public IEnumerator<Device> GetEnumerator() => _devices.GetEnumerator();

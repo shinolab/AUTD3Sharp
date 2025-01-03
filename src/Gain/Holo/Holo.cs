@@ -8,15 +8,15 @@ namespace AUTD3Sharp.Gain.Holo
     public abstract class Holo<TH>
         where TH : Holo<TH>
     {
-        protected readonly Vector3[] Foci;
+        protected readonly Point3[] Foci;
         protected readonly Amplitude[] Amps;
 
         public EmissionConstraintWrap Constraint { get; private set; }
 
-        protected Holo(EmissionConstraintWrap constraint, IEnumerable<(Vector3, Amplitude)> iter)
+        protected Holo(EmissionConstraintWrap constraint, IEnumerable<(Point3, Amplitude)> iter)
         {
             Constraint = constraint;
-            var tupleIter = iter as (Vector3, Amplitude)[] ?? iter.ToArray();
+            var tupleIter = iter as (Point3, Amplitude)[] ?? iter.ToArray();
             Foci = tupleIter.Select(x => x.Item1).ToArray();
             Amps = tupleIter.Select(x => x.Item2).ToArray();
         }

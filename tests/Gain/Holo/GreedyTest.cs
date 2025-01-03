@@ -8,7 +8,7 @@ public class GreedyTest
     [Fact]
     public async Task Greedy()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var g = new Greedy(new float[] { -40, 40 }.Select(x => (autd.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
             .WithPhaseDiv(16)
@@ -27,7 +27,7 @@ public class GreedyTest
     [Fact]
     public void GreedyDefault()
     {
-        var g = new Greedy([(Vector3.Zero, 5e3f * Pa), (Vector3.Zero, 5e3f * Pa)]);
+        var g = new Greedy([(Point3.Origin, 5e3f * Pa), (Point3.Origin, 5e3f * Pa)]);
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsGainHolo.AUTDGainGreedyIsDefault(
             g.Constraint,
             g.PhaseDiv

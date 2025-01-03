@@ -76,6 +76,11 @@ using AUTD3Sharp.NativeMethods;
 {{cacheCode}}
     }
 {{nsEnd}}
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif
+
 """;
         context.AddSource($"{fullType}.GainDerive.g.cs", code);
     }

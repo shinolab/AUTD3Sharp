@@ -5,7 +5,7 @@ public class FourierTest
     [Fact]
     public async Task FourierExact()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 128, 157, 184, 206, 221, 228, 227, 219, 206, 189, 171, 154, 140, 130, 125, 124, 128, 134, 141, 148, 153, 156, 155, 152, 146, 139, 132,
             126, 121, 119, 120, 123, 128, 133, 137, 141, 142, 141, 138, 133, 128, 122, 117, 114, 113, 114, 118, 122, 128, 132, 135, 136, 134, 129,
@@ -28,7 +28,7 @@ public class FourierTest
     [Fact]
     public async Task FourierExactFloat()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 128, 157, 184, 206, 221, 228, 227, 219, 206, 189, 171, 154, 140, 130, 125, 124, 128, 134, 141, 148, 153, 156, 155, 152, 146, 139, 132,
             126, 121, 119, 120, 123, 128, 133, 137, 141, 142, 141, 138, 133, 128, 122, 117, 114, 113, 114, 118, 122, 128, 132, 135, 136, 134, 129,
@@ -51,7 +51,7 @@ public class FourierTest
     [Fact]
     public async Task FourierNearest()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 128, 142, 157, 171, 185, 197, 208, 218, 226, 232, 236, 239, 240, 239, 236, 231, 226, 218, 210, 201, 191, 181, 171, 161, 151, 141, 133,
             125, 118, 113, 109, 106, 104, 104, 105, 107, 110, 113, 118, 123, 128, 132, 137, 142, 145, 148, 150, 151, 151, 149, 146, 142, 137, 130,

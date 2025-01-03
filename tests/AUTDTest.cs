@@ -7,12 +7,12 @@ public class AUTDTest
 {
     public static async Task<Controller<Audit>> CreateController()
     {
-        return await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(Duration.FromMillis(1)).WithReceiveInterval(Duration.FromMillis(1)).OpenAsync(Audit.Builder());
+        return await Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)]).WithSendInterval(Duration.FromMillis(1)).WithReceiveInterval(Duration.FromMillis(1)).OpenAsync(Audit.Builder());
     }
 
     public static Controller<Audit> CreateControllerSync()
     {
-        return Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).WithSendInterval(Duration.FromMillis(1)).WithReceiveInterval(Duration.FromMillis(1)).Open(Audit.Builder());
+        return Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)]).WithSendInterval(Duration.FromMillis(1)).WithReceiveInterval(Duration.FromMillis(1)).Open(Audit.Builder());
     }
 
     [Fact]
@@ -39,21 +39,21 @@ public class AUTDTest
     [Fact]
     public async Task TestWithTimerStrategy()
     {
-        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Std(new StdSleeper { })).OpenAsync(Audit.Builder());
-        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Spin(new SpinSleeper())).OpenAsync(Audit.Builder());
-        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Async(new AsyncSleeper { })).OpenAsync(Audit.Builder());
+        _ = await Controller.Builder([new AUTD3(Point3.Origin)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Std(new StdSleeper { })).OpenAsync(Audit.Builder());
+        _ = await Controller.Builder([new AUTD3(Point3.Origin)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Spin(new SpinSleeper())).OpenAsync(Audit.Builder());
+        _ = await Controller.Builder([new AUTD3(Point3.Origin)]).WithTimerStrategy(AUTD3Sharp.Timer.TimerStrategy.Async(new AsyncSleeper { })).OpenAsync(Audit.Builder());
     }
 
     [Fact]
     public async Task TestWithTimeout()
     {
-        _ = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder(), Duration.FromMillis(200));
+        _ = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder(), Duration.FromMillis(200));
     }
 
     [Fact]
     public void TestWithTimeoutSync()
     {
-        _ = Controller.Builder([new AUTD3(Vector3.Zero)]).Open(Audit.Builder(), Duration.FromMillis(200));
+        _ = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder(), Duration.FromMillis(200));
     }
 
     [Fact]

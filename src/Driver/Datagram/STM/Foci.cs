@@ -177,7 +177,7 @@ namespace AUTD3Sharp
             _points = new ControlPointsArray1(pointsArray);
         }
         public FociSTM(STMSamplingConfig config, IEnumerable<ControlPoint> points) : this(config, points.Select(p => new ControlPoints1(p))) { }
-        public FociSTM(STMSamplingConfig config, IEnumerable<Vector3> points) : this(config, points.Select(p => new ControlPoint(p))) { }
+        public FociSTM(STMSamplingConfig config, IEnumerable<Point3> points) : this(config, points.Select(p => new ControlPoint(p))) { }
 
         public FociSTM(STMSamplingConfig config, IEnumerable<ControlPoints2> points)
         {
@@ -240,7 +240,7 @@ namespace AUTD3Sharp
             return new FociSTM(config.STMSamplingConfig(pointsArray.Length), pointsArray);
         }
 
-        public static FociSTM Nearest(STMSamplingConfigNearest config, IEnumerable<Vector3> points)
+        public static FociSTM Nearest(STMSamplingConfigNearest config, IEnumerable<Point3> points)
         {
             var pointsArray = points.Select(p => new ControlPoints1(p)).ToArray();
             return new FociSTM(config.STMSamplingConfig(pointsArray.Length), pointsArray);

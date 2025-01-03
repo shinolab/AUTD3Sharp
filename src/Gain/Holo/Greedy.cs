@@ -9,7 +9,7 @@ namespace AUTD3Sharp.Gain.Holo
     [Builder]
     public sealed partial class Greedy : Holo<Greedy>
     {
-        public Greedy(IEnumerable<(Vector3, Amplitude)> iter) : base(EmissionConstraint.Uniform(EmitIntensity.Max), iter)
+        public Greedy(IEnumerable<(Point3, Amplitude)> iter) : base(EmissionConstraint.Uniform(EmitIntensity.Max), iter)
         {
             PhaseDiv = 16;
         }
@@ -21,7 +21,7 @@ namespace AUTD3Sharp.Gain.Holo
         {
             unsafe
             {
-                fixed (Vector3* foci = &Foci[0])
+                fixed (Point3* foci = &Foci[0])
                 fixed (Amplitude* amps = &Amps[0])
                 {
                     return NativeMethodsGainHolo.AUTDGainHoloGreedySphere(foci, (float*)amps, (uint)Amps.Length, PhaseDiv, Constraint);

@@ -7,7 +7,7 @@ public class RawPCMTest
     [Fact]
     public async Task RawPCM()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] {
                 157,
@@ -119,7 +119,7 @@ public class RawPCMTest
     [Fact]
     public async Task RawPCMResample()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 127, 217, 255, 217, 127, 37, 0, 37 };
 

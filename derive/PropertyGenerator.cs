@@ -106,6 +106,11 @@ using System.Runtime.CompilerServices;
         {{setters}}
     }   
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif
+
 """;
         context.AddSource($"{fullType}.Property.g.cs", code);
     }

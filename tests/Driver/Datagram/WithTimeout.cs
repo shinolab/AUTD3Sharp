@@ -9,7 +9,7 @@ public class WithTimeoutTest
     [Fact]
     public async Task TestWithTimeout()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)])
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)])
             .OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new Null().WithTimeout(null));

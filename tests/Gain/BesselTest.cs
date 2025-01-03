@@ -25,7 +25,7 @@ public class BesselTest
     [Fact]
     public void BesselDefault()
     {
-        var g = new Bessel(Vector3.Zero, Vector3.Zero, 0 * rad);
+        var g = new Bessel(Point3.Origin, Vector3.Zero, 0 * rad);
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainBesselIsDefault(g.Intensity.Value, g.PhaseOffset.Value));
     }
 }

@@ -6,7 +6,7 @@ public class CustomTest
     [Fact]
     public async Task ModulationCustom()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 255, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         await autd.SendAsync(new AUTD3Sharp.Modulation.Custom(modExpect, new SamplingConfig(10)));
@@ -21,7 +21,7 @@ public class CustomTest
     [Fact]
     public async Task ModulationCustomResample()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         await autd.SendAsync(new AUTD3Sharp.Modulation.Custom([127, 255, 127, 0], 2.0f * kHz, 4 * kHz, new SincInterpolation()));
         foreach (var dev in autd)

@@ -9,10 +9,10 @@ namespace AUTD3Sharp.Gain.Holo
     {
         internal BackendPtr Ptr;
 
-        internal abstract GainPtr Gs(Vector3[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint);
-        internal abstract GainPtr Gspat(Vector3[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint);
-        internal abstract GainPtr Naive(Vector3[] foci, Amplitude[] amps, uint size, EmissionConstraintWrap constraint);
-        internal abstract GainPtr Lm(Vector3[] foci, Amplitude[] amps, uint size, float eps1, float eps2,
+        internal abstract GainPtr Gs(Point3[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint);
+        internal abstract GainPtr Gspat(Point3[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint);
+        internal abstract GainPtr Naive(Point3[] foci, Amplitude[] amps, uint size, EmissionConstraintWrap constraint);
+        internal abstract GainPtr Lm(Point3[] foci, Amplitude[] amps, uint size, float eps1, float eps2,
             float tau, uint kMax, float[] initial, EmissionConstraintWrap constraint);
     }
 }

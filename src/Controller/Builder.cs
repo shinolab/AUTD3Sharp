@@ -44,7 +44,7 @@ namespace AUTD3Sharp
             var rot = _devices.Select(dev => dev.Rotation).ToArray();
             unsafe
             {
-                fixed (Vector3* pp = &pos[0])
+                fixed (Point3* pp = &pos[0])
                 fixed (Quaternion* rp = &rot[0])
                 {
                     return NativeMethodsBase.AUTDControllerBuilder(pp, rp, (ushort)pos.Length,

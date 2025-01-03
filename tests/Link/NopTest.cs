@@ -5,7 +5,7 @@ public class NopTest
     [Fact]
     public async Task TestNop()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero), new AUTD3(Vector3.Zero)]).OpenAsync(Nop.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)]).OpenAsync(Nop.Builder());
 
         await autd.CloseAsync();
     }

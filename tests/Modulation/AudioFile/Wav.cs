@@ -7,7 +7,7 @@ public class WavTest
     [Fact]
     public async Task Wav()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] {
                 128,
@@ -108,7 +108,7 @@ public class WavTest
     [Fact]
     public async Task WavResample()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var modExpect = new byte[] { 127, 217, 255, 217, 127, 37, 0, 37 };
 

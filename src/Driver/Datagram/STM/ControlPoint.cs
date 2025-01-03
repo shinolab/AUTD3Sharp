@@ -10,12 +10,12 @@ namespace AUTD3Sharp
     public partial struct ControlPoint
     {
         [ExcludeFromCodeCoverage]
-        public Vector3 Point { get; }
+        public Point3 Point { get; }
 
         [Property(Phase = true)]
         public Phase PhaseOffset { get; private set; }
 
-        public ControlPoint(Vector3 point)
+        public ControlPoint(Point3 point)
         {
             Point = point;
             PhaseOffset = new Phase(0);
@@ -44,7 +44,7 @@ namespace AUTD3Sharp
         {
         }
 
-        public ControlPoints1(Vector3 v) : this(new ControlPoint(v))
+        public ControlPoints1(Point3 v) : this(new ControlPoint(v))
         {
         }
     }
@@ -67,7 +67,7 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints2((Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2)))
+        public ControlPoints2((Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2)))
         {
         }
 
@@ -97,7 +97,7 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints3((Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3)))
+        public ControlPoints3((Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3)))
         {
         }
 
@@ -129,7 +129,7 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints4((Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4)))
+        public ControlPoints4((Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4)))
         {
         }
 
@@ -163,7 +163,7 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints5((Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5)))
+        public ControlPoints5((Point3, Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5)))
         {
         }
 
@@ -199,7 +199,7 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints6((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6)))
+        public ControlPoints6((Point3, Point3, Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6)))
         {
         }
 
@@ -237,7 +237,7 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints7((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7)))
+        public ControlPoints7((Point3, Point3, Point3, Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7)))
         {
         }
 
@@ -277,7 +277,7 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public ControlPoints8((Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3, Vector3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7), new ControlPoint(v.Item8)))
+        public ControlPoints8((Point3, Point3, Point3, Point3, Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7), new ControlPoint(v.Item8)))
         {
         }
 

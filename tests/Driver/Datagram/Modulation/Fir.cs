@@ -5,7 +5,7 @@ public class FirTest
     [Fact]
     public async Task Fir()
     {
-        var autd = await Controller.Builder([new AUTD3(Vector3.Zero)]).OpenAsync(Audit.Builder());
+        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
 
         var m = new Fourier([new Sine(50 * Hz), new Sine(1000 * Hz)]);
         var mr = m.WithFir([
