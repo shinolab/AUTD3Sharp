@@ -1,4 +1,4 @@
-#if UNITY_2020_2_OR_NEWER
+﻿#if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif
 
@@ -70,6 +70,14 @@ namespace AUTD3Sharp.Utils
             return new(v1, v2, v3);
         }
 
+        public static Point3 Divide(Point3 left, float right)
+        {
+            var v1 = left.X / right;
+            var v2 = left.Y / right;
+            var v3 = left.Z / right;
+            return new(v1, v2, v3);
+        }
+
         public static Point3 Multiply(Point3 left, float right)
         {
             var v1 = left.X * right;
@@ -84,6 +92,7 @@ namespace AUTD3Sharp.Utils
         public static Point3 operator -(Point3 left, Vector3 right) => Subtract(left, right);
         public static Point3 operator *(Point3 left, float right) => Multiply(left, right);
         public static Point3 operator *(float left, Point3 right) => Multiply(right, left);
+        public static Point3 operator /(Point3 left, float right) => Divide(left, right);
         public static bool operator ==(Point3 left, Point3 right) => left.Equals(right);
         public static bool operator !=(Point3 left, Point3 right) => !left.Equals(right);
         public bool Equals(Point3 other) => X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
