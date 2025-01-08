@@ -50,6 +50,51 @@ jobs:
           git push origin $TAG
         env:
           TAG: ${{ steps.get_upm_tag.outputs.result }}
+          
+  publish_unity-dynamic_freq-github:
+    name: publish-unity-dynamic_freq-github
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+      - run: python3 build.py unity build --release
+      - run: |
+          git fetch origin upm/dynamic_freq/latest:upm/dynamic_freq/latest
+          git config --global user.name 'github-bot'
+          git config --global user.email 'github-bot@users.noreply.github.com'
+          git mv unity-dynamic_freq/Assets/Samples unity-dynamic_freq/Assets/Samples~
+          rm -f unity-dynamic_freq/Assets/Scripts/Properties.meta
+          rm -f unity-dynamic_freq/Assets/Samples.meta
+          rm -f unity-dynamic_freq/Assets/DefaultVolumeProfile.*
+          rm -f unity-dynamic_freq/Assets/UniversalRenderPipelineAsset.*
+          rm -f unity-dynamic_freq/Assets/UniversalRenderPipelineAsset_Renderer.*
+          rm -f unity-dynamic_freq/Assets/UniversalRenderPipelineGlobalSettings.*
+          rm -rf tools .github
+          find ./ -name .gitignore -type f -delete
+          find ./ -name .npmignore -type f -delete
+          git add .
+          git commit -am "prepare for Unity Package Release"
+          git branch -D upm/dynamic_freq/latest
+          git subtree split -P unity-dynamic_freq/Assets -b upm/dynamic_freq/latest
+          git checkout upm/dynamic_freq/latest
+          git clean -fxd
+          git push -f -u origin upm/dynamic_freq/latest
+      - id: get_upm_tag
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+            return 'upm/dynamic_freq/'+context.payload.ref.replace(/refs\/tags\//, '');
+      - run: |
+          git tag $TAG upm/dynamic_freq/latest
+          git push origin $TAG
+        env:
+          TAG: ${{ steps.get_upm_tag.outputs.result }}
 
   publish_nuget:
     name: publish-nuget

@@ -16,7 +16,7 @@
     <Authors>Shun Suzuki</Authors>
     <Company>Shinolab</Company>
     <Description>AUTD3 derive helper for AUTD3Sharp</Description>
-    <Copyright>Copyright (c) 2024 Shun Suzuki. All rights reserved.</Copyright>
+    <Copyright>Copyright (c) 2024-2025 Shun Suzuki. All rights reserved.</Copyright>
     <PackageProjectUrl>https://github.com/shinolab/autd3</PackageProjectUrl>
     <NuspecFile>$(MSBuildProjectName).nuspec</NuspecFile>
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>

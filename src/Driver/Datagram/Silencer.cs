@@ -33,6 +33,7 @@ namespace AUTD3Sharp
         internal DatagramPtr RawPtr(bool strictMode, SilencerTarget target);
     }
 
+#if !DYNAMIC_FREQ
     public readonly struct FixedCompletionTime : ISilencer
     {
         public Duration Intensity { get; init; }
@@ -46,6 +47,7 @@ namespace AUTD3Sharp
         DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target)
            => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(Intensity, Phase, strictMode, target);
     }
+#endif
 
     public readonly struct FixedCompletionSteps : ISilencer
     {
@@ -95,7 +97,7 @@ namespace AUTD3Sharp
         })
         { }
 
-        public static Silencer Disable() => new(new FixedCompletionTime { Intensity = Duration.FromMicros(25), Phase = Duration.FromMicros(25) });
+        public static Silencer Disable() => new(new FixedCompletionSteps { Intensity = 1, Phase = 1 });
 
         public bool IsValid(IWithSampling target) => Inner.IsValid(target, StrictMode);
         DatagramPtr IDatagram.Ptr(Geometry geometry) => Inner.RawPtr(StrictMode, Target);

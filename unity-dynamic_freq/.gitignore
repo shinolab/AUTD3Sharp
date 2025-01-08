@@ -1,0 +1,13 @@
+!*.meta
+Library/
+Packages/
+ProjectSettings/
+Temp/
+UserSettings/
+.vsconfig
+autd3.csproj
+unity.sln
+obj/
+*.csproj
+Settings
+settings.meta

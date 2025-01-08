@@ -8,7 +8,9 @@ namespace AUTD3Sharp
     internal enum STMSamplingConfigTag : uint
     {
         Freq,
+#if !DYNAMIC_FREQ
         Period,
+#endif
         Config
     }
 
@@ -33,11 +35,13 @@ namespace AUTD3Sharp
             _f = f;
         }
 
+#if !DYNAMIC_FREQ
         private STMSamplingConfig(Duration period)
         {
             _tag = STMSamplingConfigTag.Period;
             _period = period;
         }
+#endif
 
         private STMSamplingConfig(SamplingConfig config)
         {
@@ -52,12 +56,16 @@ namespace AUTD3Sharp
         internal SamplingConfig SamplingConfig(int n) => _tag switch
         {
             STMSamplingConfigTag.Freq => NativeMethodsBase.AUTDSTMConfigFromFreq(_f.Hz, (ushort)n).Validate(),
+#if !DYNAMIC_FREQ
             STMSamplingConfigTag.Period => NativeMethodsBase.AUTDSTMConfigFromPeriod(_period, (ushort)n).Validate(),
+#endif
             _ => _config
         };
 
         public Freq<float> Freq(int n) => NativeMethodsBase.AUTDSTMFreq(SamplingConfig(n), (ushort)n) * Hz;
+#if !DYNAMIC_FREQ
         public Duration Period(int n) => NativeMethodsBase.AUTDSTMPeriod(SamplingConfig(n), (ushort)n);
+#endif
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -78,19 +86,27 @@ namespace AUTD3Sharp
             _f = f;
         }
 
+#if !DYNAMIC_FREQ
         private STMSamplingConfigNearest(Duration period)
         {
             _tag = STMSamplingConfigTag.Period;
             _period = period;
         }
+#endif
 
         public static implicit operator STMSamplingConfigNearest(Freq<float> f) => new(f);
+#if !DYNAMIC_FREQ
         public static implicit operator STMSamplingConfigNearest(Duration period) => new(period);
+#endif
 
         internal STMSamplingConfig STMSamplingConfig(int n) => _tag switch
         {
             STMSamplingConfigTag.Freq => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromFreqNearest(_f.Hz, (ushort)n).Validate()),
+#if DYNAMIC_FREQ
+            _ => throw new NotImplementedException(),
+#else
             _ => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromPeriodNearest(_period, (ushort)n).Validate())
+#endif
         };
     }
 }

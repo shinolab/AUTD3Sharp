@@ -304,7 +304,9 @@ namespace AUTD3Sharp
         public DatagramWithSegment<FociSTM, FociSTMPtr> WithSegment(Segment segment, TransitionModeWrap? transitionMode) => new(this, segment, transitionMode);
 
         public Freq<float> Freq => _config.Freq(_points.Length());
+#if !DYNAMIC_FREQ
         public Duration Period => _config.Period(_points.Length());
+#endif
         public SamplingConfig SamplingConfig => new(_config.SamplingConfig(_points.Length()));
 
         SamplingConfig IWithSampling.SamplingConfigIntensity() => SamplingConfig;
