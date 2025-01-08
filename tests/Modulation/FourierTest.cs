@@ -13,6 +13,7 @@ public class FourierTest
 
         {
             var m = new Fourier([new Sine(50 * Hz), new Sine(100 * Hz), new Sine(150 * Hz), new Sine(200 * Hz), new Sine(250 * Hz)]);
+            Assert.Null(m.ScaleFactor);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
             foreach (var dev in autd)
@@ -22,6 +23,12 @@ public class FourierTest
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
+        }
+
+        {
+            var m = new Fourier([new Sine(50 * Hz)]).WithScaleFactor(0.5f);
+            Assert.Equal(0.5f, m.ScaleFactor);
+            await autd.SendAsync(m);
         }
     }
 
@@ -36,6 +43,7 @@ public class FourierTest
 
         {
             var m = new Fourier([new Sine(50.0f * Hz), new Sine(100.0f * Hz), new Sine(150.0f * Hz), new Sine(200.0f * Hz), new Sine(250.0f * Hz)]);
+            Assert.Null(m.ScaleFactor);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
             foreach (var dev in autd)
@@ -45,6 +53,12 @@ public class FourierTest
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
+        }
+
+        {
+            var m = new Fourier([new Sine(50.0f * Hz)]).WithScaleFactor(0.5f);
+            Assert.Equal(0.5f, m.ScaleFactor);
+            await autd.SendAsync(m);
         }
     }
 
@@ -59,6 +73,7 @@ public class FourierTest
 
         {
             var m = new Fourier([Sine.Nearest(50.0f * Hz), Sine.Nearest(100.0f * Hz)]);
+            Assert.Null(m.ScaleFactor);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             await autd.SendAsync(m);
             foreach (var dev in autd)
@@ -68,6 +83,12 @@ public class FourierTest
                 Assert.Equal(LoopBehavior.Infinite, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
                 Assert.Equal(10u, autd.Link.ModulationFreqDivision(dev.Idx, Segment.S0));
             }
+        }
+
+        {
+            var m = new Fourier([Sine.Nearest(50.0f * Hz)]).WithScaleFactor(0.5f);
+            Assert.Equal(0.5f, m.ScaleFactor);
+            await autd.SendAsync(m);
         }
     }
 }

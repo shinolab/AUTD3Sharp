@@ -112,16 +112,23 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromUpdateRate", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramSilencerFromUpdateRate(ushort intensity, ushort phase, SilencerTarget target);
 
+        [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromCompletionSteps", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        public static extern DatagramPtr AUTDDatagramSilencerFromCompletionSteps(ushort intensity, ushort phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
+
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromCompletionTime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern DatagramPtr AUTDDatagramSilencerFromCompletionTime(Duration intensity, Duration phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
+
+        [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFixedCompletionStepsIsValid", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.U1)]
+        public static extern bool AUTDDatagramSilencerFixedCompletionStepsIsValid(ushort intensity, ushort phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SamplingConfig config_intensity, SamplingConfig config_phase);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFixedCompletionTimeIsValid", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
         public static extern bool AUTDDatagramSilencerFixedCompletionTimeIsValid(Duration intensity, Duration phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SamplingConfig config_intensity, SamplingConfig config_phase);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFixedCompletionTimeIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFixedCompletionStepsIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        public static extern bool AUTDDatagramSilencerFixedCompletionTimeIsDefault(Duration intensity, Duration phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
+        public static extern bool AUTDDatagramSilencerFixedCompletionStepsIsDefault(ushort intensity, ushort phase, [MarshalAs(UnmanagedType.U1)] bool strict_mode, SilencerTarget target);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMFoci", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern ResultFociSTM AUTDSTMFoci(SamplingConfig config, ConstPtr points, ushort size, byte n, LoopBehavior loop_behavior);
@@ -489,10 +496,10 @@ namespace AUTD3Sharp.NativeMethods
         public static extern ushort AUTDLinkAuditFpgaSilencerUpdateRatePhase(LinkPtr audit, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSilencerCompletionStepsIntensity", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern Duration AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(LinkPtr audit, ushort idx);
+        public static extern ushort AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(LinkPtr audit, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSilencerCompletionStepsPhase", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern Duration AUTDLinkAuditFpgaSilencerCompletionStepsPhase(LinkPtr audit, ushort idx);
+        public static extern ushort AUTDLinkAuditFpgaSilencerCompletionStepsPhase(LinkPtr audit, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]

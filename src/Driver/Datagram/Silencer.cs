@@ -47,6 +47,20 @@ namespace AUTD3Sharp
            => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(Intensity, Phase, strictMode, target);
     }
 
+    public readonly struct FixedCompletionSteps : ISilencer
+    {
+        public ushort Intensity { get; init; }
+        public ushort Phase { get; init; }
+
+        bool ISilencer.IsValid(IWithSampling c, bool strictMode)
+           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionStepsIsValid(Intensity, Phase, strictMode,
+               c.SamplingConfigIntensity(), c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)
+               );
+
+        DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target)
+           => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(Intensity, Phase, strictMode, target);
+    }
+
     public readonly struct FixedUpdateRate : ISilencer
     {
         public ushort Intensity { get; init; }
@@ -74,10 +88,10 @@ namespace AUTD3Sharp
             Target = SilencerTarget.Intensity;
         }
 
-        public Silencer() : this(new FixedCompletionTime
+        public Silencer() : this(new FixedCompletionSteps
         {
-            Intensity = Duration.FromMicros(250),
-            Phase = Duration.FromMillis(1)
+            Intensity = 10,
+            Phase = 40
         })
         { }
 
