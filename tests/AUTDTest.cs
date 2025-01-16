@@ -1,3 +1,4 @@
+using AUTD3Sharp.Driver;
 using AUTD3Sharp.Timer;
 
 namespace tests;
@@ -83,18 +84,29 @@ public class AUTDTest
         }
     }
 
+
     [Fact]
-    public void TestFirmwareVersionList()
+    public void TestFirmwareVersion()
     {
-        var autd = CreateController();
+        using var autd = CreateController();
 
-        foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))
-            Assert.Equal(info.Info, $"{i}: CPU = v10.0.1, FPGA = v10.0.1 [Emulator]");
+        Assert.Equal("v10.0.1", FirmwareVersion.LatestVersion);
 
-        autd.Link.BreakDown();
-        Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersion().Last());
-        autd.Link.Repair();
+        {
+            foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))
+            {
+                Assert.Equal(info.Info, $"{i}: CPU = v10.0.1, FPGA = v10.0.1 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v10.0.1, FPGA = v10.0.1 [Emulator]");
+            }
+        }
+
+        {
+            autd.Link.BreakDown();
+            Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersion().Last());
+            autd.Link.Repair();
+        }
     }
+
 
     [Fact]
     public void TestClose()
@@ -227,6 +239,13 @@ public class AUTDTest
             var (intensities, _) = autd.Link.Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
         }
+
+        Assert.Throws<AUTDException>(() => autd.Group(dev => dev.Idx.ToString())
+             .Set("0", new Null())
+             .Set("0", new Uniform(EmitIntensity.Max)));
+        Assert.Throws<AUTDException>(() => autd.Group(dev => dev.Idx.ToString())
+             .Set("0", new Uniform(EmitIntensity.Max))
+             .Set("0", new Null()));
     }
 
     [Fact]

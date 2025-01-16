@@ -23,20 +23,6 @@ namespace AUTD3Sharp.Timer
         }
     }
 
-    public class AsyncSleeper
-    {
-        public uint? TimerResolution { get; init; }
-
-        [ExcludeFromCodeCoverage]
-        public AsyncSleeper() : this(1) { }
-
-        [ExcludeFromCodeCoverage]
-        public AsyncSleeper(uint? timerResolution)
-        {
-            TimerResolution = timerResolution;
-        }
-    }
-
     [ExcludeFromCodeCoverage]
     public readonly struct WaitableSleeper
     {
