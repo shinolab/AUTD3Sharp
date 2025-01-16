@@ -102,7 +102,7 @@ namespace AUTD3Sharp
         {
             STMSamplingConfigTag.Freq => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromFreqNearest(_f.Hz, (ushort)n).Validate()),
 #if DYNAMIC_FREQ
-            _ => throw new NotImplementedException(),
+            _ => throw new System.NotImplementedException(),
 #else
             _ => new SamplingConfig(NativeMethodsBase.AUTDSTMConfigFromPeriodNearest(_period, (ushort)n).Validate())
 #endif
