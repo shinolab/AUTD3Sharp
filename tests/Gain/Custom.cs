@@ -3,11 +3,11 @@ namespace tests.Gain;
 public class CustomTest
 {
     [Fact]
-    public async Task Custom()
+    public void Custom()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
-        await autd.SendAsync(new AUTD3Sharp.Gain.Custom(dev => tr =>
+        autd.Send(new AUTD3Sharp.Gain.Custom(dev => tr =>
             (dev.Idx, tr.Idx) switch
             {
                 (0, 0) => new Drive(new Phase(0x90), new EmitIntensity(0x80)),

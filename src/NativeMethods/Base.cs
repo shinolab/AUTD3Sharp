@@ -26,16 +26,16 @@ namespace AUTD3Sharp.NativeMethods
         public static extern bool AUTDControllerBuilderIsDefault(ushort default_parallel_threshold, Duration default_timeout, Duration send_interval_ns, Duration receive_interval, TimerStrategyWrap timer_strategy);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerOpen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern FfiFuture AUTDControllerOpen(ControllerBuilderPtr builder, LinkBuilderPtr link_builder, OptionDuration timeout);
+        public static extern ResultController AUTDControllerOpen(ControllerBuilderPtr builder, LinkBuilderPtr link_builder, OptionDuration timeout);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LocalFfiFuture AUTDControllerGroup(ControllerPtr cnt, ConstPtr f, ConstPtr context, GeometryPtr geometry, int* keys, DatagramPtr* d, ushort n);
+        public static extern ResultStatus AUTDControllerGroup(ControllerPtr cnt, ConstPtr f, ConstPtr context, GeometryPtr geometry, int* keys, DatagramPtr* d, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerClose", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern FfiFuture AUTDControllerClose(ControllerPtr cnt);
+        public static extern ResultStatus AUTDControllerClose(ControllerPtr cnt);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerFPGAState", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern FfiFuture AUTDControllerFPGAState(ControllerPtr cnt);
+        public static extern ResultFPGAStateList AUTDControllerFPGAState(ControllerPtr cnt);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerFPGAStateGet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern short AUTDControllerFPGAStateGet(FPGAStateListPtr p, uint idx);
@@ -44,7 +44,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern void AUTDControllerFPGAStateDelete(FPGAStateListPtr p);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerFirmwareVersionListPointer", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern FfiFuture AUTDControllerFirmwareVersionListPointer(ControllerPtr cnt);
+        public static extern ResultFirmwareVersionList AUTDControllerFirmwareVersionListPointer(ControllerPtr cnt);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerFirmwareVersionGet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDControllerFirmwareVersionGet(FirmwareVersionListPtr p_info_list, uint idx, byte* info);
@@ -56,7 +56,7 @@ namespace AUTD3Sharp.NativeMethods
         public static extern void AUTDFirmwareLatest(byte* latest);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerSend", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern FfiFuture AUTDControllerSend(ControllerPtr cnt, DatagramPtr d);
+        public static extern ResultStatus AUTDControllerSend(ControllerPtr cnt, DatagramPtr d);
 
         [DllImport(__DllName, EntryPoint = "AUTDTimerStrategyStd", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern TimerStrategyWrap AUTDTimerStrategyStd(uint timer_resolution);
@@ -66,9 +66,6 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDTimerStrategySpin", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern TimerStrategyWrap AUTDTimerStrategySpin(uint native_accuracy_ns, SpinStrategyTag spin_strategy);
-
-        [DllImport(__DllName, EntryPoint = "AUTDTimerStrategyAsync", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern TimerStrategyWrap AUTDTimerStrategyAsync(uint timer_resolution);
 
         [DllImport(__DllName, EntryPoint = "AUTDTimerStrategyWaitable", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern TimerStrategyWrap AUTDTimerStrategyWaitable();
@@ -406,30 +403,6 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDTransducerPosition", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern Point3 AUTDTransducerPosition(TransducerPtr tr);
-
-        [DllImport(__DllName, EntryPoint = "AUTDCreateRuntime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern RuntimePtr AUTDCreateRuntime();
-
-        [DllImport(__DllName, EntryPoint = "AUTDGetRuntimeHandle", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern HandlePtr AUTDGetRuntimeHandle(RuntimePtr runtime);
-
-        [DllImport(__DllName, EntryPoint = "AUTDDeleteRuntime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDDeleteRuntime(RuntimePtr runtime);
-
-        [DllImport(__DllName, EntryPoint = "AUTDWaitResultStatus", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultStatus AUTDWaitResultStatus(HandlePtr handle, FfiFuture future);
-
-        [DllImport(__DllName, EntryPoint = "AUTDWaitLocalResultStatus", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultStatus AUTDWaitLocalResultStatus(HandlePtr handle, LocalFfiFuture future);
-
-        [DllImport(__DllName, EntryPoint = "AUTDWaitResultController", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultController AUTDWaitResultController(HandlePtr handle, FfiFuture future);
-
-        [DllImport(__DllName, EntryPoint = "AUTDWaitResultFPGAStateList", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultFPGAStateList AUTDWaitResultFPGAStateList(HandlePtr handle, FfiFuture future);
-
-        [DllImport(__DllName, EntryPoint = "AUTDWaitResultFirmwareVersionList", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultFirmwareVersionList AUTDWaitResultFirmwareVersionList(HandlePtr handle, FfiFuture future);
 
         [DllImport(__DllName, EntryPoint = "AUTDTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         public static extern void AUTDTracingInit();

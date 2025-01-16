@@ -6,9 +6,9 @@ namespace tests.Gain.Holo;
 public class LMTest
 {
     [Fact]
-    public async Task LM()
+    public void LM()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new LM(backend, new float[] { -40, 40 }.Select(x => (autd.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
@@ -23,7 +23,7 @@ public class LMTest
         Assert.Equal(1e-3f, g.Tau);
         Assert.Equal(5u, g.KMax);
         Assert.Equal([1.0f], g.Initial.ToArray());
-        await autd.SendAsync(g);
+        autd.Send(g);
 
         foreach (var dev in autd)
         {

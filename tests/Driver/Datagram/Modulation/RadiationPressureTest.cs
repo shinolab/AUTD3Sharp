@@ -3,14 +3,14 @@ namespace tests.Driver.Datagram.Modulation;
 public class RadiationPressureTest
 {
     [Fact]
-    public async Task RadiationPressure()
+    public void RadiationPressure()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var m = new Sine(150 * Hz);
         var mr = m.WithRadiationPressure().WithLoopBehavior(LoopBehavior.Once);
         Assert.Equal(LoopBehavior.Once, mr.LoopBehavior);
-        await autd.SendAsync(mr);
+        autd.Send(mr);
         foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

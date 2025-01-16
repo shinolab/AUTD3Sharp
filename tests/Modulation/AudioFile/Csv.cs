@@ -5,9 +5,9 @@ namespace tests.Modulation.AudioFile;
 public class CsvTest
 {
     [Fact]
-    public async Task Csv()
+    public void Csv()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var modExpect = new byte[] {
                157, 185, 210, 231, 245, 253, 255, 249, 236, 218, 194, 167, 138, 108, 79,  53,  31,  14,  4,   0,
@@ -18,7 +18,7 @@ public class CsvTest
         {
             var m = new Csv("sin150.csv", 4000 * Hz);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            await autd.SendAsync(m);
+            autd.Send(m);
             foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -31,7 +31,7 @@ public class CsvTest
         {
             var m = new Csv("sin150.csv", 2000 * Hz).WithDeliminator(',').WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            await autd.SendAsync(m);
+            autd.Send(m);
             foreach (var dev in autd)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
@@ -41,15 +41,15 @@ public class CsvTest
     }
 
     [Fact]
-    public async Task CsvResample()
+    public void CsvResample()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var modExpect = new byte[] { 127, 217, 255, 217, 127, 37, 0, 37 };
 
         var m = new Csv("custom.csv", 2.0f * kHz, 4 * kHz, new SincInterpolation());
         Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-        await autd.SendAsync(m);
+        autd.Send(m);
         foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

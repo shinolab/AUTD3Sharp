@@ -16,7 +16,7 @@ namespace AUTD3Sharp
 
         public static void Init(string path)
         {
-            var pathBytes = Ffi.toNullTerminatedUtf8(path);
+            var pathBytes = Ffi.ToNullTerminatedUtf8(path);
             unsafe
             {
                 fixed (byte* pathPtr = &pathBytes[0])

@@ -7,6 +7,6 @@ namespace AUTD3Sharp.Driver
     public interface ILinkBuilder<out T>
     {
         public LinkBuilderPtr Ptr();
-        public T ResolveLink(RuntimePtr runtime, LinkPtr ptr);
+        public T ResolveLink(LinkPtr ptr);
     }
 }

@@ -3,11 +3,11 @@ namespace tests.Gain;
 public class UniformTest
 {
     [Fact]
-    public async Task Uniform()
+    public void Uniform()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
-        await autd.SendAsync(new Uniform((new EmitIntensity(0x80), new Phase(0x90))));
+        autd.Send(new Uniform((new EmitIntensity(0x80), new Phase(0x90))));
         foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
@@ -15,7 +15,7 @@ public class UniformTest
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }
 
-        await autd.SendAsync(new Uniform((new EmitIntensity(0x81), new Phase(0x91))));
+        autd.Send(new Uniform((new EmitIntensity(0x81), new Phase(0x91))));
         foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);

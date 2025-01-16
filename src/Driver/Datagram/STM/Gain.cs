@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System;
 using System.Linq;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Driver.Datagram.Gain;

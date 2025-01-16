@@ -4,7 +4,6 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.Driver;
 using AUTD3Sharp.NativeMethods;
@@ -58,23 +57,10 @@ namespace AUTD3Sharp
             }
         }
 
-        public async Task<Controller<T>> OpenAsync<T>(ILinkBuilder<T> linkBuilder, Duration? timeout = null)
-        {
-            var runtime = NativeMethodsBase.AUTDCreateRuntime();
-            var handle = NativeMethodsBase.AUTDGetRuntimeHandle(runtime);
-            var future = NativeMethodsBase.AUTDControllerOpen(Ptr(), linkBuilder.Ptr(), timeout.Into());
-            var result = await Task.Run(() => NativeMethodsBase.AUTDWaitResultController(handle, future));
-            var ptr = result.Validate();
-            return new Controller<T>(NativeMethodsBase.AUTDGeometry(ptr), runtime, handle, ptr, linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr)));
-        }
-
         public Controller<T> Open<T>(ILinkBuilder<T> linkBuilder, Duration? timeout = null)
         {
-            var runtime = NativeMethodsBase.AUTDCreateRuntime();
-            var handle = NativeMethodsBase.AUTDGetRuntimeHandle(runtime);
-            var future = NativeMethodsBase.AUTDControllerOpen(Ptr(), linkBuilder.Ptr(), timeout.Into());
-            var ptr = NativeMethodsBase.AUTDWaitResultController(handle, future).Validate();
-            return new Controller<T>(NativeMethodsBase.AUTDGeometry(ptr), runtime, handle, ptr, linkBuilder.ResolveLink(runtime, NativeMethodsBase.AUTDLinkGet(ptr)));
+            var ptr = NativeMethodsBase.AUTDControllerOpen(Ptr(), linkBuilder.Ptr(), timeout.Into()).Validate();
+            return new Controller<T>(NativeMethodsBase.AUTDGeometry(ptr), ptr, linkBuilder.ResolveLink(NativeMethodsBase.AUTDLinkGet(ptr)));
         }
     }
 }

@@ -8,10 +8,10 @@ public class ClearTest
 {
 
     [Fact]
-    public async Task TestClear()
+    public void TestClear()
     {
-        using var autd = await CreateController();
-        await autd.SendAsync(new Uniform((new Phase(0x90), EmitIntensity.Max)));
+        using var autd = CreateController();
+        autd.Send(new Uniform((new Phase(0x90), EmitIntensity.Max)));
         foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -21,7 +21,7 @@ public class ClearTest
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }
 
-        await autd.SendAsync(new Clear());
+        autd.Send(new Clear());
         foreach (var dev in autd)
         {
             var m = autd.Link.Modulation(dev.Idx, Segment.S0);

@@ -5,9 +5,9 @@ namespace tests.Driver.Datagram;
 public class DebugTest
 {
     [Fact]
-    public async Task TestDebugSettings()
+    public void TestDebugSettings()
     {
-        using var autd = await CreateController();
+        using var autd = CreateController();
 
         foreach (var dev in autd)
         {
@@ -15,7 +15,7 @@ public class DebugTest
             Assert.Equal([0x0000, 0x0000, 0x0000, 0x0000], autd.Link.DebugValues(dev.Idx));
         }
 
-        await autd.SendAsync(new DebugSettings((_, gpio) => gpio switch
+        autd.Send(new DebugSettings((_, gpio) => gpio switch
         {
             AUTD3Sharp.GPIOOut.O0 => DebugType.None,
             AUTD3Sharp.GPIOOut.O1 => DebugType.BaseSignal,
@@ -30,7 +30,7 @@ public class DebugTest
             Assert.Equal([0x0000, 0x0000, 0x0000, 0x0000], autd.Link.DebugValues(dev.Idx));
         }
 
-        await autd.SendAsync(new DebugSettings((_, gpio) => gpio switch
+        autd.Send(new DebugSettings((_, gpio) => gpio switch
         {
             AUTD3Sharp.GPIOOut.O0 => DebugType.Sync,
             AUTD3Sharp.GPIOOut.O1 => DebugType.ModSegment,
@@ -44,7 +44,7 @@ public class DebugTest
             Assert.Equal([0x0000, 0x0000, 0x0001, 0x0000], autd.Link.DebugValues(dev.Idx));
         }
 
-        await autd.SendAsync(new DebugSettings((dev, gpio) => gpio switch
+        autd.Send(new DebugSettings((dev, gpio) => gpio switch
         {
             AUTD3Sharp.GPIOOut.O0 => DebugType.StmIdx(0x02),
             AUTD3Sharp.GPIOOut.O1 => DebugType.IsStmMode,
@@ -59,14 +59,15 @@ public class DebugTest
         }
 
         var sysTime = DcSysTime.Now;
-        await autd.SendAsync(new DebugSettings((dev, gpio) => gpio switch
-        {
-            AUTD3Sharp.GPIOOut.O0 => DebugType.SysTimeEq(sysTime),
-            AUTD3Sharp.GPIOOut.O1 => DebugType.None,
-            AUTD3Sharp.GPIOOut.O2 => DebugType.None,
-            AUTD3Sharp.GPIOOut.O3 => DebugType.None,
-            _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
-        }));
+        autd.Send(new DebugSettings((dev, gpio) => gpio switch
+                {
+
+                    AUTD3Sharp.GPIOOut.O0 => DebugType.SysTimeEq(sysTime),
+                    AUTD3Sharp.GPIOOut.O1 => DebugType.None,
+                    AUTD3Sharp.GPIOOut.O2 => DebugType.None,
+                    AUTD3Sharp.GPIOOut.O3 => DebugType.None,
+                    _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
+                }));
         foreach (var dev in autd)
         {
             Assert.Equal([0x60, 0x00, 0x00, 0x00], autd.Link.DebugTypes(dev.Idx));

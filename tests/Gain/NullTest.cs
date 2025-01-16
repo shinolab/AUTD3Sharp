@@ -3,11 +3,11 @@ namespace tests.Gain;
 public class NullTest
 {
     [Fact]
-    public async Task Null()
+    public void Null()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
-        await autd.SendAsync(new Null());
+        autd.Send(new Null());
 
         foreach (var dev in autd)
         {

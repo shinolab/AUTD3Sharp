@@ -22,7 +22,7 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsBase.AUTDLinkAudit();
             }
 
-            Audit ILinkBuilder<Audit>.ResolveLink(RuntimePtr _, LinkPtr ptr)
+            Audit ILinkBuilder<Audit>.ResolveLink(LinkPtr ptr)
             {
                 return new Audit
                 {
@@ -117,7 +117,7 @@ namespace AUTD3Sharp.Link
             {
                 fixed (Drive* pd = &drive[0])
                 {
-                    NativeMethodsBase.AUTDLinkAuditFpgaDrivesAt(_ptr, segment, (ushort)idx, (ushort)stmIdx, (Drive*)pd);
+                    NativeMethodsBase.AUTDLinkAuditFpgaDrivesAt(_ptr, segment, (ushort)idx, (ushort)stmIdx, pd);
                 }
             }
             var intensities = drive.Select(d => d.Intensity.Value).ToArray();

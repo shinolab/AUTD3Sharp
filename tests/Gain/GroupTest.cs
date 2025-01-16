@@ -3,13 +3,13 @@ namespace tests.Gain;
 public class GroupTest
 {
     [Fact]
-    public async Task Group()
+    public void Group()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
         var cx = autd.Center.X;
 
-        await autd.SendAsync(new Group(_ => tr => tr.Position.X switch
+        autd.Send(new Group(_ => tr => tr.Position.X switch
         {
             var x when x < cx => "uniform",
             _ => "null"
@@ -32,7 +32,7 @@ public class GroupTest
             }
         }
 
-        await autd.SendAsync(new Group(_ => tr => tr.Position.X switch
+        autd.Send(new Group(_ => tr => tr.Position.X switch
         {
             var x when x > cx => "uniform",
             _ => null
@@ -57,13 +57,13 @@ public class GroupTest
     }
 
     [Fact]
-    public async Task GroupUnknownKey()
+    public void GroupUnknownKey()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
-        var exception = await Record.ExceptionAsync(async () =>
+        var exception = Record.Exception(() =>
         {
-            await autd.SendAsync(new Group(_ => _ => "null").Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
+            autd.Send(new Group(_ => _ => "null").Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))).Set("null", new Null()));
         });
 
         if (exception == null) Assert.Fail("Exception is expected");
@@ -72,18 +72,18 @@ public class GroupTest
     }
 
     [Fact]
-    public async Task GroupCheckOnlyForEnabled()
+    public void GroupCheckOnlyForEnabled()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
         var check = new bool[autd.NumDevices];
 
         autd[0].Enable = false;
 
-        await autd.SendAsync(new Group(dev => _ =>
-        {
-            check[dev.Idx] = true;
-            return "uniform";
-        }).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))));
+        autd.Send(new Group(dev => _ =>
+            {
+                check[dev.Idx] = true;
+                return "uniform";
+            }).Set("uniform", new Uniform((new EmitIntensity(0x80), new Phase(0x90)))));
 
         Assert.False(check[0]);
         Assert.True(check[1]);

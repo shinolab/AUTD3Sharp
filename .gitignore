@@ -438,3 +438,4 @@ coverage.cobertura.xml
 html/
 VERSION
 UNITY_VERSION
+UNITY_DYNAMIC_FREQ_VERSION

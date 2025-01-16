@@ -26,13 +26,11 @@ from tools.autd3_build_utils.autd3_build_utils import (
 
 class Config(BaseConfig):
     no_examples: bool
-    dynamic_freq: bool
 
     def __init__(self, args) -> None:  # noqa: ANN001
         super().__init__(args)
 
         self.no_examples = getattr(args, "no_examples", False)
-        self.dynamic_freq = getattr(args, "dynamic_freq", False)
 
 
 def should_update_dll(config: Config, version: str) -> bool:
@@ -325,7 +323,7 @@ def copy_dll_unity_dynamic_freq(config: Config) -> None:
         f.write(Path("ThirdPartyNotice.txt").read_text())
     shutil.copy("CHANGELOG.md", "unity-dynamic_freq/Assets/CHANGELOG.md")
     remove("lib")
-    Path("UNITY_VERSION").write_text(version)
+    Path("UNITY_DYNAMIC_FREQ_VERSION").write_text(version)
 
 
 def unity_build(args) -> None:  # noqa: ANN001
@@ -480,7 +478,6 @@ if __name__ == "__main__":
         # unity build
         parser_unity_build = subparsers_unity.add_parser("build", help="see `unity build -h`")
         parser_unity_build.add_argument("--release", action="store_true", help="release build")
-        parser_unity_build.add_argument("--dynamic_freq", action="store_true", help="dynamic freq")
         parser_unity_build.set_defaults(handler=unity_build)
 
         # unity clear

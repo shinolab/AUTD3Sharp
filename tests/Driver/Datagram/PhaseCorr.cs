@@ -3,11 +3,11 @@ namespace tests.Driver.Datagram;
 public class PhaseCorrectionTest
 {
     [Fact]
-    public async Task PhaseCorrection()
+    public void PhaseCorrection()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
-        await autd.SendAsync(new AUTD3Sharp.PhaseCorrection(dev => tr => new Phase((byte)(dev.Idx + tr.Idx))));
+        autd.Send(new AUTD3Sharp.PhaseCorrection(dev => tr => new Phase((byte)(dev.Idx + tr.Idx))));
         foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);

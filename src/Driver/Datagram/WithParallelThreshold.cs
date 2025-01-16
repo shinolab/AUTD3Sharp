@@ -14,7 +14,7 @@ namespace AUTD3Sharp.Driver.Datagram
             _threshold = threshold;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramWithParallelThreshold(_datagram.Ptr(geometry), _threshold.HasValue ? _threshold.Value : -1);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramWithParallelThreshold(_datagram.Ptr(geometry), _threshold ?? -1);
     }
 }
 

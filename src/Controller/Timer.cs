@@ -2,16 +2,9 @@
 #nullable enable
 #endif
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.Derive;
-using AUTD3Sharp.Driver;
-using AUTD3Sharp.Driver.Datagram;
-using AUTD3Sharp.Driver.FPGA.Defined;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Timer
@@ -25,20 +18,6 @@ namespace AUTD3Sharp.Timer
 
         [ExcludeFromCodeCoverage]
         public StdSleeper(uint? timerResolution)
-        {
-            TimerResolution = timerResolution;
-        }
-    }
-
-    public class AsyncSleeper
-    {
-        public uint? TimerResolution { get; init; }
-
-        [ExcludeFromCodeCoverage]
-        public AsyncSleeper() : this(1) { }
-
-        [ExcludeFromCodeCoverage]
-        public AsyncSleeper(uint? timerResolution)
         {
             TimerResolution = timerResolution;
         }
@@ -73,7 +52,6 @@ namespace AUTD3Sharp.Timer
     {
         public static TimerStrategyWrap Std(StdSleeper sleeper) => NativeMethodsBase.AUTDTimerStrategyStd(sleeper.TimerResolution ?? 0);
         public static TimerStrategyWrap Spin(SpinSleeper sleeper) => NativeMethodsBase.AUTDTimerStrategySpin(sleeper.NativeAccuracyNs, sleeper.SpinStrategy);
-        public static TimerStrategyWrap Async(AsyncSleeper sleeper) => NativeMethodsBase.AUTDTimerStrategyAsync(sleeper.TimerResolution ?? 0);
         [ExcludeFromCodeCoverage]
         public static TimerStrategyWrap Waitable(WaitableSleeper sleeper) => NativeMethodsBase.AUTDTimerStrategyWaitable();
     }

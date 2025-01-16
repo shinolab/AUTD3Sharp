@@ -26,10 +26,6 @@ approx 0.5.1 (Apache-2.0)
 https://github.com/brendanzab/approx
 ---------------------------------------------------------
 
-async-ffi 0.5.0 (MIT)
-https://github.com/oxalica/async-ffi
----------------------------------------------------------
-
 async-stream 0.3.6 (MIT)
 https://github.com/tokio-rs/async-stream
 ---------------------------------------------------------
@@ -46,63 +42,67 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 29.0.0-rc.13 (MIT)
+autd3 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-derive 29.0.0-rc.13 (MIT)
+autd3-core 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 29.0.0-rc.13 (MIT)
+autd3-derive 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 29.0.0-rc.13 (MIT)
+autd3-driver 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 29.0.0-rc.13 (MIT)
+autd3-firmware-emulator 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 29.0.0-rc.13 (MIT)
+autd3-gain-holo 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-twincat 29.0.0-rc.13 (MIT)
+autd3-link-simulator 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 29.0.0-rc.13 (MIT)
+autd3-link-twincat 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 29.0.0-rc.13 (MIT)
+autd3-modulation-audio-file 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 29.0.0-rc.13 (MIT)
+autd3-protobuf 29.0.0-rc.16 (MIT)
+https://github.com/shinolab/autd3-rs
+---------------------------------------------------------
+
+autd3capi 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 29.0.0-rc.13 (MIT)
+autd3capi-driver 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 29.0.0-rc.13 (MIT)
+autd3capi-gain-holo 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 29.0.0-rc.13 (MIT)
+autd3capi-link-simulator 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 29.0.0-rc.13 (MIT)
+autd3capi-link-twincat 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 29.0.0-rc.13 (MIT)
+autd3capi-modulation-audio-file 29.0.0-rc.16 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
@@ -130,7 +130,7 @@ bitfield-struct 0.10.0 (MIT)
 https://github.com/wrenger/bitfield-struct-rs.git
 ---------------------------------------------------------
 
-bitflags 2.6.0 (Apache-2.0 OR MIT)
+bitflags 2.8.0 (Apache-2.0 OR MIT)
 https://github.com/bitflags/bitflags
 ---------------------------------------------------------
 
@@ -310,7 +310,7 @@ libloading 0.8.6 (ISC)
 https://github.com/nagisa/rust_libloading/
 ---------------------------------------------------------
 
-log 0.4.22 (Apache-2.0 OR MIT)
+log 0.4.25 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/log
 ---------------------------------------------------------
 
@@ -338,7 +338,7 @@ minimal-lexical 0.2.1 (Apache-2.0 OR MIT)
 https://github.com/Alexhuszagh/minimal-lexical
 ---------------------------------------------------------
 
-miniz_oxide 0.8.2 (Apache-2.0 OR MIT OR Zlib)
+miniz_oxide 0.8.3 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Frommi/miniz_oxide/tree/master/miniz_oxide
 ---------------------------------------------------------
 
@@ -438,7 +438,7 @@ ppv-lite86 0.2.20 (Apache-2.0 OR MIT)
 https://github.com/cryptocorrosion/cryptocorrosion
 ---------------------------------------------------------
 
-proc-macro2 1.0.92 (Apache-2.0 OR MIT)
+proc-macro2 1.0.93 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/proc-macro2
 ---------------------------------------------------------
 
@@ -550,7 +550,7 @@ spin_sleep 1.3.0 (Apache-2.0)
 https://github.com/alexheretic/spin-sleep
 ---------------------------------------------------------
 
-syn 2.0.95 (Apache-2.0 OR MIT)
+syn 2.0.96 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
@@ -558,11 +558,11 @@ sync_wrapper 1.0.2 (Apache-2.0)
 https://github.com/Actyx/sync_wrapper
 ---------------------------------------------------------
 
-thiserror 2.0.9 (Apache-2.0 OR MIT)
+thiserror 2.0.11 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
-thiserror-impl 2.0.9 (Apache-2.0 OR MIT)
+thiserror-impl 2.0.11 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
@@ -582,11 +582,11 @@ time-macros 0.2.19 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
-tokio 1.42.0 (MIT)
+tokio 1.43.0 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
-tokio-macros 2.4.0 (MIT)
+tokio-macros 2.5.0 (MIT)
 https://github.com/tokio-rs/tokio
 ---------------------------------------------------------
 
@@ -678,27 +678,27 @@ winapi-x86_64-pc-windows-gnu 0.4.0 (Apache-2.0 OR MIT)
 https://github.com/retep998/winapi-rs
 ---------------------------------------------------------
 
-windows 0.58.0 (Apache-2.0 OR MIT)
+windows 0.59.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-windows-core 0.58.0 (Apache-2.0 OR MIT)
+windows-core 0.59.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-windows-implement 0.58.0 (Apache-2.0 OR MIT)
+windows-implement 0.59.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-windows-interface 0.58.0 (Apache-2.0 OR MIT)
+windows-interface 0.59.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-windows-result 0.2.0 (Apache-2.0 OR MIT)
+windows-result 0.3.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
-windows-strings 0.1.0 (Apache-2.0 OR MIT)
+windows-strings 0.3.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
@@ -714,7 +714,15 @@ windows-targets 0.52.6 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
+windows-targets 0.53.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
 windows_aarch64_gnullvm 0.52.6 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
+windows_aarch64_gnullvm 0.53.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
@@ -722,7 +730,15 @@ windows_aarch64_msvc 0.52.6 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
+windows_aarch64_msvc 0.53.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
 windows_i686_gnu 0.52.6 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
+windows_i686_gnu 0.53.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
@@ -730,7 +746,15 @@ windows_i686_gnullvm 0.52.6 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
+windows_i686_gnullvm 0.53.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
 windows_i686_msvc 0.52.6 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
+windows_i686_msvc 0.53.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
@@ -738,11 +762,23 @@ windows_x86_64_gnu 0.52.6 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
+windows_x86_64_gnu 0.53.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
 windows_x86_64_gnullvm 0.52.6 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
+windows_x86_64_gnullvm 0.53.0 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
 windows_x86_64_msvc 0.52.6 (Apache-2.0 OR MIT)
+https://github.com/microsoft/windows-rs
+---------------------------------------------------------
+
+windows_x86_64_msvc 0.53.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
