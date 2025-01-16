@@ -3,14 +3,14 @@ namespace tests.Modulation;
 public class SquareTest
 {
     [Fact]
-    public async Task SquareExact()
+    public void SquareExact()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         {
             var m = new Square(200 * Hz).WithLow(32).WithHigh(85).WithDuty(0.1f);
             Assert.Equal(200.0f * Hz, m.Freq);
-            await autd.SendAsync(m);
+            autd.Send(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd)
             {
@@ -26,7 +26,7 @@ public class SquareTest
 
         {
             var m = new Square(150 * Hz).WithSamplingConfig(new SamplingConfig(20)).WithLoopBehavior(LoopBehavior.Once);
-            await autd.SendAsync(m);
+            autd.Send(m);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
             foreach (var dev in autd)
             {
@@ -37,14 +37,14 @@ public class SquareTest
     }
 
     [Fact]
-    public async Task SquareExactFloat()
+    public void SquareExactFloat()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         {
             var m = new Square(200.0f * Hz).WithLow(32).WithHigh(85).WithDuty(0.1f);
             Assert.Equal(200.0f * Hz, m.Freq);
-            await autd.SendAsync(m);
+            autd.Send(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd)
             {
@@ -60,12 +60,12 @@ public class SquareTest
     }
 
     [Fact]
-    public async Task SquareNearest()
+    public void SquareNearest()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var m = Square.Nearest(150.0f * Hz);
-        await autd.SendAsync(m);
+        autd.Send(m);
         Assert.Equal(150.0f * Hz, m.Freq);
         foreach (var dev in autd)
         {
@@ -74,8 +74,8 @@ public class SquareTest
             Assert.Equal(modExpect, mod);
         }
 
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Square(100.1f * Hz)));
-        await autd.SendAsync(Square.Nearest(100.1f * Hz));
+        Assert.Throws<AUTDException>(() => autd.Send(new Square(100.1f * Hz)));
+        autd.Send(Square.Nearest(100.1f * Hz));
     }
 
     [Fact]

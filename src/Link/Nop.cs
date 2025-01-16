@@ -12,7 +12,7 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsBase.AUTDLinkNop();
             }
 
-            Nop ILinkBuilder<Nop>.ResolveLink(RuntimePtr _, LinkPtr ptr)
+            Nop ILinkBuilder<Nop>.ResolveLink(LinkPtr ptr)
             {
                 return new Nop();
             }

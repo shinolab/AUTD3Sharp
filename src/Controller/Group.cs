@@ -5,7 +5,6 @@
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
@@ -53,24 +52,6 @@ namespace AUTD3Sharp
         where TD2 : IDatagram
          => Set(key, new DatagramTuple<TD1, TD2>(d));
 
-        public async Task SendAsync()
-        {
-            LocalFfiFuture future;
-            unsafe
-            {
-                fixed (int* kp = &_keys.Items[0])
-                fixed (DatagramPtr* dp = &_datagrams.Items[0])
-                {
-                    future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
-                        new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero },
-                        _controller.GeometryPtr, kp, dp, (ushort)_keys.Count);
-                }
-            }
-            var result = await Task.Run(() =>
-                NativeMethodsBase.AUTDWaitLocalResultStatus(_controller.Handle, future));
-            result.Validate();
-        }
-
         public void Send()
         {
             unsafe
@@ -78,10 +59,9 @@ namespace AUTD3Sharp
                 fixed (int* kp = &_keys.Items[0])
                 fixed (DatagramPtr* dp = &_datagrams.Items[0])
                 {
-                    var future = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
+                    var result = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
                         new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero },
                         _controller.GeometryPtr, kp, dp, (ushort)_keys.Count);
-                    var result = NativeMethodsBase.AUTDWaitLocalResultStatus(_controller.Handle, future);
                     result.Validate();
                 }
             }

@@ -45,19 +45,6 @@ namespace AUTD3Sharp
 
     namespace NativeMethods
     {
-#pragma warning disable CS0169, IDE0051
-        public struct FfiFuture
-        {
-            private unsafe fixed byte _data[24];
-        }
-
-        public struct LocalFfiFuture
-        {
-            private unsafe fixed byte _data[24];
-        }
-
-#pragma warning restore CS0169, IDE0051
-
         public static class ResultExtensions
         {
             public static AUTDStatus Validate(this ResultStatus res)
@@ -159,20 +146,9 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static LinkBuilderPtr Validate(this ResultSyncLinkBuilder res)
-            {
-                if (res.result.Item1 != IntPtr.Zero) return new LinkBuilderPtr { Item1 = res.result.Item1 };
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-
             public static LinkBuilderPtr Validate(this ResultLinkBuilder res)
             {
-                if (res.result.Item1 != IntPtr.Zero) return res.result;
+                if (res.result.Item1 != IntPtr.Zero) return new LinkBuilderPtr { Item1 = res.result.Item1 };
                 var err = new byte[res.err_len];
                 unsafe
                 {
@@ -184,7 +160,7 @@ namespace AUTD3Sharp
 
         public static class Ffi
         {
-            public static byte[] toNullTerminatedUtf8(string str)
+            public static byte[] ToNullTerminatedUtf8(string str)
             {
                 var len = System.Text.Encoding.UTF8.GetByteCount(str);
                 var bytes = new byte[len + 1];

@@ -6,16 +6,16 @@ namespace tests.Gain.Holo;
 public class GSTest
 {
     [Fact]
-    public async Task GS()
+    public void GS()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new GS(backend, new float[] { -40, 40 }.Select(x => (autd.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
             .WithRepeat(100)
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
-        await autd.SendAsync(g);
+        autd.Send(g);
 
         foreach (var dev in autd)
         {

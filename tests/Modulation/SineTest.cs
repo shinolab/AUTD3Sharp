@@ -3,14 +3,14 @@ namespace tests.Modulation;
 public class SineTest
 {
     [Fact]
-    public async Task SineExact()
+    public void SineExact()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         {
             var m = new Sine(150 * Hz).WithIntensity(0x80).WithOffset(0x40).WithPhase(MathF.PI / 2.0f * rad);
             Assert.Equal(150.0f * Hz, m.Freq);
-            await autd.SendAsync(m);
+            autd.Send(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd)
             {
@@ -27,7 +27,7 @@ public class SineTest
         {
             var m = new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(20)).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            await autd.SendAsync(m);
+            autd.Send(m);
             foreach (var dev in autd)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
@@ -37,14 +37,14 @@ public class SineTest
     }
 
     [Fact]
-    public async Task SineExactFloat()
+    public void SineExactFloat()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         {
             var m = new Sine(150.0f * Hz).WithIntensity(0x80).WithOffset(0x40).WithPhase(MathF.PI / 2.0f * rad);
             Assert.Equal(150.0f * Hz, m.Freq);
-            await autd.SendAsync(m);
+            autd.Send(m);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
             foreach (var dev in autd)
             {
@@ -60,12 +60,12 @@ public class SineTest
     }
 
     [Fact]
-    public async Task SineNearest()
+    public void SineNearest()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var m = Sine.Nearest(150.0f * Hz);
-        await autd.SendAsync(m);
+        autd.Send(m);
         Assert.Equal(150.0f * Hz, m.Freq);
         foreach (var dev in autd)
         {
@@ -75,8 +75,8 @@ public class SineTest
             Assert.Equal(modExpect, mod);
         }
 
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Sine(100.1f * Hz)));
-        await autd.SendAsync(Sine.Nearest(100.1f * Hz));
+        Assert.Throws<AUTDException>(() => autd.Send(new Sine(100.1f * Hz)));
+        autd.Send(Sine.Nearest(100.1f * Hz));
     }
 
     [Fact]

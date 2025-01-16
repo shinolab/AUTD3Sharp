@@ -3,14 +3,14 @@ namespace tests.Modulation;
 public class StaticTest
 {
     [Fact]
-    public async Task Static()
+    public void Static()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         {
             var m = new AUTD3Sharp.Modulation.Static();
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            await autd.SendAsync(m);
+            autd.Send(m);
             foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -24,7 +24,7 @@ public class StaticTest
         {
             var m = AUTD3Sharp.Modulation.Static.WithIntensity(32).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            await autd.SendAsync(m);
+            autd.Send(m);
             foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

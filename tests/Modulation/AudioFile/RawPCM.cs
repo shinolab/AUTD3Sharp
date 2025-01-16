@@ -5,9 +5,9 @@ namespace tests.Modulation.AudioFile;
 public class RawPCMTest
 {
     [Fact]
-    public async Task RawPCM()
+    public void RawPCM()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var modExpect = new byte[] {
                 157,
@@ -94,7 +94,7 @@ public class RawPCMTest
         {
             var m = new RawPCM("sin150.dat", 4000 * Hz);
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            await autd.SendAsync(m);
+            autd.Send(m);
             foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -107,7 +107,7 @@ public class RawPCMTest
         {
             var m = new RawPCM("sin150.dat", 2000 * Hz).WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, m.LoopBehavior);
-            await autd.SendAsync(m);
+            autd.Send(m);
             foreach (var dev in autd)
             {
                 Assert.Equal(LoopBehavior.Once, autd.Link.ModulationLoopBehavior(dev.Idx, Segment.S0));
@@ -117,15 +117,15 @@ public class RawPCMTest
     }
 
     [Fact]
-    public async Task RawPCMResample()
+    public void RawPCMResample()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var modExpect = new byte[] { 127, 217, 255, 217, 127, 37, 0, 37 };
 
         var m = new RawPCM("custom.dat", 2.0f * kHz, 4 * kHz, new SincInterpolation());
         Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-        await autd.SendAsync(m);
+        autd.Send(m);
         foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

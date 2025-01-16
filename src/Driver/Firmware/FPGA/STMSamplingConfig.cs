@@ -1,4 +1,3 @@
-using System;
 using AUTD3Sharp.NativeMethods;
 using System.Runtime.InteropServices;
 using static AUTD3Sharp.Units;

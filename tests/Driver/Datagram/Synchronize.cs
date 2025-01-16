@@ -7,11 +7,11 @@ namespace tests;
 public class SynchronizeTest
 {
     [Fact]
-    public async Task TestSynchronize()
+    public void TestSynchronize()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)])
-            .OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)])
+            .Open(Audit.Builder());
 
-        await autd.SendAsync(new Synchronize());
+        autd.Send(new Synchronize());
     }
 }

@@ -142,20 +142,6 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct SyncLinkBuilderPtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultSyncLinkBuilder
-    {
-        public SyncLinkBuilderPtr result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     public unsafe partial struct ModulationPtr
     {
         public IntPtr Item1;
@@ -167,18 +153,6 @@ namespace AUTD3Sharp.NativeMethods
         public ModulationPtr result;
         public uint err_len;
         public ConstPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct RuntimePtr
-    {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct HandlePtr
-    {
-        public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -285,7 +259,6 @@ namespace AUTD3Sharp.NativeMethods
     {
         Std = 0,
         Spin = 1,
-        Async = 2,
         Waitable = 3,
     }
 

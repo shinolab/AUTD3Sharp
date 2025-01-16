@@ -3,12 +3,12 @@ namespace tests.Driver.Datagram.Gain;
 public class CacheTest
 {
     [Fact]
-    public async Task Cache()
+    public void Cache()
     {
         {
-            var autd = await AUTDTest.CreateController();
+            var autd = AUTDTest.CreateController();
 
-            await autd.SendAsync(new Uniform((new EmitIntensity(0x80), new Phase(0x90))).WithCache());
+            autd.Send(new Uniform((new EmitIntensity(0x80), new Phase(0x90))).WithCache());
 
             foreach (var dev in autd)
             {

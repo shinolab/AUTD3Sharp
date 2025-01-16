@@ -5,9 +5,9 @@ namespace tests.Modulation.AudioFile;
 public class WavTest
 {
     [Fact]
-    public async Task Wav()
+    public void Wav()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var modExpect = new byte[] {
                 128,
@@ -94,7 +94,7 @@ public class WavTest
         {
             var m = new Wav("sin150.wav");
             Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-            await autd.SendAsync(m);
+            autd.Send(m);
             foreach (var dev in autd)
             {
                 var mod = autd.Link.Modulation(dev.Idx, Segment.S0);
@@ -106,15 +106,15 @@ public class WavTest
     }
 
     [Fact]
-    public async Task WavResample()
+    public void WavResample()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var modExpect = new byte[] { 127, 217, 255, 217, 127, 37, 0, 37 };
 
         var m = new Wav("custom.wav", 4 * kHz, new SincInterpolation());
         Assert.Equal(LoopBehavior.Infinite, m.LoopBehavior);
-        await autd.SendAsync(m);
+        autd.Send(m);
         foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

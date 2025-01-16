@@ -1,21 +1,20 @@
 using AUTD3Sharp.Gain.Holo;
-using static AUTD3Sharp.Units;
 
 namespace tests.Gain.Holo;
 
 public class GSPATTest
 {
     [Fact]
-    public async Task GSPAT()
+    public void GSPAT()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var backend = new NalgebraBackend();
         var g = new GSPAT(backend, new float[] { -40, 40 }.Select(x => (autd.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
             .WithRepeat(100)
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
-        await autd.SendAsync(g);
+        autd.Send(g);
 
         foreach (var dev in autd)
         {

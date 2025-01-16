@@ -3,9 +3,9 @@ namespace tests.Gain;
 public class BesselTest
 {
     [Fact]
-    public async Task Bessel()
+    public void Bessel()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
         var g = new Bessel(autd.Center, new Vector3(0, 0, 1), MathF.PI / 4 * rad).WithIntensity(0x80).WithPhaseOffset(0x81);
         Assert.Equal(autd.Center, g.Pos);
@@ -13,7 +13,7 @@ public class BesselTest
         Assert.Equal(MathF.PI / 4 * rad, g.Theta);
         Assert.Equal(0x80, g.Intensity.Value);
         Assert.Equal(0x81, g.PhaseOffset.Value);
-        await autd.SendAsync(g);
+        autd.Send(g);
         foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);

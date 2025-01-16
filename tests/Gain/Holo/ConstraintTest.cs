@@ -6,15 +6,15 @@ namespace tests.Gain.Holo;
 public class ConstraintTest
 {
     [Fact]
-    public async Task Uniform()
+    public void Uniform()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
         var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
-        await autd.SendAsync(g);
+        autd.Send(g);
 
         foreach (var dev in autd)
         {
@@ -25,15 +25,15 @@ public class ConstraintTest
     }
 
     [Fact]
-    public async Task Normalize()
+    public void Normalize()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
         var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Normalize);
 
-        await autd.SendAsync(g);
+        autd.Send(g);
 
         foreach (var dev in autd)
         {
@@ -44,16 +44,16 @@ public class ConstraintTest
     }
 
     [Fact]
-    public async Task Clamp()
+    public void Clamp()
     {
         {
-            var autd = await AUTDTest.CreateController();
+            var autd = AUTDTest.CreateController();
 
             var backend = new NalgebraBackend();
             var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
                 .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(67), new EmitIntensity(85)));
 
-            await autd.SendAsync(g);
+            autd.Send(g);
 
             foreach (var dev in autd)
             {
@@ -65,13 +65,13 @@ public class ConstraintTest
         }
 
         {
-            var autd = await AUTDTest.CreateController();
+            var autd = AUTDTest.CreateController();
 
             var backend = new NalgebraBackend();
             var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
                 .WithConstraint(EmissionConstraint.Clamp(new EmitIntensity(10), new EmitIntensity(20)));
 
-            await autd.SendAsync(g);
+            autd.Send(g);
 
             foreach (var dev in autd)
             {
@@ -84,15 +84,15 @@ public class ConstraintTest
     }
 
     [Fact]
-    public async Task Multyply()
+    public void Multyply()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
         var backend = new NalgebraBackend();
         var g = new Naive(backend, [(autd.Center + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center + new Vector3(-30, 0, 150), 5e3f * Pa)])
             .WithConstraint(EmissionConstraint.Multiply(0));
 
-        await autd.SendAsync(g);
+        autd.Send(g);
 
         foreach (var dev in autd)
         {

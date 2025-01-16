@@ -1,20 +1,19 @@
 using AUTD3Sharp.Gain.Holo;
-using static AUTD3Sharp.Units;
 
 namespace tests.Gain.Holo;
 
 public class GreedyTest
 {
     [Fact]
-    public async Task Greedy()
+    public void Greedy()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var g = new Greedy(new float[] { -40, 40 }.Select(x => (autd.Center + new Vector3(x, 0, 150), 5e3f * Pa)))
             .WithPhaseDiv(16)
             .WithConstraint(EmissionConstraint.Uniform(new EmitIntensity(0x80)));
 
-        await autd.SendAsync(g);
+        autd.Send(g);
 
         foreach (var dev in autd)
         {

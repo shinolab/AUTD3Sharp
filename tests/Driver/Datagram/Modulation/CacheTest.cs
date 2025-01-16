@@ -3,17 +3,17 @@ namespace tests.Driver.Datagram.Modulation;
 public class CacheTest
 {
     [Fact]
-    public async Task Cache()
+    public void Cache()
     {
         {
-            var autd1 = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
-            var autd2 = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+            var autd1 = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
+            var autd2 = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
             var m = new Sine(150 * Hz);
             var mc = m.WithCache().WithLoopBehavior(LoopBehavior.Once);
             Assert.Equal(LoopBehavior.Once, mc.LoopBehavior);
-            await autd1.SendAsync(m);
-            await autd2.SendAsync(mc);
+            autd1.Send(m);
+            autd2.Send(mc);
             foreach (var dev in autd2)
             {
                 var modExpect = autd1.Link.Modulation(dev.Idx, Segment.S0);

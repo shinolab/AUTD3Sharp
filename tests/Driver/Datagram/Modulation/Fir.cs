@@ -3,9 +3,9 @@ namespace tests.Driver.Datagram.Modulation;
 public class FirTest
 {
     [Fact]
-    public async Task Fir()
+    public void Fir()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)]).OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(Audit.Builder());
 
         var m = new Fourier([new Sine(50 * Hz), new Sine(1000 * Hz)]);
         var mr = m.WithFir([
@@ -110,7 +110,7 @@ public class FirTest
         0.0f,
         ]).WithLoopBehavior(LoopBehavior.Once);
         Assert.Equal(LoopBehavior.Once, mr.LoopBehavior);
-        await autd.SendAsync(mr);
+        autd.Send(mr);
         foreach (var dev in autd)
         {
             var mod = autd.Link.Modulation(dev.Idx, Segment.S0);

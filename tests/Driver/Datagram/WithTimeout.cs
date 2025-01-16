@@ -7,18 +7,18 @@ namespace tests;
 public class WithTimeoutTest
 {
     [Fact]
-    public async Task TestWithTimeout()
+    public void TestWithTimeout()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)])
-            .OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)])
+            .Open(Audit.Builder());
 
-        await autd.SendAsync(new Null().WithTimeout(null));
+        autd.Send(new Null().WithTimeout(null));
         Assert.Null(autd.Link.LastTimeout());
 
-        await autd.SendAsync(new Null().WithTimeout(Duration.FromMillis(100)));
+        autd.Send(new Null().WithTimeout(Duration.FromMillis(100)));
         Assert.Equal(Duration.FromMillis(100), autd.Link.LastTimeout());
 
-        await autd.SendAsync((new Static(), new Null()).WithTimeout(Duration.FromMillis(200)));
+        autd.Send((new Static(), new Null()).WithTimeout(Duration.FromMillis(200)));
         Assert.Equal(Duration.FromMillis(200), autd.Link.LastTimeout());
     }
 }

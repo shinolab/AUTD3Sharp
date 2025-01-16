@@ -3,11 +3,11 @@ namespace tests.Gain;
 public class PlaneTest
 {
     [Fact]
-    public async Task Plane()
+    public void Plane()
     {
-        var autd = await AUTDTest.CreateController();
+        var autd = AUTDTest.CreateController();
 
-        await autd.SendAsync(new Plane(new Vector3(0, 0, 1)).WithIntensity(0x80).WithPhaseOffset(0x81));
+        autd.Send(new Plane(new Vector3(0, 0, 1)).WithIntensity(0x80).WithPhaseOffset(0x81));
         foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
@@ -15,7 +15,7 @@ public class PlaneTest
             Assert.All(phases, p => Assert.Equal(0x81, p));
         }
 
-        await autd.SendAsync(new Plane(new Vector3(0, 0, 1)).WithIntensity(0x81));
+        autd.Send(new Plane(new Vector3(0, 0, 1)).WithIntensity(0x81));
         foreach (var dev in autd)
         {
             var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);

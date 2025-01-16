@@ -3,10 +3,10 @@ namespace tests.Link;
 public class NopTest
 {
     [Fact]
-    public async Task TestNop()
+    public void TestNop()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)]).OpenAsync(Nop.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)]).Open(Nop.Builder());
 
-        await autd.CloseAsync();
+        autd.Close();
     }
 }

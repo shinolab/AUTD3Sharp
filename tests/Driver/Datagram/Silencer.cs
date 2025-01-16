@@ -8,9 +8,9 @@ namespace tests.Driver.Datagram;
 public class SilencerTest
 {
     [Fact]
-    public async Task TestSilencerFromUpdateRate()
+    public void TestSilencerFromUpdateRate()
     {
-        using var autd = await CreateController();
+        using var autd = CreateController();
 
         foreach (var dev in autd)
         {
@@ -20,7 +20,7 @@ public class SilencerTest
             Assert.Equal(AUTD3Sharp.SilencerTarget.Intensity, autd.Link.SilencerTarget(dev.Idx));
         }
 
-        await autd.SendAsync(new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).WithTarget(AUTD3Sharp.SilencerTarget.PulseWidth));
+        autd.Send(new Silencer(new FixedUpdateRate { Intensity = 1, Phase = 2 }).WithTarget(AUTD3Sharp.SilencerTarget.PulseWidth));
         foreach (var dev in autd)
         {
             Assert.Equal(1, autd.Link.SilencerUpdateRateIntensity(dev.Idx));
@@ -34,9 +34,9 @@ public class SilencerTest
     }
 
     [Fact]
-    public async Task TestSilencerFromCompletionTime()
+    public void TestSilencerFromCompletionTime()
     {
-        using var autd = await CreateController();
+        using var autd = CreateController();
 
         var s = new Silencer();
         Assert.True(NativeMethodsBase.AUTDDatagramSilencerFixedCompletionStepsIsDefault(
@@ -45,7 +45,7 @@ public class SilencerTest
             , s.StrictMode,
                 s.Target));
 
-        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(25), Phase = Duration.FromMicros(50) }).WithTarget(AUTD3Sharp.SilencerTarget.PulseWidth));
+        autd.Send(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(25), Phase = Duration.FromMicros(50) }).WithTarget(AUTD3Sharp.SilencerTarget.PulseWidth));
         foreach (var dev in autd)
         {
             Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
@@ -60,11 +60,11 @@ public class SilencerTest
     }
 
     [Fact]
-    public async Task TestSilencerLargeSteps()
+    public void TestSilencerLargeSteps()
     {
-        using var autd = await CreateController();
+        using var autd = CreateController();
 
-        await autd.SendAsync(Silencer.Disable());
+        autd.Send(Silencer.Disable());
         foreach (var dev in autd)
         {
             Assert.Equal(1, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
@@ -74,16 +74,16 @@ public class SilencerTest
         }
 
         Assert.True(Silencer.Disable().IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
-        await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
+        autd.Send(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
 
         Assert.False(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) })));
+        Assert.Throws<AUTDException>(() => autd.Send(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) })));
     }
 
     [Fact]
-    public async Task TestSilencerSmallFreqDivMod()
+    public void TestSilencerSmallFreqDivMod()
     {
-        using var autd = await CreateController();
+        using var autd = CreateController();
 
         foreach (var dev in autd)
         {
@@ -93,10 +93,10 @@ public class SilencerTest
         }
 
         Assert.False(new Silencer().IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
+        Assert.Throws<AUTDException>(() => autd.Send(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
 
         Assert.True(new Silencer().WithStrictMode(false).IsValid(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1))));
-        await autd.SendAsync(new Silencer().WithStrictMode(false));
+        autd.Send(new Silencer().WithStrictMode(false));
         foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
@@ -105,13 +105,13 @@ public class SilencerTest
             Assert.False(autd.Link.SilencerStrictMode(dev.Idx));
         }
 
-        await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
+        autd.Send(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
     }
 
     [Fact]
-    public async Task TestSilencerSmallFreqDivGainSTM()
+    public void TestSilencerSmallFreqDivGainSTM()
     {
-        using var autd = await CreateController();
+        using var autd = CreateController();
 
         foreach (var dev in autd)
         {
@@ -121,9 +121,9 @@ public class SilencerTest
         }
 
         Assert.False(new Silencer().IsValid(new GainSTM(new SamplingConfig(1), [new Null(), new Null()])));
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new GainSTM(new SamplingConfig(1), [new Null(), new Null()])));
+        Assert.Throws<AUTDException>(() => autd.Send(new GainSTM(new SamplingConfig(1), [new Null(), new Null()])));
 
-        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).WithStrictMode(false));
+        autd.Send(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).WithStrictMode(false));
         foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
@@ -131,17 +131,17 @@ public class SilencerTest
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
             Assert.False(autd.Link.SilencerStrictMode(dev.Idx));
         }
-        await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
+        autd.Send(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
 
-        await autd.SendAsync(new GainSTM(new SamplingConfig(1), [new Null(), new Null()]));
+        autd.Send(new GainSTM(new SamplingConfig(1), [new Null(), new Null()]));
     }
 
 
 
     [Fact]
-    public async Task TestSilencerSmallFreqDivFociSTM()
+    public void TestSilencerSmallFreqDivFociSTM()
     {
-        using var autd = await CreateController();
+        using var autd = CreateController();
 
         foreach (var dev in autd)
         {
@@ -151,17 +151,17 @@ public class SilencerTest
         }
 
         Assert.False(new Silencer().IsValid(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin])));
-        await Assert.ThrowsAsync<AUTDException>(async () => await autd.SendAsync(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin])));
+        Assert.Throws<AUTDException>(() => autd.Send(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin])));
 
-        await autd.SendAsync(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).WithStrictMode(false));
+        autd.Send(new Silencer(new FixedCompletionTime { Intensity = Duration.FromMicros(250), Phase = Duration.FromMicros(1000) }).WithStrictMode(false));
         foreach (var dev in autd)
         {
             Assert.Equal(10, autd.Link.SilencerCompletionStepsIntensity(dev.Idx));
             Assert.Equal(40, autd.Link.SilencerCompletionStepsPhase(dev.Idx));
             Assert.True(autd.Link.SilencerFixedCompletionStepsMode(dev.Idx));
         }
-        await autd.SendAsync(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
+        autd.Send(new Sine(150 * Hz).WithSamplingConfig(new SamplingConfig(1)));
 
-        await autd.SendAsync(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin]));
+        autd.Send(new FociSTM(new SamplingConfig(1), [Point3.Origin, Point3.Origin]));
     }
 }

@@ -1,9 +1,6 @@
 using AUTD3Sharp.NativeMethods;
-using System;
-using System.Net;
 using AUTD3Sharp.Derive;
 using AUTD3Sharp.Driver;
-using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp.Link
 {
@@ -20,7 +17,7 @@ namespace AUTD3Sharp.Link
                 return NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT();
             }
 
-            TwinCAT ILinkBuilder<TwinCAT>.ResolveLink(RuntimePtr _, LinkPtr ptr)
+            TwinCAT ILinkBuilder<TwinCAT>.ResolveLink(LinkPtr ptr)
             {
                 return new TwinCAT();
             }
@@ -52,9 +49,9 @@ namespace AUTD3Sharp.Link
 
         LinkBuilderPtr ILinkBuilder<RemoteTwinCAT>.Ptr()
         {
-            var serverAmsNetIdBytes = Ffi.toNullTerminatedUtf8(ServerAmsNetId);
-            var serverIpBytes = Ffi.toNullTerminatedUtf8(ServerIp);
-            var clientAmsNetIdBytes = Ffi.toNullTerminatedUtf8(ClientAmsNetId);
+            var serverAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(ServerAmsNetId);
+            var serverIpBytes = Ffi.ToNullTerminatedUtf8(ServerIp);
+            var clientAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(ClientAmsNetId);
             unsafe
             {
                 fixed (byte* sp = &serverAmsNetIdBytes[0])
@@ -64,7 +61,7 @@ namespace AUTD3Sharp.Link
             }
         }
 
-        RemoteTwinCAT ILinkBuilder<RemoteTwinCAT>.ResolveLink(RuntimePtr _, LinkPtr ptr)
+        RemoteTwinCAT ILinkBuilder<RemoteTwinCAT>.ResolveLink(LinkPtr ptr)
         {
             return new RemoteTwinCAT();
         }

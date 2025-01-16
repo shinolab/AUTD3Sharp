@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 using static AUTD3Sharp.Units;
@@ -6,7 +5,7 @@ using static AUTD3Sharp.Units;
 namespace AUTD3Sharp
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct SamplingConfig
+    public readonly struct SamplingConfig
     {
         public ushort Division { get; init; }
 

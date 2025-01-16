@@ -3,38 +3,38 @@ namespace tests.Driver.Datagram.Modulation;
 public class SegmentTest
 {
     [Fact]
-    public async Task TestChangeModulationSegment()
+    public void TestChangeModulationSegment()
     {
-        var autd = await Controller.Builder([new AUTD3(Point3.Origin)])
-         .OpenAsync(Audit.Builder());
+        var autd = Controller.Builder([new AUTD3(Point3.Origin)])
+         .Open(Audit.Builder());
 
-        await autd.SendAsync(new ReadsFPGAState(_ => true));
+        autd.Send(new ReadsFPGAState(_ => true));
 
-        var infos = await autd.FPGAStateAsync();
+        var infos = autd.FPGAState();
         Assert.Equal(Segment.S0, infos[0]?.CurrentModSegment);
 
         var m = new Static();
-        await autd.SendAsync(m);
+        autd.Send(m);
         Assert.Equal(Segment.S0, autd.Link.CurrentModulationSegment(0));
-        infos = await autd.FPGAStateAsync();
+        infos = autd.FPGAState();
         Assert.Equal(Segment.S0, infos[0]?.CurrentModSegment);
         Assert.Null(infos[0]?.CurrentSTMSegment);
 
-        await autd.SendAsync(m.WithSegment(Segment.S1, TransitionMode.Immediate));
+        autd.Send(m.WithSegment(Segment.S1, TransitionMode.Immediate));
         Assert.Equal(Segment.S1, autd.Link.CurrentModulationSegment(0));
-        infos = await autd.FPGAStateAsync();
+        infos = autd.FPGAState();
         Assert.Equal(Segment.S1, infos[0]?.CurrentModSegment);
         Assert.Null(infos[0]?.CurrentSTMSegment);
 
-        await autd.SendAsync(m.WithSegment(Segment.S0, null));
+        autd.Send(m.WithSegment(Segment.S0, null));
         Assert.Equal(Segment.S1, autd.Link.CurrentModulationSegment(0));
-        infos = await autd.FPGAStateAsync();
+        infos = autd.FPGAState();
         Assert.Equal(Segment.S1, infos[0]?.CurrentModSegment);
         Assert.Null(infos[0]?.CurrentSTMSegment);
 
-        await autd.SendAsync(SwapSegment.Modulation(Segment.S0, TransitionMode.Immediate));
+        autd.Send(SwapSegment.Modulation(Segment.S0, TransitionMode.Immediate));
         Assert.Equal(Segment.S0, autd.Link.CurrentModulationSegment(0));
-        infos = await autd.FPGAStateAsync();
+        infos = autd.FPGAState();
         Assert.Equal(Segment.S0, infos[0]?.CurrentModSegment);
         Assert.Null(infos[0]?.CurrentSTMSegment);
     }
