@@ -1,50 +1,59 @@
 using System;
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Derive;
 using AUTD3Sharp.Utils;
 using System.Collections.Generic;
+using System.Linq;
+using AUTD3Sharp.Driver.Datagram;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    [Gain]
-    [Builder]
-    public sealed partial class LM : Holo<LM>
+    public readonly struct LMOption
     {
-        private readonly Backend _backend;
-        private float[] _initial;
+        public float Eps1 { get; init; } = 1e-8f;
+        public float Eps2 { get; init; } = 1e-8f;
+        public float Tau { get; init; } = 1e-3f;
+        public uint KMax { get; init; } = 5;
+        public float[] Initial { get; init; } = Array.Empty<float>();
+        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
 
-        public LM(Backend backend, IEnumerable<(Point3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        public LMOption() { }
+
+        internal NativeMethods.LMOption ToNative()
         {
-            _backend = backend;
-            Eps1 = 1e-8f;
-            Eps2 = 1e-8f;
-            Tau = 1e-3f;
-            KMax = 5;
-            _initial = Array.Empty<float>();
+            unsafe
+            {
+                fixed (float* pInitial = Initial)
+                    return new NativeMethods.LMOption
+                    {
+                        eps_1 = Eps1,
+                        eps_2 = Eps2,
+                        tau = Tau,
+                        k_max = KMax,
+                        initial = pInitial,
+                        initial_len = (uint)Initial.Length,
+                        constraint = EmissionConstraint.Inner
+                    };
+            }
+        }
+    }
+
+    public sealed class LM : IGain
+    {
+        public (Point3, Amplitude)[] Foci;
+        public LMOption Option;
+        public Backend Backend;
+
+        public LM(IEnumerable<(Point3, Amplitude)> foci, LMOption option, Backend backend)
+        {
+            Foci = foci as (Point3, Amplitude)[] ?? foci.ToArray();
+            Option = option;
+            Backend = backend;
         }
 
-        public LM WithInitial(float[] value)
-        {
-            _initial = value;
-            return this;
-        }
-
-        [Property]
-        public float Eps1 { get; private set; }
-
-        [Property]
-        public float Eps2 { get; private set; }
-
-        [Property]
-        public float Tau { get; private set; }
-
-        [Property]
-        public uint KMax { get; private set; }
-
-        public ReadOnlySpan<float> Initial => new(_initial);
-
-        private GainPtr GainPtr(Geometry _) =>
-            _backend.Lm(Foci, Amps,
-                (uint)Amps.Length, Eps1, Eps2, Tau, KMax, _initial, Constraint);
+        GainPtr IGain.GainPtr(Geometry _) => Backend.Lm(Foci, Option.ToNative());
     }
 }

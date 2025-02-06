@@ -1,112 +1,177 @@
+using AUTD3Sharp.Driver.Datagram;
+using System.Runtime.InteropServices;
+using Point3 = AUTD3Sharp.Utils.Point3;
+
 namespace tests.Driver.Datagram.STM;
 
 public class GainSTMTest
 {
+
+    private static IEnumerable<Uniform> CreateGains(int size) =>
+        Enumerable.Range(0, size).Select(_ => new Uniform(intensity: EmitIntensity.Max, phase: new Phase(0xFF)));
+
     [Fact]
-    public void TestGainSTM()
+    public void TestGainSTMFreq()
     {
-        var autd = Controller.Builder([
-                new AUTD3(Point3.Origin),new AUTD3(Point3.Origin)
-            ])
-            .Open(Audit.Builder());
-
+        var autd = CreateController();
         autd.Send(Silencer.Disable());
-
-        const float radius = 30.0f;
-        const int size = 2;
-        var center = autd.Center + new Vector3(0, 0, 150);
-        var stm = new GainSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
-                new Focus(center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0))));
-        Assert.Equal(1.0f * Hz, stm.Freq);
-        Assert.Equal(Duration.FromSecs(1), stm.Period);
-        Assert.Equal(20000u, stm.SamplingConfig.Division);
-        autd.Send(stm);
-
-        foreach (var dev in autd)
-        {
-            Assert.True(autd.Link.IsStmGainMode(dev.Idx, Segment.S0));
-            Assert.Equal(20000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
-        }
-
-        stm = GainSTM.Nearest(1.0f * Hz, [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]);
+        var stm = new GainSTM(CreateGains(2), 1.0f * Hz, new GainSTMOption());
+        Assert.Equal(20000u, stm.SamplingConfig().Division);
         autd.Send(stm);
         foreach (var dev in autd)
         {
-            Assert.Equal(20000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
-            Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
-        }
-
-        stm = new GainSTM(Duration.FromSecs(1), [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]);
-        autd.Send(stm);
-        foreach (var dev in autd)
-        {
-            Assert.Equal(20000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
-            Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
-        }
-
-        stm = GainSTM.Nearest(Duration.FromSecs(1), [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]);
-        autd.Send(stm);
-        foreach (var dev in autd)
-        {
-            Assert.Equal(20000u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
-            Assert.Equal(LoopBehavior.Infinite, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
-        }
-
-        stm = new GainSTM(new SamplingConfig(1), [new Uniform(EmitIntensity.Max), new Uniform(new EmitIntensity(0x80))]).WithLoopBehavior(LoopBehavior.Once);
-        Assert.Equal(LoopBehavior.Once, stm.LoopBehavior);
-        autd.Send(stm);
-        foreach (var dev in autd)
-        {
-            Assert.Equal(1u, autd.Link.StmFreqDivision(dev.Idx, Segment.S0));
-            Assert.Equal(LoopBehavior.Once, autd.Link.StmLoopBehavior(dev.Idx, Segment.S0));
-        }
-
-        foreach (var dev in autd)
-        {
-            Assert.Equal(2u, autd.Link.StmCycle(dev.Idx, Segment.S0));
+            Assert.True(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
-                Assert.All(phases, p => Assert.Equal(0, p));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
             }
             {
-                var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 1);
-                Assert.All(intensities, d => Assert.Equal(0x80, d));
-                Assert.All(phases, p => Assert.Equal(0, p));
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
             }
         }
+    }
 
-        stm = stm.WithMode(GainSTMMode.PhaseFull);
+    [Fact]
+    public void TestGainSTMFreqNearest()
+    {
+        var autd = CreateController();
+        autd.Send(Silencer.Disable());
+        var stm = new GainSTM(CreateGains(2), 1.0f * Hz, new GainSTMOption()).IntoNearest();
         autd.Send(stm);
         foreach (var dev in autd)
         {
-            Assert.Equal(2u, autd.Link.StmCycle(dev.Idx, Segment.S0));
+            Assert.True(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
-                Assert.All(phases, p => Assert.Equal(0, p));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
             }
             {
-                var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 1);
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
-                Assert.All(phases, p => Assert.Equal(0, p));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
             }
         }
+    }
 
-        stm = stm.WithMode(GainSTMMode.PhaseHalf);
+    [Fact]
+    public void TestGainSTMPeriod()
+    {
+        var autd = CreateController();
+        autd.Send(Silencer.Disable());
+        var stm = new GainSTM(CreateGains(2), Duration.FromSecs(1), new GainSTMOption());
         autd.Send(stm);
         foreach (var dev in autd)
         {
-            Assert.Equal(2u, autd.Link.StmCycle(dev.Idx, Segment.S0));
+            Assert.True(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
-                Assert.All(phases, p => Assert.Equal(0, p));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
             }
             {
-                var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 1);
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
-                Assert.All(phases, p => Assert.Equal(0, p));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
+            }
+        }
+    }
+
+    [Fact]
+    public void TestGainSTMPeriodNearest()
+    {
+        var autd = CreateController();
+        autd.Send(Silencer.Disable());
+        var stm = new GainSTM(CreateGains(2), Duration.FromSecs(1), new GainSTMOption()).IntoNearest();
+        autd.Send(stm);
+        foreach (var dev in autd)
+        {
+            Assert.True(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            {
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
+            }
+            {
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
+            }
+        }
+    }
+
+    [Fact]
+    public void TestGainSTMSamplingConfig()
+    {
+        var autd = CreateController();
+        autd.Send(Silencer.Disable());
+        var stm = new GainSTM(CreateGains(2), new SamplingConfig(1), new GainSTMOption());
+        autd.Send(stm);
+        foreach (var dev in autd)
+        {
+            Assert.True(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal(1, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            {
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
+            }
+            {
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
+            }
+        }
+    }
+
+    [Fact]
+    public void TestGainSTMWithLoopBehavior()
+    {
+        var autd = CreateController();
+        autd.Send(Silencer.Disable());
+        var stm = new GainSTM(CreateGains(2), new SamplingConfig(1), new GainSTMOption());
+        autd.Send(new WithLoopBehavior(stm, LoopBehavior.Once, Segment.S1, TransitionMode.SyncIdx));
+        foreach (var dev in autd)
+        {
+            Assert.Equal(1u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S1));
+            Assert.Equal(LoopBehavior.Once, autd.Link().StmLoopBehavior(dev.Idx(), Segment.S1));
+            Assert.True(autd.Link().IsStmGainMode(dev.Idx(), Segment.S1));
+            Assert.Equal(1, autd.Link().StmFreqDivision(dev.Idx(), Segment.S1));
+            {
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S1, 0);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
+            }
+            {
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S1, 1);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
+            }
+        }
+
+        autd.Send(new WithLoopBehavior(stm, LoopBehavior.Finite(10), Segment.S0, null));
+        foreach (var dev in autd)
+        {
+            Assert.Equal(1u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(LoopBehavior.Finite(10), autd.Link().StmLoopBehavior(dev.Idx(), Segment.S0));
+            Assert.True(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal(1, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            {
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
+            }
+            {
+                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                Assert.All(intensities, d => Assert.Equal(0xFF, d));
+                Assert.All(phases, p => Assert.Equal(0xFF, p));
             }
         }
     }
@@ -114,43 +179,39 @@ public class GainSTMTest
     [Fact]
     public void TestChangeGainSTMSegment()
     {
-        var autd = Controller.Builder([new AUTD3(Point3.Origin)])
-         .Open(Audit.Builder());
+        var autd = CreateController(1);
 
         autd.Send(new ReadsFPGAState(_ => true));
         autd.Send(Silencer.Disable());
 
         var infos = autd.FPGAState();
-        Assert.Equal(Segment.S0, infos[0]?.CurrentGainSegment);
-        Assert.Null(infos[0]?.CurrentSTMSegment);
+        Assert.Equal(Segment.S0, infos[0]?.CurrentGainSegment());
+        Assert.Null(infos[0]?.CurrentSTMSegment());
 
-        const float radius = 30.0f;
-        const int size = 2;
-        var center = autd.Center + new Vector3(0, 0, 150);
-        var stm = new GainSTM(1.0f * Hz, Enumerable.Range(0, size).Select(i => 2 * MathF.PI * i / size).Select(theta =>
-                new Focus(center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0))));
+        var stm = new GainSTM(CreateGains(2), 1.0f * Hz, new GainSTMOption());
+
         autd.Send(stm);
-        Assert.Equal(Segment.S0, autd.Link.CurrentStmSegment(0));
+        Assert.Equal(Segment.S0, autd.Link().CurrentStmSegment(0));
         infos = autd.FPGAState();
-        Assert.Null(infos[0]?.CurrentGainSegment);
-        Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment);
+        Assert.Null(infos[0]?.CurrentGainSegment());
+        Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment());
 
-        autd.Send(stm.WithSegment(Segment.S1, TransitionMode.Immediate));
-        Assert.Equal(Segment.S1, autd.Link.CurrentStmSegment(0));
+        autd.Send(new WithSegment(stm, Segment.S1, TransitionMode.Immediate));
+        Assert.Equal(Segment.S1, autd.Link().CurrentStmSegment(0));
         infos = autd.FPGAState();
-        Assert.Null(infos[0]?.CurrentGainSegment);
-        Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment);
+        Assert.Null(infos[0]?.CurrentGainSegment());
+        Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment());
 
-        autd.Send(stm.WithSegment(Segment.S0, null));
-        Assert.Equal(Segment.S1, autd.Link.CurrentStmSegment(0));
+        autd.Send(new WithSegment(stm, Segment.S0, null));
+        Assert.Equal(Segment.S1, autd.Link().CurrentStmSegment(0));
         infos = autd.FPGAState();
-        Assert.Null(infos[0]?.CurrentGainSegment);
-        Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment);
+        Assert.Null(infos[0]?.CurrentGainSegment());
+        Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment());
 
         autd.Send(SwapSegment.GainSTM(Segment.S0, TransitionMode.Immediate));
-        Assert.Equal(Segment.S0, autd.Link.CurrentStmSegment(0));
+        Assert.Equal(Segment.S0, autd.Link().CurrentStmSegment(0));
         infos = autd.FPGAState();
-        Assert.Null(infos[0]?.CurrentGainSegment);
-        Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment);
+        Assert.Null(infos[0]?.CurrentGainSegment());
+        Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment());
     }
 }

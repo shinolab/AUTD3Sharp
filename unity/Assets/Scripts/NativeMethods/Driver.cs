@@ -12,23 +12,23 @@ using AUTD3Sharp.Link;
 
 namespace AUTD3Sharp.NativeMethods
 {
-    public static unsafe partial class NativeMethodsDriver
+    internal static unsafe partial class NativeMethodsDriver
     {
         const string __DllName = "autd3capi_driver";
 
-        public const uint NUM_TRANS_IN_UNIT = 249;
-        public const uint NUM_TRANS_IN_X = 18;
-        public const uint NUM_TRANS_IN_Y = 14;
-        public const float TRANS_SPACING_MM = 10.16f;
-        public const float DEVICE_HEIGHT_MM = 151.4f;
-        public const float DEVICE_WIDTH_MM = 192f;
+        internal const uint NUM_TRANS_IN_UNIT = 249;
+        internal const uint NUM_TRANS_IN_X = 18;
+        internal const uint NUM_TRANS_IN_Y = 14;
+        internal const float TRANS_SPACING_MM = 10.16f;
+        internal const float DEVICE_HEIGHT_MM = 151.4f;
+        internal const float DEVICE_WIDTH_MM = 192f;
 
 
 
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe partial struct DebugTypeValue
+    internal unsafe partial struct DebugTypeValue
     {
         [FieldOffset(0)]
         public ulong @null;
@@ -41,14 +41,20 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct DebugTypeWrap
+    internal unsafe partial struct DebugTypeWrap
     {
         public DebugTypeTag ty;
         public ulong value;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct LoopBehavior
+    {
+        public ushort rep;
+    }
+
     [StructLayout(LayoutKind.Explicit)]
-    public unsafe partial struct TransitionModeValue
+    internal unsafe partial struct TransitionModeValue
     {
         [FieldOffset(0)]
         public ulong @null;
@@ -59,44 +65,44 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct TransitionModeWrap
+    internal unsafe partial struct TransitionModeWrap
     {
         public TransitionModeTag tag;
         public TransitionModeValue value;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ConstPtr
+    internal unsafe partial struct ConstPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ControllerPtr
+    internal unsafe partial struct ControllerPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ControllerBuilderPtr
+    internal unsafe partial struct SenderPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct DatagramPtr
+    internal unsafe partial struct DatagramPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct GainPtr
+    internal unsafe partial struct GainPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultGain
+    internal unsafe partial struct ResultGain
     {
         public GainPtr result;
         public uint err_len;
@@ -104,51 +110,45 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct GeometryPtr
+    internal unsafe partial struct GeometryPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct DevicePtr
+    internal unsafe partial struct DevicePtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct TransducerPtr
+    internal unsafe partial struct TransducerPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkBuilderPtr
+    internal unsafe partial struct LinkPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct LinkPtr
+    internal unsafe partial struct ResultLink
     {
-        public IntPtr Item1;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultLinkBuilder
-    {
-        public LinkBuilderPtr result;
+        public LinkPtr result;
         public uint err_len;
         public ConstPtr err;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ModulationPtr
+    internal unsafe partial struct ModulationPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultModulation
+    internal unsafe partial struct ResultModulation
     {
         public ModulationPtr result;
         public uint err_len;
@@ -156,42 +156,19 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct FociSTMPtr
+    internal unsafe partial struct FociSTMPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct GainSTMPtr
+    internal unsafe partial struct GainSTMPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultFociSTM
-    {
-        public FociSTMPtr result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultGainSTM
-    {
-        public GainSTMPtr result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct DynSincInterpolator
-    {
-        public DynWindow window;
-        public uint window_size;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultStatus
+    internal unsafe partial struct ResultStatus
     {
         public AUTDStatus result;
         public uint err_len;
@@ -199,7 +176,7 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct ResultSamplingConfig
+    internal unsafe partial struct ResultSamplingConfig
     {
         public SamplingConfig result;
         public uint err_len;
@@ -207,15 +184,15 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct TimerStrategyWrap
+    internal unsafe partial struct SleeperWrap
     {
-        public TimerStrategyTag tag;
+        public SleeperTag tag;
         public uint value;
         public SpinStrategyTag spin_strategy;
     }
 
 
-    public enum DebugTypeTag : byte
+    internal enum DebugTypeTag : byte
     {
         None = 0,
         BaseSignal = 1,
@@ -232,7 +209,7 @@ namespace AUTD3Sharp.NativeMethods
         SysTimeEq = 12,
     }
 
-    public enum TransitionModeTag : byte
+    internal enum TransitionModeTag : byte
     {
         SyncIdx = 0,
         SysTime = 1,
@@ -242,27 +219,21 @@ namespace AUTD3Sharp.NativeMethods
         None = 255,
     }
 
-    public enum DynWindow : uint
-    {
-        Rectangular = 0,
-        Blackman = 1,
-    }
-
-    public enum AUTDStatus : byte
+    internal enum AUTDStatus : byte
     {
         AUTDTrue = 0,
         AUTDFalse = 1,
         AUTDErr = 2,
     }
 
-    public enum TimerStrategyTag : byte
+    internal enum SleeperTag : byte
     {
         Std = 0,
         Spin = 1,
         Waitable = 3,
     }
 
-    public enum SpinStrategyTag : byte
+    internal enum SpinStrategyTag : byte
     {
         YieldThread = 0,
         SpinLoopHint = 1,

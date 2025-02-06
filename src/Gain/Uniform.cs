@@ -1,18 +1,23 @@
-using AUTD3Sharp.Derive;
+using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
 
 namespace AUTD3Sharp.Gain
 {
-    [Gain]
-    public sealed partial class Uniform
+    public class Uniform : IGain
     {
-        public Uniform(Drive d)
+        public EmitIntensity Intensity { get; init; }
+        public Phase Phase { get; init; }
+
+        public Uniform(EmitIntensity intensity, Phase phase)
         {
-            Drive = d;
+            Intensity = intensity;
+            Phase = phase;
         }
 
-        public Drive Drive { get; }
-
-        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainUniform(Drive.Intensity.Value, Drive.Phase.Value);
+        GainPtr IGain.GainPtr(Geometry _) => NativeMethodsBase.AUTDGainUniform(Intensity.Inner, Phase.Inner);
     }
 }

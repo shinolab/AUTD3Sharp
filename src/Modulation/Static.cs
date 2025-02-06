@@ -1,25 +1,14 @@
-using AUTD3Sharp.Derive;
+using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
 {
-    [Modulation(ConfigNoChange = true)]
-    public sealed partial class Static
+    public sealed class Static : IModulation
     {
-        public Static()
-        {
-            Intensity = 0xFF;
-        }
+        public byte Intensity;
 
-        private Static(byte intensity)
-        {
-            Intensity = intensity;
-        }
+        public Static(byte intensity = 0xFF) => Intensity = intensity;
 
-        public static Static WithIntensity(byte intensity) => new(intensity);
-
-        public byte Intensity { get; }
-
-        private ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity, LoopBehavior);
+        ModulationPtr IModulation.ModulationPtr() => NativeMethodsBase.AUTDModulationStatic(Intensity);
     }
 }

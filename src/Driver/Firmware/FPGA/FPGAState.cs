@@ -1,58 +1,50 @@
+using System;
+
 namespace AUTD3Sharp.Driver.FPGA.Defined
 {
-    public class FPGAState
+    public class FPGAState : IEquatable<FPGAState>
     {
         private readonly byte _info;
 
-        internal FPGAState(byte info)
-        {
-            _info = info;
-        }
+        internal FPGAState(byte info) => _info = info;
 
-        public bool IsThermalAssert => (_info & (1 << 0)) != 0;
+        public bool IsThermalAssert() => (_info & (1 << 0)) != 0;
 
-        public Segment CurrentModSegment => (_info & (1 << 1)) switch
+        public Segment CurrentModSegment() => (_info & (1 << 1)) switch
         {
             0 => Segment.S0,
             _ => Segment.S1
         };
 
-        public Segment? CurrentGainSegment
+        public Segment? CurrentGainSegment()
         {
-            get
+            if (!IsGainMode()) return null;
+            return (_info & (1 << 2)) switch
             {
-                {
-                    if (!IsGainMode) return null;
-                    return (_info & (1 << 2)) switch
-                    {
-                        0 => Segment.S0,
-                        _ => Segment.S1
-                    };
-                }
-            }
+                0 => Segment.S0,
+                _ => Segment.S1
+            };
         }
 
-        public Segment? CurrentSTMSegment
+        public Segment? CurrentSTMSegment()
         {
-            get
+            if (!IsSTMMode()) return null;
+            return (_info & (1 << 2)) switch
             {
-                {
-                    if (!IsSTMMode) return null;
-                    return (_info & (1 << 2)) switch
-                    {
-                        0 => Segment.S0,
-                        _ => Segment.S1
-                    };
-                }
-            }
+                0 => Segment.S0,
+                _ => Segment.S1
+            };
         }
 
-        public bool IsGainMode => (_info & (1 << 3)) != 0;
-        public bool IsSTMMode => !IsGainMode;
+        public bool IsGainMode() => (_info & (1 << 3)) != 0;
+        public bool IsSTMMode() => !IsGainMode();
 
-        public override string ToString()
-        {
-            return $"Thermal assert = {IsThermalAssert}";
-        }
+        public static bool operator ==(FPGAState left, FPGAState right) => left.Equals(right);
+        public static bool operator !=(FPGAState left, FPGAState right) => !left.Equals(right);
+        public bool Equals(FPGAState? other) => other is not null && _info.Equals(other._info);
+        public override bool Equals(object? obj) => obj is FPGAState other && Equals(other);
+        public override int GetHashCode() => _info.GetHashCode();
+
+        public override string ToString() => $"Thermal assert = {IsThermalAssert()}";
     }
 }

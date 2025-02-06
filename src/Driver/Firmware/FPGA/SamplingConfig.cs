@@ -1,42 +1,42 @@
-using System.Runtime.InteropServices;
+using System;
+using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.NativeMethods;
 using static AUTD3Sharp.Units;
 
 namespace AUTD3Sharp
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public readonly struct SamplingConfig
+    public class SamplingConfig : IEquatable<SamplingConfig>
     {
-        public ushort Division { get; init; }
+        public static readonly SamplingConfig Freq40K = new(1);
+        public static readonly SamplingConfig Freq4K = new(10);
 
-        internal SamplingConfig(SamplingConfig config)
-        {
-            Division = config.Division;
-        }
+        internal readonly NativeMethods.SamplingConfig Inner;
 
-        public SamplingConfig(ushort div) : this(NativeMethodsBase.AUTDSamplingConfigFromDivision(div).Validate())
-        {
-        }
+        [ExcludeFromCodeCoverage]
+        private SamplingConfig() { }
 
+        internal SamplingConfig(NativeMethods.SamplingConfig config) { Inner = config; }
+
+        public SamplingConfig(ushort div) : this(NativeMethodsBase.AUTDSamplingConfigFromDivision(div).Validate()) { }
         public SamplingConfig(Freq<uint> f) : this(NativeMethodsBase.AUTDSamplingConfigFromFreq(f.Hz).Validate()) { }
         public SamplingConfig(Freq<float> f) : this(NativeMethodsBase.AUTDSamplingConfigFromFreqF(f.Hz).Validate()) { }
-#if !DYNAMIC_FREQ
         public SamplingConfig(Duration period) : this(NativeMethodsBase.AUTDSamplingConfigFromPeriod(period).Validate()) { }
-#endif
 
         public static implicit operator SamplingConfig(Freq<uint> f) => new(f);
         public static implicit operator SamplingConfig(Freq<float> f) => new(f);
         public static implicit operator SamplingConfig(Duration period) => new(period);
 
         public static SamplingConfig Nearest(Freq<float> f) => new(NativeMethodsBase.AUTDSamplingConfigFromFreqNearest(f.Hz));
-#if !DYNAMIC_FREQ
         public static SamplingConfig Nearest(Duration period) => new(NativeMethodsBase.AUTDSamplingConfigFromPeriodNearest(period));
-#endif
 
-        public Freq<float> Freq => NativeMethodsBase.AUTDSamplingConfigFreq(this) * Hz;
+        public ushort Division => Inner.division;
+        public Freq<float> Freq() => NativeMethodsBase.AUTDSamplingConfigFreq(Inner) * Hz;
+        public Duration Period() => NativeMethodsBase.AUTDSamplingConfigPeriod(Inner);
 
-#if !DYNAMIC_FREQ
-        public Duration Period => NativeMethodsBase.AUTDSamplingConfigPeriod(this);
-#endif
+        public static bool operator ==(SamplingConfig left, SamplingConfig right) => left.Equals(right);
+        public static bool operator !=(SamplingConfig left, SamplingConfig right) => !left.Equals(right);
+        public bool Equals(SamplingConfig? other) => other is not null && Inner.Equals(other.Inner);
+        public override bool Equals(object? obj) => obj is SamplingConfig other && Equals(other);
+        public override int GetHashCode() => Inner.GetHashCode();
     }
 }

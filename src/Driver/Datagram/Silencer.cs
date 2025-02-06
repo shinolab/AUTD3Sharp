@@ -1,66 +1,50 @@
-using System;
+using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
-using AUTD3Sharp.Derive;
 
 #if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
-#if UNITY_2018_3_OR_NEWER
-using System.ComponentModel;
-
-namespace System.Runtime.CompilerServices
-{
-    [EditorBrowsable(EditorBrowsableState.Never)]
-    public static class IsExternalInit
-    {
-    }
-}
+using System.Runtime.CompilerServices;
 #endif
 
 namespace AUTD3Sharp
 {
-    public interface IWithSampling
-    {
-        internal SamplingConfig SamplingConfigIntensity();
-        internal SamplingConfig? SamplingConfigPhase();
-    }
-
     public interface ISilencer
     {
-        internal bool IsValid(IWithSampling c, bool strictMode);
-        internal DatagramPtr RawPtr(bool strictMode, SilencerTarget target);
+        internal DatagramPtr RawPtr(SilencerTarget target);
     }
 
-#if !DYNAMIC_FREQ
     public readonly struct FixedCompletionTime : ISilencer
     {
-        public Duration Intensity { get; init; }
-        public Duration Phase { get; init; }
+        public Duration Intensity { get; init; } = Duration.FromMicros(250);
+        public Duration Phase { get; init; } = Duration.FromMillis(1);
+        public bool StrictMode { get; init; } = true;
 
-        bool ISilencer.IsValid(IWithSampling c, bool strictMode)
-           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionTimeIsValid(Intensity, Phase, strictMode,
-               c.SamplingConfigIntensity(), c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)
-               );
+        public FixedCompletionTime() { }
 
-        DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target)
-           => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(Intensity, Phase, strictMode, target);
+        DatagramPtr ISilencer.RawPtr(SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(new NativeMethods.FixedCompletionTime
+        {
+            intensity = Intensity,
+            phase = Phase,
+            strict_mode = StrictMode
+        }, target);
     }
-#endif
 
     public readonly struct FixedCompletionSteps : ISilencer
     {
-        public ushort Intensity { get; init; }
-        public ushort Phase { get; init; }
+        public ushort Intensity { get; init; } = 10;
+        public ushort Phase { get; init; } = 40;
+        public bool StrictMode { get; init; } = true;
 
-        bool ISilencer.IsValid(IWithSampling c, bool strictMode)
-           => NativeMethodsBase.AUTDDatagramSilencerFixedCompletionStepsIsValid(Intensity, Phase, strictMode,
-               c.SamplingConfigIntensity(), c.SamplingConfigPhase() ?? new SamplingConfig(0xFFFF)
-               );
+        public FixedCompletionSteps() { }
 
-        DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target)
-           => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(Intensity, Phase, strictMode, target);
+        internal NativeMethods.FixedCompletionSteps ToNative() => new()
+        {
+            intensity = Intensity,
+            phase = Phase,
+            strict_mode = StrictMode
+        };
+
+        DatagramPtr ISilencer.RawPtr(SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(ToNative(), target);
     }
 
     public readonly struct FixedUpdateRate : ISilencer
@@ -68,42 +52,30 @@ namespace AUTD3Sharp
         public ushort Intensity { get; init; }
         public ushort Phase { get; init; }
 
-        bool ISilencer.IsValid(IWithSampling c, bool strictMode) => throw new NotImplementedException();
-        DatagramPtr ISilencer.RawPtr(bool strictMode, SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(Intensity, Phase, target);
+        internal NativeMethods.FixedUpdateRate ToNative() => new()
+        {
+            intensity = Intensity,
+            phase = Phase
+        };
+
+        DatagramPtr ISilencer.RawPtr(SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(ToNative(), target);
     }
 
-    [Builder]
-    public sealed partial class Silencer : IDatagram
+    public sealed class Silencer : IDatagram
     {
-        public ISilencer Inner { get; init; }
+        public ISilencer Config = new FixedCompletionSteps();
+        public SilencerTarget Target = SilencerTarget.Intensity;
 
-        [Property]
-        public bool StrictMode { get; private set; }
-
-        [Property]
-        public SilencerTarget Target { get; private set; }
-
-        public Silencer(ISilencer silencer)
+        public Silencer(ISilencer config, SilencerTarget target)
         {
-            Inner = silencer;
-            StrictMode = true;
-            Target = SilencerTarget.Intensity;
+            Config = config;
+            Target = target;
         }
 
-        public Silencer() : this(new FixedCompletionSteps
-        {
-            Intensity = 10,
-            Phase = 40
-        })
-        { }
+        public Silencer() { }
 
-        public static Silencer Disable() => new(new FixedCompletionSteps { Intensity = 1, Phase = 1 });
+        public static Silencer Disable() => new(new FixedCompletionSteps { Intensity = 1, Phase = 1 }, SilencerTarget.Intensity);
 
-        public bool IsValid(IWithSampling target) => Inner.IsValid(target, StrictMode);
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => Inner.RawPtr(StrictMode, Target);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => Config.RawPtr(Target);
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

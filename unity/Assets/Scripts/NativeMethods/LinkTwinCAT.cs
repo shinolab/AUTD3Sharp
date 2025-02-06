@@ -12,23 +12,23 @@ using AUTD3Sharp.Link;
 
 namespace AUTD3Sharp.NativeMethods
 {
-    public static unsafe partial class NativeMethodsLinkTwinCAT
+    internal static unsafe partial class NativeMethodsLinkTwinCAT
     {
         const string __DllName = "autd3capi_link_twincat";
 
 
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCATTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDLinkTwinCATTracingInit();
+        internal static extern void AUTDLinkTwinCATTracingInit();
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCATTracingInitWithFile", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultStatus AUTDLinkTwinCATTracingInitWithFile(byte* path);
+        internal static extern ResultStatus AUTDLinkTwinCATTracingInitWithFile(byte* path);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern LinkBuilderPtr AUTDLinkTwinCAT();
+        internal static extern ResultLink AUTDLinkTwinCAT();
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteTwinCAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultLinkBuilder AUTDLinkRemoteTwinCAT(byte* server_ams_net_id, byte* server_ip, byte* client_ams_net_id);
+        internal static extern ResultLink AUTDLinkRemoteTwinCAT(byte* server_ams_net_id, byte* server_ip, byte* client_ams_net_id);
 
 
     }

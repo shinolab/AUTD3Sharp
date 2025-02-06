@@ -1,6 +1,4 @@
-namespace tests.Driver.Common;
-
-using static AUTD3Sharp.Units;
+namespace tests.Driver.Defined;
 
 public class RotationTest
 {
@@ -20,39 +18,37 @@ public class RotationTest
     {
         {
             var autd = Open(EulerAngles.Xyz(90 * deg, 0 * deg, 0 * deg));
-            AssertNearVec3(Vector3.UnitX, autd[0].XDirection);
-            AssertNearVec3(Vector3.UnitZ, autd[0].YDirection);
-            AssertNearVec3(-Vector3.UnitY, autd[0].AxialDirection);
+            AssertNearVec3(Vector3.UnitX, autd[0].XDirection());
+            AssertNearVec3(Vector3.UnitZ, autd[0].YDirection());
+            AssertNearVec3(-Vector3.UnitY, autd[0].AxialDirection());
         }
         {
             var autd = Open(EulerAngles.Xyz(0 * deg, 90 * deg, 0 * deg));
-            AssertNearVec3(-Vector3.UnitZ, autd[0].XDirection);
-            AssertNearVec3(Vector3.UnitY, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection);
+            AssertNearVec3(-Vector3.UnitZ, autd[0].XDirection());
+            AssertNearVec3(Vector3.UnitY, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection());
         }
         {
             var autd = Open(EulerAngles.Xyz(0 * deg, 0 * deg, 90 * deg));
-            AssertNearVec3(Vector3.UnitY, autd[0].XDirection);
-            AssertNearVec3(-Vector3.UnitX, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitZ, autd[0].AxialDirection);
+            AssertNearVec3(Vector3.UnitY, autd[0].XDirection());
+            AssertNearVec3(-Vector3.UnitX, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitZ, autd[0].AxialDirection());
         }
         {
             var autd = Open(EulerAngles.Xyz(0 * deg, 90 * deg, 90 * deg));
-            AssertNearVec3(Vector3.UnitY, autd[0].XDirection);
-            AssertNearVec3(Vector3.UnitZ, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection);
+            AssertNearVec3(Vector3.UnitY, autd[0].XDirection());
+            AssertNearVec3(Vector3.UnitZ, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection());
         }
         {
             var autd = Open(EulerAngles.Xyz(90 * deg, 90 * deg, 0 * deg));
-            AssertNearVec3(Vector3.UnitY, autd[0].XDirection);
-            AssertNearVec3(Vector3.UnitZ, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection);
+            AssertNearVec3(Vector3.UnitY, autd[0].XDirection());
+            AssertNearVec3(Vector3.UnitZ, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection());
         }
         return;
 
-        Controller<Audit> Open(Quaternion q) =>
-            Controller.Builder([new AUTD3(Point3.Origin).WithRotation(q)])
-                .Open(Audit.Builder());
+        Controller<Audit> Open(Quaternion q) => Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
 
         void AssertNearVec3(Vector3 expected, Vector3 x)
         {
@@ -67,39 +63,37 @@ public class RotationTest
     {
         {
             var autd = Open(EulerAngles.Zyz(90 * deg, 0 * deg, 0 * deg));
-            AssertNearVec3(Vector3.UnitY, autd[0].XDirection);
-            AssertNearVec3(-Vector3.UnitX, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitZ, autd[0].AxialDirection);
+            AssertNearVec3(Vector3.UnitY, autd[0].XDirection());
+            AssertNearVec3(-Vector3.UnitX, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitZ, autd[0].AxialDirection());
         }
         {
             var autd = Open(EulerAngles.Zyz(0 * deg, 90 * deg, 0 * deg));
-            AssertNearVec3(-Vector3.UnitZ, autd[0].XDirection);
-            AssertNearVec3(Vector3.UnitY, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection);
+            AssertNearVec3(-Vector3.UnitZ, autd[0].XDirection());
+            AssertNearVec3(Vector3.UnitY, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection());
         }
         {
             var autd = Open(EulerAngles.Zyz(0 * deg, 0 * deg, 90 * deg));
-            AssertNearVec3(Vector3.UnitY, autd[0].XDirection);
-            AssertNearVec3(-Vector3.UnitX, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitZ, autd[0].AxialDirection);
+            AssertNearVec3(Vector3.UnitY, autd[0].XDirection());
+            AssertNearVec3(-Vector3.UnitX, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitZ, autd[0].AxialDirection());
         }
         {
             var autd = Open(EulerAngles.Zyz(0 * deg, 90 * deg, 90 * deg));
-            AssertNearVec3(Vector3.UnitY, autd[0].XDirection);
-            AssertNearVec3(Vector3.UnitZ, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection);
+            AssertNearVec3(Vector3.UnitY, autd[0].XDirection());
+            AssertNearVec3(Vector3.UnitZ, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitX, autd[0].AxialDirection());
         }
         {
             var autd = Open(EulerAngles.Zyz(90 * deg, 90 * deg, 0 * deg));
-            AssertNearVec3(-Vector3.UnitZ, autd[0].XDirection);
-            AssertNearVec3(-Vector3.UnitX, autd[0].YDirection);
-            AssertNearVec3(Vector3.UnitY, autd[0].AxialDirection);
+            AssertNearVec3(-Vector3.UnitZ, autd[0].XDirection());
+            AssertNearVec3(-Vector3.UnitX, autd[0].YDirection());
+            AssertNearVec3(Vector3.UnitY, autd[0].AxialDirection());
         }
         return;
 
-        Controller<Audit> Open(Quaternion q) =>
-            Controller.Builder([new AUTD3(Point3.Origin).WithRotation(q)])
-                .Open(Audit.Builder());
+        Controller<Audit> Open(Quaternion q) => Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
 
         void AssertNearVec3(Vector3 expected, Vector3 x)
         {

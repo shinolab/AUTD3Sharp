@@ -1,37 +1,30 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using AUTD3Sharp.Driver.Datagram;
+using AUTD3Sharp.NativeMethods;
+
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Derive;
-
 namespace AUTD3Sharp.Gain
 {
-    [Gain]
-    public sealed partial class Group
+    public sealed class Group<TKey> : IGain
     {
-        private readonly Func<Device, Func<Transducer, object?>> _f;
-        private readonly Dictionary<object, Driver.Datagram.Gain.IGain> _map;
+        public Func<Device, Func<Transducer, TKey?>> KeyMap;
+        public Dictionary<TKey, IGain> GainMap;
 
-        public Group(Func<Device, Func<Transducer, object?>> f)
+        public Group(Func<Device, Func<Transducer, TKey?>> keyMap, Dictionary<TKey, IGain> gainMap)
         {
-            _f = f;
-            _map = new();
+            KeyMap = keyMap;
+            GainMap = gainMap;
         }
 
-        public Group Set(object key, Driver.Datagram.Gain.IGain gain)
-        {
-            _map[key] = gain;
-            return this;
-        }
-
-        private GainPtr GainPtr(Geometry geometry)
+        GainPtr IGain.GainPtr(Geometry geometry)
         {
             var keymap = new Dictionary<object, int>();
-            var deviceIndices = geometry.Devices().Select(dev => (ushort)dev.Idx).ToArray();
+            var deviceIndices = geometry.Devices().Select(dev => (ushort)dev.Idx()).ToArray();
             unsafe
             {
                 fixed (ushort* deviceIndicesPtr = &deviceIndices[0])
@@ -40,26 +33,25 @@ namespace AUTD3Sharp.Gain
                     var k = 0;
                     foreach (var dev in geometry.Devices())
                     {
-                        var m = new int[dev.NumTransducers];
+                        var m = new int[dev.NumTransducers()];
                         foreach (var tr in dev)
                         {
-                            var key = _f(dev)(tr);
+                            var key = KeyMap(dev)(tr);
                             if (key != null)
                             {
                                 if (!keymap.ContainsKey(key)) keymap[key] = k++;
-                                m[tr.Idx] = keymap[key];
+                                m[tr.Idx()] = keymap[key];
                             }
                             else
-                                m[tr.Idx] = -1;
+                                m[tr.Idx()] = -1;
                         }
 
-                        fixed (int* p = &m[0])
-                            map = NativeMethodsBase.AUTDGainGroupMapSet(map, (ushort)dev.Idx, p);
+                        fixed (int* p = &m[0]) map = NativeMethodsBase.AUTDGainGroupMapSet(map, (ushort)dev.Idx(), p);
                     }
 
-                    var keys = new int[_map.Count];
-                    var values = new GainPtr[_map.Count];
-                    foreach (var (kv, i) in _map.Select((v, i) => (v, i)))
+                    var keys = new int[GainMap.Count];
+                    var values = new GainPtr[GainMap.Count];
+                    foreach (var (kv, i) in GainMap.Select((v, i) => (v, i)))
                     {
                         if (!keymap.TryGetValue(kv.Key, out var value)) throw new AUTDException("Unknown group key");
                         keys[i] = value;
@@ -68,11 +60,7 @@ namespace AUTD3Sharp.Gain
 
                     fixed (int* keysPtr = &keys[0])
                     fixed (GainPtr* valuesPtr = &values[0])
-                        return NativeMethodsBase.AUTDGainGroup(
-                            map,
-                            keysPtr,
-                            valuesPtr,
-                            (uint)values.Length).Validate();
+                        return NativeMethodsBase.AUTDGainGroup(map, keysPtr, valuesPtr, (uint)values.Length);
                 }
             }
         }

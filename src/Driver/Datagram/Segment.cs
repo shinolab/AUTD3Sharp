@@ -6,64 +6,64 @@ namespace AUTD3Sharp
     public sealed class SwapSegmentModulation : IDatagram
     {
         private readonly Segment _segment;
-        private readonly TransitionModeWrap _transitionMode;
+        private readonly TransitionMode _transitionMode;
 
-        internal SwapSegmentModulation(Segment segment, TransitionModeWrap transitionMode)
+        internal SwapSegmentModulation(Segment segment, TransitionMode transitionMode)
         {
             _segment = segment;
             _transitionMode = transitionMode;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentModulation(_segment, _transitionMode);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentModulation(_segment.ToNative(), _transitionMode.Inner);
     }
 
     public sealed class SwapSegmentFociSTM : IDatagram
     {
         private readonly Segment _segment;
-        private readonly TransitionModeWrap _transitionMode;
+        private readonly TransitionMode _transitionMode;
 
-        internal SwapSegmentFociSTM(Segment segment, TransitionModeWrap transitionMode)
+        internal SwapSegmentFociSTM(Segment segment, TransitionMode transitionMode)
         {
             _segment = segment;
             _transitionMode = transitionMode;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentFociSTM(_segment, _transitionMode);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentFociSTM(_segment.ToNative(), _transitionMode.Inner);
     }
 
     public sealed class SwapSegmentGainSTM : IDatagram
     {
         private readonly Segment _segment;
-        private readonly TransitionModeWrap _transitionMode;
+        private readonly TransitionMode _transitionMode;
 
-        internal SwapSegmentGainSTM(Segment segment, TransitionModeWrap transitionMode)
+        internal SwapSegmentGainSTM(Segment segment, TransitionMode transitionMode)
         {
             _segment = segment;
             _transitionMode = transitionMode;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentGainSTM(_segment, _transitionMode);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentGainSTM(_segment.ToNative(), _transitionMode.Inner);
     }
 
     public sealed class SwapSegmentGain : IDatagram
     {
         private readonly Segment _segment;
-        private readonly TransitionModeWrap _transitionMode;
+        private readonly TransitionMode _transitionMode;
 
-        internal SwapSegmentGain(Segment segment, TransitionModeWrap transitionMode)
+        internal SwapSegmentGain(Segment segment, TransitionMode transitionMode)
         {
             _segment = segment;
             _transitionMode = transitionMode;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentGain(_segment, _transitionMode);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentGain(_segment.ToNative(), _transitionMode.Inner);
     }
 
     public static class SwapSegment
     {
-        public static SwapSegmentModulation Modulation(Segment segment, TransitionModeWrap transitionMode) => new(segment, transitionMode);
-        public static SwapSegmentFociSTM FociSTM(Segment segment, TransitionModeWrap transitionMode) => new(segment, transitionMode);
-        public static SwapSegmentGainSTM GainSTM(Segment segment, TransitionModeWrap transitionMode) => new(segment, transitionMode);
-        public static SwapSegmentGain Gain(Segment segment, TransitionModeWrap transitionMode) => new(segment, transitionMode);
+        public static SwapSegmentModulation Modulation(Segment segment, TransitionMode transitionMode) => new(segment, transitionMode);
+        public static SwapSegmentFociSTM FociSTM(Segment segment, TransitionMode transitionMode) => new(segment, transitionMode);
+        public static SwapSegmentGainSTM GainSTM(Segment segment, TransitionMode transitionMode) => new(segment, transitionMode);
+        public static SwapSegmentGain Gain(Segment segment, TransitionMode transitionMode) => new(segment, transitionMode);
     }
 }

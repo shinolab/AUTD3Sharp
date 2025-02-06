@@ -1,34 +1,34 @@
-﻿#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Driver;
-using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.Driver.FPGA.Defined;
 using AUTD3Sharp.NativeMethods;
+using AUTD3Sharp.Utils;
+using AUTD3Sharp.Driver.Datagram;
 
 namespace AUTD3Sharp
 {
     public sealed class Controller<T> : Geometry, IDisposable
+    where T : Driver.Link
     {
-        #region field
-
         private bool _isDisposed;
         internal ControllerPtr Ptr;
-
-        #endregion
-
-        #region Controller
+        private readonly T _link;
 
         internal Controller(GeometryPtr geometry, ControllerPtr ptr, T link) : base(geometry)
         {
             Ptr = ptr;
-            Link = link;
+            _link = link;
         }
+
+        public Sender Sender(SenderOption option) => new(NativeMethodsBase.AUTDSender(Ptr, option.ToNative()), Geometry());
+
+        public void Send<TD>(TD d) where TD : IDatagram => Sender(new SenderOption()).Send(d);
+        public void Send<TD1, TD2>((TD1, TD2) d) where TD1 : IDatagram where TD2 : IDatagram => Send(new DatagramTuple<TD1, TD2>(d));
+
+        public void GroupSend(Func<Device, object?> keyMap, GroupDictionary datagramMap) => Sender(new SenderOption()).GroupSend(keyMap, datagramMap);
 
         private static FirmwareVersion GetFirmwareVersion(FirmwareVersionListPtr handle, uint i)
         {
@@ -47,9 +47,18 @@ namespace AUTD3Sharp
         {
             var result = NativeMethodsBase.AUTDControllerFirmwareVersionListPointer(Ptr);
             var handle = result.Validate();
-            var list = Enumerable.Range(0, Geometry.NumDevices).Select(i => GetFirmwareVersion(handle, (uint)i)).ToArray();
+            var list = Enumerable.Range(0, NumDevices()).Select(i => GetFirmwareVersion(handle, (uint)i)).ToArray();
             NativeMethodsBase.AUTDControllerFirmwareVersionListPointerDelete(handle);
             return list;
+        }
+
+        public FPGAState?[] FPGAState()
+        {
+            var result = NativeMethodsBase.AUTDControllerFPGAState(Ptr);
+            var p = result.Validate();
+            var states = Enumerable.Range(0, NumDevices()).Select(i => NativeMethodsBase.AUTDControllerFPGAStateGet(p, (uint)i)).Select(x => x < 0 ? null : new FPGAState((byte)x)).ToArray();
+            NativeMethodsBase.AUTDControllerFPGAStateDelete(p);
+            return states;
         }
 
         public void Close()
@@ -71,57 +80,34 @@ namespace AUTD3Sharp
         }
 
         [ExcludeFromCodeCoverage]
-        ~Controller()
-        {
-            Dispose();
-        }
+        ~Controller() { Dispose(); }
 
-        #endregion
-
-        #region Property
-
-        public Geometry Geometry => this;
-
-        public FPGAState?[] FPGAState()
-        {
-            var result = NativeMethodsBase.AUTDControllerFPGAState(Ptr);
-            var p = result.Validate();
-            var states = Enumerable.Range(0, Geometry.NumDevices).Select(i => NativeMethodsBase.AUTDControllerFPGAStateGet(p, (uint)i)).Select(
-                x => x < 0 ? null : new FPGAState((byte)x)).ToArray();
-            NativeMethodsBase.AUTDControllerFPGAStateDelete(p);
-            return states;
-        }
-
-        public T Link { get; }
-
-        #endregion
-
-        public void Send<TD>(TD d)
-        where TD : IDatagram
-        {
-            var result = NativeMethodsBase.AUTDControllerSend(Ptr, d.Ptr(Geometry));
-            result.Validate();
-        }
-
-        public void Send<TD1, TD2>((TD1, TD2) d)
-        where TD1 : IDatagram
-        where TD2 : IDatagram
-        {
-            Send(new DatagramTuple<TD1, TD2>(d));
-        }
-
-        public GroupGuard<T> Group(Func<Device, object?> map)
-        {
-            return new GroupGuard<T>(map, this);
-        }
+        public Geometry Geometry() => this;
+        public T Link() => _link;
     }
 
     public static class Controller
     {
-        public static ControllerBuilder Builder(IEnumerable<AUTD3> iter) => new(iter);
+        public static Controller<T> Open<T>(IEnumerable<AUTD3> devices, T link) where T : Driver.Link => OpenWithOption(devices, link, new SenderOption());
+
+        public static Controller<T> OpenWithOption<T>(IEnumerable<AUTD3> devices, T link, SenderOption option)
+            where T : Driver.Link
+        {
+            var devicesArray = devices as AUTD3[] ?? devices.ToArray();
+            var pos = devicesArray.Select(d => d.Pos).ToArray();
+            var rot = devicesArray.Select(d => d.Rot).ToArray();
+            var linkPtr = link.Resolve();
+            unsafe
+            {
+                fixed (Point3* pPos = &pos[0])
+                fixed (Quaternion* pRot = &rot[0])
+                {
+                    var ptr = NativeMethodsBase.AUTDControllerOpen(pPos, pRot, (ushort)devicesArray.Length, linkPtr, option.ToNative()).Validate();
+                    var geometryPtr = NativeMethodsBase.AUTDGeometry(ptr);
+                    link.Ptr = NativeMethodsBase.AUTDLinkGet(ptr);
+                    return new Controller<T>(geometryPtr, ptr, link);
+                }
+            }
+        }
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

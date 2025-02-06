@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics.CodeAnalysis;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -7,37 +6,19 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace AUTD3Sharp
 {
-    public readonly struct Freq<T> : IEquatable<Freq<T>> where T : struct
+    public readonly struct Freq<T> : IEquatable<Freq<T>> where T : struct, IComparable, IFormattable, IConvertible, IComparable<T>, IEquatable<T>
     {
         public T Hz { get; }
 
-        public Freq(T hz)
-        {
-            Hz = hz;
-        }
+        public Freq(T hz) => Hz = hz;
 
-        public override string ToString()
-        {
-            return $"{Hz}Hz";
-        }
+        public override string ToString() => $"{Hz}Hz";
 
-        [ExcludeFromCodeCoverage]
-        public bool Equals(Freq<T> other)
-        {
-            return Hz.Equals(other.Hz);
-        }
-
-        [ExcludeFromCodeCoverage]
-        public override bool Equals(object? obj)
-        {
-            return obj is Freq<T> other && Equals(other);
-        }
-
-        [ExcludeFromCodeCoverage]
-        public override int GetHashCode()
-        {
-            return Hz.GetHashCode();
-        }
+        public static bool operator ==(Freq<T> left, Freq<T> right) => left.Equals(right);
+        public static bool operator !=(Freq<T> left, Freq<T> right) => !left.Equals(right);
+        public bool Equals(Freq<T> other) => Hz.Equals(other.Hz);
+        public override bool Equals(object? obj) => obj is Freq<T> other && Equals(other);
+        public override int GetHashCode() => Hz.GetHashCode();
     }
 
     public class UnitHz

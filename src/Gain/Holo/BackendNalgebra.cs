@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
 
@@ -7,10 +8,7 @@ namespace AUTD3Sharp.Gain.Holo
 {
     public sealed class NalgebraBackend : Backend
     {
-        public NalgebraBackend()
-        {
-            Ptr = NativeMethodsGainHolo.AUTDNalgebraBackendSphere();
-        }
+        public NalgebraBackend() => Ptr = NativeMethodsGainHolo.AUTDNalgebraBackendSphere();
 
         [ExcludeFromCodeCoverage]
         ~NalgebraBackend()
@@ -19,53 +17,51 @@ namespace AUTD3Sharp.Gain.Holo
             Ptr.Item1 = IntPtr.Zero;
         }
 
-        internal override GainPtr Gs(Point3[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint)
+        internal override GainPtr Gs((Point3, Amplitude)[] foci, NativeMethods.GSOption option)
         {
+            var points = foci.Select(f => f.Item1).ToArray();
+            var amps = foci.Select(f => f.Item2.Pascal()).ToArray();
             unsafe
             {
-                fixed (Point3* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
-                {
-                    return NativeMethodsGainHolo.AUTDGainHoloGSSphere(Ptr, pf, (float*)pa, size, repeat, constraint);
-                }
+                fixed (Point3* pPoints = &points[0])
+                fixed (float* pAmps = &amps[0])
+                    return NativeMethodsGainHolo.AUTDGainHoloGSSphere(Ptr, pPoints, pAmps, (uint)foci.Length, option);
             }
         }
 
-        internal override GainPtr Gspat(Point3[] foci, Amplitude[] amps, uint size, uint repeat, EmissionConstraintWrap constraint)
+        internal override GainPtr Gspat((Point3, Amplitude)[] foci, NativeMethods.GSPATOption option)
         {
+            var points = foci.Select(f => f.Item1).ToArray();
+            var amps = foci.Select(f => f.Item2.Pascal()).ToArray();
             unsafe
             {
-                fixed (Point3* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
-                {
-                    return NativeMethodsGainHolo.AUTDGainHoloGSPATSphere(Ptr, pf, (float*)pa, size, repeat, constraint);
-                }
+                fixed (Point3* pPoints = &points[0])
+                fixed (float* pAmps = &amps[0])
+                    return NativeMethodsGainHolo.AUTDGainHoloGSPATSphere(Ptr, pPoints, pAmps, (uint)foci.Length, option);
             }
         }
 
-        internal override GainPtr Naive(Point3[] foci, Amplitude[] amps, uint size, EmissionConstraintWrap constraint)
+        internal override GainPtr Naive((Point3, Amplitude)[] foci, NativeMethods.NaiveOption option)
         {
+            var points = foci.Select(f => f.Item1).ToArray();
+            var amps = foci.Select(f => f.Item2.Pascal()).ToArray();
             unsafe
             {
-                fixed (Point3* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
-                {
-                    return NativeMethodsGainHolo.AUTDGainHoloNaiveSphere(Ptr, pf, (float*)pa, size, constraint);
-                }
+                fixed (Point3* pPoints = &points[0])
+                fixed (float* pAmps = &amps[0])
+                    return NativeMethodsGainHolo.AUTDGainHoloNaiveSphere(Ptr, pPoints, pAmps, (uint)foci.Length, option);
             }
         }
 
-        [ExcludeFromCodeCoverage]
-        internal override GainPtr Lm(Point3[] foci, Amplitude[] amps, uint size, float eps1, float eps2, float tau, uint kMax, float[] initial, EmissionConstraintWrap constraint)
+        internal override GainPtr Lm((Point3, Amplitude)[] foci, NativeMethods.LMOption option)
         {
+            var points = foci.Select(f => f.Item1).ToArray();
+            var amps = foci.Select(f => f.Item2.Pascal()).ToArray();
             unsafe
             {
-                fixed (Point3* pf = &foci[0])
-                fixed (Amplitude* pa = &amps[0])
-                fixed (float* pInitial = initial)
-                {
-                    return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pf, (float*)pa, size, eps1, eps2, tau, kMax, pInitial, (uint)initial.Length, constraint);
-                }
+                fixed (Point3* pPoints = &points[0])
+                fixed (float* pAmps = &amps[0])
+                    return NativeMethodsGainHolo.AUTDGainHoloLMSphere(Ptr, pPoints, pAmps, (uint)foci.Length, option);
             }
         }
     }

@@ -1,69 +1,58 @@
-﻿#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
     internal delegate int GroupMapDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx);
 
-    public sealed class GroupGuard<T>
+    public class GroupDictionary : Dictionary<object, IDatagram>
     {
-        private readonly GroupMapDelegate _f;
-        private readonly Controller<T> _controller;
-        private readonly PList<int> _keys;
-        private readonly PList<DatagramPtr> _datagrams;
-        private readonly Dictionary<object, int> _keymap;
-        private int _k;
+        public void Add<TD1, TD2>(object key, (TD1, TD2) d) where TD1 : IDatagram where TD2 : IDatagram => Add(key, new DatagramTuple<TD1, TD2>(d));
+    }
 
-        internal GroupGuard(Func<Device, object?> map, Controller<T> controller)
+    public partial class Sender
+    {
+        public void GroupSend(Func<Device, object?> keyMap, GroupDictionary datagramMap)
         {
-            _controller = controller;
-            _keys = new PList<int>();
-            _datagrams = new PList<DatagramPtr>();
-            _keymap = new Dictionary<object, int>();
-            _k = 0;
-            _f = (_, geometryPtr, devIdx) =>
+            var keys = new PList<int>();
+            var keymap = new Dictionary<object, int>();
+            var datagrams = new PList<DatagramPtr>();
+            var k = 0;
+
+            foreach (var (key, d) in datagramMap)
             {
-                var key = map(new Device(devIdx, geometryPtr));
-                return key != null ? _keymap[key] : -1;
-            };
-        }
+                if (keymap.ContainsKey(key)) throw new AUTDException("Key already exists");
+                datagrams.Add(d.Ptr(Geometry));
+                keys.Add(k);
+                keymap[key] = k++;
+            }
 
-        public GroupGuard<T> Set<TD>(object key, TD d)
-        where TD : IDatagram
-        {
-            if (_keymap.ContainsKey(key)) throw new AUTDException("Key already exists");
-            _datagrams.Add(d.Ptr(_controller));
-            _keys.Add(_k);
-            _keymap[key] = _k++;
-            return this;
-        }
-
-        public GroupGuard<T> Set<TD1, TD2>(object key, (TD1, TD2) d)
-        where TD1 : IDatagram
-        where TD2 : IDatagram
-         => Set(key, new DatagramTuple<TD1, TD2>(d));
-
-        public void Send()
-        {
             unsafe
             {
-                fixed (int* kp = &_keys.Items[0])
-                fixed (DatagramPtr* dp = &_datagrams.Items[0])
+                fixed (int* kp = &keys.Items[0])
+                fixed (DatagramPtr* dp = &datagrams.Items[0])
                 {
-                    var result = NativeMethodsBase.AUTDControllerGroup(_controller.Ptr,
-                        new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero },
-                        _controller.GeometryPtr, kp, dp, (ushort)_keys.Count);
-                    result.Validate();
+                    NativeMethodsBase.AUTDControllerGroup(Ptr,
+                       new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate((GroupMapDelegate)F) }, new ConstPtr { Item1 = IntPtr.Zero },
+                       Geometry.GeometryPtr, kp, dp, (ushort)keys.Count).Validate();
                 }
+            }
+
+            return;
+
+            int F(IntPtr _, GeometryPtr geometryPtr, ushort devIdx)
+            {
+                var key = keyMap(new Device(devIdx, geometryPtr));
+                return key is null ? -1 : keymap[key];
             }
         }
     }

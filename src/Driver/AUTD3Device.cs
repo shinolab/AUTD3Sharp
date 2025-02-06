@@ -2,14 +2,12 @@
 #define DIMENSION_M
 #endif
 
-using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
 
 namespace AUTD3Sharp
 {
-    [Builder]
-    public partial class AUTD3
+    public class AUTD3
     {
         #region const
 #if DIMENSION_M
@@ -27,14 +25,14 @@ namespace AUTD3Sharp
         public const float DeviceWidth = NativeMethodsDriver.DEVICE_WIDTH_MM * Millimeter;
         #endregion
 
-        public Point3 Pos { get; }
-        [Property]
-        public Quaternion Rotation { get; private set; }
+        public Point3 Pos = Point3.Origin;
+        public Quaternion Rot = Quaternion.Identity;
 
-        public AUTD3(Point3 pos)
+        public AUTD3() { }
+        public AUTD3(Point3 pos, Quaternion rot)
         {
             Pos = pos;
-            Rotation = Quaternion.Identity;
+            Rot = rot;
         }
     }
 }

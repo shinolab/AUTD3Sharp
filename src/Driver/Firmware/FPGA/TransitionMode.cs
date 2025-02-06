@@ -1,15 +1,26 @@
 ﻿using AUTD3Sharp.NativeMethods;
+using System;
 
 namespace AUTD3Sharp
 {
-    public static class TransitionMode
+    public class TransitionMode : IEquatable<TransitionMode>
     {
-        public static TransitionModeWrap SyncIdx = NativeMethodsBase.AUTDTransitionModeSyncIdx();
-        public static TransitionModeWrap SysTime(DcSysTime sysTime) => NativeMethodsBase.AUTDTransitionModeSysTime(sysTime);
-        public static TransitionModeWrap GPIO(GPIOIn gpio) => NativeMethodsBase.AUTDTransitionModeGPIO(gpio);
-        public static TransitionModeWrap Ext = NativeMethodsBase.AUTDTransitionModeExt();
-        public static TransitionModeWrap Immediate = NativeMethodsBase.AUTDTransitionModeImmediate();
+        internal readonly TransitionModeWrap Inner;
 
-        public static TransitionModeWrap None = NativeMethodsBase.AUTDTransitionModeNone();
+        private TransitionMode(TransitionModeWrap inner) { Inner = inner; }
+
+        public static TransitionMode SyncIdx => new(NativeMethodsBase.AUTDTransitionModeSyncIdx());
+        public static TransitionMode SysTime(DcSysTime sysTime) => new(NativeMethodsBase.AUTDTransitionModeSysTime(sysTime));
+        public static TransitionMode GPIO(GPIOIn gpio) => new(NativeMethodsBase.AUTDTransitionModeGPIO(gpio.ToNative()));
+        public static readonly TransitionMode Ext = new(NativeMethodsBase.AUTDTransitionModeExt());
+        public static readonly TransitionMode Immediate = new(NativeMethodsBase.AUTDTransitionModeImmediate());
+
+        internal static TransitionMode None = new(NativeMethodsBase.AUTDTransitionModeNone());
+
+        public static bool operator ==(TransitionMode left, TransitionMode right) => left.Equals(right);
+        public static bool operator !=(TransitionMode left, TransitionMode right) => !left.Equals(right);
+        public bool Equals(TransitionMode? other) => other is not null && Inner.Equals(other.Inner);
+        public override bool Equals(object? obj) => obj is TransitionMode other && Equals(other);
+        public override int GetHashCode() => Inner.GetHashCode();
     }
 }

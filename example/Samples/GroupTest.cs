@@ -15,7 +15,7 @@ internal static class GroupByDeviceTest
 
         autd.Group(dev =>
            {
-               return dev.Idx switch
+               return dev.Idx() switch
                {
                    0 => "null",
                    1 => "focus",
@@ -23,7 +23,7 @@ internal static class GroupByDeviceTest
                };
            })
            .Set("null", (new Static(), new Null()))
-           .Set("focus", (new Sine(150 * Hz), new Focus(autd.Center + new Vector3(0, 0, 150))))
+           .Set("focus", (new Sine(150 * Hz), new Focus(autd.Center() + new Vector3(0, 0, 150))))
            .Send();
     }
 }
@@ -37,7 +37,7 @@ internal static class GroupByTransducerTest
         autd.Send(config);
 
         var cx = autd.Center.X;
-        var g1 = new Focus(autd.Center + new Vector3(0, 0, 150));
+        var g1 = new Focus(autd.Center() + new Vector3(0, 0, 150));
         var g2 = new Null();
 
         var g = new Group(

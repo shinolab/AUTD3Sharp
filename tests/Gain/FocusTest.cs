@@ -5,16 +5,12 @@ public class FocusTest
     [Fact]
     public void Focus()
     {
-        var autd = AUTDTest.CreateController();
-
-        var g = new Focus(autd.Center).WithIntensity(0x81).WithPhaseOffset(0x80);
-        Assert.Equal(autd.Center, g.Pos);
-        Assert.Equal(0x81, g.Intensity.Value);
-        Assert.Equal(0x80, g.PhaseOffset.Value);
+        var autd = CreateController();
+        var g = new Focus(autd.Center(), new FocusOption { Intensity = new EmitIntensity(0x81) });
         autd.Send(g);
         foreach (var dev in autd)
         {
-            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
+            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x81, d));
             Assert.Contains(phases, p => p != 0);
         }
@@ -23,7 +19,6 @@ public class FocusTest
     [Fact]
     public void FocusDefault()
     {
-        var g = new Focus(Point3.Origin);
-        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainFocusIsDefault(g.Intensity.Value, g.PhaseOffset.Value));
+        Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDGainFocusIsDefault(new FocusOption().ToNative()));
     }
 }

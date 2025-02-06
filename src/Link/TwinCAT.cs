@@ -1,77 +1,47 @@
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Derive;
-using AUTD3Sharp.Driver;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
 
 namespace AUTD3Sharp.Link
 {
-    public sealed class TwinCAT
+    public sealed class TwinCAT : Driver.Link
     {
-        public sealed class TwinCATBuilder : ILinkBuilder<TwinCAT>
-        {
-            internal TwinCATBuilder()
-            {
-            }
-
-            LinkBuilderPtr ILinkBuilder<TwinCAT>.Ptr()
-            {
-                return NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT();
-            }
-
-            TwinCAT ILinkBuilder<TwinCAT>.ResolveLink(LinkPtr ptr)
-            {
-                return new TwinCAT();
-            }
-        }
-
-        public static TwinCATBuilder Builder()
-        {
-            return new TwinCATBuilder();
-        }
+        internal override LinkPtr Resolve() => NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT().Validate();
     }
 
-    [Builder]
-    public sealed partial class RemoteTwinCATBuilder : ILinkBuilder<RemoteTwinCAT>
+    public readonly struct RemoteTwinCATOption
     {
-        public string ServerAmsNetId { get; }
+        public string ServerIp { get; init; } = "";
+        public string ClientAmsNetId { get; init; } = "";
 
-        [Property]
-        public string ServerIp { get; private set; }
+        public RemoteTwinCATOption() { }
+    }
 
-        [Property]
-        public string ClientAmsNetId { get; private set; }
+    public sealed class RemoteTwinCAT : Driver.Link
+    {
+        public string ServerAmsNetId;
+        public RemoteTwinCATOption Option;
 
-        public RemoteTwinCATBuilder(string serverAmsNetId)
+        public RemoteTwinCAT(string serverAmsNetId, RemoteTwinCATOption option)
         {
             ServerAmsNetId = serverAmsNetId;
-            ServerIp = string.Empty;
-            ClientAmsNetId = string.Empty;
+            Option = option;
         }
 
-        LinkBuilderPtr ILinkBuilder<RemoteTwinCAT>.Ptr()
+        internal override LinkPtr Resolve()
         {
             var serverAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(ServerAmsNetId);
-            var serverIpBytes = Ffi.ToNullTerminatedUtf8(ServerIp);
-            var clientAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(ClientAmsNetId);
+            var clientAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(Option.ClientAmsNetId);
+            var serverIpBytes = Ffi.ToNullTerminatedUtf8(Option.ServerIp);
             unsafe
             {
-                fixed (byte* sp = &serverAmsNetIdBytes[0])
-                fixed (byte* ip = serverIpBytes)
-                fixed (byte* cp = clientAmsNetIdBytes)
-                    return NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCAT(sp, ip, cp).Validate();
+                fixed (byte* serverAmsNetIdPtr = &serverAmsNetIdBytes[0])
+                fixed (byte* clientAmsNetIdPtr = &clientAmsNetIdBytes[0])
+                fixed (byte* serverIpPtr = &serverIpBytes[0])
+                    return NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCAT(serverAmsNetIdPtr, serverIpPtr, clientAmsNetIdPtr).Validate();
             }
-        }
-
-        RemoteTwinCAT ILinkBuilder<RemoteTwinCAT>.ResolveLink(LinkPtr ptr)
-        {
-            return new RemoteTwinCAT();
-        }
-    }
-
-    public sealed class RemoteTwinCAT
-    {
-        public static RemoteTwinCATBuilder Builder(string serverAmsNetId)
-        {
-            return new RemoteTwinCATBuilder(serverAmsNetId);
         }
     }
 }

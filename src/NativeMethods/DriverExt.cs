@@ -1,7 +1,20 @@
 using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 
+[assembly: InternalsVisibleTo("tests")]
 namespace AUTD3Sharp
 {
+    [StructLayout(LayoutKind.Sequential)]
+    public struct GainSTMOption
+    {
+        public GainSTMMode mode = GainSTMMode.PhaseIntensityFull;
+
+        public GainSTMOption()
+        {
+        }
+    }
+
     public enum GainSTMMode : byte
     {
         PhaseIntensityFull = 0,
@@ -9,45 +22,135 @@ namespace AUTD3Sharp
         PhaseHalf = 2
     }
 
-    public enum SyncMode : byte
+    public enum Segment
     {
-        DC = 0,
-        FreeRun = 1
+        S0,
+        S1
     }
 
-    public enum Segment : byte
+    public enum SilencerTarget
     {
-        S0 = 0,
-        S1 = 1
+        Intensity,
+        PulseWidth
     }
 
-    public enum GPIOIn : byte
+    public enum GPIOIn
     {
-        I0 = 0,
-        I1 = 1,
-        I2 = 2,
-        I3 = 3
+        I0,
+        I1,
+        I2,
+        I3
     }
 
-    public enum GPIOOut : byte
+    public enum GPIOOut
     {
-        O0 = 0,
-        O1 = 1,
-        O2 = 2,
-        O3 = 3
+        O0,
+        O1,
+        O2,
+        O3
     }
 
-    public enum SilencerTarget : byte
+    public enum SpinStrategyTag
     {
-        Intensity = 0,
-        PulseWidth = 1
+        YieldThread,
+        SpinLoopHint
+    }
+
+    public enum ParallelMode
+    {
+        Auto,
+        On,
+        Off
     }
 
     namespace NativeMethods
     {
+        public static class EnumExtensions
+        {
+            internal static Segment ToNative(this AUTD3Sharp.Segment seg) => seg switch
+            {
+                AUTD3Sharp.Segment.S0 => Segment.S0,
+                AUTD3Sharp.Segment.S1 => Segment.S1,
+                _ => throw new ArgumentOutOfRangeException(nameof(seg), seg, null)
+            };
+
+            internal static AUTD3Sharp.Segment ToManaged(this Segment seg) => seg switch
+            {
+                Segment.S0 => AUTD3Sharp.Segment.S0,
+                Segment.S1 => AUTD3Sharp.Segment.S1,
+                _ => throw new ArgumentOutOfRangeException(nameof(seg), seg, null)
+            };
+
+            internal static GPIOIn ToNative(this AUTD3Sharp.GPIOIn gpio) => gpio switch
+            {
+                AUTD3Sharp.GPIOIn.I0 => GPIOIn.I0,
+                AUTD3Sharp.GPIOIn.I1 => GPIOIn.I1,
+                AUTD3Sharp.GPIOIn.I2 => GPIOIn.I2,
+                AUTD3Sharp.GPIOIn.I3 => GPIOIn.I3,
+                _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
+            };
+
+            internal static AUTD3Sharp.GPIOIn ToManaged(this GPIOIn gpio) => gpio switch
+            {
+                GPIOIn.I0 => AUTD3Sharp.GPIOIn.I0,
+                GPIOIn.I1 => AUTD3Sharp.GPIOIn.I1,
+                GPIOIn.I2 => AUTD3Sharp.GPIOIn.I2,
+                GPIOIn.I3 => AUTD3Sharp.GPIOIn.I3,
+                _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
+            };
+
+            internal static GPIOOut ToNative(this AUTD3Sharp.GPIOOut gpio) => gpio switch
+            {
+                AUTD3Sharp.GPIOOut.O0 => GPIOOut.O0,
+                AUTD3Sharp.GPIOOut.O1 => GPIOOut.O1,
+                AUTD3Sharp.GPIOOut.O2 => GPIOOut.O2,
+                AUTD3Sharp.GPIOOut.O3 => GPIOOut.O3,
+                _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
+            };
+
+            internal static AUTD3Sharp.GPIOOut ToManaged(this GPIOOut gpio) => gpio switch
+            {
+                GPIOOut.O0 => AUTD3Sharp.GPIOOut.O0,
+                GPIOOut.O1 => AUTD3Sharp.GPIOOut.O1,
+                GPIOOut.O2 => AUTD3Sharp.GPIOOut.O2,
+                GPIOOut.O3 => AUTD3Sharp.GPIOOut.O3,
+                _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
+            };
+
+            internal static SpinStrategyTag ToNative(this AUTD3Sharp.SpinStrategyTag tag) => tag switch
+            {
+                AUTD3Sharp.SpinStrategyTag.YieldThread => SpinStrategyTag.YieldThread,
+                AUTD3Sharp.SpinStrategyTag.SpinLoopHint => SpinStrategyTag.SpinLoopHint,
+                _ => throw new ArgumentOutOfRangeException(nameof(tag), tag, null)
+            };
+
+            internal static AUTD3Sharp.SpinStrategyTag ToManaged(this SpinStrategyTag tag) => tag switch
+            {
+                SpinStrategyTag.YieldThread => AUTD3Sharp.SpinStrategyTag.YieldThread,
+                SpinStrategyTag.SpinLoopHint => AUTD3Sharp.SpinStrategyTag.SpinLoopHint,
+                _ => throw new ArgumentOutOfRangeException(nameof(tag), tag, null)
+            };
+
+            internal static ParallelMode ToNative(this AUTD3Sharp.ParallelMode mode) => mode switch
+            {
+                AUTD3Sharp.ParallelMode.Auto => ParallelMode.Auto,
+                AUTD3Sharp.ParallelMode.On => ParallelMode.On,
+                AUTD3Sharp.ParallelMode.Off => ParallelMode.Off,
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+
+            internal static AUTD3Sharp.ParallelMode ToManaged(this ParallelMode mode) => mode switch
+            {
+                ParallelMode.Auto => AUTD3Sharp.ParallelMode.Auto,
+                ParallelMode.On => AUTD3Sharp.ParallelMode.On,
+                ParallelMode.Off => AUTD3Sharp.ParallelMode.Off,
+                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
+            };
+        }
+
         public static class ResultExtensions
         {
-            public static AUTDStatus Validate(this ResultStatus res)
+            internal static AUTDStatus Validate(this ResultStatus res)
             {
                 if (res.result != AUTDStatus.AUTDErr) return res.result;
                 var err = new byte[res.err_len];
@@ -58,7 +161,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static SamplingConfig Validate(this ResultSamplingConfig res)
+            internal static SamplingConfig Validate(this ResultSamplingConfig res)
             {
                 if (res.err_len == 0) return res.result;
                 var err = new byte[res.err_len];
@@ -69,7 +172,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static ControllerPtr Validate(this ResultController res)
+            internal static ControllerPtr Validate(this ResultController res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
@@ -80,7 +183,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static GainPtr Validate(this ResultGain res)
+            internal static GainPtr Validate(this ResultGain res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
@@ -91,7 +194,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static ModulationPtr Validate(this ResultModulation res)
+            internal static LinkPtr Validate(this ResultLink res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
@@ -102,7 +205,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static FirmwareVersionListPtr Validate(this ResultFirmwareVersionList res)
+            internal static ModulationPtr Validate(this ResultModulation res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
@@ -113,7 +216,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static FPGAStateListPtr Validate(this ResultFPGAStateList res)
+            internal static FirmwareVersionListPtr Validate(this ResultFirmwareVersionList res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
@@ -124,7 +227,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            public static GainSTMPtr Validate(this ResultGainSTM res)
+            internal static FPGAStateListPtr Validate(this ResultFPGAStateList res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
@@ -134,28 +237,22 @@ namespace AUTD3Sharp
                 }
                 throw new AUTDException(err);
             }
+        }
 
-            public static FociSTMPtr Validate(this ResultFociSTM res)
-            {
-                if (res.result.Item1 != IntPtr.Zero) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct FixedCompletionSteps
+        {
+            internal ushort intensity;
+            internal ushort phase;
+            [MarshalAs(UnmanagedType.U1)]
+            internal bool strict_mode;
+        }
 
-            public static LinkBuilderPtr Validate(this ResultLinkBuilder res)
-            {
-                if (res.result.Item1 != IntPtr.Zero) return new LinkBuilderPtr { Item1 = res.result.Item1 };
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct FixedUpdateRate
+        {
+            internal ushort intensity;
+            internal ushort phase;
         }
 
         public static class Ffi

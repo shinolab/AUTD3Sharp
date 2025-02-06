@@ -13,7 +13,7 @@ internal static class WavTest
         autd.Send(config);
 
         var m = new Wav("sin150.wav");
-        var g = new Focus(autd.Center + new Vector3(0, 0, 150));
+        var g = new Focus(autd.Center() + new Vector3(0, 0, 150));
         autd.Send((m, g));
     }
 }

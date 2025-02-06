@@ -1,23 +1,31 @@
-using System.Runtime.InteropServices;
+using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AUTD3Sharp
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public readonly struct EmitIntensity
+    public class EmitIntensity : IEquatable<EmitIntensity>
     {
-        public byte Value { get; }
+        internal readonly NativeMethods.EmitIntensity Inner;
 
         public static readonly EmitIntensity Max = new(0xFF);
         public static readonly EmitIntensity Min = new(0x00);
 
+        [ExcludeFromCodeCoverage]
+        private EmitIntensity() { }
+
         public EmitIntensity(byte value)
         {
-            Value = value;
+            Inner.Item1 = value;
         }
 
-        public static EmitIntensity operator /(EmitIntensity a, int b)
-        {
-            return new EmitIntensity((byte)(a.Value / b));
-        }
+        public byte Item1 => Inner.Item1;
+
+        public static EmitIntensity operator /(EmitIntensity a, int b) => new((byte)(a.Inner.Item1 / b));
+
+        public static bool operator ==(EmitIntensity left, EmitIntensity right) => left.Equals(right);
+        public static bool operator !=(EmitIntensity left, EmitIntensity right) => !left.Equals(right);
+        public bool Equals(EmitIntensity? other) => other is not null && Inner.Equals(other.Inner);
+        public override bool Equals(object? obj) => obj is EmitIntensity other && Equals(other);
+        public override int GetHashCode() => Inner.GetHashCode();
     }
 }

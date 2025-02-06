@@ -20,10 +20,15 @@ namespace AUTD3Sharp
             public static Angle operator *(float a, UnitDegree _) => FromDegree(a);
         }
 
-        private Angle(float value)
-        {
-            Radian = value;
-        }
+        private Angle(float value) => Radian = value;
+
+        public static bool operator ==(Angle left, Angle right) => left.Equals(right);
+        public static bool operator !=(Angle left, Angle right) => !left.Equals(right);
+        public bool Equals(Angle other) => Radian.Equals(other.Radian);
+        public override bool Equals(object? obj) => obj is Angle other && Equals(other);
+        public override int GetHashCode() => Radian.GetHashCode();
+
+        internal NativeMethods.Angle ToNative() => new() { radian = Radian };
     }
 
     public static partial class Units

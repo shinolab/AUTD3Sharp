@@ -1,38 +1,58 @@
-using AUTD3Sharp.Derive;
+using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
 
 namespace AUTD3Sharp.Modulation
 {
-    [Modulation]
-    [Builder]
-    public sealed partial class Square
+    public readonly struct SquareOption
     {
-        private Square(ISamplingMode mode)
+        public byte Low { get; init; } = 0x00;
+        public byte High { get; init; } = 0xFF;
+        public float Duty { get; init; } = 0.5f;
+        public SamplingConfig SamplingConfig { get; init; } = SamplingConfig.Freq4K;
+
+        public SquareOption() { }
+
+        internal NativeMethods.SquareOption ToNative() => new()
         {
-            Low = 0x00;
-            High = 0xFF;
-            Duty = 0.5f;
-            Mode = mode;
+            low = Low,
+            high = High,
+            duty = Duty,
+            sampling_config = SamplingConfig.Inner
+        };
+    }
+
+    public sealed class Square : IModulation
+    {
+        internal ISamplingMode Freq;
+        public SquareOption Option;
+
+        private Square(ISamplingMode freq, SquareOption option)
+        {
+            Freq = freq;
+            Option = option;
         }
 
-        public Square(Freq<uint> freq) : this(new SamplingModeExact(freq)) { }
-        public Square(Freq<float> freq) : this(new SamplingModeExactFloat(freq)) { }
-        public static Square Nearest(Freq<float> freq) => new(new SamplingModeNearest(freq));
+        public Square(Freq<uint> freq, SquareOption option) : this(new Exact<uint> { Freq = freq }, option) { }
 
-        public Freq<float> Freq => Mode.SquareFreq(ModulationPtr());
+        public Square(Freq<float> freq, SquareOption option) : this(new Exact<float> { Freq = freq }, option) { }
 
-        [Property]
-        public byte Low { get; private set; }
+        public Square IntoNearest() => Freq switch
+        {
+            Exact<float> f => new Square(new Nearest { Freq = f.Freq }, Option),
+            Nearest => this,
+            _ => throw new AUTDException("Freq type must be float.")
+        };
 
-        [Property]
-        public byte High { get; private set; }
-
-        [Property]
-
-        public float Duty { get; private set; }
-
-        private ISamplingMode Mode { get; }
-
-        private ModulationPtr ModulationPtr() => Mode.SquarePtr(_config, Low, High, Duty, LoopBehavior);
+        ModulationPtr IModulation.ModulationPtr() => Freq switch
+        {
+            Exact<uint> f => NativeMethodsBase.AUTDModulationSquareExact(f.Freq.Hz, Option.ToNative()),
+            Exact<float> f => NativeMethodsBase.AUTDModulationSquareExactFloat(f.Freq.Hz, Option.ToNative()),
+            Nearest f => NativeMethodsBase.AUTDModulationSquareNearest(f.Freq.Hz, Option.ToNative()),
+            _ => throw AUTDException.InvalidFreqType()
+        };
     }
 }

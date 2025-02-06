@@ -12,35 +12,23 @@ using AUTD3Sharp.Link;
 
 namespace AUTD3Sharp.NativeMethods
 {
-    public static unsafe partial class NativeMethodsModulationAudioFile
+    internal static unsafe partial class NativeMethodsModulationAudioFile
     {
         const string __DllName = "autd3capi_modulation_audio_file";
 
 
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern void AUTDModulationAudioFileTracingInit();
+        internal static extern void AUTDModulationAudioFileTracingInit();
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileTracingInitWithFile", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultStatus AUTDModulationAudioFileTracingInitWithFile(byte* path);
+        internal static extern ResultStatus AUTDModulationAudioFileTracingInitWithFile(byte* path);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileWav", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationAudioFileWav(byte* path, LoopBehavior loop_behavior);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileWavWithResample", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationAudioFileWavWithResample(byte* path, LoopBehavior loop_behavior, SamplingConfig target, DynSincInterpolator resample);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileRawPCM", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationAudioFileRawPCM(byte* path, SamplingConfig config, LoopBehavior loop_behavior);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileRawPCMWithResample", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationAudioFileRawPCMWithResample(byte* path, LoopBehavior loop_behavior, float src, SamplingConfig target, DynSincInterpolator resample);
+        internal static extern ResultModulation AUTDModulationAudioFileWav(byte* path);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileCsv", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationAudioFileCsv(byte* path, SamplingConfig config, byte deliminator, LoopBehavior loop_behavior);
-
-        [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileCsvWithResample", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        public static extern ResultModulation AUTDModulationAudioFileCsvWithResample(byte* path, byte deliminator, LoopBehavior loop_behavior, float src, SamplingConfig target, DynSincInterpolator resample);
+        internal static extern ResultModulation AUTDModulationAudioFileCsv(byte* path, SamplingConfig sampling_config, byte deliminator);
 
 
     }

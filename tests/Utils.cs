@@ -2,8 +2,5 @@ namespace tests;
 
 public static class Utils
 {
-    public static Controller<Audit> CreateController()
-    {
-        return Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)]).Open(Audit.Builder());
-    }
+    public static Controller<Audit> CreateController(int n = 2) => Controller.Open(Enumerable.Repeat(new AUTD3(), n), new Audit());
 }

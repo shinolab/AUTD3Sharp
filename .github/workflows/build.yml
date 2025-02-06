@@ -18,28 +18,5 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: ./.github/actions/setup-build
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          os: ${{ matrix.os }}
-      - run: python3 build.py cs build
-      - run: python3 build.py cs test
-
-  test-unity:
-    name: test-unity-on-${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - uses: ./.github/actions/setup-build
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          os: ${{ matrix.os }}
-      - run: python3 build.py unity build
+      - run: cargo make check

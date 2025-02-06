@@ -6,6 +6,6 @@ namespace AUTD3Sharp.Driver.Datagram
     [ComVisible(false)]
     public interface IDatagram
     {
-        public DatagramPtr Ptr(Geometry geometry);
+        internal DatagramPtr Ptr(Geometry geometry);
     }
 }

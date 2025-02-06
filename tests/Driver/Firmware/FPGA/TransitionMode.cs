@@ -1,13 +1,13 @@
 using AUTD3Sharp.NativeMethods;
 
-namespace tests.Driver.Common;
+namespace tests.Driver.Firmware.FPGA;
 
 public class TransitionModeTest
 {
     [Fact]
     public void TransitionModeSyncIdx()
     {
-        var m = TransitionMode.SyncIdx;
+        var m = TransitionMode.SyncIdx.Inner;
         Assert.Equal(TransitionModeTag.SyncIdx, m.tag);
         Assert.Equal(0ul, m.value.@null);
     }
@@ -16,7 +16,7 @@ public class TransitionModeTest
     public void TransitionModeSysTime()
     {
         var now = DcSysTime.Now;
-        var m = TransitionMode.SysTime(now);
+        var m = TransitionMode.SysTime(now).Inner;
         Assert.Equal(TransitionModeTag.SysTime, m.tag);
         Assert.Equal(now.SysTime, m.value.sys_time);
     }
@@ -24,15 +24,15 @@ public class TransitionModeTest
     [Fact]
     public void TransitionModeGPIO()
     {
-        var m = TransitionMode.GPIO(AUTD3Sharp.GPIOIn.I1);
+        var m = TransitionMode.GPIO(AUTD3Sharp.GPIOIn.I1).Inner;
         Assert.Equal(TransitionModeTag.Gpio, m.tag);
-        Assert.Equal((byte)AUTD3Sharp.GPIOIn.I1, m.value.gpio_in);
+        Assert.Equal((byte)AUTD3Sharp.GPIOIn.I1.ToNative(), m.value.gpio_in);
     }
 
     [Fact]
     public void TransitionModeExt()
     {
-        var m = TransitionMode.Ext;
+        var m = TransitionMode.Ext.Inner;
         Assert.Equal(TransitionModeTag.Ext, m.tag);
         Assert.Equal(0ul, m.value.@null);
     }
@@ -40,7 +40,7 @@ public class TransitionModeTest
     [Fact]
     public void TransitionModeImmediate()
     {
-        var m = TransitionMode.Immediate;
+        var m = TransitionMode.Immediate.Inner;
         Assert.Equal(TransitionModeTag.Immediate, m.tag);
         Assert.Equal(0ul, m.value.@null);
     }

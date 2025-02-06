@@ -1,22 +1,16 @@
-#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    public static class EmissionConstraint
+    public class EmissionConstraint
     {
-        public static EmissionConstraintWrap Normalize => NativeMethodsGainHolo.AUTDGainHoloConstraintNormalize();
-        public static EmissionConstraintWrap Uniform(EmitIntensity value) => Uniform(value.Value);
-        public static EmissionConstraintWrap Uniform(byte value) => NativeMethodsGainHolo.AUTDGainHoloConstraintUniform(value);
-        public static EmissionConstraintWrap Clamp(EmitIntensity min, EmitIntensity max) => Clamp(min.Value, max.Value);
-        public static EmissionConstraintWrap Clamp(byte min, byte max) => NativeMethodsGainHolo.AUTDGainHoloConstraintClamp(min, max);
-        public static EmissionConstraintWrap Multiply(float value) => NativeMethodsGainHolo.AUTDGainHoloConstraintMultiply(value);
+        internal EmissionConstraintWrap Inner;
+
+        private EmissionConstraint(EmissionConstraintWrap inner) => Inner = inner;
+
+        public static EmissionConstraint Normalize => new(NativeMethodsGainHolo.AUTDGainHoloConstraintNormalize());
+        public static EmissionConstraint Uniform(EmitIntensity value) => new(NativeMethodsGainHolo.AUTDGainHoloConstraintUniform(value.Inner));
+        public static EmissionConstraint Clamp(EmitIntensity min, EmitIntensity max) => new(NativeMethodsGainHolo.AUTDGainHoloConstraintClamp(min.Inner, max.Inner));
+        public static EmissionConstraint Multiply(float value) => new(NativeMethodsGainHolo.AUTDGainHoloConstraintMultiply(value));
     }
 }
-
-#if UNITY_2020_2_OR_NEWER
-#nullable restore
-#endif

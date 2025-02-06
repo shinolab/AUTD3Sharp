@@ -1,27 +1,38 @@
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
-using AUTD3Sharp.Derive;
 using System.Collections.Generic;
+using System.Linq;
+using AUTD3Sharp.Driver.Datagram;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    [Gain]
-    [Builder]
-    public sealed partial class GS : Holo<GS>
+    public readonly struct GSOption
     {
-        private readonly Backend _backend;
+        public uint Repeat { get; init; } = 100;
+        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
 
-        public GS(Backend backend, IEnumerable<(Point3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        public GSOption() { }
+
+        internal NativeMethods.GSOption ToNative() => new()
         {
-            _backend = backend;
-            Repeat = 100;
+            repeat = Repeat,
+            constraint = EmissionConstraint.Inner
+        };
+    }
+
+    public sealed class GS : IGain
+    {
+        public (Point3, Amplitude)[] Foci;
+        public GSOption Option;
+        public Backend Backend;
+
+        public GS(IEnumerable<(Point3, Amplitude)> foci, GSOption option, Backend backend)
+        {
+            Foci = foci as (Point3, Amplitude)[] ?? foci.ToArray();
+            Option = option;
+            Backend = backend;
         }
 
-        [Property] public uint Repeat { get; private set; }
-
-        private GainPtr GainPtr(Geometry _)
-        {
-            return _backend.Gs(Foci, Amps, (uint)Amps.Length, Repeat, Constraint);
-        }
+        GainPtr IGain.GainPtr(Geometry _) => Backend.Gs(Foci, Option.ToNative());
     }
 }

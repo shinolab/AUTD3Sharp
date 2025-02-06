@@ -1,4 +1,4 @@
-namespace tests.Driver.Common;
+namespace tests.Driver.Firmware.FPGA;
 
 public class EmitIntensityTest
 {
@@ -8,7 +8,7 @@ public class EmitIntensityTest
         for (var i = 0; i <= 0xFF; i++)
         {
             var intensity = new EmitIntensity((byte)i);
-            Assert.Equal(i, intensity.Value);
+            Assert.Equal(i, intensity.Item1);
         }
     }
 
@@ -18,6 +18,6 @@ public class EmitIntensityTest
     {
         var intensity = new EmitIntensity(0x80);
         var div = intensity / 2;
-        Assert.Equal(0x40, div.Value);
+        Assert.Equal(0x40, div.Item1);
     }
 }

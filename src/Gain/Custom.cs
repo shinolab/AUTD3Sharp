@@ -1,14 +1,13 @@
 using System;
 using System.Runtime.InteropServices;
-using AUTD3Sharp.Derive;
+using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain
 {
-    [Gain]
-    public sealed partial class Custom
+    public sealed class Custom : IGain
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void TransducerTestDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, Drive* raw);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void TransducerTestDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, byte trIdx, NativeMethods.Drive* raw);
 
         private readonly TransducerTestDelegate _f;
 
@@ -19,15 +18,11 @@ namespace AUTD3Sharp.Gain
                 _f = (_, geometryPtr, devIdx, trIdx, raw) =>
                 {
                     var dev = new Device(devIdx, geometryPtr);
-                    var tr = new Transducer(trIdx, devIdx, dev.Ptr);
-                    *raw = f(dev)(tr);
+                    *raw = f(dev)(new Transducer(trIdx, devIdx, dev.Ptr)).ToNative();
                 };
             }
         }
 
-        private GainPtr GainPtr(Geometry geometry)
-        {
-            return NativeMethodsBase.AUTDGainCustom(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
-        }
+        GainPtr IGain.GainPtr(Geometry geometry) => NativeMethodsBase.AUTDGainCustom(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
     }
 }

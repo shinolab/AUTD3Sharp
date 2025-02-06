@@ -9,9 +9,7 @@ public class SynchronizeTest
     [Fact]
     public void TestSynchronize()
     {
-        var autd = Controller.Builder([new AUTD3(Point3.Origin), new AUTD3(Point3.Origin)])
-            .Open(Audit.Builder());
-
+        var autd = CreateController();
         autd.Send(new Synchronize());
     }
 }

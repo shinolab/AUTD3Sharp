@@ -1,28 +1,38 @@
+using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Derive;
 using AUTD3Sharp.Utils;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
 
 namespace AUTD3Sharp.Gain
 {
-    [Gain]
-    [Builder]
-    public sealed partial class Plane
+    public readonly struct PlaneOption
     {
-        public Plane(Vector3 dir)
+        public EmitIntensity Intensity { get; init; } = EmitIntensity.Max;
+        public Phase PhaseOffset { get; init; } = Phase.Zero;
+
+        public PlaneOption() { }
+
+        internal NativeMethods.PlaneOption ToNative() => new()
+        {
+            intensity = Intensity.Inner,
+            phase_offset = PhaseOffset.Inner
+        };
+    }
+
+    public sealed class Plane : IGain
+    {
+        public Vector3 Dir;
+        public PlaneOption Option;
+
+        public Plane(Vector3 dir, PlaneOption option)
         {
             Dir = dir;
-            Intensity = EmitIntensity.Max;
-            PhaseOffset = new Phase(0);
+            Option = option;
         }
 
-        public Vector3 Dir { get; }
-
-        [Property(Phase = true)]
-        public Phase PhaseOffset { get; private set; }
-
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainPlane(Dir, Intensity.Value, PhaseOffset.Value);
+        GainPtr IGain.GainPtr(Geometry _) => NativeMethodsBase.AUTDGainPlane(Dir, Option.ToNative());
     }
 }
