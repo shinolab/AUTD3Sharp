@@ -1,5 +1,4 @@
 name: 'build tools setup action'
-inputs:
 runs:
   using: "composite"
   steps:
