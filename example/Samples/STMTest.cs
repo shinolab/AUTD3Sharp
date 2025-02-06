@@ -8,7 +8,7 @@ namespace Samples;
 
 internal static class GainSTMTest
 {
-    public static void Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
     {
         var config = Silencer.Disable();
         autd.Send(config);
@@ -18,11 +18,11 @@ internal static class GainSTMTest
         var center = autd.Center() + new Vector3(0, 0, 150);
         const int pointNum = 50;
         const float radius = 30.0f;
-        var stm = new GainSTM(1.0f * Hz, Enumerable.Range(0, pointNum).Select(i =>
+        var stm = new GainSTM(gains: Enumerable.Range(0, pointNum).Select(i =>
         {
             var theta = 2.0f * MathF.PI * i / pointNum;
-            return new Focus(center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0));
-        }));
+            return new Focus(pos: center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0), option: new FocusOption());
+        }), config: 1.0f * Hz, option: new GainSTMOption());
 
         autd.Send((m, stm));
     }
@@ -30,7 +30,7 @@ internal static class GainSTMTest
 
 internal static class FociSTMTest
 {
-    public static void Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
     {
         var config = Silencer.Disable();
         autd.Send(config);
@@ -41,11 +41,11 @@ internal static class FociSTMTest
         var center = autd.Center() + new Vector3(0, 0, 150);
         const int pointNum = 200;
         const float radius = 30.0f;
-        var stm = new FociSTM(1.0f * Hz, Enumerable.Range(0, pointNum).Select(i =>
+        var stm = new FociSTM(foci: Enumerable.Range(0, pointNum).Select(i =>
         {
             var theta = 2.0f * MathF.PI * i / pointNum;
             return center + radius * new Vector3(MathF.Cos(theta), MathF.Sin(theta), 0);
-        }));
+        }), config: 1.0f * Hz);
 
         autd.Send(stm);
     }

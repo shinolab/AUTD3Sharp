@@ -8,13 +8,13 @@ namespace Samples;
 
 internal static class FocusTest
 {
-    public static void Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
     {
         var config = new Silencer();
         autd.Send(config);
 
-        var m = new Sine(150 * Hz);
-        var g = new Focus(autd.Center() + new Vector3(0, 0, 150));
+        var m = new Sine(freq: 150 * Hz, option: new SineOption());
+        var g = new Focus(pos: autd.Center() + new Vector3(0, 0, 150), option: new FocusOption());
         autd.Send((m, g));
     }
 }

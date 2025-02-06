@@ -66,7 +66,7 @@ command = "dotnet"
 args = ["format"]
 
 [tasks.cs-example-format]
-dependencies = ["nuget-remove-tmp-src", "nuget-add-tmp-src", "cs-example-format-main"]
+dependencies = ["nuget-remove-tmp-src", "nuget-cache-clear", "nuget-add-tmp-src", "cs-example-format-main"]
 
 [tasks.cs-example-format-main]
 cwd = "./example"
@@ -82,7 +82,7 @@ command = "dotnet"
 args = ["build", "-c:Release"]
 
 [tasks.cs-example-build]
-dependencies = ["nuget-remove-tmp-src", "nuget-add-tmp-src", "cs-example-build-main"]
+dependencies = ["nuget-remove-tmp-src", "nuget-cache-clear", "nuget-add-tmp-src", "cs-example-build-main"]
 
 [tasks.cs-example-build-main]
 cwd = "./example"
@@ -98,6 +98,11 @@ args = ["nuget", "add", "source", "${CARGO_MAKE_WORKING_DIRECTORY}/src/bin/Relea
 ignore_errors = true
 command = "dotnet"
 args = ["nuget", "remove", "source", "autd3sharp_local"]
+
+[tasks.nuget-cache-clear]
+ignore_errors = true
+command = "dotnet"
+args = ["nuget", "locals", "all", "-c"]
 
 [tasks.cs-test]
 cwd = "./tests"

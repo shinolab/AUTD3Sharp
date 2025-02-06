@@ -8,7 +8,7 @@ namespace Samples;
 
 internal static class GainHoloTest
 {
-    public static void Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
     {
         var config = new Silencer();
         autd.Send(config);
@@ -16,9 +16,9 @@ internal static class GainHoloTest
         var center = autd.Center() + new Vector3(0, 0, 150);
 
         var backend = new NalgebraBackend();
-        var g = new GSPAT(backend, [(center + 20.0f * Vector3.UnitX, 5e3f * Pa), (center - 20.0f * Vector3.UnitX, 5e3f * Pa)]);
+        var g = new GSPAT(foci: [(center + 20.0f * Vector3.UnitX, 5e3f * Pa), (center - 20.0f * Vector3.UnitX, 5e3f * Pa)], option: new GSPATOption(), backend: backend);
 
-        var m = new Sine(150 * Hz);
+        var m = new Sine(freq: 150 * Hz, option: new SineOption());
 
         autd.Send((m, g));
     }

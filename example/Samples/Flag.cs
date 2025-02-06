@@ -4,7 +4,7 @@ namespace Samples;
 
 internal static class FlagTest
 {
-    public static void Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
     {
         Console.WriteLine("press any key to run fan...");
         Console.ReadKey(true);
@@ -25,7 +25,7 @@ internal static class FlagTest
         {
             var states = autd.FPGAState();
             Console.WriteLine($"{prompts[promptsIdx++ / 1000 % prompts.Length]} FPGA Status...");
-            Console.WriteLine(string.Join("\n", states.Select((s, i) => s == null ? $"[{i}]: -" : $"[{i}]: {s.IsThermalAssert}")));
+            Console.WriteLine(string.Join("\n", states.Select((s, i) => s is null ? $"[{i}]: -" : $"[{i}]: {s.IsThermalAssert}")));
             Console.Write($"\x1b[{states.Length + 1}A");
         }
 
