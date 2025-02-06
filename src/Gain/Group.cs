@@ -10,12 +10,12 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain
 {
-    public sealed class Group<TKey> : IGain
+    public sealed class Group : IGain
     {
-        public Func<Device, Func<Transducer, TKey?>> KeyMap;
-        public Dictionary<TKey, IGain> GainMap;
+        public Func<Device, Func<Transducer, object?>> KeyMap;
+        public Dictionary<object, IGain> GainMap;
 
-        public Group(Func<Device, Func<Transducer, TKey?>> keyMap, Dictionary<TKey, IGain> gainMap)
+        public Group(Func<Device, Func<Transducer, object?>> keyMap, Dictionary<object, IGain> gainMap)
         {
             KeyMap = keyMap;
             GainMap = gainMap;
