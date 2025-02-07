@@ -87,5 +87,5 @@ public class SquareTest
         Assert.Throws<AUTDException>(() => autd.Send(m));
     }
 
-    private class InvalidSamplingMode: ISamplingMode { }
+    private class InvalidSamplingMode : ISamplingMode { }
 }
