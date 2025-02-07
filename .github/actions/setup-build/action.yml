@@ -2,6 +2,9 @@ name: 'build tools setup action'
 runs:
   using: "composite"
   steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: 3.13
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-make
