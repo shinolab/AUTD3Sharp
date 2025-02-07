@@ -23,7 +23,7 @@ public class FreqTest
     {
         var m1 = 1000 * Hz;
         var m2 = 1 * kHz;
-        var m3 = 1 *Hz;
+        var m3 = 1 * Hz;
 
         Assert.True(m1 == m2);
         Assert.True(m1 != m3);
