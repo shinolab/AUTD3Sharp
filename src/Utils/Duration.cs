@@ -1,24 +1,22 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
 #endif
 
-using System;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-
 namespace AUTD3Sharp
 {
     [StructLayout(LayoutKind.Sequential)]
-    public struct Duration : IEquatable<Duration>, IComparable<Duration>
+    public readonly struct Duration : IEquatable<Duration>, IComparable<Duration>
     {
-        private ulong _nanos;
+        private readonly ulong _nanos;
 
         public static Duration Zero => new(0);
 
-        private Duration(ulong nanos)
-        {
-            _nanos = nanos;
-        }
+        private Duration(ulong nanos) => _nanos = nanos;
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Duration FromNanos(ulong nanos) => new(nanos);
@@ -44,33 +42,30 @@ namespace AUTD3Sharp
         public static Duration operator *(int a, Duration b) => new((ulong)a * b._nanos);
         public static Duration operator /(Duration a, int b) => new(a._nanos / (ulong)b);
         public static Duration operator %(Duration a, int b) => new(a._nanos % (ulong)b);
-        public static bool operator ==(Duration a, Duration b) => a.Equals(b);
-        public static bool operator !=(Duration a, Duration b) => !a.Equals(b);
         public static bool operator <(Duration a, Duration b) => a.CompareTo(b) < 0;
         public static bool operator >(Duration a, Duration b) => a.CompareTo(b) > 0;
         public static bool operator <=(Duration a, Duration b) => a.CompareTo(b) <= 0;
         public static bool operator >=(Duration a, Duration b) => a.CompareTo(b) >= 0;
 
-        public bool Equals(Duration other) => _nanos == other._nanos;
+        public static bool operator ==(Duration left, Duration right) => left.Equals(right);
+        public static bool operator !=(Duration left, Duration right) => !left.Equals(right);
+        public bool Equals(Duration other) => _nanos.Equals(other._nanos);
         public override bool Equals(object? obj) => obj is Duration other && Equals(other);
-        public override int GetHashCode() => _nanos.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => _nanos.GetHashCode();
 
         public override string ToString()
         {
             var ns = AsNanos();
             if (ns < 1000) return $"{ns}ns";
             var us = ns / 1000;
-            if (us < 1000) return ns % 1000 != 0 ? $"{us}.{(ns % 1000):D3}".TrimEnd('0') + "μs" : $"{us}μs";
+            if (us < 1000) return ns % 1000 != 0 ? $"{us}.{ns % 1000:D3}".TrimEnd('0') + "μs" : $"{us}μs";
             var ms = us / 1000;
-            if (ms < 1000) return us % 1000 != 0 ? $"{ms}.{(us % 1000):D3}".TrimEnd('0') + "ms" : $"{ms}ms";
+            if (ms < 1000) return us % 1000 != 0 ? $"{ms}.{us % 1000:D3}".TrimEnd('0') + "ms" : $"{ms}ms";
             var s = ms / 1000;
-            return ms % 1000 != 0 ? $"{s}.{(ms % 1000):D3}".TrimEnd('0') + "s" : $"{s}s";
+            return ms % 1000 != 0 ? $"{s}.{ms % 1000:D3}".TrimEnd('0') + "s" : $"{s}s";
         }
 
-        public int CompareTo(Duration other)
-        {
-            return _nanos.CompareTo(other._nanos);
-        }
+        public int CompareTo(Duration other) => _nanos.CompareTo(other._nanos);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -78,13 +73,11 @@ namespace AUTD3Sharp
     {
         [MarshalAs(UnmanagedType.U1)] public bool has_value;
         public Duration value;
-
-        public Duration? Into() => has_value ? value : null;
     }
 
     public static class OptionDurationExt
     {
-        public static OptionDuration Into(this Duration? duration) => new OptionDuration { has_value = duration.HasValue, value = duration ?? Duration.Zero };
+        public static OptionDuration ToNative(this Duration? duration) => new() { has_value = duration.HasValue, value = duration ?? Duration.Zero };
     }
 }
 

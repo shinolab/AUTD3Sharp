@@ -1,28 +1,36 @@
+using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Derive;
 using AUTD3Sharp.Utils;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
 
 namespace AUTD3Sharp.Gain
 {
-    [Gain]
-    [Builder]
-    public sealed partial class Focus
+    public class FocusOption
     {
-        public Focus(Point3 pos)
+        public EmitIntensity Intensity { get; init; } = EmitIntensity.Max;
+        public Phase PhaseOffset { get; init; } = Phase.Zero;
+
+        internal NativeMethods.FocusOption ToNative() => new()
+        {
+            intensity = Intensity.Inner,
+            phase_offset = PhaseOffset.Inner
+        };
+    }
+
+    public sealed class Focus : IGain
+    {
+        public Focus(Point3 pos, FocusOption option)
         {
             Pos = pos;
-            Intensity = EmitIntensity.Max;
-            PhaseOffset = new Phase(0);
+            Option = option;
         }
 
-        public Point3 Pos { get; }
+        public Point3 Pos;
+        public FocusOption Option;
 
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [Property(Phase = true)]
-        public Phase PhaseOffset { get; private set; }
-
-        private GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainFocus(Pos, Intensity.Value, PhaseOffset.Value);
+        GainPtr IGain.GainPtr(Geometry _) => NativeMethodsBase.AUTDGainFocus(Pos, Option.ToNative());
     }
 }

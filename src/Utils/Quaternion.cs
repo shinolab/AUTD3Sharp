@@ -1,10 +1,10 @@
-﻿#if UNITY_2020_2_OR_NEWER
-#nullable enable
-#endif
-
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
 
 namespace AUTD3Sharp.Utils
 {
@@ -29,36 +29,20 @@ namespace AUTD3Sharp.Utils
 
         public static Quaternion Identity => new(1, 0, 0, 0);
         #endregion
-
         public Quaternion Normalized => this / L2Norm;
         public float L2Norm => MathF.Sqrt(L2NormSquared);
         public float L2NormSquared => W * W + X * X + Y * Y + Z * Z;
-
-
         #region arithmetic
-        [ExcludeFromCodeCoverage] public static bool operator ==(Quaternion left, Quaternion right) => left.Equals(right);
-        [ExcludeFromCodeCoverage] public static bool operator !=(Quaternion left, Quaternion right) => !left.Equals(right);
-        [ExcludeFromCodeCoverage] public bool Equals(Quaternion other) => W.Equals(other.W) && X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
-        [ExcludeFromCodeCoverage]
-        public override bool Equals(object? obj)
-        {
-            if (obj is Quaternion qua) return Equals(qua);
-            return false;
-        }
-        public static Quaternion Divide(Quaternion left, float right)
-        {
-            var v1 = left.W / right;
-            var v2 = left.X / right;
-            var v3 = left.Y / right;
-            var v4 = left.Z / right;
-            return new Quaternion(v1, v2, v3, v4);
-        }
-
+        public static bool operator ==(Quaternion left, Quaternion right) => left.Equals(right);
+        public static bool operator !=(Quaternion left, Quaternion right) => !left.Equals(right);
+        public bool Equals(Quaternion other) => W.Equals(other.W) && X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
+        public override bool Equals(object? obj) => obj is Quaternion other && Equals(other);
+        public static Quaternion Divide(Quaternion left, float right) => new(left.W / right, left.X / right, left.Y / right, left.Z / right);
         public static Quaternion operator /(Quaternion left, float right) => Divide(left, right);
         #endregion
 
         #region util
-        [ExcludeFromCodeCoverage] public override int GetHashCode() => W.GetHashCode() ^ X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => HashCode.Combine(W, X, Y, Z);
 
         public override string ToString() => $"({W}, {X}, {Y}, {Z})";
         #endregion

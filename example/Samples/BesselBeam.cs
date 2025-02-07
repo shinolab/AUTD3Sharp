@@ -8,16 +8,16 @@ namespace Samples;
 
 internal static class BesselBeamTest
 {
-    public static void Test<T>(Controller<T> autd)
+    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
     {
         var config = new Silencer();
         autd.Send(config);
 
-        var m = new Sine(150 * Hz); // AM sin 150 Hz
+        var m = new Sine(freq: 150 * Hz, option: new SineOption());
 
-        var start = autd.Center;
+        var start = autd.Center();
         var dir = Vector3.UnitZ;
-        var g = new Bessel(start, dir, 13.0f / 180.0f * MathF.PI * rad); // BesselBeam from (x, y, 0), theta = 13 deg
+        var g = new Bessel(start, dir, 13.0f / 180.0f * MathF.PI * rad, new BesselOption());
 
         autd.Send((m, g));
     }

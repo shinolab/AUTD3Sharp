@@ -4,3 +4,4 @@ LICENSE.md
 *.tgz
 *.tgz.meta
 Scenes.meta
+!Scripts/Init.cs

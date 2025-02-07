@@ -7,5 +7,4 @@ namespace AUTD3Sharp
     {
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSynchronize();
     }
-
 }

@@ -25,7 +25,6 @@ namespace AUTD3Sharp.Utils
         public Vector3(params float[] vector)
         {
             if (vector.Length != 3) throw new InvalidCastException();
-
             X = vector[0];
             Y = vector[1];
             Z = vector[2];
@@ -65,37 +64,10 @@ namespace AUTD3Sharp.Utils
         #region arithmetic
         public static Vector3 Negate(Vector3 operand) => new(-operand.X, -operand.Y, -operand.Z);
 
-        public static Vector3 Add(Vector3 left, Vector3 right)
-        {
-            var v1 = left.X + right.X;
-            var v2 = left.Y + right.Y;
-            var v3 = left.Z + right.Z;
-            return new(v1, v2, v3);
-        }
-        public static Vector3 Subtract(Vector3 left, Vector3 right)
-        {
-            var v1 = left.X - right.X;
-            var v2 = left.Y - right.Y;
-            var v3 = left.Z - right.Z;
-            return new(v1, v2, v3);
-        }
-
-        public static Vector3 Divide(Vector3 left, float right)
-        {
-            var v1 = left.X / right;
-            var v2 = left.Y / right;
-            var v3 = left.Z / right;
-            return new(v1, v2, v3);
-        }
-
-        public static Vector3 Multiply(Vector3 left, float right)
-        {
-            var v1 = left.X * right;
-            var v2 = left.Y * right;
-            var v3 = left.Z * right;
-            return new(v1, v2, v3);
-        }
-
+        public static Vector3 Add(Vector3 left, Vector3 right) => new(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+        public static Vector3 Subtract(Vector3 left, Vector3 right) => new(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+        public static Vector3 Divide(Vector3 left, float right) => new(left.X / right, left.Y / right, left.Z / right);
+        public static Vector3 Multiply(Vector3 left, float right) => new(left.X * right, left.Y * right, left.Z * right);
         public static Vector3 Multiply(float left, Vector3 right) => Multiply(right, left);
         public static Vector3 operator -(Vector3 operand) => Negate(operand);
         public static Vector3 operator +(Vector3 left, Vector3 right) => Add(left, right);
@@ -106,11 +78,7 @@ namespace AUTD3Sharp.Utils
         public static bool operator ==(Vector3 left, Vector3 right) => left.Equals(right);
         public static bool operator !=(Vector3 left, Vector3 right) => !left.Equals(right);
         public bool Equals(Vector3 other) => X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
-        public override bool Equals(object? obj)
-        {
-            if (obj is Vector3 vec) return Equals(vec);
-            return false;
-        }
+        public override bool Equals(object? obj) => obj is Vector3 other && Equals(other);
         #endregion
 
         #region public methods
@@ -119,7 +87,7 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region util
-        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+        public override int GetHashCode() => HashCode.Combine(X, Y, Z);
         [ExcludeFromCodeCoverage] IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public string ToString(string format) => $"({string.Format(CultureInfo.CurrentCulture, format, X)}, {string.Format(CultureInfo.CurrentCulture, format, Y)}, {string.Format(CultureInfo.CurrentCulture, format, Z)})";
 

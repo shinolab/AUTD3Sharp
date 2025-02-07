@@ -1,12 +1,10 @@
-
+using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Derive;
 
 namespace AUTD3Sharp.Gain
 {
-    [Gain]
-    public sealed partial class Null
+    public sealed class Null : IGain
     {
-        private static GainPtr GainPtr(Geometry _) => NativeMethodsBase.AUTDGainNull();
+        GainPtr IGain.GainPtr(Geometry _) => NativeMethodsBase.AUTDGainNull();
     }
 }

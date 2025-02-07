@@ -1,45 +1,37 @@
-using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 using System;
 
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
+
 namespace AUTD3Sharp.Modulation.AudioFile
 {
-    [Builder]
-    [Modulation(ConfigNoChange = true)]
-    public sealed partial class Csv
+    public class CsvOption
     {
-        private readonly string _filename;
+        public char Deliminator { get; init; } = ',';
+    }
 
-        [Property]
-        public char Deliminator { get; private set; } = ',';
+    public sealed class Csv : Driver.Datagram.Modulation
+    {
+        public string Path;
+        public SamplingConfig Config;
+        public CsvOption Option;
 
-        private readonly (float, DynSincInterpolator)? _resample;
-
-        public Csv(string filename, SamplingConfig config)
+        public Csv(string path, SamplingConfig config, CsvOption option)
         {
-            _filename = filename;
-            _config = config;
-            _resample = null;
+            Path = path;
+            Config = config;
+            Option = option;
         }
 
-        public Csv(string filename, Freq<float> source, SamplingConfig target, SincInterpolation resampler)
+        internal override ModulationPtr ModulationPtr()
         {
-            _filename = filename;
-            _config = target;
-            _resample = (source.Hz, resampler.DynResampler());
-        }
-
-        private ModulationPtr ModulationPtr()
-        {
-            var filenameBytes = Ffi.ToNullTerminatedUtf8(_filename);
+            var filenameBytes = Ffi.ToNullTerminatedUtf8(Path);
             unsafe
             {
                 fixed (byte* fp = &filenameBytes[0])
-                {
-                    return _resample.HasValue ?
-                        NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsvWithResample(fp, Convert.ToByte(Deliminator), LoopBehavior, _resample.Value.Item1, _config, _resample.Value.Item2).Validate()
-                    : NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, _config, Convert.ToByte(Deliminator), LoopBehavior).Validate();
-                }
+                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, Config.Inner, Convert.ToByte(Option.Deliminator)).Validate();
             }
         }
     }

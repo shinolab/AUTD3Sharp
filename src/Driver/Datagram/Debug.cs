@@ -1,42 +1,42 @@
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
-
 using System.Runtime.InteropServices;
 using System;
 
 namespace AUTD3Sharp
 {
-    public static class DebugType
+    public class DebugType
     {
-        public static DebugTypeWrap None => NativeMethodsBase.AUTDDebugTypeNone();
-        public static DebugTypeWrap BaseSignal => NativeMethodsBase.AUTDDebugTypeBaseSignal();
-        public static DebugTypeWrap Thermo => NativeMethodsBase.AUTDDebugTypeThermo();
-        public static DebugTypeWrap ForceFan => NativeMethodsBase.AUTDDebugTypeForceFan();
-        public static DebugTypeWrap Sync => NativeMethodsBase.AUTDDebugTypeSync();
-        public static DebugTypeWrap ModSegment => NativeMethodsBase.AUTDDebugTypeModSegment();
-        public static DebugTypeWrap ModIdx(ushort idx) => NativeMethodsBase.AUTDDebugTypeModIdx(idx);
-        public static DebugTypeWrap StmSegment => NativeMethodsBase.AUTDDebugTypeStmSegment();
-        public static DebugTypeWrap StmIdx(ushort idx) => NativeMethodsBase.AUTDDebugTypeStmIdx(idx);
-        public static DebugTypeWrap IsStmMode => NativeMethodsBase.AUTDDebugTypeIsStmMode();
-        public static DebugTypeWrap SysTimeEq(DcSysTime sysTime) => NativeMethodsBase.AUTDDebugTypeSysTimeEq(sysTime);
-        public static DebugTypeWrap PwmOut(Transducer tr) => NativeMethodsBase.AUTDDebugTypePwmOut(tr.Ptr);
-        public static DebugTypeWrap Direct(bool v) => NativeMethodsBase.AUTDDebugTypeDirect(v);
+        internal DebugTypeWrap Inner;
+
+        private DebugType(DebugTypeWrap inner) { Inner = inner; }
+
+        public static DebugType None => new(NativeMethodsBase.AUTDDebugTypeNone());
+        public static DebugType BaseSignal => new(NativeMethodsBase.AUTDDebugTypeBaseSignal());
+        public static DebugType Thermo => new(NativeMethodsBase.AUTDDebugTypeThermo());
+        public static DebugType ForceFan => new(NativeMethodsBase.AUTDDebugTypeForceFan());
+        public static DebugType Sync => new(NativeMethodsBase.AUTDDebugTypeSync());
+        public static DebugType ModSegment => new(NativeMethodsBase.AUTDDebugTypeModSegment());
+        public static DebugType ModIdx(ushort idx) => new(NativeMethodsBase.AUTDDebugTypeModIdx(idx));
+        public static DebugType StmSegment => new(NativeMethodsBase.AUTDDebugTypeStmSegment());
+        public static DebugType StmIdx(ushort idx) => new(NativeMethodsBase.AUTDDebugTypeStmIdx(idx));
+        public static DebugType IsStmMode => new(NativeMethodsBase.AUTDDebugTypeIsStmMode());
+        public static DebugType SysTimeEq(DcSysTime sysTime) => new(NativeMethodsBase.AUTDDebugTypeSysTimeEq(sysTime));
+        public static DebugType PwmOut(Transducer tr) => new(NativeMethodsBase.AUTDDebugTypePwmOut(tr.Ptr));
+        public static DebugType Direct(bool v) => new(NativeMethodsBase.AUTDDebugTypeDirect(v));
     }
 
     public sealed class DebugSettings : IDatagram
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void DebugSettingsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, GPIOOut gpio, DebugTypeWrap* debugType);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void DebugSettingsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, NativeMethods.GPIOOut gpio, DebugTypeWrap* debugType);
 
         private readonly DebugSettingsDelegate _f;
 
-        public DebugSettings(Func<Device, GPIOOut, DebugTypeWrap> f)
+        public DebugSettings(Func<Device, GPIOOut, DebugType> f)
         {
             unsafe
             {
-                _f = (_, geometryPtr, devIdx, gpio, debugType) =>
-                {
-                    *debugType = f(new Device(devIdx, geometryPtr), gpio);
-                };
+                _f = (_, geometryPtr, devIdx, gpio, debugType) => { *debugType = f(new Device(devIdx, geometryPtr), gpio.ToManaged()).Inner; };
             }
         }
 

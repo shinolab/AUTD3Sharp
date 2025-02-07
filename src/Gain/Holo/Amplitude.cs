@@ -1,19 +1,26 @@
+using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
+
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
 
 namespace AUTD3Sharp.Gain.Holo
 {
     [StructLayout(LayoutKind.Sequential)]
-    public readonly struct Amplitude
+    public readonly struct Amplitude : IEquatable<Amplitude>
     {
+        private readonly float _value;
+
         internal Amplitude(float value)
         {
-            Pascal = value;
+            _value = value;
         }
 
-        public float Pascal { get; }
-
-        public float SPL => NativeMethodsGainHolo.AUTDGainHoloPascalToSPL(Pascal);
+        public float Pascal() => _value;
+        public float SPL() => NativeMethodsGainHolo.AUTDGainHoloPascalToSPL(_value);
 
         private static Amplitude NewPascal(float pascal) => new(pascal);
         private static Amplitude NewSPL(float spl) => new(NativeMethodsGainHolo.AUTDGainHoloSPLToPascal(spl));
@@ -29,6 +36,12 @@ namespace AUTD3Sharp.Gain.Holo
             internal UnitSPL() { }
             public static Amplitude operator *(float a, UnitSPL _) => NewSPL(a);
         }
+
+        public static bool operator ==(Amplitude left, Amplitude right) => left.Equals(right);
+        public static bool operator !=(Amplitude left, Amplitude right) => !left.Equals(right);
+        public bool Equals(Amplitude other) => _value.Equals(other._value);
+        public override bool Equals(object? obj) => obj is Amplitude other && Equals(other);
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => _value.GetHashCode();
     }
 }
 
@@ -42,3 +55,7 @@ namespace AUTD3Sharp
 #pragma warning restore IDE1006
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

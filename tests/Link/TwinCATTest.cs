@@ -1,5 +1,3 @@
-using System.Net;
-
 namespace tests.Link;
 
 public class TwinCATTest
@@ -7,14 +5,16 @@ public class TwinCATTest
     [Fact]
     public void TestTwinCAT()
     {
-        _ = TwinCAT.Builder();
+        _ = new TwinCAT();
     }
 
     [Fact]
     public void TestRemoteTwinCAT()
     {
-        _ = RemoteTwinCAT.Builder("xxx.Xxx.Xxx.Xxx.Xxx.Xxx")
-            .WithServerIp("127.0.0.1")
-            .WithClientAmsNetId("xxx.Xxx.Xxx.Xxx.Xxx.Xxx");
+        _ = new RemoteTwinCAT("xxx.Xxx.Xxx.Xxx.Xxx.Xxx", new RemoteTwinCATOption
+        {
+            ServerIp = "127.0.0.1",
+            ClientAmsNetId = "xxx.Xxx.Xxx.Xxx.Xxx.Xxx"
+        });
     }
 }

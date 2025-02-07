@@ -16,8 +16,6 @@ jobs:
       src: ${{ steps.changed-files-yaml.outputs.src_any_changed }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - id: changed-files-yaml
         uses: tj-actions/changed-files@v44
         with:
@@ -26,7 +24,6 @@ jobs:
               - src/AUTD3Sharp.csproj
               - src/AUTD3Sharp.nuspec
               - '**/*.cs'
-              - unity/Assets/package.json
 
   test:
     needs: changed-files
@@ -39,14 +36,8 @@ jobs:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@v4
-        with:
-          submodules: true
       - uses: ./.github/actions/setup-build
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          os: ${{ matrix.os }}
-      - run: python3 build.py cs build
-      - run: python3 build.py cs test
+      - run: cargo make check
 
   all-tests-passed:
     if: ${{ always() }}
@@ -55,32 +46,4 @@ jobs:
     needs: test
     steps:
       - if: ${{ needs.test.result == 'failure' || needs.test.result == 'cancelled' }}
-        run: exit 1
-
-  test-unity:
-    needs: changed-files
-    if: ${{ needs.changed-files.outputs.src == 'true' }}
-    name: test-unity-on-${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - uses: ./.github/actions/setup-build
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          os: ${{ matrix.os }}
-      - run: python3 build.py unity build
-
-  all-tests-unity-passed:
-    if: ${{ always() }}
-    name: all-tests-unity-passed
-    runs-on: ubuntu-latest
-    needs: test-unity
-    steps:
-      - if: ${{ needs.test-unity.result == 'failure' || needs.test-unity.result == 'cancelled' }}
         run: exit 1

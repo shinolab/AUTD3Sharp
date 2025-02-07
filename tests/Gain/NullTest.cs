@@ -5,13 +5,13 @@ public class NullTest
     [Fact]
     public void Null()
     {
-        var autd = AUTDTest.CreateController();
+        var autd = CreateController();
 
         autd.Send(new Null());
 
         foreach (var dev in autd)
         {
-            var (intensities, phases) = autd.Link.Drives(dev.Idx, Segment.S0, 0);
+            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }

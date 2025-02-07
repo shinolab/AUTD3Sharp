@@ -1,0 +1,448 @@
+[config]
+default_to_workspace = false
+skip_core_tasks = true
+
+[tasks.clean]
+ignore_errors = true
+script_runner = "@shell"
+script = '''
+rm -rf ./src/bin
+rm -rf ./src/obj
+rm -rf ./src/.vs
+rm -rf ./src/native
+rm -rf ./src/LICENSE.txt
+rm -rf ./tests/bin
+rm -rf ./tests/obj
+rm -rf ./tests/TestResults
+rm -rf ./tests/html
+rm -rf ./tests/.vs
+rm ./tests/*.dll
+rm ./tests/*.dylib
+rm ./tests/*.so
+rm -rf ./example/RemoteTwinCAT/bin
+rm -rf ./example/RemoteTwinCAT/obj
+rm -rf ./example/Samples/bin
+rm -rf ./example/Samples/obj
+rm -rf ./example/Simulator/bin
+rm -rf ./example/Simulator/obj
+rm -rf ./example/TwinCAT/bin
+rm -rf ./example/TwinCAT/obj
+rm -rf ./example/*/obj
+rm -rf ./example/.vs
+rm -rf ./unity/.vs
+rm -rf ./unity/Library
+rm -rf ./unity/Logs
+rm -rf ./unity/obj
+rm -rf ./unity/Packages
+rm -rf ./unity/ProjectSettings
+rm -rf ./unity/Samples~
+rm -rf ./unity/UserSettings
+rm -rf ./unity/Assets/LICENSE.md
+rm -rf ./unity/Assets/CHANGELOG.md
+rm ./unity/Assets/Plugins/**/*.dll
+rm ./unity/Assets/Plugins/**/*.dylib
+rm ./unity/Assets/Plugins/**/*.so
+rm ./VERSION
+rm ./UNITY_VERSION
+'''
+
+[tasks.build]
+dependencies = ["update-bin", "cs-src-build"]
+
+[tasks.format]
+dependencies = ["cs-src-format", "cs-tests-format", "cs-example-format"]
+
+[tasks.check]
+dependencies = ["build", "test", "cs-example-build"]
+
+[tasks.cs-src-format]
+cwd = "./src"
+command = "dotnet"
+args = ["format"]
+
+[tasks.cs-tests-format]
+cwd = "./tests"
+command = "dotnet"
+args = ["format"]
+
+[tasks.cs-example-format]
+dependencies = ["nuget-remove-tmp-src", "nuget-cache-clear", "nuget-add-tmp-src", "cs-example-format-main"]
+
+[tasks.cs-example-format-main]
+cwd = "./example"
+command = "dotnet"
+args = ["format"]
+
+[tasks.test]
+dependencies = ["update-bin", "cs-test"]
+
+[tasks.cs-src-build]
+cwd = "./src"
+command = "dotnet"
+args = ["build", "-c:Release"]
+
+[tasks.cs-example-build]
+dependencies = ["nuget-remove-tmp-src", "nuget-cache-clear", "nuget-add-tmp-src", "cs-example-build-main"]
+
+[tasks.cs-example-build-main]
+cwd = "./example"
+command = "dotnet"
+args = ["build", "-c:Release"]
+
+[tasks.nuget-add-tmp-src]
+ignore_errors = true
+command = "dotnet"
+args = ["nuget", "add", "source", "${CARGO_MAKE_WORKING_DIRECTORY}/src/bin/Release", "-n", "autd3sharp_local"]
+
+[tasks.nuget-remove-tmp-src]
+ignore_errors = true
+command = "dotnet"
+args = ["nuget", "remove", "source", "autd3sharp_local"]
+
+[tasks.nuget-cache-clear]
+ignore_errors = true
+command = "dotnet"
+args = ["nuget", "locals", "all", "-c"]
+
+[tasks.cs-test]
+cwd = "./tests"
+command = "dotnet"
+args = ["test"]
+
+[tasks.cov]
+dependencies = ["cs-cov-check-native-methods", "build", "cs-cov", "cs-cov-report"]
+
+[tasks.cs-cov]
+cwd = "./tests"
+command = "dotnet"
+args = ["test", '--collect:"XPlat Code Coverage"', "--settings", "coverlet.runsettings"]
+
+[tasks.cs-cov-report]
+cwd = "./tests"
+script_runner = "python"
+script_extension = "py"
+script = '''
+import sys
+import os
+import subprocess
+from pathlib import Path
+
+if len(sys.argv) > 1 and sys.argv[1] == "html":
+    cov_res = sorted(Path("TestResults").rglob("coverage.cobertura.xml"), key=os.path.getmtime, reverse=True)[0]
+    command = [
+        "reportgenerator",
+        f"-reports:{cov_res}",
+        "-targetdir:html",
+        "-reporttypes:Html",
+    ]
+    subprocess.run(command)
+'''
+
+[tasks.cs-cov-check-native-methods]
+script_runner = "python"
+script_extension = "py"
+script = '''
+import re
+import sys
+from pathlib import Path
+
+defined_methods = set()
+pattern = re.compile("\\s*internal static extern .* (AUTD.*?)\\(.*")
+for file in Path("src/NativeMethods").rglob("*.cs"):
+    with file.open() as f:
+        for line in f.readlines():
+            result = pattern.match(line)
+            if result:
+                defined_methods.add(result.group(1))
+defined_methods = set(filter(lambda x: not x.endswith("T4010A1"), defined_methods))
+defined_methods = set(filter(lambda x: x != "AUTDSamplingConfigDivision", defined_methods))
+used_methods = set()
+pattern = re.compile("NativeMethods.*?\\.(AUTD.*?)\\(")
+paths: set[Path] = set()
+paths |= set(Path("src").rglob("*.cs"))
+paths -= set(Path("src/NativeMethods").rglob("*.cs"))
+paths |= set(Path("tests").rglob("*.cs"))
+paths.add(Path("src/NativeMethods/DriverExt.cs"))
+for file in paths:
+    with file.open(encoding="utf-8") as f:
+        for line in f.readlines():
+            result = pattern.findall(line)
+            if result:
+                for group in result:
+                    used_methods.add(group)
+unused_methods = defined_methods.symmetric_difference(used_methods)
+if len(unused_methods) != 0:
+    print("Following native methods are defined but not used.")
+    for method in unused_methods:
+        print(f"\t{method}")
+    sys.exit(-1)
+else:
+    print("All native methods are used.")
+'''
+
+[tasks.unity-build]
+dependencies = ["update-bin-unity", "unity-build-main"]
+
+[tasks.unity-build-main]
+script_runner = "python"
+script_extension = "py"
+script = '''
+import shutil
+import os
+import contextlib
+
+ignore = shutil.ignore_patterns("NativeMethods", ".vs", "bin", "obj")
+shutil.copytree(
+    "src",
+    "unity/Assets/Scripts",
+    dirs_exist_ok=True,
+    ignore=ignore,
+)
+os.remove("unity/Assets/Scripts/AUTD3Sharp.csproj")
+os.remove("unity/Assets/Scripts/AUTD3Sharp.nuspec")
+os.remove("unity/Assets/Scripts/.gitignore")
+with contextlib.suppress(FileNotFoundError):
+    os.remove("unity/Assets/Scripts/LICENSE.txt")
+with contextlib.suppress(FileNotFoundError):
+    shutil.rmtree("unity/Assets/Scripts/.vs")
+with contextlib.suppress(FileNotFoundError):
+    shutil.rmtree("unity/Assets/Scripts/obj")
+with contextlib.suppress(FileNotFoundError):
+    shutil.rmtree("unity/Assets/Scripts/bin")
+with contextlib.suppress(FileNotFoundError):
+    shutil.rmtree("unity/Assets/Scripts/native")
+shutil.copy(
+    "src/NativeMethods/DriverExt.cs",
+    "unity/Assets/Scripts/NativeMethods/DriverExt.cs",
+)
+'''
+
+[tasks.generate-wrapper]
+dependencies = ["generate-wrapper-pre", "generate-wrapper-main"]
+
+[tasks.generate-wrapper-pre]
+command = "git"
+args = ["submodule", "update", "--init"]
+
+[tasks.generate-wrapper-main]
+cwd = "./tools/wrapper-generator"
+command = "cargo"
+args = ["r", "--release"]
+
+[tasks.update-bin]
+script_runner = "python"
+script_extension = "py"
+script = '''
+import platform
+import re
+import shutil
+import sys
+import tarfile
+import urllib.request
+from pathlib import Path
+
+
+def download_and_extract(url: str, *dest_dirs: str) -> None:
+    tmp_file = Path("tmp.zip" if url.endswith(".zip") else "tmp.tar.gz")
+    urllib.request.urlretrieve(url, tmp_file)
+    if tmp_file.suffix == ".zip":
+        shutil.unpack_archive(tmp_file, ".")
+    else:
+        with tarfile.open(tmp_file, "r:gz") as tar:
+            tar.extractall(filter="fully_trusted")
+    tmp_file.unlink()
+    for dest_dir in dest_dirs:
+        Path(dest_dir).mkdir(parents=True, exist_ok=True)
+    for dll in Path("bin").glob("*.dll"):
+        for dest_dir in dest_dirs:
+            shutil.copy(dll, dest_dir)
+    for dylib in Path("bin").glob("*.dylib"):
+        for dest_dir in dest_dirs:
+            shutil.copy(dylib, dest_dir)
+    for so in Path("bin").glob("*.so"):
+        for dest_dir in dest_dirs:
+            shutil.copy(so, dest_dir)
+    shutil.rmtree("bin")
+
+
+def should_update_dll(version: str) -> bool:
+    if platform.system() == "Windows":
+        if not Path("src/native/windows/x64/autd3capi.dll").is_file() or not Path("tests/autd3capi.dll").is_file():
+            return True
+    elif platform.system() == "Darwin":
+        if not Path("src/native/osx/universal/libautd3capi.dylib").is_file() or not Path("tests/libautd3capi.dylib").is_file():
+            return True
+    elif not Path("src/native/linux/x64/libautd3capi.so").is_file() or not Path("tests/libautd3capi.so").is_file():
+        return True
+
+    version_file = Path("VERSION")
+    if not version_file.exists():
+        return True
+
+    old_version = version_file.read_text().strip()
+    return old_version != version
+
+
+with Path("src/AUTD3Sharp.csproj").open() as f:
+    content = f.read()
+    version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
+    version = (
+        ".".join(version[:4]) if version[2].endswith("rc") else ".".join(version[:3])
+    )
+
+if not should_update_dll(version):
+    sys.exit(0)
+
+base_url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}"
+download_and_extract(
+    f"{base_url}/autd3-v{version}-win-x64-shared.zip",
+    "src/native/windows/x64",
+    "tests",
+)
+download_and_extract(
+    f"{base_url}/autd3-v{version}-macos-aarch64-shared.tar.gz",
+    "src/native/osx/aarch64",
+    "tests",
+)
+download_and_extract(
+    f"{base_url}/autd3-v{version}-linux-x64-shared.tar.gz",
+    "src/native/linux/x64",
+    "tests",
+)
+shutil.copyfile("LICENSE", "src/LICENSE.txt")
+with Path("src/LICENSE.txt").open("a") as f:
+    f.write("\n=========================================================\n")
+    f.write(Path("ThirdPartyNotice.txt").read_text())
+
+Path("VERSION").write_text(version)
+'''
+
+[tasks.update-bin-unity]
+script_runner = "python"
+script_extension = "py"
+script = '''
+import platform
+import re
+import shutil
+import sys
+import tarfile
+import urllib.request
+from pathlib import Path
+
+
+def download_and_extract(url: str, *dest_dirs: str) -> None:
+    tmp_file = Path("tmp.zip" if url.endswith(".zip") else "tmp.tar.gz")
+    urllib.request.urlretrieve(url, tmp_file)
+    if tmp_file.suffix == ".zip":
+        shutil.unpack_archive(tmp_file, ".")
+    else:
+        with tarfile.open(tmp_file, "r:gz") as tar:
+            tar.extractall(filter="fully_trusted")
+    tmp_file.unlink()
+    for dest_dir in dest_dirs:
+        Path(dest_dir).mkdir(parents=True, exist_ok=True)
+    for dll in Path("bin").glob("*.dll"):
+        for dest_dir in dest_dirs:
+            shutil.copy(dll, dest_dir)
+    for dylib in Path("bin").glob("*.dylib"):
+        for dest_dir in dest_dirs:
+            shutil.copy(dylib, dest_dir)
+    for so in Path("bin").glob("*.so"):
+        for dest_dir in dest_dirs:
+            shutil.copy(so, dest_dir)
+    shutil.rmtree("bin")
+
+
+def should_update_dll(version: str) -> bool:
+    if platform.system() == "Windows":
+        if not Path("unity/Assets/Plugins/x86_64/autd3capi.dll").is_file():
+            return True
+    elif platform.system() == "Darwin":
+        if not Path("unity/Assets/Plugins/x86_64/libautd3capi.dylib").is_file():
+            return True
+    elif not Path("unity/Assets/Plugins/x86_64/libautd3capi.so").is_file():
+        return True
+
+    version_file = Path("UNITY_VERSION")
+    if not version_file.exists():
+        return True
+
+    old_version = version_file.read_text().strip()
+    return old_version != version
+
+
+with Path("src/AUTD3Sharp.csproj").open() as f:
+    content = f.read()
+    version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
+    version = (
+        ".".join(version[:4]) if version[2].endswith("rc") else ".".join(version[:3])
+    )
+
+if not should_update_dll(version):
+    sys.exit(0)
+
+base_url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}"
+download_and_extract(
+    f"{base_url}/autd3-v{version}-win-x64-unity.zip",
+    "unity/Assets/Plugins/x86_64"
+)
+download_and_extract(
+    f"{base_url}/autd3-v{version}-macos-aarch64-unity.tar.gz",
+    "unity/Assets/Plugins/aarch64",
+)
+download_and_extract(
+    f"{base_url}/autd3-v{version}-linux-x64-unity.tar.gz",
+    "unity/Assets/Plugins/x86_64",
+)
+shutil.copyfile("LICENSE", "unity/Assets/LICENSE.md")
+with Path("unity/Assets/LICENSE.md").open("a") as f:
+    f.write("\n=========================================================\n")
+    f.write(Path("ThirdPartyNotice.txt").read_text())
+shutil.copy("CHANGELOG.md", "unity/Assets/CHANGELOG.md")
+Path("UNITY_VERSION").write_text(version)
+'''
+
+[tasks.update-version]
+script_runner = "python"
+script_extension = "py"
+script = '''
+import sys
+import re
+from pathlib import Path
+
+version = sys.argv[1]
+
+def substitute_in_file(file: str, pattern: str, repl: str) -> None:
+    file = Path(file)
+    content = file.read_text(encoding="utf-8")
+    content = re.sub(pattern, repl, content, flags=re.MULTILINE)
+    file.write_text(content, encoding="utf-8")
+
+for proj in Path("example").rglob("*.csproj"):
+    substitute_in_file(
+        proj,
+        r'"AUTD3Sharp" Version="(.*)"',
+        f'"AUTD3Sharp" Version="{version}"',
+    )
+substitute_in_file(
+    "src/AUTD3Sharp.csproj",
+    r"<Version>(.*)</Version>",
+    f"<Version>{version}</Version>",
+)
+substitute_in_file(
+    "src/AUTD3Sharp.nuspec",
+    r'"AUTD3Sharp\.Derive" version="(.*)"',
+    f'"AUTD3Sharp.Derive" version="{version}"',
+)
+version_tokens = version.split(".")
+if "-" in version_tokens[2]:
+    version_tokens[2] = version_tokens[2].split("-")[0]
+    unity_version = ".".join(version_tokens[:3])
+else:
+    unity_version = version
+substitute_in_file(
+    "unity/Assets/package.json",
+    r'"version": "(.*)"',
+    f'"version": "{unity_version}"',
+)
+'''

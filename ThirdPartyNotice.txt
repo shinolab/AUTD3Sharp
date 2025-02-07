@@ -34,7 +34,7 @@ async-stream-impl 0.3.6 (MIT)
 https://github.com/tokio-rs/async-stream
 ---------------------------------------------------------
 
-async-trait 0.1.85 (Apache-2.0 OR MIT)
+async-trait 0.1.86 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/async-trait
 ---------------------------------------------------------
 
@@ -42,67 +42,67 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 29.0.0-rc.16 (MIT)
+autd3 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-core 29.0.0-rc.16 (MIT)
+autd3-core 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-derive 29.0.0-rc.16 (MIT)
+autd3-derive 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 29.0.0-rc.16 (MIT)
+autd3-driver 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 29.0.0-rc.16 (MIT)
+autd3-firmware-emulator 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 29.0.0-rc.16 (MIT)
+autd3-gain-holo 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 29.0.0-rc.16 (MIT)
+autd3-link-simulator 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-twincat 29.0.0-rc.16 (MIT)
+autd3-link-twincat 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 29.0.0-rc.16 (MIT)
+autd3-modulation-audio-file 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 29.0.0-rc.16 (MIT)
+autd3-protobuf 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 29.0.0-rc.16 (MIT)
+autd3capi 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 29.0.0-rc.16 (MIT)
+autd3capi-driver 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 29.0.0-rc.16 (MIT)
+autd3capi-gain-holo 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 29.0.0-rc.16 (MIT)
+autd3capi-link-simulator 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 29.0.0-rc.16 (MIT)
+autd3capi-link-twincat 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 29.0.0-rc.16 (MIT)
+autd3capi-modulation-audio-file 29.0.0-rc.19 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
@@ -126,7 +126,7 @@ bit-vec 0.8.0 (Apache-2.0 OR MIT)
 https://github.com/contain-rs/bit-vec
 ---------------------------------------------------------
 
-bitfield-struct 0.10.0 (MIT)
+bitfield-struct 0.10.1 (MIT)
 https://github.com/wrenger/bitfield-struct-rs.git
 ---------------------------------------------------------
 
@@ -226,6 +226,14 @@ getrandom 0.2.15 (Apache-2.0 OR MIT)
 https://github.com/rust-random/getrandom
 ---------------------------------------------------------
 
+getrandom 0.3.1 (Apache-2.0 OR MIT)
+https://github.com/rust-random/getrandom
+---------------------------------------------------------
+
+getset 0.1.4 (MIT)
+https://github.com/jbaublitz/getset
+---------------------------------------------------------
+
 gimli 0.31.1 (Apache-2.0 OR MIT)
 https://github.com/gimli-rs/gimli
 ---------------------------------------------------------
@@ -258,7 +266,7 @@ http-body-util 0.1.2 (MIT)
 https://github.com/hyperium/http-body
 ---------------------------------------------------------
 
-httparse 1.9.5 (Apache-2.0 OR MIT)
+httparse 1.10.0 (Apache-2.0 OR MIT)
 https://github.com/seanmonstar/httparse
 ---------------------------------------------------------
 
@@ -266,7 +274,7 @@ httpdate 1.0.3 (Apache-2.0 OR MIT)
 https://github.com/pyfisch/httpdate
 ---------------------------------------------------------
 
-hyper 1.5.2 (MIT)
+hyper 1.6.0 (MIT)
 https://github.com/hyperium/hyper
 ---------------------------------------------------------
 
@@ -282,7 +290,7 @@ indexmap 1.9.3 (Apache-2.0 OR MIT)
 https://github.com/bluss/indexmap
 ---------------------------------------------------------
 
-indexmap 2.7.0 (Apache-2.0 OR MIT)
+indexmap 2.7.1 (Apache-2.0 OR MIT)
 https://github.com/indexmap-rs/indexmap
 ---------------------------------------------------------
 
@@ -438,6 +446,14 @@ ppv-lite86 0.2.20 (Apache-2.0 OR MIT)
 https://github.com/cryptocorrosion/cryptocorrosion
 ---------------------------------------------------------
 
+proc-macro-error-attr2 2.0.0 (Apache-2.0 OR MIT)
+https://github.com/GnomedDev/proc-macro-error-2
+---------------------------------------------------------
+
+proc-macro-error2 2.0.1 (Apache-2.0 OR MIT)
+https://github.com/GnomedDev/proc-macro-error-2
+---------------------------------------------------------
+
 proc-macro2 1.0.93 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/proc-macro2
 ---------------------------------------------------------
@@ -458,11 +474,23 @@ rand 0.8.5 (Apache-2.0 OR MIT)
 https://github.com/rust-random/rand
 ---------------------------------------------------------
 
+rand 0.9.0 (Apache-2.0 OR MIT)
+https://github.com/rust-random/rand
+---------------------------------------------------------
+
 rand_chacha 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/rust-random/rand
 ---------------------------------------------------------
 
+rand_chacha 0.9.0 (Apache-2.0 OR MIT)
+https://github.com/rust-random/rand
+---------------------------------------------------------
+
 rand_core 0.6.4 (Apache-2.0 OR MIT)
+https://github.com/rust-random/rand
+---------------------------------------------------------
+
+rand_core 0.9.0 (Apache-2.0 OR MIT)
 https://github.com/rust-random/rand
 ---------------------------------------------------------
 
@@ -506,7 +534,7 @@ rustversion 1.0.19 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/rustversion
 ---------------------------------------------------------
 
-ryu 1.0.18 (Apache-2.0 OR BSL-1.0)
+ryu 1.0.19 (Apache-2.0 OR BSL-1.0)
 https://github.com/dtolnay/ryu
 ---------------------------------------------------------
 
@@ -550,7 +578,7 @@ spin_sleep 1.3.0 (Apache-2.0)
 https://github.com/alexheretic/spin-sleep
 ---------------------------------------------------------
 
-syn 2.0.96 (Apache-2.0 OR MIT)
+syn 2.0.98 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
@@ -646,7 +674,7 @@ typenum 1.17.0 (Apache-2.0 OR MIT)
 https://github.com/paholg/typenum
 ---------------------------------------------------------
 
-unicode-ident 1.0.14 ((MIT OR Apache-2.0) AND Unicode-3.0)
+unicode-ident 1.0.16 ((MIT OR Apache-2.0) AND Unicode-3.0)
 https://github.com/dtolnay/unicode-ident
 ---------------------------------------------------------
 
@@ -660,6 +688,10 @@ https://github.com/seanmonstar/want
 
 wasi 0.11.0+wasi-snapshot-preview1 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
 https://github.com/bytecodealliance/wasi
+---------------------------------------------------------
+
+wasi 0.13.3+wasi-0.2.2 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
+https://github.com/bytecodealliance/wasi-rs
 ---------------------------------------------------------
 
 wide 0.7.32 (Apache-2.0 OR MIT OR Zlib)
@@ -782,6 +814,10 @@ windows_x86_64_msvc 0.53.0 (Apache-2.0 OR MIT)
 https://github.com/microsoft/windows-rs
 ---------------------------------------------------------
 
+wit-bindgen-rt 0.33.0 (Apache-2.0 OR Apache-2.0 WITH LLVM-exception OR MIT)
+https://github.com/bytecodealliance/wasi-rs
+---------------------------------------------------------
+
 zerocopy 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
@@ -798,7 +834,7 @@ zerocopy-derive 0.8.14 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
-ADS 0.0.25-1 (MIT)
+ADS 28.1 (MIT)
 https://github.com/Beckhoff/ADS
 
 ---------------------------------------------------------
@@ -1202,7 +1238,8 @@ FILES OR SOFTWARE.
 Except as contained in this notice, the name of a copyright holder shall
 not be used in advertising or otherwise to promote the sale, use or other
 dealings in these Data Files or Software without prior written
-authorization of the copyright holder.---------------------------------------------------------
+authorization of the copyright holder.
+---------------------------------------------------------
 
 Zlib
 

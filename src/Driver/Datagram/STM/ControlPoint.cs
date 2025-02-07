@@ -1,288 +1,133 @@
-﻿using AUTD3Sharp.Derive;
-using AUTD3Sharp.Utils;
-using System.Runtime.InteropServices;
+﻿using AUTD3Sharp.Utils;
+using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Runtime.InteropServices;
+
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
 
 namespace AUTD3Sharp
 {
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoint
+    namespace NativeMethods
     {
-        [ExcludeFromCodeCoverage]
-        public Point3 Point { get; }
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoint
+        {
+            internal Point3 point;
+            internal Phase phase_offset;
+        }
 
-        [Property(Phase = true)]
-        public Phase PhaseOffset { get; private set; }
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoints1
+        {
+            internal ControlPoint points;
+            internal EmitIntensity intensity;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoints2
+        {
+            internal (ControlPoint, ControlPoint) points;
+            internal EmitIntensity intensity;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoints3
+        {
+            internal (ControlPoint, ControlPoint, ControlPoint) points;
+            internal EmitIntensity intensity;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoints4
+        {
+            internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
+            internal EmitIntensity intensity;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoints5
+        {
+            internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
+            internal EmitIntensity intensity;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoints6
+        {
+            internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
+            internal EmitIntensity intensity;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoints7
+        {
+            internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
+            internal EmitIntensity intensity;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct ControlPoints8
+        {
+            internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
+            internal EmitIntensity intensity;
+        }
+    }
+
+    public class ControlPoint : IEquatable<ControlPoint>
+    {
+        public Point3 Point { get; init; }
+        public Phase PhaseOffset { get; init; }
+
+        public ControlPoint()
+        {
+            Point = Point3.Origin;
+            PhaseOffset = Phase.Zero;
+        }
 
         public ControlPoint(Point3 point)
         {
             Point = point;
             PhaseOffset = new Phase(0);
         }
+
+        public static bool operator ==(ControlPoint left, ControlPoint right) => left.Equals(right);
+        public static bool operator !=(ControlPoint left, ControlPoint right) => !left.Equals(right);
+        public bool Equals(ControlPoint? other) => other is not null && Point.Equals(other.Point) && PhaseOffset.Equals(other.PhaseOffset);
+        public override bool Equals(object? obj) => obj is ControlPoint other && Equals(other);
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => HashCode.Combine(Point, PhaseOffset);
+
+        internal NativeMethods.ControlPoint ToNative() => new()
+        {
+            point = Point,
+            phase_offset = PhaseOffset.Inner
+        };
     }
 
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints1
+    public class ControlPoints : IEquatable<ControlPoints>
     {
-        private ControlPoint _point;
+        public ControlPoint[] Points { get; init; }
+        public EmitIntensity Intensity { get; init; }
 
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public readonly ControlPoint[] Points => new[] { _point };
-
-        private ControlPoints1(ControlPoint point, EmitIntensity intensity)
+        public ControlPoints(IEnumerable<ControlPoint> points, EmitIntensity intensity)
         {
-            _point = point;
+            Points = points as ControlPoint[] ?? points.ToArray();
             Intensity = intensity;
         }
+        public ControlPoints(IEnumerable<ControlPoint> points) : this(points, EmitIntensity.Max) { }
+        public ControlPoints(IEnumerable<Point3> points) : this(points.Select(v => new ControlPoint(v))) { }
 
-        public ControlPoints1(ControlPoint v) : this(v, EmitIntensity.Max)
-        {
-        }
-
-        public ControlPoints1(Point3 v) : this(new ControlPoint(v))
-        {
-        }
-    }
-
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints2
-    {
-        private ControlPoint _point1;
-        private ControlPoint _point2;
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public readonly ControlPoint[] Points => new[] { _point1, _point2 };
-        private ControlPoints2((ControlPoint, ControlPoint) points, EmitIntensity intensity)
-        {
-            _point1 = points.Item1;
-            _point2 = points.Item2;
-            Intensity = intensity;
-        }
-
-        public ControlPoints2((Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2)))
-        {
-        }
-
-        public ControlPoints2((ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
-        {
-        }
-    }
-
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints3
-    {
-        private ControlPoint _point1;
-        private ControlPoint _point2;
-        private ControlPoint _point3;
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3 };
-
-        private ControlPoints3((ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
-        {
-            _point1 = points.Item1;
-            _point2 = points.Item2;
-            _point3 = points.Item3;
-            Intensity = intensity;
-        }
-
-        public ControlPoints3((Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3)))
-        {
-        }
-
-        public ControlPoints3((ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
-        {
-        }
-    }
-
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints4
-    {
-        private ControlPoint _point1;
-        private ControlPoint _point2;
-        private ControlPoint _point3;
-        private ControlPoint _point4;
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4 };
-
-        private ControlPoints4((ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
-        {
-            _point1 = points.Item1;
-            _point2 = points.Item2;
-            _point3 = points.Item3;
-            _point4 = points.Item4;
-            Intensity = intensity;
-        }
-
-        public ControlPoints4((Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4)))
-        {
-        }
-
-        public ControlPoints4((ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
-        {
-        }
-    }
-
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints5
-    {
-        private ControlPoint _point1;
-        private ControlPoint _point2;
-        private ControlPoint _point3;
-        private ControlPoint _point4;
-        private ControlPoint _point5;
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4, _point5 };
-
-        private ControlPoints5((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
-        {
-            _point1 = points.Item1;
-            _point2 = points.Item2;
-            _point3 = points.Item3;
-            _point4 = points.Item4;
-            _point5 = points.Item5;
-            Intensity = intensity;
-        }
-
-        public ControlPoints5((Point3, Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5)))
-        {
-        }
-
-        public ControlPoints5((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
-        {
-        }
-    }
-
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints6
-    {
-        private ControlPoint _point1;
-        private ControlPoint _point2;
-        private ControlPoint _point3;
-        private ControlPoint _point4;
-        private ControlPoint _point5;
-        private ControlPoint _point6;
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4, _point5, _point6 };
-
-        private ControlPoints6((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
-        {
-            _point1 = points.Item1;
-            _point2 = points.Item2;
-            _point3 = points.Item3;
-            _point4 = points.Item4;
-            _point5 = points.Item5;
-            _point6 = points.Item6;
-            Intensity = intensity;
-        }
-
-        public ControlPoints6((Point3, Point3, Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6)))
-        {
-        }
-
-        public ControlPoints6((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
-        {
-        }
-    }
-
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints7
-    {
-        private ControlPoint _point1;
-        private ControlPoint _point2;
-        private ControlPoint _point3;
-        private ControlPoint _point4;
-        private ControlPoint _point5;
-        private ControlPoint _point6;
-        private ControlPoint _point7;
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4, _point5, _point6, _point7 };
-
-        private ControlPoints7((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
-        {
-            _point1 = points.Item1;
-            _point2 = points.Item2;
-            _point3 = points.Item3;
-            _point4 = points.Item4;
-            _point5 = points.Item5;
-            _point6 = points.Item6;
-            _point7 = points.Item7;
-            Intensity = intensity;
-        }
-
-        public ControlPoints7((Point3, Point3, Point3, Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7)))
-        {
-        }
-
-        public ControlPoints7((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
-        {
-        }
-    }
-
-    [Builder]
-    [StructLayout(LayoutKind.Sequential)]
-    public partial struct ControlPoints8
-    {
-        private ControlPoint _point1;
-        private ControlPoint _point2;
-        private ControlPoint _point3;
-        private ControlPoint _point4;
-        private ControlPoint _point5;
-        private ControlPoint _point6;
-        private ControlPoint _point7;
-        private ControlPoint _point8;
-        [Property(EmitIntensity = true)]
-        public EmitIntensity Intensity { get; private set; }
-
-        [ExcludeFromCodeCoverage]
-        public readonly ControlPoint[] Points => new[] { _point1, _point2, _point3, _point4, _point5, _point6, _point7, _point8 };
-
-        private ControlPoints8((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points, EmitIntensity intensity)
-        {
-            _point1 = points.Item1;
-            _point2 = points.Item2;
-            _point3 = points.Item3;
-            _point4 = points.Item4;
-            _point5 = points.Item5;
-            _point6 = points.Item6;
-            _point7 = points.Item7;
-            _point8 = points.Item8;
-            Intensity = intensity;
-        }
-
-        public ControlPoints8((Point3, Point3, Point3, Point3, Point3, Point3, Point3, Point3) v) : this((new ControlPoint(v.Item1), new ControlPoint(v.Item2), new ControlPoint(v.Item3), new ControlPoint(v.Item4), new ControlPoint(v.Item5), new ControlPoint(v.Item6), new ControlPoint(v.Item7), new ControlPoint(v.Item8)))
-        {
-        }
-
-        public ControlPoints8((ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) v) : this(v, EmitIntensity.Max)
-        {
-        }
+        public static bool operator ==(ControlPoints left, ControlPoints right) => left.Equals(right);
+        public static bool operator !=(ControlPoints left, ControlPoints right) => !left.Equals(right);
+        public bool Equals(ControlPoints? other) => other is not null && Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public override bool Equals(object? obj) => obj is ControlPoints other && Equals(other);
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

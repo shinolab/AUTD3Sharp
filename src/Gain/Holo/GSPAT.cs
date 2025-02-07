@@ -1,29 +1,40 @@
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Derive;
 using AUTD3Sharp.Utils;
 using System.Collections.Generic;
+using System.Linq;
+using AUTD3Sharp.Driver.Datagram;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    [Gain]
-    [Builder]
-    public sealed partial class GSPAT : Holo<GSPAT>
+    public class GSPATOption
     {
-        private readonly Backend _backend;
+        public uint Repeat { get; init; } = 100;
+        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
 
-        public GSPAT(Backend backend, IEnumerable<(Point3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        internal NativeMethods.GSPATOption ToNative() => new()
         {
-            _backend = backend;
-            Repeat = 100;
+            repeat = Repeat,
+            constraint = EmissionConstraint.Inner
+        };
+    }
+
+    public sealed class GSPAT : IGain
+    {
+        public (Point3, Amplitude)[] Foci;
+        public GSPATOption Option;
+        public Backend Backend;
+
+        public GSPAT(IEnumerable<(Point3, Amplitude)> foci, GSPATOption option, Backend backend)
+        {
+            Foci = foci as (Point3, Amplitude)[] ?? foci.ToArray();
+            Option = option;
+            Backend = backend;
         }
 
-        [Property]
-
-        public uint Repeat { get; private set; }
-
-        private GainPtr GainPtr(Geometry _)
-        {
-            return _backend.Gspat(Foci, Amps, (uint)Amps.Length, Repeat, Constraint);
-        }
+        GainPtr IGain.GainPtr(Geometry _) => Backend.Gspat(Foci, Option.ToNative());
     }
 }

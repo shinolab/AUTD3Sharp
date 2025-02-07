@@ -1,37 +1,20 @@
-using AUTD3Sharp.Derive;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation.AudioFile
 {
-    [Modulation(ConfigNoChange = true)]
-    public sealed partial class Wav
+    public sealed class Wav : Driver.Datagram.Modulation
     {
-        private readonly string _filename;
-        private readonly (SamplingConfig, DynSincInterpolator)? _resample;
+        public string Path;
 
-        public Wav(string filename)
-        {
-            _filename = filename;
-            _resample = null;
-        }
+        public Wav(string path) => Path = path;
 
-        public Wav(string filename, SamplingConfig target, SincInterpolation resampler)
+        internal override ModulationPtr ModulationPtr()
         {
-            _filename = filename;
-            _resample = (target, resampler.DynResampler());
-        }
-
-        private ModulationPtr ModulationPtr()
-        {
-            var filenameBytes = Ffi.ToNullTerminatedUtf8(_filename);
+            var filenameBytes = Ffi.ToNullTerminatedUtf8(Path);
             unsafe
             {
                 fixed (byte* fp = &filenameBytes[0])
-                {
-                    return _resample.HasValue ?
-                        NativeMethodsModulationAudioFile.AUTDModulationAudioFileWavWithResample(fp, LoopBehavior, _resample.Value.Item1, _resample.Value.Item2).Validate()
-                    : NativeMethodsModulationAudioFile.AUTDModulationAudioFileWav(fp, LoopBehavior).Validate();
-                }
+                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileWav(fp).Validate();
             }
         }
     }

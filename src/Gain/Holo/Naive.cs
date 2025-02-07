@@ -1,21 +1,38 @@
 using AUTD3Sharp.NativeMethods;
-using AUTD3Sharp.Derive;
 using AUTD3Sharp.Utils;
 using System.Collections.Generic;
+using System.Linq;
+using AUTD3Sharp.Driver.Datagram;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#endif
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    [Gain]
-    public sealed partial class Naive : Holo<Naive>
+    public class NaiveOption
     {
-        private readonly Backend _backend;
+        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
 
-        public Naive(Backend backend, IEnumerable<(Point3, Amplitude)> iter) : base(EmissionConstraint.Clamp(0x00, 0xFF), iter)
+        internal NativeMethods.NaiveOption ToNative() => new()
         {
-            _backend = backend;
+            constraint = EmissionConstraint.Inner
+        };
+    }
+
+    public sealed class Naive : IGain
+    {
+        public (Point3, Amplitude)[] Foci;
+        public NaiveOption Option;
+        public Backend Backend;
+
+        public Naive(IEnumerable<(Point3, Amplitude)> foci, NaiveOption option, Backend backend)
+        {
+            Foci = foci as (Point3, Amplitude)[] ?? foci.ToArray();
+            Option = option;
+            Backend = backend;
         }
 
-        private GainPtr GainPtr(Geometry _) =>
-            _backend.Naive(Foci, Amps, (uint)Amps.Length, Constraint);
+        GainPtr IGain.GainPtr(Geometry _) => Backend.Naive(Foci, Option.ToNative());
     }
 }

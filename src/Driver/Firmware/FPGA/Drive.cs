@@ -1,12 +1,17 @@
-using System.Runtime.InteropServices;
+using System;
+using System.Diagnostics.CodeAnalysis;
+
+#if UNITY_2020_2_OR_NEWER
+using System.Runtime.CompilerServices;
+#nullable enable
+#endif
 
 namespace AUTD3Sharp
 {
-    [StructLayout(LayoutKind.Sequential)]
-    public struct Drive
+    public readonly struct Drive : IEquatable<Drive>
     {
-        public Phase Phase { get; set; }
-        public EmitIntensity Intensity { get; set; }
+        public Phase Phase { get; init; }
+        public EmitIntensity Intensity { get; init; }
 
         public Drive(Phase phase, EmitIntensity intensity)
         {
@@ -14,11 +19,26 @@ namespace AUTD3Sharp
             Intensity = intensity;
         }
 
-        public static implicit operator Drive((Phase, EmitIntensity) d) => new(d.Item1, d.Item2);
-        public static implicit operator Drive((EmitIntensity, Phase) d) => new(d.Item2, d.Item1);
-        public static implicit operator Drive(EmitIntensity d) => new(new Phase(0x00), d);
-        public static implicit operator Drive(Phase d) => new(d, EmitIntensity.Max);
+        public static Drive Null => new()
+        {
+            Intensity = EmitIntensity.Min,
+            Phase = Phase.Zero
+        };
 
-        public static Drive Null => new(new Phase(0), new EmitIntensity(0));
+        internal NativeMethods.Drive ToNative() => new()
+        {
+            phase = Phase.Inner,
+            intensity = Intensity.Inner
+        };
+
+        public static bool operator ==(Drive left, Drive right) => left.Equals(right);
+        public static bool operator !=(Drive left, Drive right) => !left.Equals(right);
+        public bool Equals(Drive other) => Phase.Equals(other.Phase) && Intensity.Equals(other.Intensity);
+        public override bool Equals(object? obj) => obj is Drive other && Equals(other);
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => HashCode.Combine(Phase, Intensity);
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

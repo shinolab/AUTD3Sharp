@@ -15,15 +15,9 @@ namespace AUTD3Sharp.Utils
     public readonly struct Point3 : IEquatable<Point3>, IEnumerable<float>
     {
         #region ctor
-        public Point3(float x, float y, float z)
-        {
-            Coords = new(x, y, z);
-        }
+        public Point3(float x, float y, float z) => Coords = new Vector3(x, y, z);
 
-        public Point3(params float[] vector)
-        {
-            Coords = new(vector);
-        }
+        public Point3(params float[] vector) => Coords = new Vector3(vector);
         #endregion
 
         #region property
@@ -54,38 +48,10 @@ namespace AUTD3Sharp.Utils
 
         #region arithmetic
         public static Point3 Negate(Point3 operand) => new(-operand.X, -operand.Y, -operand.Z);
-
-        public static Point3 Add(Point3 left, Vector3 right)
-        {
-            var v1 = left.X + right.X;
-            var v2 = left.Y + right.Y;
-            var v3 = left.Z + right.Z;
-            return new(v1, v2, v3);
-        }
-        public static Point3 Subtract(Point3 left, Vector3 right)
-        {
-            var v1 = left.X - right.X;
-            var v2 = left.Y - right.Y;
-            var v3 = left.Z - right.Z;
-            return new(v1, v2, v3);
-        }
-
-        public static Point3 Divide(Point3 left, float right)
-        {
-            var v1 = left.X / right;
-            var v2 = left.Y / right;
-            var v3 = left.Z / right;
-            return new(v1, v2, v3);
-        }
-
-        public static Point3 Multiply(Point3 left, float right)
-        {
-            var v1 = left.X * right;
-            var v2 = left.Y * right;
-            var v3 = left.Z * right;
-            return new(v1, v2, v3);
-        }
-
+        public static Point3 Add(Point3 left, Vector3 right) => new(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+        public static Point3 Subtract(Point3 left, Vector3 right) => new(left.X - right.X, left.Y - right.Y, left.Z - right.Z);
+        public static Point3 Divide(Point3 left, float right) => new(left.X / right, left.Y / right, left.Z / right);
+        public static Point3 Multiply(Point3 left, float right) => new(left.X * right, left.Y * right, left.Z * right);
         public static Point3 Multiply(float left, Point3 right) => Multiply(right, left);
         public static Point3 operator -(Point3 operand) => Negate(operand);
         public static Point3 operator +(Point3 left, Vector3 right) => Add(left, right);
@@ -96,11 +62,7 @@ namespace AUTD3Sharp.Utils
         public static bool operator ==(Point3 left, Point3 right) => left.Equals(right);
         public static bool operator !=(Point3 left, Point3 right) => !left.Equals(right);
         public bool Equals(Point3 other) => X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
-        public override bool Equals(object? obj)
-        {
-            if (obj is Point3 vec) return Equals(vec);
-            return false;
-        }
+        public override bool Equals(object? obj) => obj is Point3 other && Equals(other);
         #endregion
 
         #region public methods
@@ -108,7 +70,7 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region util
-        public override int GetHashCode() => X.GetHashCode() ^ Y.GetHashCode() ^ Z.GetHashCode();
+        public override int GetHashCode() => HashCode.Combine(X, Y, Z);
         [ExcludeFromCodeCoverage] IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
         public string ToString(string format) => $"({string.Format(CultureInfo.CurrentCulture, format, X)}, {string.Format(CultureInfo.CurrentCulture, format, Y)}, {string.Format(CultureInfo.CurrentCulture, format, Z)})";
 

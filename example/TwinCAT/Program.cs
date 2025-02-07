@@ -3,6 +3,6 @@ using AUTD3Sharp;
 using AUTD3Sharp.Link;
 using Samples;
 
-using var autd = Controller.Builder([new AUTD3(Point3.Origin)]).Open(TwinCAT.Builder());
+using var autd = Controller.Open([new AUTD3(pos: Point3.Origin, rot: Quaternion.Identity)], new TwinCAT());
 
 SampleRunner.Run(autd);

@@ -4,11 +4,11 @@ using AUTD3Sharp.Gain;
 
 namespace Samples;
 
-internal delegate void TestFn<T>(Controller<T> autd);
+internal delegate void TestFn<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link;
 
 public class SampleRunner
 {
-    public static void Run<T>(Controller<T> autd)
+    public static void Run<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
     {
         var examples = new List<(TestFn<T>, string)> { (FocusTest.Test, "Single focus test"),
             (BesselBeamTest.Test, "Bessel beam test"),
@@ -21,7 +21,7 @@ public class SampleRunner
             (CustomGain.Test, "Custom gain test"),
             (GroupByTransducerTest.Test, "Group (by Transducer) test")
         };
-        if (autd.NumDevices >= 2) examples.Add((GroupByDeviceTest.Test, "Group (by Device) test"));
+        if (autd.NumDevices() >= 2) examples.Add((GroupByDeviceTest.Test, "Group (by Device) test"));
 
         Console.WriteLine("======== AUTD3 firmware information ========");
         Console.WriteLine(string.Join("\n", autd.FirmwareVersion()));

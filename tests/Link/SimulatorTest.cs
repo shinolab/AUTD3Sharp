@@ -7,6 +7,6 @@ public class SimulatorTest
     [Fact]
     public void TestSimulator()
     {
-        _ = Simulator.Builder(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080));
+        _ = new Simulator(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080));
     }
 }
