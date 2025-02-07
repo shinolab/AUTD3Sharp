@@ -72,7 +72,7 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct ConstPtr
+    public unsafe partial struct ConstPtr
     {
         public IntPtr Item1;
     }
@@ -128,13 +128,13 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct LinkPtr
+    public unsafe partial struct LinkPtr
     {
         public IntPtr Item1;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct ResultLink
+    public unsafe partial struct ResultLink
     {
         public LinkPtr result;
         public uint err_len;
@@ -168,7 +168,7 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct ResultStatus
+    public unsafe partial struct ResultStatus
     {
         public AUTDStatus result;
         public uint err_len;
@@ -219,7 +219,7 @@ namespace AUTD3Sharp.NativeMethods
         None = 255,
     }
 
-    internal enum AUTDStatus : byte
+    public enum AUTDStatus : byte
     {
         AUTDTrue = 0,
         AUTDFalse = 1,

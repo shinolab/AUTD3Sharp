@@ -87,6 +87,24 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
     let content = std::fs::read_to_string(&out_file)?;
     let content = content.replace("void*", "IntPtr");
     let content = content.replace("void @null", "byte @null");
+    let content = content.replace(
+        "internal unsafe partial struct ConstPtr",
+        "public unsafe partial struct ConstPtr",
+    );
+    let content = content.replace(
+        "internal unsafe partial struct ResultLink",
+        "public unsafe partial struct ResultLink",
+    );
+    let content = content.replace(
+        "internal unsafe partial struct LinkPtr",
+        "public unsafe partial struct LinkPtr",
+    );
+    let content = content.replace(
+        "internal unsafe partial struct ResultStatus",
+        "public unsafe partial struct ResultStatus",
+    );
+    let content = content.replace("internal enum AUTDStatus", "public enum AUTDStatus");
+
     // Following substitutions are required to avoid alignment issues
     let content = content.replace("public DcSysTime sys_time;", "public ulong sys_time;");
     let content = content.replace("public GPIOIn gpio_in;", "public byte gpio_in;");
