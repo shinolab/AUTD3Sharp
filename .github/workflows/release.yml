@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-build
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-make
       - run: cargo make unity-build
       - run: |
           git fetch origin upm/latest:upm/latest
@@ -52,7 +54,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-build
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-make
       - id: get_version
         run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3 | cut -d . -f 1,2,3)" >> $GITHUB_OUTPUT
       - run: |
