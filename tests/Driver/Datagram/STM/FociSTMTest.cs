@@ -244,7 +244,7 @@ public class FociSTMTest
         autd.Send(Silencer.Disable());
         const int size = 2;
         var center = autd.Center() + new Vector3(0, 0, 150);
-        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints2((center, center))), 1.0f * Hz).IntoNearest());
+        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
                 Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
@@ -257,7 +257,7 @@ public class FociSTMTest
         autd.Send(Silencer.Disable());
         const int size = 2;
         var center = autd.Center() + new Vector3(0, 0, 150);
-        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints3((center, center, center))), 1.0f * Hz).IntoNearest());
+        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
                 Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
@@ -270,7 +270,7 @@ public class FociSTMTest
         autd.Send(Silencer.Disable());
         const int size = 2;
         var center = autd.Center() + new Vector3(0, 0, 150);
-        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints4((center, center, center, center))), 1.0f * Hz).IntoNearest());
+        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
                 Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
@@ -283,7 +283,7 @@ public class FociSTMTest
         autd.Send(Silencer.Disable());
         const int size = 2;
         var center = autd.Center() + new Vector3(0, 0, 150);
-        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints5((center, center, center, center, center))), 1.0f * Hz).IntoNearest());
+        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
                 Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
@@ -296,7 +296,7 @@ public class FociSTMTest
         autd.Send(Silencer.Disable());
         const int size = 2;
         var center = autd.Center() + new Vector3(0, 0, 150);
-        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints6((center, center, center, center, center, center))), 1.0f * Hz).IntoNearest());
+        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
                 Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
@@ -309,7 +309,7 @@ public class FociSTMTest
         autd.Send(Silencer.Disable());
         const int size = 2;
         var center = autd.Center() + new Vector3(0, 0, 150);
-        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints7((center, center, center, center, center, center, center))), 1.0f * Hz).IntoNearest());
+        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
                 Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
@@ -322,10 +322,18 @@ public class FociSTMTest
         autd.Send(Silencer.Disable());
         const int size = 2;
         var center = autd.Center() + new Vector3(0, 0, 150);
-        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints8((center, center, center, center, center, center, center, center))), 1.0f * Hz).IntoNearest());
+        autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center, center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
                 Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+    }
+
+    [Fact]
+    public void TestFociSTM0()
+    {
+        var autd = CreateController();
+        autd.Send(Silencer.Disable());
+        Assert.Throws<ArgumentOutOfRangeException>(() => autd.Send(new FociSTM(Enumerable.Empty<ControlPoints>(), 1.0f * Hz).IntoNearest()));
     }
 
     [Fact]
@@ -333,19 +341,14 @@ public class FociSTMTest
     {
         var autd = CreateController();
         autd.Send(Silencer.Disable());
-        var center = autd.Center() + new Vector3(0, 0, 150);
-        var stm = new FociSTM(Enumerable.Range(0, 1).Select(_ => center), 1.0f * Hz).IntoNearest();
-        stm.Foci = [new ControlPoints9()];
-        Assert.Throws<ArgumentOutOfRangeException>(() => autd.Send(stm));
+        Assert.Throws<ArgumentOutOfRangeException>(() => autd.Send(new FociSTM(Enumerable.Range(0, 2).Select(i => new ControlPoints([Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin])), 1.0f * Hz).IntoNearest()));
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    private struct ControlPoints9 : IControlPoints
+    [Fact]
+    public void TestFociSTMMixed()
     {
-        public (ControlPoint, ControlPoint) _points;
-        private AUTD3Sharp.NativeMethods.EmitIntensity _intensity;
-        public ControlPoint[] Points { get; set; }
-        public EmitIntensity Intensity { get; set; }
-        readonly public byte N => 9;
+        var autd = CreateController();
+        autd.Send(Silencer.Disable());
+        Assert.Throws<AUTDException>(() => autd.Send(new FociSTM([new ControlPoints([Point3.Origin]), new ControlPoints([Point3.Origin, Point3.Origin])], 1.0f * Hz).IntoNearest()));
     }
 }

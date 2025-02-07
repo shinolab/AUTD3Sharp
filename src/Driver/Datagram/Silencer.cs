@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Driver.Datagram;
 
@@ -13,13 +12,11 @@ namespace AUTD3Sharp
         internal DatagramPtr RawPtr(SilencerTarget target);
     }
 
-    public readonly struct FixedCompletionTime : ISilencer
+    public class FixedCompletionTime : ISilencer
     {
         public Duration Intensity { get; init; } = Duration.FromMicros(250);
         public Duration Phase { get; init; } = Duration.FromMillis(1);
         public bool StrictMode { get; init; } = true;
-
-        public FixedCompletionTime() { }
 
         DatagramPtr ISilencer.RawPtr(SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(new NativeMethods.FixedCompletionTime
         {
@@ -29,13 +26,11 @@ namespace AUTD3Sharp
         }, target);
     }
 
-    public readonly struct FixedCompletionSteps : ISilencer
+    public class FixedCompletionSteps : ISilencer
     {
         public ushort Intensity { get; init; } = 10;
         public ushort Phase { get; init; } = 40;
         public bool StrictMode { get; init; } = true;
-
-        public FixedCompletionSteps() { }
 
         internal NativeMethods.FixedCompletionSteps ToNative() => new()
         {
@@ -47,7 +42,7 @@ namespace AUTD3Sharp
         DatagramPtr ISilencer.RawPtr(SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(ToNative(), target);
     }
 
-    public readonly struct FixedUpdateRate : ISilencer
+    public class FixedUpdateRate : ISilencer
     {
         public ushort Intensity { get; init; }
         public ushort Phase { get; init; }

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -8,11 +9,7 @@ namespace AUTD3Sharp
     [StructLayout(LayoutKind.Sequential)]
     public struct GainSTMOption
     {
-        public GainSTMMode mode = GainSTMMode.PhaseIntensityFull;
-
-        public GainSTMOption()
-        {
-        }
+        public GainSTMMode mode;
     }
 
     public enum GainSTMMode : byte
@@ -65,6 +62,7 @@ namespace AUTD3Sharp
 
     namespace NativeMethods
     {
+        [ExcludeFromCodeCoverage]
         public static class EnumExtensions
         {
             internal static Segment ToNative(this AUTD3Sharp.Segment seg) => seg switch
@@ -90,24 +88,6 @@ namespace AUTD3Sharp
                 _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
             };
 
-            internal static AUTD3Sharp.GPIOIn ToManaged(this GPIOIn gpio) => gpio switch
-            {
-                GPIOIn.I0 => AUTD3Sharp.GPIOIn.I0,
-                GPIOIn.I1 => AUTD3Sharp.GPIOIn.I1,
-                GPIOIn.I2 => AUTD3Sharp.GPIOIn.I2,
-                GPIOIn.I3 => AUTD3Sharp.GPIOIn.I3,
-                _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
-            };
-
-            internal static GPIOOut ToNative(this AUTD3Sharp.GPIOOut gpio) => gpio switch
-            {
-                AUTD3Sharp.GPIOOut.O0 => GPIOOut.O0,
-                AUTD3Sharp.GPIOOut.O1 => GPIOOut.O1,
-                AUTD3Sharp.GPIOOut.O2 => GPIOOut.O2,
-                AUTD3Sharp.GPIOOut.O3 => GPIOOut.O3,
-                _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
-            };
-
             internal static AUTD3Sharp.GPIOOut ToManaged(this GPIOOut gpio) => gpio switch
             {
                 GPIOOut.O0 => AUTD3Sharp.GPIOOut.O0,
@@ -124,13 +104,6 @@ namespace AUTD3Sharp
                 _ => throw new ArgumentOutOfRangeException(nameof(tag), tag, null)
             };
 
-            internal static AUTD3Sharp.SpinStrategyTag ToManaged(this SpinStrategyTag tag) => tag switch
-            {
-                SpinStrategyTag.YieldThread => AUTD3Sharp.SpinStrategyTag.YieldThread,
-                SpinStrategyTag.SpinLoopHint => AUTD3Sharp.SpinStrategyTag.SpinLoopHint,
-                _ => throw new ArgumentOutOfRangeException(nameof(tag), tag, null)
-            };
-
             internal static ParallelMode ToNative(this AUTD3Sharp.ParallelMode mode) => mode switch
             {
                 AUTD3Sharp.ParallelMode.Auto => ParallelMode.Auto,
@@ -138,16 +111,9 @@ namespace AUTD3Sharp
                 AUTD3Sharp.ParallelMode.Off => ParallelMode.Off,
                 _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
-
-            internal static AUTD3Sharp.ParallelMode ToManaged(this ParallelMode mode) => mode switch
-            {
-                ParallelMode.Auto => AUTD3Sharp.ParallelMode.Auto,
-                ParallelMode.On => AUTD3Sharp.ParallelMode.On,
-                ParallelMode.Off => AUTD3Sharp.ParallelMode.Off,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
-            };
         }
 
+        [ExcludeFromCodeCoverage]
         public static class ResultExtensions
         {
             internal static AUTDStatus Validate(this ResultStatus res)

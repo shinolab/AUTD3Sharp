@@ -3,6 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     [StructLayout(LayoutKind.Sequential)]
@@ -23,3 +27,7 @@ namespace AUTD3Sharp
         [ExcludeFromCodeCoverage] public override int GetHashCode() => SysTime.GetHashCode();
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

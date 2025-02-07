@@ -1,6 +1,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp.Driver.FPGA.Defined
 {
     public class FPGAState : IEquatable<FPGAState>
@@ -49,3 +53,7 @@ namespace AUTD3Sharp.Driver.FPGA.Defined
         public override string ToString() => $"Thermal assert = {IsThermalAssert()}";
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

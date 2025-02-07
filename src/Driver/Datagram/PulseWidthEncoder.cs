@@ -4,6 +4,10 @@ using System.Runtime.InteropServices;
 using System;
 using System.Collections.Concurrent;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public sealed class PulseWidthEncoder : IDatagram
@@ -24,3 +28,7 @@ namespace AUTD3Sharp
         DatagramPtr IDatagram.Ptr(Geometry geometry) => _f == null ? NativeMethodsBase.AUTDDatagramPulseWidthEncoderDefault() : NativeMethodsBase.AUTDDatagramPulseWidthEncoder(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

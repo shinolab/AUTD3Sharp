@@ -8,15 +8,13 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Modulation
 {
-    public readonly struct SineOption
+    public class SineOption
     {
         public byte Intensity { get; init; } = 0xFF;
         public byte Offset { get; init; } = 0x80;
         public Angle Phase { get; init; } = 0.0f * rad;
         public bool Clamp { get; init; } = false;
         public SamplingConfig SamplingConfig { get; init; } = SamplingConfig.Freq4K;
-
-        public SineOption() { }
 
         internal NativeMethods.SineOption ToNative() => new()
         {

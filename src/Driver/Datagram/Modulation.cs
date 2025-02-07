@@ -1,6 +1,10 @@
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp.Driver.Datagram
 {
     [ComVisible(false)]
@@ -14,3 +18,7 @@ namespace AUTD3Sharp.Driver.Datagram
         DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

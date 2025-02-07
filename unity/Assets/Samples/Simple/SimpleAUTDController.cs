@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Net;
 using AUTD3Sharp;
+using AUTD3Sharp.Gain;
+using AUTD3Sharp.Modulation;
 using AUTD3Sharp.Link;
 using UnityEngine;
 using static AUTD3Sharp.Units;
 
-#if UNITY_2020_2_OR_NEWER
 #nullable enable
-#endif
 
 public class SimpleAUTDController : MonoBehaviour
 {
@@ -22,8 +22,7 @@ public class SimpleAUTDController : MonoBehaviour
     {
         try
         {
-            _autd = Controller.Builder(new[] { new AUTD3(gameObject.transform.position).WithRotation(gameObject.transform.rotation) })
-                .Open(AUTD3Sharp.Link.Simulator.Builder(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080)));
+            _autd = Controller.Open(new[] { new AUTD3(pos: gameObject.transform.position, rot: gameObject.transform.rotation) }, new AUTD3Sharp.Link.Simulator(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080)));
         }
         catch (Exception)
         {
@@ -36,10 +35,10 @@ public class SimpleAUTDController : MonoBehaviour
 #endif
         }
 
-        _autd!.Send(new AUTD3Sharp.Modulation.Sine(150 * Hz)); // 150 Hz
+        _autd!.Send(new Sine(freq: 150 * Hz, option: new SineOption())); // 150 Hz
 
         if (Target == null) return;
-        _autd!.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));
+        _autd!.Send(new Focus(pos: Target.transform.position, option: new FocusOption()));
         _oldPosition = Target.transform.position;
     }
 
@@ -55,7 +54,7 @@ public class SimpleAUTDController : MonoBehaviour
         if (_autd == null) return;
 
         if (Target == null || Target.transform.position == _oldPosition) return;
-        _autd.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));
+        _autd.Send(new Focus(pos: Target.transform.position, option: new FocusOption()));
         _oldPosition = Target.transform.position;
     }
 
@@ -65,6 +64,4 @@ public class SimpleAUTDController : MonoBehaviour
     }
 }
 
-#if UNITY_2020_2_OR_NEWER
 #nullable restore
-#endif

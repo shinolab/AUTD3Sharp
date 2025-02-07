@@ -1,6 +1,10 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public readonly struct Angle
@@ -40,3 +44,7 @@ namespace AUTD3Sharp
 #pragma warning restore IDE1006
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

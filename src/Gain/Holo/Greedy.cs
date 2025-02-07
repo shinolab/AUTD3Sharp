@@ -10,12 +10,10 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    public readonly struct GreedyOption
+    public class GreedyOption
     {
         public byte PhaseDiv { get; init; } = 16;
         public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Uniform(EmitIntensity.Max);
-
-        public GreedyOption() { }
 
         internal NativeMethods.GreedyOption ToNative() => new()
         {

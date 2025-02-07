@@ -11,12 +11,10 @@ namespace AUTD3Sharp.Link
         internal override LinkPtr Resolve() => NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT().Validate();
     }
 
-    public readonly struct RemoteTwinCATOption
+    public class RemoteTwinCATOption
     {
         public string ServerIp { get; init; } = "";
         public string ClientAmsNetId { get; init; } = "";
-
-        public RemoteTwinCATOption() { }
     }
 
     public sealed class RemoteTwinCAT : Driver.Link

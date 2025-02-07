@@ -8,12 +8,10 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Gain
 {
-    public readonly struct FocusOption
+    public class FocusOption
     {
         public EmitIntensity Intensity { get; init; } = EmitIntensity.Max;
         public Phase PhaseOffset { get; init; } = Phase.Zero;
-
-        public FocusOption() { }
 
         internal NativeMethods.FocusOption ToNative() => new()
         {

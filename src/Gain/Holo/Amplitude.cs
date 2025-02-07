@@ -3,6 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp.Gain.Holo
 {
     [StructLayout(LayoutKind.Sequential)]
@@ -51,3 +55,7 @@ namespace AUTD3Sharp
 #pragma warning restore IDE1006
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

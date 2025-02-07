@@ -8,6 +8,10 @@ using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
 using AUTD3Sharp.Driver.Datagram;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public sealed class Controller<T> : Geometry, IDisposable
@@ -110,3 +114,7 @@ namespace AUTD3Sharp
         }
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

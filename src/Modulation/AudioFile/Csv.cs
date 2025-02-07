@@ -7,11 +7,9 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Modulation.AudioFile
 {
-    public readonly struct CsvOption
+    public class CsvOption
     {
         public char Deliminator { get; init; } = ',';
-
-        public CsvOption() { }
     }
 
     public sealed class Csv : Driver.Datagram.Modulation

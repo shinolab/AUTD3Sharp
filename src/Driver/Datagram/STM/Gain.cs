@@ -3,6 +3,10 @@ using System.Linq;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public sealed class GainSTM : IDatagramS, IDatagram, IDatagramL
@@ -37,3 +41,7 @@ namespace AUTD3Sharp
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDSTMGainIntoDatagram(RawPtr(geometry));
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

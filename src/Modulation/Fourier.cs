@@ -8,13 +8,11 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Modulation
 {
-    public readonly struct FourierOption
+    public class FourierOption
     {
         public float? ScaleFactor { get; init; } = null;
         public bool Clamp { get; init; } = false;
         public byte Offset { get; init; } = 0;
-
-        public FourierOption() { }
 
         internal NativeMethods.FourierOption ToNative() => new()
         {

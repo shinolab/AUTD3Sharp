@@ -3,6 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 #if UNITY_2020_2_OR_NEWER
 using System.Runtime.CompilerServices;
+#nullable enable
 #endif
 
 namespace AUTD3Sharp
@@ -37,3 +38,7 @@ namespace AUTD3Sharp
         [ExcludeFromCodeCoverage] public override int GetHashCode() => HashCode.Combine(Phase, Intensity);
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

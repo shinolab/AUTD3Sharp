@@ -8,12 +8,10 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Gain
 {
-    public readonly struct BesselOption
+    public class BesselOption
     {
         public EmitIntensity Intensity { get; init; } = EmitIntensity.Max;
         public Phase PhaseOffset { get; init; } = Phase.Zero;
-
-        public BesselOption() { }
 
         internal NativeMethods.BesselOption ToNative() => new()
         {

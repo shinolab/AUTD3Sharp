@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Net;
 using AUTD3Sharp;
+using AUTD3Sharp.Gain;
+using AUTD3Sharp.Modulation;
 using UnityEngine;
 using static AUTD3Sharp.Units;
 
-#if UNITY_2020_2_OR_NEWER
 #nullable enable
-#endif
 
 public class MultiAUTD3Controller : MonoBehaviour
 {
@@ -17,13 +17,12 @@ public class MultiAUTD3Controller : MonoBehaviour
 
     void Awake()
     {
-        var builder = Controller.Builder(
-            FindObjectsByType<AUTD3Device>(FindObjectsSortMode.InstanceID).Select(obj => new AUTD3(obj.transform.position).WithRotation(obj.transform.rotation))
-        );
-
         try
         {
-            _autd = builder.Open(AUTD3Sharp.Link.Simulator.Builder(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080)));
+            _autd = Controller.Open(
+                    FindObjectsByType<AUTD3Device>(FindObjectsSortMode.InstanceID).Select(obj => new AUTD3(pos: obj.transform.position, rot: obj.transform.rotation)),
+                    new AUTD3Sharp.Link.Simulator(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080))
+                );
         }
         catch (Exception)
         {
@@ -35,10 +34,10 @@ public class MultiAUTD3Controller : MonoBehaviour
 #endif
         }
 
-        _autd!.Send(new AUTD3Sharp.Modulation.Sine(150 * Hz)); // 150 Hz
+        _autd!.Send(new Sine(freq: 150 * Hz, option: new SineOption()));
 
         if (Target == null) return;
-        _autd!.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));
+        _autd!.Send(new Focus(pos: Target.transform.position, option: new FocusOption()));
         _oldPosition = Target.transform.position;
     }
 
@@ -46,7 +45,7 @@ public class MultiAUTD3Controller : MonoBehaviour
     {
         if (Target == null || Target.transform.position == _oldPosition) return;
         if (_autd == null) return;
-        _autd.Send(new AUTD3Sharp.Gain.Focus(Target.transform.position));
+        _autd.Send(new Focus(pos: Target.transform.position, option: new FocusOption()));
         _oldPosition = Target.transform.position;
     }
 
@@ -56,6 +55,4 @@ public class MultiAUTD3Controller : MonoBehaviour
     }
 }
 
-#if UNITY_2020_2_OR_NEWER
 #nullable restore
-#endif

@@ -8,12 +8,10 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Gain
 {
-    public readonly struct PlaneOption
+    public class PlaneOption
     {
         public EmitIntensity Intensity { get; init; } = EmitIntensity.Max;
         public Phase PhaseOffset { get; init; } = Phase.Zero;
-
-        public PlaneOption() { }
 
         internal NativeMethods.PlaneOption ToNative() => new()
         {

@@ -4,6 +4,7 @@ using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
 using System.Runtime.CompilerServices;
+#nullable enable
 #endif
 
 namespace AUTD3Sharp
@@ -33,3 +34,7 @@ namespace AUTD3Sharp
         [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.GetHashCode();
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

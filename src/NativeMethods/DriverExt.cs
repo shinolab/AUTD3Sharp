@@ -9,11 +9,7 @@ namespace AUTD3Sharp
     [StructLayout(LayoutKind.Sequential)]
     public struct GainSTMOption
     {
-        public GainSTMMode mode = GainSTMMode.PhaseIntensityFull;
-
-        public GainSTMOption()
-        {
-        }
+        public GainSTMMode mode;
     }
 
     public enum GainSTMMode : byte

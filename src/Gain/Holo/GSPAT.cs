@@ -10,12 +10,10 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    public readonly struct GSPATOption
+    public class GSPATOption
     {
         public uint Repeat { get; init; } = 100;
         public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
-
-        public GSPATOption() { }
 
         internal NativeMethods.GSPATOption ToNative() => new()
         {

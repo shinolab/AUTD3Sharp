@@ -203,9 +203,13 @@ os.remove("unity/Assets/Scripts/AUTD3Sharp.nuspec")
 os.remove("unity/Assets/Scripts/.gitignore")
 with contextlib.suppress(FileNotFoundError):
     os.remove("unity/Assets/Scripts/LICENSE.txt")
+with contextlib.suppress(FileNotFoundError):
     shutil.rmtree("unity/Assets/Scripts/.vs")
+with contextlib.suppress(FileNotFoundError):
     shutil.rmtree("unity/Assets/Scripts/obj")
+with contextlib.suppress(FileNotFoundError):
     shutil.rmtree("unity/Assets/Scripts/bin")
+with contextlib.suppress(FileNotFoundError):
     shutil.rmtree("unity/Assets/Scripts/native")
 shutil.copy(
     "src/NativeMethods/DriverExt.cs",

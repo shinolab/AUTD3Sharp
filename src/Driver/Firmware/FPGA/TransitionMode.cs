@@ -2,6 +2,10 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public class TransitionMode : IEquatable<TransitionMode>
@@ -25,3 +29,7 @@ namespace AUTD3Sharp
         [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.GetHashCode();
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

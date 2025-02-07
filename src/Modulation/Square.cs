@@ -6,14 +6,12 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Modulation
 {
-    public readonly struct SquareOption
+    public class SquareOption
     {
         public byte Low { get; init; } = 0x00;
         public byte High { get; init; } = 0xFF;
         public float Duty { get; init; } = 0.5f;
         public SamplingConfig SamplingConfig { get; init; } = SamplingConfig.Freq4K;
-
-        public SquareOption() { }
 
         internal NativeMethods.SquareOption ToNative() => new()
         {

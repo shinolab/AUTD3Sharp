@@ -10,11 +10,9 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    public readonly struct NaiveOption
+    public class NaiveOption
     {
         public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
-
-        public NaiveOption() { }
 
         internal NativeMethods.NaiveOption ToNative() => new()
         {

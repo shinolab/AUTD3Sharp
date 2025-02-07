@@ -6,12 +6,10 @@ using AUTD3Sharp.Driver.Datagram;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    public readonly struct GSOption
+    public class GSOption
     {
         public uint Repeat { get; init; } = 100;
         public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
-
-        public GSOption() { }
 
         internal NativeMethods.GSOption ToNative() => new()
         {

@@ -11,7 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace AUTD3Sharp.Gain.Holo
 {
-    public readonly struct LMOption
+    public class LMOption
     {
         public float Eps1 { get; init; } = 1e-8f;
         public float Eps2 { get; init; } = 1e-8f;
@@ -19,8 +19,6 @@ namespace AUTD3Sharp.Gain.Holo
         public uint KMax { get; init; } = 5;
         public float[] Initial { get; init; } = Array.Empty<float>();
         public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
-
-        public LMOption() { }
 
         internal NativeMethods.LMOption ToNative()
         {
