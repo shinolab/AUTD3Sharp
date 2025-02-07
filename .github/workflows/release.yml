@@ -60,6 +60,6 @@ jobs:
       - id: get_version
         run: echo "VERSION=$(echo $GITHUB_REF | cut -d / -f 3 | cut -d . -f 1,2,3)" >> $GITHUB_OUTPUT
       - run: |
-          cagro make build
+          cargo make build
           cd src/bin/Release
           dotnet nuget push autd3sharp.*.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }} --skip-duplicate --no-symbols
