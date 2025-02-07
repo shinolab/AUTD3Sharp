@@ -1,5 +1,3 @@
-using AUTD3Sharp.Driver;
-
 namespace tests;
 
 public class AUTDTest
@@ -62,7 +60,7 @@ public class AUTDTest
     {
         using var autd = CreateController();
 
-        Assert.Equal("v10.0.1", FirmwareVersion.LatestVersion);
+        Assert.Equal("v10.0.1", AUTD3Sharp.Driver.FirmwareVersion.LatestVersion);
 
         {
             foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))

@@ -1,6 +1,5 @@
 using AUTD3Sharp.NativeMethods;
 using System;
-using AUTD3Sharp.Driver.Datagram;
 
 #if UNITY_2020_2_OR_NEWER
 using System.Runtime.CompilerServices;
@@ -15,7 +14,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
         public CsvOption() { }
     }
 
-    public sealed class Csv : IModulation
+    public sealed class Csv : Driver.Datagram.Modulation
     {
         public string Path;
         public SamplingConfig Config;
@@ -28,7 +27,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             Option = option;
         }
 
-        ModulationPtr IModulation.ModulationPtr()
+        internal override ModulationPtr ModulationPtr()
         {
             var filenameBytes = Ffi.ToNullTerminatedUtf8(Path);
             unsafe

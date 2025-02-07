@@ -30,7 +30,6 @@ namespace AUTD3Sharp
 
             foreach (var (key, d) in datagramMap)
             {
-                if (keymap.ContainsKey(key)) throw new AUTDException("Key already exists");
                 datagrams.Add(d.Ptr(Geometry));
                 keys.Add(k);
                 keymap[key] = k++;

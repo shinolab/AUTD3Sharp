@@ -5,321 +5,204 @@ public class ControlPointsTest
     [Fact]
     public void ControlPoint()
     {
+        var c1 = new ControlPoint();
+        var c2 = new ControlPoint
         {
-            var c = new ControlPoint
-            {
-                Point = new Point3(1, 2, 3),
-                PhaseOffset = new Phase(0xFF),
-            };
-            Assert.Equal(new Point3(1, 2, 3), c.Point);
-            Assert.Equal(new Phase(0xFF), c.PhaseOffset);
-        }
+            Point = Point3.Origin,
+            PhaseOffset = Phase.Zero,
+        };
+        var c3 = new ControlPoint
         {
-            var c = new ControlPoint();
-            Assert.Equal(new Point3(0, 0, 0), c.Point);
-            Assert.Equal(new Phase(0x00), c.PhaseOffset);
-        }
+            Point = Point3.Origin,
+            PhaseOffset = new Phase(0xFF),
+        };
+        var c4 = new ControlPoint
+        {
+            Point = new Point3(0, 0, 1),
+            PhaseOffset = Phase.Zero,
+        };
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 
     [Fact]
     public void ControlPoints1()
     {
+        var c1 = new ControlPoints1();
+        var c2 = new ControlPoints1
         {
-            var c = new ControlPoints1
-            {
-                Points = [new ControlPoint(new Point3(1, 2, 3))],
-                Intensity = EmitIntensity.Min,
-            };
-            Assert.Equal([new ControlPoint(new Point3(1, 2, 3))], c.Points);
-            Assert.Equal(EmitIntensity.Min, c.Intensity);
-        }
+            Points = [new ControlPoint()],
+            Intensity = EmitIntensity.Max,
+        };
+        var c3 = new ControlPoints1
         {
-            var c = new ControlPoints1(new Point3(1, 2, 3));
-            Assert.Equal([new ControlPoint(new Point3(1, 2, 3))], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
-        {
-            var c = new ControlPoints1();
-            Assert.Equal([new ControlPoint()], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
+            Points = [new ControlPoint()],
+            Intensity = EmitIntensity.Min,
+        };
+        var c4 = new ControlPoints1(new Point3(0, 0, 1));
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 
     [Fact]
     public void ControlPoints2()
     {
+        var c1 = new ControlPoints2();
+        var c2 = new ControlPoints2
         {
-            var c = new ControlPoints2
-            {
-                Points = [new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6))],
-                Intensity = EmitIntensity.Min,
-            };
-            Assert.Equal([new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6))], c.Points);
-            Assert.Equal(EmitIntensity.Min, c.Intensity);
-        }
+            Points = [new ControlPoint(), new ControlPoint()],
+            Intensity = EmitIntensity.Max,
+        };
+        var c3 = new ControlPoints2
         {
-            var c = new ControlPoints2((new Point3(1, 2, 3), new Point3(4, 5, 6)));
-            Assert.Equal([new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6))], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
-        {
-            var c = new ControlPoints2();
-            Assert.Equal([new ControlPoint(), new ControlPoint()], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
+            Intensity = EmitIntensity.Min,
+        };
+        var c4 = new ControlPoints2((new Point3(0, 0, 1), Point3.Origin));
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 
     [Fact]
     public void ControlPoints3()
     {
+        var c1 = new ControlPoints3();
+        var c2 = new ControlPoints3
         {
-            var c = new ControlPoints3
-            {
-                Points =
-                [
-                    new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                    new ControlPoint(new Point3(7, 8, 9))
-                ],
-                Intensity = EmitIntensity.Min,
-            };
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Min, c.Intensity);
-        }
+            Points = [new ControlPoint(), new ControlPoint(), new ControlPoint()],
+            Intensity = EmitIntensity.Max,
+        };
+        var c3 = new ControlPoints3
         {
-            var c = new ControlPoints3((new Point3(1, 2, 3), new Point3(4, 5, 6), new Point3(7, 8, 9)));
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
-        {
-            var c = new ControlPoints3();
-            Assert.Equal([new ControlPoint(), new ControlPoint(), new ControlPoint()], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
+            Intensity = EmitIntensity.Min,
+        };
+        var c4 = new ControlPoints3((new Point3(0, 0, 1), Point3.Origin, Point3.Origin));
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 
     [Fact]
     public void ControlPoints4()
     {
+        var c1 = new ControlPoints4();
+        var c2 = new ControlPoints4
         {
-            var c = new ControlPoints4
-            {
-                Points =
-                [
-                    new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                    new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12))
-                ],
-                Intensity = EmitIntensity.Min,
-            };
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Min, c.Intensity);
-        }
+            Points = [new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint()],
+            Intensity = EmitIntensity.Max,
+        };
+        var c3 = new ControlPoints4
         {
-            var c = new ControlPoints4((new Point3(1, 2, 3), new Point3(4, 5, 6), new Point3(7, 8, 9),
-                new Point3(10, 11, 12)));
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
-        {
-            var c = new ControlPoints4();
-            Assert.Equal([new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint()], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
+            Intensity = EmitIntensity.Min,
+        };
+        var c4 = new ControlPoints4((new Point3(0, 0, 1), Point3.Origin, Point3.Origin, Point3.Origin));
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 
     [Fact]
     public void ControlPoints5()
     {
+        var c1 = new ControlPoints5();
+        var c2 = new ControlPoints5
         {
-            var c = new ControlPoints5
-            {
-                Points =
-                [
-                    new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                    new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                    new ControlPoint(new Point3(13, 14, 15))
-                ],
-                Intensity = EmitIntensity.Min,
-            };
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                new ControlPoint(new Point3(13, 14, 15))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Min, c.Intensity);
-        }
+            Points = [new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint()],
+            Intensity = EmitIntensity.Max,
+        };
+        var c3 = new ControlPoints5
         {
-            var c = new ControlPoints5((new Point3(1, 2, 3), new Point3(4, 5, 6), new Point3(7, 8, 9),
-                new Point3(10, 11, 12), new Point3(13, 14, 15)));
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                new ControlPoint(new Point3(13, 14, 15))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
-        {
-            var c = new ControlPoints5();
-            Assert.Equal(
-                [new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint()],
-                c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
+            Intensity = EmitIntensity.Min,
+        };
+        var c4 = new ControlPoints5((new Point3(0, 0, 1), Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin));
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 
     [Fact]
     public void ControlPoints6()
     {
+        var c1 = new ControlPoints6();
+        var c2 = new ControlPoints6
         {
-            var c = new ControlPoints6
-            {
-                Points =
-                [
-                    new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                    new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                    new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18))
-                ],
-                Intensity = EmitIntensity.Min,
-            };
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Min, c.Intensity);
-        }
+            Points = [new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint()],
+            Intensity = EmitIntensity.Max,
+        };
+        var c3 = new ControlPoints6
         {
-            var c = new ControlPoints6((new Point3(1, 2, 3), new Point3(4, 5, 6), new Point3(7, 8, 9),
-                new Point3(10, 11, 12), new Point3(13, 14, 15), new Point3(16, 17, 18)));
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
-        {
-            var c = new ControlPoints6();
-            Assert.Equal(
-            [
-                new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(),
-                new ControlPoint()
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
+            Intensity = EmitIntensity.Min,
+        };
+        var c4 = new ControlPoints6((new Point3(0, 0, 1), Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin));
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 
     [Fact]
     public void ControlPoints7()
     {
+        var c1 = new ControlPoints7();
+        var c2 = new ControlPoints7
         {
-            var c = new ControlPoints7
-            {
-                Points =
-                [
-                    new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                    new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                    new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18)),
-                    new ControlPoint(new Point3(19, 20, 21))
-                ],
-                Intensity = EmitIntensity.Min,
-            };
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18)),
-                new ControlPoint(new Point3(19, 20, 21))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Min, c.Intensity);
-        }
+            Points = [new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint()],
+            Intensity = EmitIntensity.Max,
+        };
+        var c3 = new ControlPoints7
         {
-            var c = new ControlPoints7((new Point3(1, 2, 3), new Point3(4, 5, 6), new Point3(7, 8, 9),
-                new Point3(10, 11, 12), new Point3(13, 14, 15), new Point3(16, 17, 18), new Point3(19, 20, 21)));
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18)),
-                new ControlPoint(new Point3(19, 20, 21))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
-        {
-            var c = new ControlPoints7();
-            Assert.Equal(
-            [
-                new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(),
-                new ControlPoint(), new ControlPoint()
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
+            Intensity = EmitIntensity.Min,
+        };
+        var c4 = new ControlPoints7((new Point3(0, 0, 1), Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin));
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 
     [Fact]
     public void ControlPoints8()
     {
+        var c1 = new ControlPoints8();
+        var c2 = new ControlPoints8
         {
-            var c = new ControlPoints8
-            {
-                Points =
-                [
-                    new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                    new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                    new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18)),
-                    new ControlPoint(new Point3(19, 20, 21)), new ControlPoint(new Point3(22, 23, 24))
-                ],
-                Intensity = EmitIntensity.Min,
-            };
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18)),
-                new ControlPoint(new Point3(19, 20, 21)), new ControlPoint(new Point3(22, 23, 24))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Min, c.Intensity);
-        }
+            Points = [new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint()],
+            Intensity = EmitIntensity.Max,
+        };
+        var c3 = new ControlPoints8
         {
-            var c = new ControlPoints8((new Point3(1, 2, 3), new Point3(4, 5, 6), new Point3(7, 8, 9),
-                new Point3(10, 11, 12), new Point3(13, 14, 15), new Point3(16, 17, 18), new Point3(19, 20, 21),
-                new Point3(22, 23, 24)));
-            Assert.Equal(
-            [
-                new ControlPoint(new Point3(1, 2, 3)), new ControlPoint(new Point3(4, 5, 6)),
-                new ControlPoint(new Point3(7, 8, 9)), new ControlPoint(new Point3(10, 11, 12)),
-                new ControlPoint(new Point3(13, 14, 15)), new ControlPoint(new Point3(16, 17, 18)),
-                new ControlPoint(new Point3(19, 20, 21)), new ControlPoint(new Point3(22, 23, 24))
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
-        {
-            var c = new ControlPoints8();
-            Assert.Equal(
-            [
-                new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(), new ControlPoint(),
-                new ControlPoint(), new ControlPoint(), new ControlPoint()
-            ], c.Points);
-            Assert.Equal(EmitIntensity.Max, c.Intensity);
-        }
+            Intensity = EmitIntensity.Min,
+        };
+        var c4 = new ControlPoints8((new Point3(0, 0, 1), Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin, Point3.Origin));
+
+        Assert.True(c1 == c2);
+        Assert.True(c1 != c3);
+        Assert.True(c1 != c4);
+        Assert.True(!c1.Equals(null));
+        Assert.True(c1.Equals((object?)c2));
     }
 }

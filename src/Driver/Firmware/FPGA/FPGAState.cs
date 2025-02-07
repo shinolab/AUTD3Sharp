@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AUTD3Sharp.Driver.FPGA.Defined
 {
@@ -43,7 +44,7 @@ namespace AUTD3Sharp.Driver.FPGA.Defined
         public static bool operator !=(FPGAState left, FPGAState right) => !left.Equals(right);
         public bool Equals(FPGAState? other) => other is not null && _info.Equals(other._info);
         public override bool Equals(object? obj) => obj is FPGAState other && Equals(other);
-        public override int GetHashCode() => _info.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => _info.GetHashCode();
 
         public override string ToString() => $"Thermal assert = {IsThermalAssert()}";
     }

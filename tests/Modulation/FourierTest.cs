@@ -61,4 +61,19 @@ public class FourierTest
             Assert.Equal(10u, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
         }
     }
+
+    [Fact]
+    public void InvalidType()
+    {
+        var autd = CreateController(1);
+        Assert.Throws<AUTDException>(() => autd.Send(new Fourier([new Sine(freq: 50u * Hz, option: new SineOption()), new Sine(freq: 50f * Hz, option: new SineOption())], option: new FourierOption())));
+
+        var s = new Sine(freq: 50 * Hz, option: new SineOption())
+        {
+            Freq = new InvalidSamplingMode()
+        };
+        Assert.Throws<AUTDException>(() => autd.Send(new Fourier([s], option: new FourierOption())));
+    }
+
+    private class InvalidSamplingMode : ISamplingMode { }
 }

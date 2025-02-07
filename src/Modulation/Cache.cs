@@ -1,5 +1,4 @@
 using System.Diagnostics.CodeAnalysis;
-using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -8,12 +7,12 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
 {
-    public sealed class Cache : IModulation
+    public sealed class Cache : Driver.Datagram.Modulation
     {
-        private readonly IModulation _m;
+        private readonly Driver.Datagram.Modulation _m;
         private ModulationCachePtr? _ptr;
 
-        public Cache(IModulation m)
+        public Cache(Driver.Datagram.Modulation m)
         {
             _m = m;
             _ptr = null;
@@ -27,7 +26,7 @@ namespace AUTD3Sharp.Modulation
             _ptr = null;
         }
 
-        ModulationPtr IModulation.ModulationPtr()
+        internal override ModulationPtr ModulationPtr()
         {
             _ptr ??= NativeMethodsBase.AUTDModulationCache(_m.ModulationPtr());
             return NativeMethodsBase.AUTDModulationCacheClone(_ptr.Value);

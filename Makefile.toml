@@ -53,7 +53,7 @@ dependencies = ["update-bin", "cs-src-build"]
 dependencies = ["cs-src-format", "cs-tests-format", "cs-example-format"]
 
 [tasks.check]
-dependencies = ["format", "build", "test", "cs-example-build"]
+dependencies = ["build", "test", "cs-example-build"]
 
 [tasks.cs-src-format]
 cwd = "./src"

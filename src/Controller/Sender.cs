@@ -16,9 +16,12 @@ namespace AUTD3Sharp
 
     public struct StdSleeper : ISleeper
     {
-        public uint? TimerResolution = 1;
+        public uint? TimerResolution;
 
-        public StdSleeper() { }
+        public StdSleeper()
+        {
+            TimerResolution = 1;
+        }
 
         SleeperWrap ISleeper.ToNative() => new()
         {
@@ -41,10 +44,15 @@ namespace AUTD3Sharp
 
     public struct SpinSleeper : ISleeper
     {
-        public uint NativeAccuracyNs = NativeMethodsBase.AUTDSpinSleepDefaultAccuracy();
-        public SpinStrategyTag SpinStrategy = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? SpinStrategyTag.SpinLoopHint : SpinStrategyTag.YieldThread;
+        public uint NativeAccuracyNs;
+        public SpinStrategyTag SpinStrategy;
 
-        public SpinSleeper() { }
+        [ExcludeFromCodeCoverage]
+        public SpinSleeper()
+        {
+            NativeAccuracyNs = NativeMethodsBase.AUTDSpinSleepDefaultAccuracy();
+            SpinStrategy = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? SpinStrategyTag.SpinLoopHint : SpinStrategyTag.YieldThread;
+        }
 
         SleeperWrap ISleeper.ToNative() => new()
         {

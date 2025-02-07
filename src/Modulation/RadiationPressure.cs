@@ -1,14 +1,13 @@
-using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
 {
-    public sealed class RadiationPressure : IModulation
+    public sealed class RadiationPressure : Driver.Datagram.Modulation
     {
-        public IModulation Target;
+        public Driver.Datagram.Modulation Target;
 
-        public RadiationPressure(IModulation target) => Target = target;
+        public RadiationPressure(Driver.Datagram.Modulation target) => Target = target;
 
-        ModulationPtr IModulation.ModulationPtr() => NativeMethodsBase.AUTDModulationWithRadiationPressure(Target.ModulationPtr());
+        internal override ModulationPtr ModulationPtr() => NativeMethodsBase.AUTDModulationWithRadiationPressure(Target.ModulationPtr());
     }
 }

@@ -35,7 +35,6 @@ namespace AUTD3Sharp
                 STMSamplingConfigTag.FreqNearest => new STMSamplingConfig(STMSamplingConfigTag.FreqNearest, _f),
                 STMSamplingConfigTag.Period => new STMSamplingConfig(STMSamplingConfigTag.PeriodNearest, _period),
                 STMSamplingConfigTag.PeriodNearest => new STMSamplingConfig(STMSamplingConfigTag.PeriodNearest, _period),
-                STMSamplingConfigTag.Config => this,
                 _ => this
             };
         }

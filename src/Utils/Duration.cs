@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
@@ -41,16 +42,16 @@ namespace AUTD3Sharp
         public static Duration operator *(int a, Duration b) => new((ulong)a * b._nanos);
         public static Duration operator /(Duration a, int b) => new(a._nanos / (ulong)b);
         public static Duration operator %(Duration a, int b) => new(a._nanos % (ulong)b);
-        public static bool operator ==(Duration a, Duration b) => a.Equals(b);
-        public static bool operator !=(Duration a, Duration b) => !a.Equals(b);
         public static bool operator <(Duration a, Duration b) => a.CompareTo(b) < 0;
         public static bool operator >(Duration a, Duration b) => a.CompareTo(b) > 0;
         public static bool operator <=(Duration a, Duration b) => a.CompareTo(b) <= 0;
         public static bool operator >=(Duration a, Duration b) => a.CompareTo(b) >= 0;
 
-        public bool Equals(Duration other) => _nanos == other._nanos;
+        public static bool operator ==(Duration left, Duration right) => left.Equals(right);
+        public static bool operator !=(Duration left, Duration right) => !left.Equals(right);
+        public bool Equals(Duration other) => _nanos.Equals(other._nanos);
         public override bool Equals(object? obj) => obj is Duration other && Equals(other);
-        public override int GetHashCode() => _nanos.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => _nanos.GetHashCode();
 
         public override string ToString()
         {

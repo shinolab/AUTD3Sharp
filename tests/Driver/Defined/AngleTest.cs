@@ -1,9 +1,9 @@
 namespace tests.Driver.Defined;
 
-public class RotationTest
+public class AngleTest
 {
     [Fact]
-    public void AngleTest()
+    public void Constructor()
     {
 
         var angle = 90 * deg;
@@ -48,7 +48,7 @@ public class RotationTest
         }
         return;
 
-        Controller<Audit> Open(Quaternion q) => Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
+        Controller<Audit> Open(Quaternion q) => AUTD3Sharp.Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
 
         void AssertNearVec3(Vector3 expected, Vector3 x)
         {
@@ -93,7 +93,7 @@ public class RotationTest
         }
         return;
 
-        Controller<Audit> Open(Quaternion q) => Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
+        Controller<Audit> Open(Quaternion q) => AUTD3Sharp.Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
 
         void AssertNearVec3(Vector3 expected, Vector3 x)
         {
@@ -101,5 +101,18 @@ public class RotationTest
             Assert.True(Math.Abs(expected.Y - x.Y) < 1e-6);
             Assert.True(Math.Abs(expected.Z - x.Z) < 1e-6);
         }
+    }
+
+    [Fact]
+    public void Equals_Angle()
+    {
+        var m1 = 0 * deg;
+        var m2 = 0 * deg;
+        var m3 = 1 * deg;
+
+        Assert.True(m1 == m2);
+        Assert.True(m1 != m3);
+        Assert.True(!m1.Equals(null));
+        Assert.True(m1.Equals((object?)m2));
     }
 }

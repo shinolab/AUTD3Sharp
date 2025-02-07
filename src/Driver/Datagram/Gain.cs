@@ -10,6 +10,5 @@ namespace AUTD3Sharp.Driver.Datagram
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDGainIntoDatagram(GainPtr(geometry));
 
         DatagramPtr IDatagramS.WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? transitionMode) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(GainPtr(geometry), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner);
-        internal DatagramPtr DatagramPtrWithSegment(Geometry geometry, Segment segment, TransitionMode transitionMode) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(GainPtr(geometry), segment.ToNative(), transitionMode.Inner);
     }
 }

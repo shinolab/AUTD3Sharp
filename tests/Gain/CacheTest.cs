@@ -1,4 +1,4 @@
-namespace tests.Driver.Datagram.Gain;
+namespace tests.Gain;
 
 public class CacheTest
 {

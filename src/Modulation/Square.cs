@@ -1,4 +1,3 @@
-using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -25,7 +24,7 @@ namespace AUTD3Sharp.Modulation
         };
     }
 
-    public sealed class Square : IModulation
+    public sealed class Square : Driver.Datagram.Modulation
     {
         internal ISamplingMode Freq;
         public SquareOption Option;
@@ -47,7 +46,7 @@ namespace AUTD3Sharp.Modulation
             _ => throw new AUTDException("Freq type must be float.")
         };
 
-        ModulationPtr IModulation.ModulationPtr() => Freq switch
+        internal override ModulationPtr ModulationPtr() => Freq switch
         {
             Exact<uint> f => NativeMethodsBase.AUTDModulationSquareExact(f.Freq.Hz, Option.ToNative()),
             Exact<float> f => NativeMethodsBase.AUTDModulationSquareExactFloat(f.Freq.Hz, Option.ToNative()),

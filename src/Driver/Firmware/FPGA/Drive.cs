@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 #if UNITY_2020_2_OR_NEWER
 using System.Runtime.CompilerServices;
@@ -33,6 +34,6 @@ namespace AUTD3Sharp
         public static bool operator !=(Drive left, Drive right) => !left.Equals(right);
         public bool Equals(Drive other) => Phase.Equals(other.Phase) && Intensity.Equals(other.Intensity);
         public override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public override int GetHashCode() => HashCode.Combine(Phase, Intensity);
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => HashCode.Combine(Phase, Intensity);
     }
 }

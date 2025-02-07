@@ -1,5 +1,7 @@
 ﻿using AUTD3Sharp.Utils;
 using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Runtime.InteropServices;
 
 namespace AUTD3Sharp
@@ -32,9 +34,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoint left, ControlPoint right) => left.Equals(right);
         public static bool operator !=(ControlPoint left, ControlPoint right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoint other) => Point.Equals(other.Point) && _phaseOffset.Equals(other._phaseOffset);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Point, _phaseOffset);
+        public readonly bool Equals(ControlPoint other) => Point.Equals(other.Point) && PhaseOffset.Equals(other.PhaseOffset);
+        public readonly override bool Equals(object? obj) => obj is ControlPoint other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Point, PhaseOffset);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -72,9 +74,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoints1 left, ControlPoints1 right) => left.Equals(right);
         public static bool operator !=(ControlPoints1 left, ControlPoints1 right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoints1 other) => Points.Equals(other.Points) && _intensity.Equals(other._intensity);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Points, _intensity);
+        public readonly bool Equals(ControlPoints1 other) => Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public readonly override bool Equals(object? obj) => obj is ControlPoints1 other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -112,9 +114,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoints2 left, ControlPoints2 right) => left.Equals(right);
         public static bool operator !=(ControlPoints2 left, ControlPoints2 right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoints2 other) => Points.Equals(other.Points) && _intensity.Equals(other._intensity);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Points, _intensity);
+        public readonly bool Equals(ControlPoints2 other) => Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public readonly override bool Equals(object? obj) => obj is ControlPoints2 other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -152,9 +154,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoints3 left, ControlPoints3 right) => left.Equals(right);
         public static bool operator !=(ControlPoints3 left, ControlPoints3 right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoints3 other) => Points.Equals(other.Points) && _intensity.Equals(other._intensity);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Points, _intensity);
+        public readonly bool Equals(ControlPoints3 other) => Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public readonly override bool Equals(object? obj) => obj is ControlPoints3 other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -193,9 +195,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoints4 left, ControlPoints4 right) => left.Equals(right);
         public static bool operator !=(ControlPoints4 left, ControlPoints4 right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoints4 other) => Points.Equals(other.Points) && _intensity.Equals(other._intensity);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Points, _intensity);
+        public readonly bool Equals(ControlPoints4 other) => Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public readonly override bool Equals(object? obj) => obj is ControlPoints4 other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -231,9 +233,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoints5 left, ControlPoints5 right) => left.Equals(right);
         public static bool operator !=(ControlPoints5 left, ControlPoints5 right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoints5 other) => Points.Equals(other.Points) && _intensity.Equals(other._intensity);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Points, _intensity);
+        public readonly bool Equals(ControlPoints5 other) => Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public readonly override bool Equals(object? obj) => obj is ControlPoints5 other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -270,9 +272,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoints6 left, ControlPoints6 right) => left.Equals(right);
         public static bool operator !=(ControlPoints6 left, ControlPoints6 right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoints6 other) => Points.Equals(other.Points) && _intensity.Equals(other._intensity);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Points, _intensity);
+        public readonly bool Equals(ControlPoints6 other) => Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public readonly override bool Equals(object? obj) => obj is ControlPoints6 other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -308,9 +310,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoints7 left, ControlPoints7 right) => left.Equals(right);
         public static bool operator !=(ControlPoints7 left, ControlPoints7 right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoints7 other) => Points.Equals(other.Points) && _intensity.Equals(other._intensity);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Points, _intensity);
+        public readonly bool Equals(ControlPoints7 other) => Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public readonly override bool Equals(object? obj) => obj is ControlPoints7 other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -347,8 +349,8 @@ namespace AUTD3Sharp
 
         public static bool operator ==(ControlPoints8 left, ControlPoints8 right) => left.Equals(right);
         public static bool operator !=(ControlPoints8 left, ControlPoints8 right) => !left.Equals(right);
-        public readonly bool Equals(ControlPoints8 other) => Points.Equals(other.Points) && _intensity.Equals(other._intensity);
-        public readonly override bool Equals(object? obj) => obj is Drive other && Equals(other);
-        public readonly override int GetHashCode() => HashCode.Combine(Points, _intensity);
+        public readonly bool Equals(ControlPoints8 other) => Points.SequenceEqual(other.Points) && Intensity.Equals(other.Intensity);
+        public readonly override bool Equals(object? obj) => obj is ControlPoints8 other && Equals(other);
+        [ExcludeFromCodeCoverage] public readonly override int GetHashCode() => HashCode.Combine(Points, Intensity);
     }
 }

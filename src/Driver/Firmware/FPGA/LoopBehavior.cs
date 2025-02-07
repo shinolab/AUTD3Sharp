@@ -10,8 +10,7 @@ namespace AUTD3Sharp
 {
     public class LoopBehavior : IEquatable<LoopBehavior>
     {
-        [ExcludeFromCodeCoverage]
-        private LoopBehavior() { }
+        [ExcludeFromCodeCoverage] private LoopBehavior() { }
 
         internal LoopBehavior(NativeMethods.LoopBehavior inner) => Inner = inner;
 
@@ -31,6 +30,6 @@ namespace AUTD3Sharp
         public static bool operator !=(LoopBehavior left, LoopBehavior right) => !left.Equals(right);
         public bool Equals(LoopBehavior? other) => other is not null && Inner.Equals(other.Inner);
         public override bool Equals(object? obj) => obj is LoopBehavior other && Equals(other);
-        public override int GetHashCode() => Inner.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.GetHashCode();
     }
 }

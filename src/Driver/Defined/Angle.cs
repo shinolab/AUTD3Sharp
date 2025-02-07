@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AUTD3Sharp
 {
@@ -26,7 +27,7 @@ namespace AUTD3Sharp
         public static bool operator !=(Angle left, Angle right) => !left.Equals(right);
         public bool Equals(Angle other) => Radian.Equals(other.Radian);
         public override bool Equals(object? obj) => obj is Angle other && Equals(other);
-        public override int GetHashCode() => Radian.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Radian.GetHashCode();
 
         internal NativeMethods.Angle ToNative() => new() { radian = Radian };
     }

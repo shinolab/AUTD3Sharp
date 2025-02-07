@@ -1,4 +1,4 @@
-namespace tests;
+namespace tests.Utils;
 
 public class QuaternionTests
 {
@@ -67,16 +67,20 @@ public class QuaternionTests
     }
 
     [Fact]
-    public void Equals_ReturnsTrueForEqualVectors()
+    public void Equals_ReturnsTrueForEqualQuaternion()
     {
         var q1 = new Quaternion(1, 2, 3, 4);
         var q2 = new Quaternion(1, 2, 3, 4);
-        var q3 = new Quaternion(1, 2, 3, 5);
+        var q3 = new Quaternion(2, 2, 3, 4);
+        var q4 = new Quaternion(1, 3, 3, 4);
+        var q5 = new Quaternion(1, 2, 4, 4);
+        var q6 = new Quaternion(1, 2, 3, 5);
 
         Assert.True(q1 == q2);
         Assert.True(q1 != q3);
-        Assert.True(q1.Equals(q2));
-        Assert.True(!q1.Equals(q3));
+        Assert.True(q1 != q4);
+        Assert.True(q1 != q5);
+        Assert.True(q1 != q6);
         Assert.True(q1.Equals((object)q2));
         Assert.True(!q1.Equals((object)q3));
         Assert.True(!q1.Equals(null));

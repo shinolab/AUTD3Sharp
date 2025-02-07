@@ -74,4 +74,18 @@ public class SquareTest
     {
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSquareIsDefault(new SquareOption().ToNative()));
     }
+
+    [Fact]
+    public void InvalidType()
+    {
+        var m = new Square(freq: 150.0f * Hz, option: new SquareOption()).IntoNearest();
+        _ = m.IntoNearest();
+        Assert.Throws<AUTDException>(() => new Square(freq: 150u * Hz, option: new SquareOption()).IntoNearest());
+
+        var autd = CreateController(1);
+        m.Freq = new InvalidSamplingMode();
+        Assert.Throws<AUTDException>(() => autd.Send(m));
+    }
+
+    private class InvalidSamplingMode: ISamplingMode { }
 }

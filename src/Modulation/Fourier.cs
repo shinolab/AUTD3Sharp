@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
@@ -26,7 +25,7 @@ namespace AUTD3Sharp.Modulation
         };
     }
 
-    public sealed class Fourier : IModulation
+    public sealed class Fourier : Driver.Datagram.Modulation
     {
         public Sine[] Components;
         public FourierOption Option;
@@ -37,7 +36,7 @@ namespace AUTD3Sharp.Modulation
             Option = option;
         }
 
-        ModulationPtr IModulation.ModulationPtr()
+        internal override ModulationPtr ModulationPtr()
         {
             [ExcludeFromCodeCoverage]
             static int FreqType(ISamplingMode mode) => mode switch

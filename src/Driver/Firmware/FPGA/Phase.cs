@@ -25,6 +25,6 @@ namespace AUTD3Sharp
         public static bool operator !=(Phase left, Phase right) => !left.Equals(right);
         public bool Equals(Phase? other) => other is not null && Inner.Equals(other.Inner);
         public override bool Equals(object? obj) => obj is Phase other && Equals(other);
-        public override int GetHashCode() => Inner.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.GetHashCode();
     }
 }

@@ -1,4 +1,4 @@
-namespace tests;
+namespace tests.Utils;
 
 public class Point3Test
 {

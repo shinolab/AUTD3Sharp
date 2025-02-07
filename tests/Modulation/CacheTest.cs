@@ -1,4 +1,4 @@
-namespace tests.Driver.Datagram.Modulation;
+namespace tests.Modulation;
 
 public class CacheTest
 {

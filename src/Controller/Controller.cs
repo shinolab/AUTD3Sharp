@@ -26,8 +26,7 @@ namespace AUTD3Sharp
         public Sender Sender(SenderOption option) => new(NativeMethodsBase.AUTDSender(Ptr, option.ToNative()), Geometry());
 
         public void Send<TD>(TD d) where TD : IDatagram => Sender(new SenderOption()).Send(d);
-        public void Send<TD1, TD2>((TD1, TD2) d) where TD1 : IDatagram where TD2 : IDatagram => Send(new DatagramTuple<TD1, TD2>(d));
-
+        public void Send<TD1, TD2>((TD1, TD2) d) where TD1 : IDatagram where TD2 : IDatagram => Sender(new SenderOption()).Send(d);
         public void GroupSend(Func<Device, object?> keyMap, GroupDictionary datagramMap) => Sender(new SenderOption()).GroupSend(keyMap, datagramMap);
 
         private static FirmwareVersion GetFirmwareVersion(FirmwareVersionListPtr handle, uint i)

@@ -1,8 +1,4 @@
-using AUTD3Sharp.Driver;
-using AUTD3Sharp.Driver.Datagram;
-using AUTD3Sharp.NativeMethods;
-
-namespace tests;
+namespace tests.Driver.Datagram;
 
 public class SynchronizeTest
 {

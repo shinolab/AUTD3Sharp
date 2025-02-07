@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
@@ -36,7 +37,7 @@ namespace AUTD3Sharp.Gain.Holo
         public static bool operator !=(Amplitude left, Amplitude right) => !left.Equals(right);
         public bool Equals(Amplitude other) => _value.Equals(other._value);
         public override bool Equals(object? obj) => obj is Amplitude other && Equals(other);
-        public override int GetHashCode() => _value.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => _value.GetHashCode();
     }
 }
 

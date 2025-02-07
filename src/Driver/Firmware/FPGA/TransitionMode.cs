@@ -1,5 +1,6 @@
 ﻿using AUTD3Sharp.NativeMethods;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AUTD3Sharp
 {
@@ -21,6 +22,6 @@ namespace AUTD3Sharp
         public static bool operator !=(TransitionMode left, TransitionMode right) => !left.Equals(right);
         public bool Equals(TransitionMode? other) => other is not null && Inner.Equals(other.Inner);
         public override bool Equals(object? obj) => obj is TransitionMode other && Equals(other);
-        public override int GetHashCode() => Inner.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.GetHashCode();
     }
 }

@@ -1,9 +1,8 @@
-using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Modulation
 {
-    public sealed class Custom : IModulation
+    public sealed class Custom : Driver.Datagram.Modulation
     {
         public byte[] Buffer;
         public SamplingConfig Config;
@@ -14,7 +13,7 @@ namespace AUTD3Sharp.Modulation
             Buffer = buffer;
         }
 
-        ModulationPtr IModulation.ModulationPtr()
+        internal override ModulationPtr ModulationPtr()
         {
             unsafe
             {

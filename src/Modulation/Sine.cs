@@ -1,4 +1,3 @@
-using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 using System;
 using static AUTD3Sharp.Units;
@@ -42,7 +41,7 @@ namespace AUTD3Sharp.Modulation
         internal Freq<float> Freq;
     }
 
-    public sealed class Sine : IModulation
+    public sealed class Sine : Driver.Datagram.Modulation
     {
         internal ISamplingMode Freq;
         public SineOption Option;
@@ -64,7 +63,7 @@ namespace AUTD3Sharp.Modulation
             _ => throw new AUTDException("Freq type must be float.")
         };
 
-        ModulationPtr IModulation.ModulationPtr() => Freq switch
+        internal override ModulationPtr ModulationPtr() => Freq switch
         {
             Exact<uint> f => NativeMethodsBase.AUTDModulationSineExact(f.Freq.Hz, Option.ToNative()),
             Exact<float> f => NativeMethodsBase.AUTDModulationSineExactFloat(f.Freq.Hz, Option.ToNative()),

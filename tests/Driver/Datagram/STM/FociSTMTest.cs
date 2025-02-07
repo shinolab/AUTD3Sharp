@@ -23,6 +23,7 @@ public class FociSTMTest
         {
             Assert.False(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link().StmSoundSpeed(dev.Idx(), Segment.S0));
+            Assert.Equal(2, autd.Link().StmCycle(dev.Idx(), Segment.S0));
             Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
             {
                 var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);

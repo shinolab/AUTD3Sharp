@@ -1,6 +1,4 @@
 using AUTD3Sharp.Driver.Datagram;
-using System.Runtime.InteropServices;
-using Point3 = AUTD3Sharp.Utils.Point3;
 
 namespace tests.Driver.Datagram.STM;
 
@@ -21,6 +19,7 @@ public class GainSTMTest
         foreach (var dev in autd)
         {
             Assert.True(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal(2, autd.Link().StmCycle(dev.Idx(), Segment.S0));
             Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
             {
                 var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);

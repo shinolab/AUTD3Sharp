@@ -1,3 +1,5 @@
+using AUTD3Sharp.Driver.Datagram;
+
 namespace tests.Modulation;
 
 public class SineTest
@@ -13,6 +15,7 @@ public class SineTest
             Offset = 0x40,
             Phase = MathF.PI / 2.0f * rad,
         });
+        Assert.Equal(SamplingConfig.Freq4K, m.SamplingConfig());
         autd.Send(m);
         foreach (var dev in autd)
         {
@@ -75,4 +78,18 @@ public class SineTest
     {
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDModulationSineIsDefault(new SineOption().ToNative()));
     }
+
+    [Fact]
+    public void InvalidType()
+    {
+        var m = new Sine(freq: 150.0f * Hz, option: new SineOption()).IntoNearest();
+        _ = m.IntoNearest();
+        Assert.Throws<AUTDException>(() => new Sine(freq: 150u * Hz, option: new SineOption()).IntoNearest());
+
+        var autd = CreateController(1);
+        m.Freq = new InvalidSamplingMode();
+        Assert.Throws<AUTDException>(() => autd.Send(m));
+    }
+
+    private class InvalidSamplingMode : ISamplingMode { }
 }

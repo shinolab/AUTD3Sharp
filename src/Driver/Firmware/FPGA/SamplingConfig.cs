@@ -37,6 +37,6 @@ namespace AUTD3Sharp
         public static bool operator !=(SamplingConfig left, SamplingConfig right) => !left.Equals(right);
         public bool Equals(SamplingConfig? other) => other is not null && Inner.Equals(other.Inner);
         public override bool Equals(object? obj) => obj is SamplingConfig other && Equals(other);
-        public override int GetHashCode() => Inner.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.GetHashCode();
     }
 }

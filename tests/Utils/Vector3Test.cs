@@ -1,5 +1,4 @@
-
-namespace tests;
+namespace tests.Utils;
 
 public class Vector3Test
 {
@@ -23,6 +22,15 @@ public class Vector3Test
         Assert.Equal(3, vector.Z);
 
         Assert.Throws<InvalidCastException>(() => new Vector3([]));
+    }
+
+    [Fact]
+    public void Construct_Zero()
+    {
+        var vector = Vector3.Zero;
+        Assert.Equal(0, vector.X);
+        Assert.Equal(0, vector.Y);
+        Assert.Equal(0, vector.Z);
     }
 
     [Fact]

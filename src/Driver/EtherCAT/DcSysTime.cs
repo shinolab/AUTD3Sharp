@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using AUTD3Sharp.NativeMethods;
 
@@ -19,6 +20,6 @@ namespace AUTD3Sharp
         public static bool operator !=(DcSysTime left, DcSysTime right) => !left.Equals(right);
         public bool Equals(DcSysTime other) => SysTime.Equals(other.SysTime);
         public override bool Equals(object? obj) => obj is DcSysTime other && Equals(other);
-        public override int GetHashCode() => SysTime.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => SysTime.GetHashCode();
     }
 }

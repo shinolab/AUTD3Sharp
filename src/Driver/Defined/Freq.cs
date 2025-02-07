@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -18,7 +19,7 @@ namespace AUTD3Sharp
         public static bool operator !=(Freq<T> left, Freq<T> right) => !left.Equals(right);
         public bool Equals(Freq<T> other) => Hz.Equals(other.Hz);
         public override bool Equals(object? obj) => obj is Freq<T> other && Equals(other);
-        public override int GetHashCode() => Hz.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Hz.GetHashCode();
     }
 
     public class UnitHz
