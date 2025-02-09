@@ -98,6 +98,6 @@ namespace AUTD3Sharp.Link
             return table;
         }
 
-        internal override LinkPtr Resolve() => NativeMethodsBase.AUTDLinkAudit();
+        public override LinkPtr Resolve() => NativeMethodsBase.AUTDLinkAudit();
     }
 }
