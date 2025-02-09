@@ -7,6 +7,6 @@ namespace AUTD3Sharp.Driver
     public abstract class Link
     {
         internal LinkPtr Ptr;
-        internal abstract LinkPtr Resolve();
+        public abstract LinkPtr Resolve();
     }
 }

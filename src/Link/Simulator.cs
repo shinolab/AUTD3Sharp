@@ -9,7 +9,7 @@ namespace AUTD3Sharp.Link
 
         public Simulator(IPEndPoint addr) => Addr = addr;
 
-        internal override LinkPtr Resolve()
+        public override LinkPtr Resolve()
         {
             var addr = Ffi.ToNullTerminatedUtf8(Addr.Address.ToString());
             unsafe

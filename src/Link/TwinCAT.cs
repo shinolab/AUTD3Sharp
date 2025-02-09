@@ -8,7 +8,7 @@ namespace AUTD3Sharp.Link
 {
     public sealed class TwinCAT : Driver.Link
     {
-        internal override LinkPtr Resolve() => NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT().Validate();
+        public override LinkPtr Resolve() => NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT().Validate();
     }
 
     public class RemoteTwinCATOption
@@ -28,7 +28,7 @@ namespace AUTD3Sharp.Link
             Option = option;
         }
 
-        internal override LinkPtr Resolve()
+        public override LinkPtr Resolve()
         {
             var serverAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(ServerAmsNetId);
             var clientAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(Option.ClientAmsNetId);
