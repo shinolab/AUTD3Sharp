@@ -7,9 +7,9 @@ namespace AUTD3Sharp.Modulation
         public byte[] Buffer;
         public SamplingConfig Config;
 
-        public Custom(byte[] buffer, SamplingConfig config)
+        public Custom(byte[] buffer, SamplingConfig samplingConfig)
         {
-            Config = config;
+            Config = samplingConfig;
             Buffer = buffer;
         }
 

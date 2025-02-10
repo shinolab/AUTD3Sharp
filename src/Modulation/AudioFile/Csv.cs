@@ -9,7 +9,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
 {
     public class CsvOption
     {
-        public char Deliminator { get; init; } = ',';
+        public char Delimiter { get; init; } = ',';
     }
 
     public sealed class Csv : Driver.Datagram.Modulation
@@ -18,10 +18,10 @@ namespace AUTD3Sharp.Modulation.AudioFile
         public SamplingConfig Config;
         public CsvOption Option;
 
-        public Csv(string path, SamplingConfig config, CsvOption option)
+        public Csv(string path, SamplingConfig samplingConfig, CsvOption option)
         {
             Path = path;
-            Config = config;
+            Config = samplingConfig;
             Option = option;
         }
 
@@ -31,7 +31,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             unsafe
             {
                 fixed (byte* fp = &filenameBytes[0])
-                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, Config.Inner, Convert.ToByte(Option.Deliminator)).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, Config.Inner, Convert.ToByte(Option.Delimiter)).Validate();
             }
         }
     }

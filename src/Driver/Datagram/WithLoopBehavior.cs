@@ -5,22 +5,26 @@ using AUTD3Sharp.NativeMethods;
 #nullable enable
 #endif
 
-namespace AUTD3Sharp.Driver.Datagram
+namespace AUTD3Sharp
 {
-    [ComVisible(false)]
-    public interface IDatagramL
+    namespace Driver.Datagram
     {
-        internal DatagramPtr WithLoopBehavior(Geometry geometry, Segment segment, TransitionMode? transitionMode, LoopBehavior loopBehavior);
+
+        [ComVisible(false)]
+        public interface IDatagramL
+        {
+            internal DatagramPtr WithLoopBehavior(Geometry geometry, Segment segment, TransitionMode? transitionMode, LoopBehavior loopBehavior);
+        }
     }
 
-    public sealed class WithLoopBehavior : IDatagram
+    public sealed class WithLoopBehavior : Driver.Datagram.IDatagram
     {
-        public IDatagramL Inner;
+        public Driver.Datagram.IDatagramL Inner;
         public LoopBehavior LoopBehavior;
         public Segment Segment;
         public TransitionMode? TransitionMode;
 
-        public WithLoopBehavior(IDatagramL inner, LoopBehavior loopBehavior, Segment segment, TransitionMode? transitionMode)
+        public WithLoopBehavior(Driver.Datagram.IDatagramL inner, LoopBehavior loopBehavior, Segment segment, TransitionMode? transitionMode)
         {
             Inner = inner;
             LoopBehavior = loopBehavior;
@@ -28,7 +32,7 @@ namespace AUTD3Sharp.Driver.Datagram
             TransitionMode = transitionMode;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => Inner.WithLoopBehavior(geometry, Segment, TransitionMode, LoopBehavior);
+        DatagramPtr Driver.Datagram.IDatagram.Ptr(Geometry geometry) => Inner.WithLoopBehavior(geometry, Segment, TransitionMode, LoopBehavior);
     }
 }
 

@@ -5,28 +5,31 @@ using AUTD3Sharp.NativeMethods;
 #nullable enable
 #endif
 
-namespace AUTD3Sharp.Driver.Datagram
+namespace AUTD3Sharp
 {
-    [ComVisible(false)]
-    public interface IDatagramS
+    namespace Driver.Datagram
     {
-        internal DatagramPtr WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? transitionMode);
+        [ComVisible(false)]
+        public interface IDatagramS
+        {
+            internal DatagramPtr WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? transitionMode);
+        }
     }
 
-    public sealed class WithSegment : IDatagram
+    public sealed class WithSegment : Driver.Datagram.IDatagram
     {
-        public IDatagramS Inner;
+        public Driver.Datagram.IDatagramS Inner;
         public Segment Segment;
         public TransitionMode? TransitionMode;
 
-        public WithSegment(IDatagramS inner, Segment segment, TransitionMode? transitionMode)
+        public WithSegment(Driver.Datagram.IDatagramS inner, Segment segment, TransitionMode? transitionMode)
         {
             Inner = inner;
             Segment = segment;
             TransitionMode = transitionMode;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => Inner.WithSegmentTransition(geometry, Segment, TransitionMode);
+        DatagramPtr Driver.Datagram.IDatagram.Ptr(Geometry geometry) => Inner.WithSegmentTransition(geometry, Segment, TransitionMode);
     }
 }
 
