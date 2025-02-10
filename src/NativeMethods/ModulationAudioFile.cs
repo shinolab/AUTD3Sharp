@@ -28,7 +28,7 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern ResultModulation AUTDModulationAudioFileWav(byte* path);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationAudioFileCsv", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultModulation AUTDModulationAudioFileCsv(byte* path, SamplingConfig sampling_config, byte deliminator);
+        internal static extern ResultModulation AUTDModulationAudioFileCsv(byte* path, SamplingConfig sampling_config, byte delimiter);
 
 
     }
