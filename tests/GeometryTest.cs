@@ -11,8 +11,8 @@ public class GeometryTest
         Assert.Equal(192.0f, AUTD3.DeviceWidth);
         Assert.Equal(151.4f, AUTD3.DeviceHeight);
 
-        Assert.Equal(18, AUTD3.NumTransInX);
-        Assert.Equal(14, AUTD3.NumTransInY);
+        Assert.Equal(18, AUTD3.NumTransX);
+        Assert.Equal(14, AUTD3.NumTransY);
         Assert.Equal(249, AUTD3.NumTransInUnit);
     }
 
@@ -252,10 +252,10 @@ public class GeometryTest
         var autd = CreateController();
         Assert.Equal(autd[0][0].Position(), new Vector3(0.0f, 0.0f, 0.0f));
         Assert.Equal(autd[0][AUTD3.NumTransInUnit - 1].Position(),
-            new Vector3((AUTD3.NumTransInX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransInY - 1) * AUTD3.TransSpacing, 0.0f));
+            new Vector3((AUTD3.NumTransX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransY - 1) * AUTD3.TransSpacing, 0.0f));
 
         Assert.Equal(autd[1][0].Position(), new Vector3(0.0f, 0.0f, 0.0f));
         Assert.Equal(autd[1][AUTD3.NumTransInUnit - 1].Position(),
-            new Vector3((AUTD3.NumTransInX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransInY - 1) * AUTD3.TransSpacing, 0.0f));
+            new Vector3((AUTD3.NumTransX - 1) * AUTD3.TransSpacing, (AUTD3.NumTransY - 1) * AUTD3.TransSpacing, 0.0f));
     }
 }

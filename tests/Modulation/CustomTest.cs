@@ -8,7 +8,7 @@ public class CustomTest
         var autd = CreateController(1);
 
         var modExpect = new byte[] { 255, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        autd.Send(new AUTD3Sharp.Modulation.Custom(buffer: modExpect, config: new SamplingConfig(10)));
+        autd.Send(new AUTD3Sharp.Modulation.Custom(buffer: modExpect, samplingConfig: new SamplingConfig(10)));
         foreach (var dev in autd)
         {
             var mod = autd.Link().Modulation(dev.Idx(), Segment.S0);
