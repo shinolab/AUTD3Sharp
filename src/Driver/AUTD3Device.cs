@@ -19,8 +19,8 @@ namespace AUTD3Sharp
         public const int NumTransInUnit = (int)NativeMethodsDriver.NUM_TRANS_IN_UNIT;
         public const float TransSpacingMm = NativeMethodsDriver.TRANS_SPACING_MM;
         public const float TransSpacing = NativeMethodsDriver.TRANS_SPACING_MM * Millimeter;
-        public const int NumTransInX = (int)NativeMethodsDriver.NUM_TRANS_IN_X;
-        public const int NumTransInY = (int)NativeMethodsDriver.NUM_TRANS_IN_Y;
+        public const int NumTransX = (int)NativeMethodsDriver.NUM_TRANS_IN_X;
+        public const int NumTransY = (int)NativeMethodsDriver.NUM_TRANS_IN_Y;
         public const float DeviceHeight = NativeMethodsDriver.DEVICE_HEIGHT_MM * Millimeter;
         public const float DeviceWidth = NativeMethodsDriver.DEVICE_WIDTH_MM * Millimeter;
         #endregion
