@@ -116,7 +116,7 @@ namespace AUTD3Sharp
         [ExcludeFromCodeCoverage]
         public static class ResultExtensions
         {
-            internal static AUTDStatus Validate(this ResultStatus res)
+            public static AUTDStatus Validate(this ResultStatus res)
             {
                 if (res.result != AUTDStatus.AUTDErr) return res.result;
                 var err = new byte[res.err_len];
@@ -160,7 +160,7 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            internal static LinkPtr Validate(this ResultLink res)
+            public static LinkPtr Validate(this ResultLink res)
             {
                 if (res.result.Item1 != IntPtr.Zero) return res.result;
                 var err = new byte[res.err_len];
