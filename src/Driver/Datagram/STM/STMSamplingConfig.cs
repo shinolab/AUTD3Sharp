@@ -25,7 +25,7 @@ namespace AUTD3Sharp
         private readonly Duration _period;
 
         [FieldOffset(8)]
-        private readonly NativeMethods.SamplingConfig _config;
+        private readonly NativeMethods.SamplingConfigWrap _config;
 
         internal STMSamplingConfig IntoNearest()
         {

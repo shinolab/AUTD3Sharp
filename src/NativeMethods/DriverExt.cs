@@ -127,7 +127,40 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            internal static SamplingConfig Validate(this ResultSamplingConfig res)
+            internal static SamplingConfigWrap Validate(this ResultSamplingConfig res)
+            {
+                if (res.err_len == 0) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            internal static float Validate(this ResultF32 res)
+            {
+                if (res.err_len == 0) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            internal static ushort Validate(this ResultU16 res)
+            {
+                if (res.err_len == 0) return res.result;
+                var err = new byte[res.err_len];
+                unsafe
+                {
+                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
+                }
+                throw new AUTDException(err);
+            }
+
+            internal static Duration Validate(this ResultDuration res)
             {
                 if (res.err_len == 0) return res.result;
                 var err = new byte[res.err_len];

@@ -27,6 +27,12 @@ namespace AUTD3Sharp.NativeMethods
 
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct Duration_
+    {
+        public ulong nanos;
+    }
+
     [StructLayout(LayoutKind.Explicit)]
     internal unsafe partial struct DebugTypeValue
     {
@@ -51,6 +57,24 @@ namespace AUTD3Sharp.NativeMethods
     internal unsafe partial struct LoopBehavior
     {
         public ushort rep;
+    }
+
+    [StructLayout(LayoutKind.Explicit)]
+    internal unsafe partial struct SamplingConfigValue
+    {
+        [FieldOffset(0)]
+        public ushort division;
+        [FieldOffset(0)]
+        public float freq;
+        [FieldOffset(0)]
+        public ulong period_ns;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct SamplingConfigWrap
+    {
+        public SamplingConfigTag tag;
+        public SamplingConfigValue value;
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -178,7 +202,31 @@ namespace AUTD3Sharp.NativeMethods
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct ResultSamplingConfig
     {
-        public SamplingConfig result;
+        public SamplingConfigWrap result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct ResultU16
+    {
+        public ushort result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct ResultF32
+    {
+        public float result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct ResultDuration
+    {
+        public Duration result;
         public uint err_len;
         public ConstPtr err;
     }
@@ -207,6 +255,15 @@ namespace AUTD3Sharp.NativeMethods
         PwmOut = 10,
         Direct = 11,
         SysTimeEq = 12,
+    }
+
+    internal enum SamplingConfigTag : byte
+    {
+        Division = 0,
+        Frequency = 1,
+        Period = 2,
+        FrequencyNearest = 3,
+        PeriodNearest = 4,
     }
 
     internal enum TransitionModeTag : byte

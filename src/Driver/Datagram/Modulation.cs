@@ -11,7 +11,7 @@ namespace AUTD3Sharp.Driver.Datagram
     public abstract class Modulation : IDatagram, IDatagramS, IDatagramL
     {
         internal abstract ModulationPtr ModulationPtr();
-        public SamplingConfig SamplingConfig() => new(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()).Validate());
+        public SamplingConfig SamplingConfig() => new(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
 
         DatagramPtr IDatagramS.WithSegmentTransition(Geometry _, Segment segment, TransitionMode? transitionMode) => NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(ModulationPtr(), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner);
         DatagramPtr IDatagramL.WithLoopBehavior(Geometry _, Segment segment, TransitionMode? transitionMode, LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationIntoDatagramWithLoopBehavior(ModulationPtr(), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner, loopBehavior.Inner);
