@@ -53,6 +53,7 @@ namespace AUTD3Sharp
         public override bool Equals(object? obj) => obj is Duration other && Equals(other);
         [ExcludeFromCodeCoverage] public override int GetHashCode() => _nanos.GetHashCode();
 
+
         public override string ToString()
         {
             var ns = AsNanos();

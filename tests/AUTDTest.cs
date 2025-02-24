@@ -115,10 +115,6 @@ public class AUTDTest
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
 
-        autd.Link().Down();
-        Assert.Throws<AUTDException>(() => autd.Send(new Static()));
-        autd.Link().Up();
-
         autd.Link().BreakDown();
         Assert.Throws<AUTDException>(() => autd.Send(new Static()));
         autd.Link().Repair();
@@ -146,10 +142,6 @@ public class AUTDTest
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
-
-        autd.Link().Down();
-        Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero))));
-        autd.Link().Up();
 
         autd.Link().BreakDown();
         Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero))));

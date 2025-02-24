@@ -5,8 +5,6 @@ namespace AUTD3Sharp.Link
 {
     public sealed class Audit : Driver.Link
     {
-        public void Down() => NativeMethodsBase.AUTDLinkAuditDown(Ptr);
-        public void Up() => NativeMethodsBase.AUTDLinkAuditUp(Ptr);
         public bool IsOpen() => NativeMethodsBase.AUTDLinkAuditIsOpen(Ptr);
         public bool IsForceFan(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(Ptr, (ushort)idx);
         public void BreakDown() => NativeMethodsBase.AUTDLinkAuditBreakDown(Ptr);

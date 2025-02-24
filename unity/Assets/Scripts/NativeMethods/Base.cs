@@ -111,7 +111,7 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern bool AUTDDatagramSilencerFixedCompletionStepsIsDefault(FixedCompletionSteps config, SilencerTarget target);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMFoci", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern FociSTMPtr AUTDSTMFoci(SamplingConfig config, ConstPtr points, ushort size, byte n);
+        internal static extern FociSTMPtr AUTDSTMFoci(SamplingConfigWrap config, ConstPtr points, ushort size, byte n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMFociIntoDatagramWithSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDSTMFociIntoDatagramWithSegment(FociSTMPtr stm, byte n, Segment segment, TransitionModeWrap transition_mode);
@@ -123,7 +123,7 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern DatagramPtr AUTDSTMFociIntoDatagram(FociSTMPtr stm, byte n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMGain", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern GainSTMPtr AUTDSTMGain(SamplingConfig config, GainPtr* gains, ushort size, GainSTMOption option);
+        internal static extern GainSTMPtr AUTDSTMGain(SamplingConfigWrap config, GainPtr* gains, ushort size, GainSTMOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMGainIntoDatagramWithSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDSTMGainIntoDatagramWithSegment(GainSTMPtr stm, Segment segment, TransitionModeWrap transition_mode);
@@ -141,10 +141,10 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern ResultSamplingConfig AUTDSTMConfigFromPeriod(Duration p, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMConfigFromFreqNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern SamplingConfig AUTDSTMConfigFromFreqNearest(float f, ushort n);
+        internal static extern SamplingConfigWrap AUTDSTMConfigFromFreqNearest(float f, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMConfigFromPeriodNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern SamplingConfig AUTDSTMConfigFromPeriodNearest(Duration p, ushort n);
+        internal static extern SamplingConfigWrap AUTDSTMConfigFromPeriodNearest(Duration p, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSynchronize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramSynchronize();
@@ -207,28 +207,26 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern ResultSamplingConfig AUTDSamplingConfigFromDivision(ushort div);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultSamplingConfig AUTDSamplingConfigFromFreq(uint f);
-
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFreqF", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultSamplingConfig AUTDSamplingConfigFromFreqF(float f);
-
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFreqNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern SamplingConfig AUTDSamplingConfigFromFreqNearest(float f);
+        internal static extern SamplingConfigWrap AUTDSamplingConfigFromFreq(float f);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultSamplingConfig AUTDSamplingConfigFromPeriod(Duration p);
+        internal static extern SamplingConfigWrap AUTDSamplingConfigFromPeriod(Duration p);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromPeriodNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern SamplingConfig AUTDSamplingConfigFromPeriodNearest(Duration p);
+        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigIntoNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern SamplingConfigWrap AUTDSamplingConfigIntoNearest(SamplingConfigWrap config);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ushort AUTDSamplingConfigDivision(SamplingConfig c);
+        internal static extern ResultU16 AUTDSamplingConfigDivision(SamplingConfigWrap c);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern float AUTDSamplingConfigFreq(SamplingConfig c);
+        internal static extern ResultF32 AUTDSamplingConfigFreq(SamplingConfigWrap c);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigPeriod", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern Duration AUTDSamplingConfigPeriod(SamplingConfig c);
+        internal static extern ResultDuration AUTDSamplingConfigPeriod(SamplingConfigWrap c);
+
+        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigEq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.U1)]
+        internal static extern bool AUTDSamplingConfigEq(SamplingConfigWrap a, SamplingConfigWrap b);
 
         [DllImport(__DllName, EntryPoint = "AUTDTransitionModeSyncIdx", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern TransitionModeWrap AUTDTransitionModeSyncIdx();
@@ -391,12 +389,6 @@ namespace AUTD3Sharp.NativeMethods
         [return: MarshalAs(UnmanagedType.U1)]
         internal static extern bool AUTDLinkAuditIsOpen(LinkPtr audit);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditDown", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDLinkAuditDown(LinkPtr audit);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditUp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDLinkAuditUp(LinkPtr audit);
-
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditBreakDown", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void AUTDLinkAuditBreakDown(LinkPtr audit);
 
@@ -501,22 +493,22 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern void AUTDModulationCacheFree(ModulationCachePtr m);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationCustom", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ModulationPtr AUTDModulationCustom(byte* ptr, ushort len, SamplingConfig sampling_config);
+        internal static extern ModulationPtr AUTDModulationCustom(byte* ptr, ushort len, SamplingConfigWrap sampling_config);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationWithFir", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ModulationPtr AUTDModulationWithFir(ModulationPtr m, float* coef, uint n_tap);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationFourierExact", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ModulationPtr AUTDModulationFourierExact(uint* sine_freq, SineOption* sine_clamp, uint size, FourierOption option);
+        internal static extern ModulationPtr AUTDModulationFourierExact(uint* sine_freq, SineOption* sine_option, uint size, FourierOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationFourierExactFloat", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ModulationPtr AUTDModulationFourierExactFloat(float* sine_freq, SineOption* sine_clamp, uint size, FourierOption option);
+        internal static extern ModulationPtr AUTDModulationFourierExactFloat(float* sine_freq, SineOption* sine_option, uint size, FourierOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationFourierNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ModulationPtr AUTDModulationFourierNearest(float* sine_freq, SineOption* sine_clamp, uint size, FourierOption option);
+        internal static extern ModulationPtr AUTDModulationFourierNearest(float* sine_freq, SineOption* sine_option, uint size, FourierOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationSamplingConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultSamplingConfig AUTDModulationSamplingConfig(ModulationPtr m);
+        internal static extern SamplingConfigWrap AUTDModulationSamplingConfig(ModulationPtr m);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationIntoDatagramWithSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDModulationIntoDatagramWithSegment(ModulationPtr m, Segment segment, TransitionModeWrap transition_mode);
@@ -648,6 +640,25 @@ namespace AUTD3Sharp.NativeMethods
         public float scale_factor;
         [MarshalAs(UnmanagedType.U1)] public bool clamp;
         public byte offset;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct SineOption
+    {
+        public byte intensity;
+        public byte offset;
+        public Angle phase;
+        [MarshalAs(UnmanagedType.U1)] public bool clamp;
+        public ushort sampling_config_div;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct SquareOption
+    {
+        public byte low;
+        public byte high;
+        public float duty;
+        public ushort sampling_config_div;
     }
 
 

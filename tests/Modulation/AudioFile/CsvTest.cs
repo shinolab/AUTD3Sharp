@@ -15,7 +15,7 @@ public class CsvTest
                                     98,  70,  45,  24,  10,  2,   0,   6,   19,  37,  61,  88,  117, 147, 176, 202, 224, 241, 251, 255,
                                     251, 241, 224, 202, 176, 147, 117, 88,  61,  37,  19,  6,   0,   2,   10,  24,  45,  70,  98,  128};
 
-        var m = new Csv("sin150.csv", 4000 * Hz, new CsvOption());
+        var m = new Csv("sin150.csv", 4000f * Hz, new CsvOption());
         autd.Send(m);
         foreach (var dev in autd)
         {

@@ -5,15 +5,6 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigFreq()
     {
-        SamplingConfig c = 4000u * Hz;
-        Assert.Equal(4000.0f * Hz, c.Freq());
-        Assert.Equal(Duration.FromMicros(250), c.Period());
-        Assert.Equal(10, c.Division);
-    }
-
-    [Fact]
-    public void SamplingConfigFreqFloat()
-    {
         SamplingConfig c = 4000.0f * Hz;
         Assert.Equal(4000.0f * Hz, c.Freq());
         Assert.Equal(Duration.FromMicros(250), c.Period());
@@ -23,7 +14,7 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigFreqNearest()
     {
-        var c = SamplingConfig.Nearest(4000.0f * Hz);
+        var c = new SamplingConfig(4000.0f * Hz).IntoNearest();
         Assert.Equal(4000.0f * Hz, c.Freq());
         Assert.Equal(Duration.FromMicros(250), c.Period());
         Assert.Equal(10, c.Division);
@@ -41,7 +32,7 @@ public class SamplingConfigTest
     [Fact]
     public void SamplingConfigPeriodNearest()
     {
-        var c = SamplingConfig.Nearest(Duration.FromMicros(250));
+        var c = new SamplingConfig(Duration.FromMicros(250)).IntoNearest();
         Assert.Equal(4000.0f * Hz, c.Freq());
         Assert.Equal(Duration.FromMicros(250), c.Period());
         Assert.Equal(10, c.Division);

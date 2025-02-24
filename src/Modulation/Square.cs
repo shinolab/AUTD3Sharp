@@ -18,7 +18,7 @@ namespace AUTD3Sharp.Modulation
             low = Low,
             high = High,
             duty = Duty,
-            sampling_config = SamplingConfig.Inner
+            sampling_config_div = SamplingConfig.Division
         };
     }
 

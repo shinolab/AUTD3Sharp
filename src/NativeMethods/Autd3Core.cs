@@ -58,12 +58,6 @@ namespace AUTD3Sharp.NativeMethods
         public byte Item1;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct SamplingConfig
-    {
-        public ushort division;
-    }
-
 
     internal enum GPIOOut : byte
     {

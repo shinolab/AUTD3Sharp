@@ -35,25 +35,6 @@ namespace AUTD3Sharp.NativeMethods
         public Phase phase_offset;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct SineOption
-    {
-        public byte intensity;
-        public byte offset;
-        public Angle phase;
-        [MarshalAs(UnmanagedType.U1)] public bool clamp;
-        public SamplingConfig sampling_config;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct SquareOption
-    {
-        public byte low;
-        public byte high;
-        public float duty;
-        public SamplingConfig sampling_config;
-    }
-
 
     internal enum ParallelMode : byte
     {
