@@ -11,9 +11,9 @@ public class CustomTest
         autd.Send(new AUTD3Sharp.Modulation.Custom(buffer: modExpect, samplingConfig: new SamplingConfig(10)));
         foreach (var dev in autd)
         {
-            var mod = autd.Link().Modulation(dev.Idx(), Segment.S0);
+            var mod = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(10, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(10, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
         }
     }
 }

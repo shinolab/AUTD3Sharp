@@ -9,4 +9,10 @@ namespace AUTD3Sharp.Driver
         internal LinkPtr Ptr;
         public abstract LinkPtr Resolve();
     }
+
+    [ComVisible(false)]
+    public interface ILink
+    {
+        public void Resolve(LinkPtr ptr);
+    }
 }

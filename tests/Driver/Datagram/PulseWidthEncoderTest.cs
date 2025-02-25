@@ -14,7 +14,7 @@ public class PulseWidthEncoderTest
         autd.Send(new AUTD3Sharp.PulseWidthEncoder(dev => i => buf[i]));
         foreach (var dev in autd)
         {
-            Assert.Equal(buf, autd.Link().PulseWidthEncoderTable(dev.Idx()));
+            Assert.Equal(buf, autd.Link<Audit>().PulseWidthEncoderTable(dev.Idx()));
         }
     }
 
@@ -31,7 +31,7 @@ public class PulseWidthEncoderTest
         autd.Send(new AUTD3Sharp.PulseWidthEncoder());
         foreach (var dev in autd)
         {
-            Assert.Equal(buf, autd.Link().PulseWidthEncoderTable(dev.Idx()));
+            Assert.Equal(buf, autd.Link<Audit>().PulseWidthEncoderTable(dev.Idx()));
         }
     }
 }

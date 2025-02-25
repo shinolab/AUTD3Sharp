@@ -12,11 +12,11 @@ public class StaticTest
             autd.Send(m);
             foreach (var dev in autd)
             {
-                var mod = autd.Link().Modulation(dev.Idx(), Segment.S0);
+                var mod = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
                 var modExpect = new byte[] { 0xFF, 0xFF };
                 Assert.Equal(modExpect, mod);
-                Assert.Equal(LoopBehavior.Infinite, autd.Link().ModulationLoopBehavior(dev.Idx(), Segment.S0));
-                Assert.Equal(0xFFFFu, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
+                Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
+                Assert.Equal(0xFFFFu, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
             }
         }
 
@@ -28,12 +28,12 @@ public class StaticTest
             autd.Send(m);
             foreach (var dev in autd)
             {
-                var mod = autd.Link().Modulation(dev.Idx(), Segment.S0);
+                var mod = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
 #pragma warning disable IDE0230
                 var modExpect = new byte[] { 32, 32 };
 #pragma warning restore IDE0230
                 Assert.Equal(modExpect, mod);
-                Assert.Equal(0xFFFFu, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
+                Assert.Equal(0xFFFFu, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
             }
         }
     }

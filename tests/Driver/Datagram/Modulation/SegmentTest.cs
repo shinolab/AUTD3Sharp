@@ -16,22 +16,22 @@ public class SegmentTest
 
         var m = new Static();
         autd.Send(m);
-        Assert.Equal(Segment.S0, autd.Link().CurrentModulationSegment(0));
+        Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentModulationSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S0, infos[0]?.CurrentModSegment());
 
         autd.Send(new WithSegment(m, Segment.S1, TransitionMode.Immediate));
-        Assert.Equal(Segment.S1, autd.Link().CurrentModulationSegment(0));
+        Assert.Equal(Segment.S1, autd.Link<Audit>().CurrentModulationSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S1, infos[0]?.CurrentModSegment());
 
         autd.Send(new WithSegment(m, Segment.S0, null));
-        Assert.Equal(Segment.S1, autd.Link().CurrentModulationSegment(0));
+        Assert.Equal(Segment.S1, autd.Link<Audit>().CurrentModulationSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S1, infos[0]?.CurrentModSegment());
 
         autd.Send(SwapSegment.Modulation(Segment.S0, TransitionMode.Immediate));
-        Assert.Equal(Segment.S0, autd.Link().CurrentModulationSegment(0));
+        Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentModulationSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S0, infos[0]?.CurrentModSegment());
     }

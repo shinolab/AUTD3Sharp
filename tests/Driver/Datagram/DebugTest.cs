@@ -9,8 +9,8 @@ public class DebugTest
 
         foreach (var dev in autd)
         {
-            Assert.Equal([0x00, 0x00, 0x00, 0x00], autd.Link().DebugTypes(dev.Idx()));
-            Assert.Equal([0x0000, 0x0000, 0x0000, 0x0000], autd.Link().DebugValues(dev.Idx()));
+            Assert.Equal([0x00, 0x00, 0x00, 0x00], autd.Link<Audit>().DebugTypes(dev.Idx()));
+            Assert.Equal([0x0000, 0x0000, 0x0000, 0x0000], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
 
         autd.Send(new DebugSettings((_, gpio) => gpio switch
@@ -24,8 +24,8 @@ public class DebugTest
 
         foreach (var dev in autd)
         {
-            Assert.Equal([0x00, 0x01, 0x02, 0x03], autd.Link().DebugTypes(dev.Idx()));
-            Assert.Equal([0x0000, 0x0000, 0x0000, 0x0000], autd.Link().DebugValues(dev.Idx()));
+            Assert.Equal([0x00, 0x01, 0x02, 0x03], autd.Link<Audit>().DebugTypes(dev.Idx()));
+            Assert.Equal([0x0000, 0x0000, 0x0000, 0x0000], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
 
         autd.Send(new DebugSettings((_, gpio) => gpio switch
@@ -38,8 +38,8 @@ public class DebugTest
         }));
         foreach (var dev in autd)
         {
-            Assert.Equal([0x10, 0x20, 0x21, 0x50], autd.Link().DebugTypes(dev.Idx()));
-            Assert.Equal([0x0000, 0x0000, 0x0001, 0x0000], autd.Link().DebugValues(dev.Idx()));
+            Assert.Equal([0x10, 0x20, 0x21, 0x50], autd.Link<Audit>().DebugTypes(dev.Idx()));
+            Assert.Equal([0x0000, 0x0000, 0x0001, 0x0000], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
 
         autd.Send(new DebugSettings((dev, gpio) => gpio switch
@@ -52,8 +52,8 @@ public class DebugTest
         }));
         foreach (var dev in autd)
         {
-            Assert.Equal([0x51, 0x52, 0xE0, 0xF0], autd.Link().DebugTypes(dev.Idx()));
-            Assert.Equal([0x0002, 0x0000, 0x0003, 0x0001], autd.Link().DebugValues(dev.Idx()));
+            Assert.Equal([0x51, 0x52, 0xE0, 0xF0], autd.Link<Audit>().DebugTypes(dev.Idx()));
+            Assert.Equal([0x0002, 0x0000, 0x0003, 0x0001], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
 
         var sysTime = DcSysTime.Now;
@@ -68,8 +68,8 @@ public class DebugTest
                 }));
         foreach (var dev in autd)
         {
-            Assert.Equal([0x60, 0x00, 0x00, 0x00], autd.Link().DebugTypes(dev.Idx()));
-            Assert.Equal([(sysTime.SysTime / 3125) << 5, 0x0000, 0x0000, 0x0000], autd.Link().DebugValues(dev.Idx()));
+            Assert.Equal([0x60, 0x00, 0x00, 0x00], autd.Link<Audit>().DebugTypes(dev.Idx()));
+            Assert.Equal([(sysTime.SysTime / 3125) << 5, 0x0000, 0x0000, 0x0000], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
     }
 }

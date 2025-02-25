@@ -11,17 +11,17 @@ public class LoopBehaviorTest
 
         autd.Send(new ReadsFPGAState(_ => true));
 
-        Assert.Equal(LoopBehavior.Infinite, autd.Link().ModulationLoopBehavior(0, Segment.S0));
-        Assert.Equal(LoopBehavior.Infinite, autd.Link().ModulationLoopBehavior(0, Segment.S1));
+        Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(0, Segment.S0));
+        Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(0, Segment.S1));
 
         var m = new Static();
         autd.Send(m);
-        Assert.Equal(Segment.S0, autd.Link().CurrentModulationSegment(0));
+        Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentModulationSegment(0));
 
         autd.Send(new WithLoopBehavior(m, LoopBehavior.Once, Segment.S1, TransitionMode.SyncIdx));
-        Assert.Equal(LoopBehavior.Once, autd.Link().ModulationLoopBehavior(0, Segment.S1));
+        Assert.Equal(LoopBehavior.Once, autd.Link<Audit>().ModulationLoopBehavior(0, Segment.S1));
 
         autd.Send(new WithLoopBehavior(m, LoopBehavior.Once, Segment.S0, null));
-        Assert.Equal(LoopBehavior.Once, autd.Link().ModulationLoopBehavior(0, Segment.S0));
+        Assert.Equal(LoopBehavior.Once, autd.Link<Audit>().ModulationLoopBehavior(0, Segment.S0));
     }
 }

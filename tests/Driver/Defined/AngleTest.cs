@@ -48,7 +48,7 @@ public class AngleTest
         }
         return;
 
-        Controller<Audit> Open(Quaternion q) => AUTD3Sharp.Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
+        AUTD3Sharp.Controller Open(Quaternion q) => AUTD3Sharp.Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
 
         void AssertNearVec3(Vector3 expected, Vector3 x)
         {
@@ -93,7 +93,7 @@ public class AngleTest
         }
         return;
 
-        Controller<Audit> Open(Quaternion q) => AUTD3Sharp.Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
+        AUTD3Sharp.Controller Open(Quaternion q) => AUTD3Sharp.Controller.Open([new AUTD3 { Pos = Point3.Origin, Rot = q }], new Audit());
 
         void AssertNearVec3(Vector3 expected, Vector3 x)
         {

@@ -23,7 +23,7 @@ public class GroupTest
             }));
         foreach (var dev in autd)
         {
-            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
             foreach (var tr in dev)
             {
                 if (tr.Position().X < cx)
@@ -51,7 +51,7 @@ public class GroupTest
             ));
         foreach (var dev in autd)
         {
-            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
             foreach (var tr in dev)
             {
                 if (tr.Position().X > cx)
@@ -106,12 +106,12 @@ public class GroupTest
         Assert.True(check[1]);
 
         {
-            var (intensities, phases) = autd.Link().Drives(0, Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, phases) = autd.Link().Drives(1, Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }

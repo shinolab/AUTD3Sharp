@@ -13,8 +13,8 @@ public class RadiationPressureTest
             194, 212, 227, 239, 248, 253, 255, 253, 248, 239, 227, 212, 194, 173, 150, 125, 97,  70, 39, 0,  23, 50, 78, 107, 134, 158};
         foreach (var dev in autd)
         {
-            Assert.Equal(modExpect, autd.Link().Modulation(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(modExpect, autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
         }
     }
 }

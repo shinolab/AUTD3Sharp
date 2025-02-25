@@ -7,14 +7,14 @@ public class ForceFanTest
     {
         var autd = CreateController();
         foreach (var dev in autd)
-            Assert.False(autd.Link().IsForceFan(dev.Idx()));
+            Assert.False(autd.Link<Audit>().IsForceFan(dev.Idx()));
 
         autd.Send(new ForceFan(dev => dev.Idx() == 0));
-        Assert.True(autd.Link().IsForceFan(0));
-        Assert.False(autd.Link().IsForceFan(1));
+        Assert.True(autd.Link<Audit>().IsForceFan(0));
+        Assert.False(autd.Link<Audit>().IsForceFan(1));
 
         autd.Send(new ForceFan(dev => dev.Idx() == 1));
-        Assert.False(autd.Link().IsForceFan(0));
-        Assert.True(autd.Link().IsForceFan(1));
+        Assert.False(autd.Link<Audit>().IsForceFan(0));
+        Assert.True(autd.Link<Audit>().IsForceFan(1));
     }
 }

@@ -9,7 +9,7 @@ namespace Samples;
 
 internal static class GroupByDeviceTest
 {
-    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
+    public static void Test(Controller autd)
     {
         var config = new Silencer();
         autd.Send(config);
@@ -30,7 +30,7 @@ internal static class GroupByDeviceTest
 
 internal static class GroupByTransducerTest
 {
-    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
+    public static void Test(Controller autd)
     {
         var config = new Silencer();
         autd.Send(config);

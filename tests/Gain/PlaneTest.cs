@@ -14,7 +14,7 @@ public class PlaneTest
         }));
         foreach (var dev in autd)
         {
-            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x81, p));
         }
