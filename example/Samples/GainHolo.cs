@@ -8,7 +8,7 @@ namespace Samples;
 
 internal static class GainHoloTest
 {
-    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
+    public static void Test(Controller autd)
     {
         var config = new Silencer();
         autd.Send(config);

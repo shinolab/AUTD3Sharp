@@ -4,13 +4,13 @@ using AUTD3Sharp.Gain;
 
 namespace Samples;
 
-internal delegate void TestFn<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link;
+internal delegate void TestFn(Controller autd);
 
 public class SampleRunner
 {
-    public static void Run<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
+    public static void Run(Controller autd)
     {
-        var examples = new List<(TestFn<T>, string)> { (FocusTest.Test, "Single focus test"),
+        var examples = new List<(TestFn, string)> { (FocusTest.Test, "Single focus test"),
             (BesselBeamTest.Test, "Bessel beam test"),
             (PlaneWaveTest.Test, "Plane wave test"),
             (WavTest.Test, "Wav modulation test"),

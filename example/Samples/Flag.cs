@@ -4,7 +4,7 @@ namespace Samples;
 
 internal static class FlagTest
 {
-    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
+    public static void Test(Controller autd)
     {
         Console.WriteLine("press any key to run fan...");
         Console.ReadKey(true);

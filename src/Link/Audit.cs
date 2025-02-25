@@ -3,7 +3,7 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Link
 {
-    public sealed class Audit : Driver.Link
+    public sealed class Audit : Driver.Link, Driver.ILink
     {
         public bool IsOpen() => NativeMethodsBase.AUTDLinkAuditIsOpen(Ptr);
         public bool IsForceFan(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaIsForceFan(Ptr, (ushort)idx);
@@ -97,5 +97,9 @@ namespace AUTD3Sharp.Link
         }
 
         public override LinkPtr Resolve() => NativeMethodsBase.AUTDLinkAudit();
+
+        public Audit() { }
+
+        void Driver.ILink.Resolve(LinkPtr ptr) => Ptr = ptr;
     }
 }

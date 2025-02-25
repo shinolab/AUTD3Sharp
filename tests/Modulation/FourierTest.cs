@@ -15,10 +15,10 @@ public class FourierTest
         autd.Send(m);
         foreach (var dev in autd)
         {
-            var mod = autd.Link().Modulation(dev.Idx(), Segment.S0);
+            var mod = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(LoopBehavior.Infinite, autd.Link().ModulationLoopBehavior(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
         }
     }
 
@@ -35,10 +35,10 @@ public class FourierTest
         autd.Send(m);
         foreach (var dev in autd)
         {
-            var mod = autd.Link().Modulation(dev.Idx(), Segment.S0);
+            var mod = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(LoopBehavior.Infinite, autd.Link().ModulationLoopBehavior(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
         }
     }
 
@@ -55,10 +55,10 @@ public class FourierTest
         autd.Send(m);
         foreach (var dev in autd)
         {
-            var mod = autd.Link().Modulation(dev.Idx(), Segment.S0);
+            var mod = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(LoopBehavior.Infinite, autd.Link().ModulationLoopBehavior(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
         }
     }
 

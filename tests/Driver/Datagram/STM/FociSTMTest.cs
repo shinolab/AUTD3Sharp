@@ -21,17 +21,17 @@ public class FociSTMTest
         autd.Send(stm);
         foreach (var dev in autd)
         {
-            Assert.False(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(2, autd.Link().StmCycle(dev.Idx(), Segment.S0));
-            Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
+            Assert.Equal(2, autd.Link<Audit>().StmCycle(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
@@ -47,16 +47,16 @@ public class FociSTMTest
         autd.Send(stm);
         foreach (var dev in autd)
         {
-            Assert.False(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
@@ -72,16 +72,16 @@ public class FociSTMTest
         autd.Send(stm);
         foreach (var dev in autd)
         {
-            Assert.False(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
@@ -97,16 +97,16 @@ public class FociSTMTest
         autd.Send(stm);
         foreach (var dev in autd)
         {
-            Assert.False(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(20000u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
@@ -122,16 +122,16 @@ public class FociSTMTest
         autd.Send(stm);
         foreach (var dev in autd)
         {
-            Assert.False(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(1, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
+            Assert.Equal(1, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
@@ -147,18 +147,18 @@ public class FociSTMTest
         autd.Send(new WithLoopBehavior(stm, LoopBehavior.Once, Segment.S1, TransitionMode.SyncIdx));
         foreach (var dev in autd)
         {
-            Assert.Equal(1u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S1));
-            Assert.Equal(LoopBehavior.Once, autd.Link().StmLoopBehavior(dev.Idx(), Segment.S1));
-            Assert.False(autd.Link().IsStmGainMode(dev.Idx(), Segment.S1));
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link().StmSoundSpeed(dev.Idx(), Segment.S1));
-            Assert.Equal(1, autd.Link().StmFreqDivision(dev.Idx(), Segment.S1));
+            Assert.Equal(1u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S1));
+            Assert.Equal(LoopBehavior.Once, autd.Link<Audit>().StmLoopBehavior(dev.Idx(), Segment.S1));
+            Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S1));
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S1));
+            Assert.Equal(1, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S1));
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S1, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S1, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S1, 1);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S1, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
@@ -167,18 +167,18 @@ public class FociSTMTest
         autd.Send(new WithLoopBehavior(stm, LoopBehavior.Finite(10), Segment.S0, null));
         foreach (var dev in autd)
         {
-            Assert.Equal(1u, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
-            Assert.Equal(LoopBehavior.Finite(10), autd.Link().StmLoopBehavior(dev.Idx(), Segment.S0));
-            Assert.False(autd.Link().IsStmGainMode(dev.Idx(), Segment.S0));
-            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(1, autd.Link().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(1u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(LoopBehavior.Finite(10), autd.Link<Audit>().StmLoopBehavior(dev.Idx(), Segment.S0));
+            Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
+            Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
+            Assert.Equal(1, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 1);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 1);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
                 Assert.Contains(phases, p => p != 0);
             }
@@ -200,25 +200,25 @@ public class FociSTMTest
         var stm = new FociSTM(CreateFoci(2), 1.0f * Hz);
 
         autd.Send(stm);
-        Assert.Equal(Segment.S0, autd.Link().CurrentStmSegment(0));
+        Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Null(infos[0]?.CurrentGainSegment());
         Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment());
 
         autd.Send(new WithSegment(stm, Segment.S1, TransitionMode.Immediate));
-        Assert.Equal(Segment.S1, autd.Link().CurrentStmSegment(0));
+        Assert.Equal(Segment.S1, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Null(infos[0]?.CurrentGainSegment());
         Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment());
 
         autd.Send(new WithSegment(stm, Segment.S0, null));
-        Assert.Equal(Segment.S1, autd.Link().CurrentStmSegment(0));
+        Assert.Equal(Segment.S1, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Null(infos[0]?.CurrentGainSegment());
         Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment());
 
         autd.Send(SwapSegment.FociSTM(Segment.S0, TransitionMode.Immediate));
-        Assert.Equal(Segment.S0, autd.Link().CurrentStmSegment(0));
+        Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Null(infos[0]?.CurrentGainSegment());
         Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment());
@@ -234,7 +234,7 @@ public class FociSTMTest
         autd.Send(new FociSTM(Enumerable.Range(0, size).Select(_ => center), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
-                Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+                Assert.All(autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
     }
 
     [Fact]
@@ -247,7 +247,7 @@ public class FociSTMTest
         autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
-                Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+                Assert.All(autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
     }
 
     [Fact]
@@ -260,7 +260,7 @@ public class FociSTMTest
         autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
-                Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+                Assert.All(autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
     }
 
     [Fact]
@@ -273,7 +273,7 @@ public class FociSTMTest
         autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
-                Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+                Assert.All(autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
     }
 
     [Fact]
@@ -286,7 +286,7 @@ public class FociSTMTest
         autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
-                Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+                Assert.All(autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
     }
 
     [Fact]
@@ -299,7 +299,7 @@ public class FociSTMTest
         autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
-                Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+                Assert.All(autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
     }
 
     [Fact]
@@ -312,7 +312,7 @@ public class FociSTMTest
         autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
-                Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+                Assert.All(autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
     }
 
     [Fact]
@@ -325,7 +325,7 @@ public class FociSTMTest
         autd.Send(new FociSTM(Enumerable.Range(0, size).Select(i => new ControlPoints([center, center, center, center, center, center, center, center])), 1.0f * Hz).IntoNearest());
         foreach (var dev in autd)
             for (var i = 0; i < size; i++)
-                Assert.All(autd.Link().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
+                Assert.All(autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, i).Item1, d => Assert.Equal(0xFF, d));
     }
 
     [Fact]

@@ -12,7 +12,7 @@ public class ConstraintTest
         autd.Send(g);
         foreach (var dev in autd)
         {
-            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.Contains(phases, p => p != 0);
         }
@@ -26,7 +26,7 @@ public class ConstraintTest
         autd.Send(g);
         foreach (var dev in autd)
         {
-            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
             Assert.Contains(intensities, d => d != 0);
             Assert.Contains(phases, p => p != 0);
         }
@@ -41,7 +41,7 @@ public class ConstraintTest
             autd.Send(g);
             foreach (var dev in autd)
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.True(67 <= d));
                 Assert.All(intensities, d => Assert.True(d <= 85));
                 Assert.Contains(phases, p => p != 0);
@@ -53,7 +53,7 @@ public class ConstraintTest
             autd.Send(g);
             foreach (var dev in autd)
             {
-                var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+                var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.True(10 <= d));
                 Assert.All(intensities, d => Assert.True(d <= 20));
                 Assert.Contains(phases, p => p != 0);
@@ -69,7 +69,7 @@ public class ConstraintTest
         autd.Send(g);
         foreach (var dev in autd)
         {
-            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.Contains(phases, p => p != 0);
         }

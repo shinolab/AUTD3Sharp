@@ -14,17 +14,37 @@ using AUTD3Sharp.Driver.Datagram;
 
 namespace AUTD3Sharp
 {
-    public sealed class Controller<T> : Geometry, IDisposable
-    where T : Driver.Link
+    public sealed class Controller : Geometry, IDisposable
     {
         private bool _isDisposed;
         internal ControllerPtr Ptr;
-        private readonly T _link;
+        private readonly LinkPtr _linkPtr;
 
-        internal Controller(GeometryPtr geometry, ControllerPtr ptr, T link) : base(geometry)
+        internal Controller(GeometryPtr geometry, ControllerPtr ptr, LinkPtr linkPtr) : base(geometry)
         {
             Ptr = ptr;
-            _link = link;
+            _linkPtr = linkPtr;
+        }
+
+        public static Controller Open<T>(IEnumerable<AUTD3> devices, T link) where T : Driver.Link => OpenWithOption(devices, link, new SenderOption());
+
+        public static Controller OpenWithOption<T>(IEnumerable<AUTD3> devices, T link, SenderOption option)
+            where T : Driver.Link
+        {
+            var devicesArray = devices as AUTD3[] ?? devices.ToArray();
+            var pos = devicesArray.Select(d => d.Pos).ToArray();
+            var rot = devicesArray.Select(d => d.Rot).ToArray();
+            var linkPtr = link.Resolve();
+            unsafe
+            {
+                fixed (Point3* pPos = &pos[0])
+                fixed (Quaternion* pRot = &rot[0])
+                {
+                    var ptr = NativeMethodsBase.AUTDControllerOpen(pPos, pRot, (ushort)devicesArray.Length, linkPtr, option.ToNative()).Validate();
+                    var geometryPtr = NativeMethodsBase.AUTDGeometry(ptr);
+                    return new Controller(geometryPtr, ptr, NativeMethodsBase.AUTDLinkGet(ptr));
+                }
+            }
         }
 
         public Sender Sender(SenderOption option) => new(NativeMethodsBase.AUTDSender(Ptr, option.ToNative()), Geometry());
@@ -86,31 +106,12 @@ namespace AUTD3Sharp
         ~Controller() { Dispose(); }
 
         public Geometry Geometry() => this;
-        public T Link() => _link;
-    }
 
-    public static class Controller
-    {
-        public static Controller<T> Open<T>(IEnumerable<AUTD3> devices, T link) where T : Driver.Link => OpenWithOption(devices, link, new SenderOption());
-
-        public static Controller<T> OpenWithOption<T>(IEnumerable<AUTD3> devices, T link, SenderOption option)
-            where T : Driver.Link
+        public T Link<T>() where T: Driver.ILink , new()
         {
-            var devicesArray = devices as AUTD3[] ?? devices.ToArray();
-            var pos = devicesArray.Select(d => d.Pos).ToArray();
-            var rot = devicesArray.Select(d => d.Rot).ToArray();
-            var linkPtr = link.Resolve();
-            unsafe
-            {
-                fixed (Point3* pPos = &pos[0])
-                fixed (Quaternion* pRot = &rot[0])
-                {
-                    var ptr = NativeMethodsBase.AUTDControllerOpen(pPos, pRot, (ushort)devicesArray.Length, linkPtr, option.ToNative()).Validate();
-                    var geometryPtr = NativeMethodsBase.AUTDGeometry(ptr);
-                    link.Ptr = NativeMethodsBase.AUTDLinkGet(ptr);
-                    return new Controller<T>(geometryPtr, ptr, link);
-                }
-            }
+            var link = new T();
+            link.Resolve(_linkPtr);
+            return link;
         }
     }
 }

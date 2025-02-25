@@ -22,7 +22,7 @@ public class AUTDTest
         autd.Send(new ReadsFPGAState(_ => true));
 
         {
-            autd.Link().AssertThermalSensor(0);
+            autd.Link<Audit>().AssertThermalSensor(0);
 
             var infos = autd.FPGAState();
             Assert.True(infos[0]!.IsThermalAssert());
@@ -32,8 +32,8 @@ public class AUTDTest
         }
 
         {
-            autd.Link().DeassertThermalSensor(0);
-            autd.Link().AssertThermalSensor(1);
+            autd.Link<Audit>().DeassertThermalSensor(0);
+            autd.Link<Audit>().AssertThermalSensor(1);
 
             var infos = autd.FPGAState();
             Assert.False(infos[0]!.IsThermalAssert());
@@ -48,9 +48,9 @@ public class AUTDTest
         }
 
         {
-            autd.Link().BreakDown();
+            autd.Link<Audit>().BreakDown();
             Assert.Throws<AUTDException>(() => _ = autd.FPGAState());
-            autd.Link().Repair();
+            autd.Link<Audit>().Repair();
         }
     }
 
@@ -71,9 +71,9 @@ public class AUTDTest
         }
 
         {
-            autd.Link().BreakDown();
+            autd.Link<Audit>().BreakDown();
             Assert.Throws<AUTDException>(() => _ = autd.FirmwareVersion().Last());
-            autd.Link().Repair();
+            autd.Link<Audit>().Repair();
         }
     }
 
@@ -83,7 +83,7 @@ public class AUTDTest
     {
         {
             var autd = CreateController();
-            Assert.True(autd.Link().IsOpen());
+            Assert.True(autd.Link<Audit>().IsOpen());
 
             autd.Close();
             autd.Close();
@@ -92,7 +92,7 @@ public class AUTDTest
         {
             var autd = CreateController();
 
-            autd.Link().BreakDown();
+            autd.Link<Audit>().BreakDown();
             Assert.Throws<AUTDException>(() => autd.Close());
         }
     }
@@ -104,20 +104,20 @@ public class AUTDTest
 
         foreach (var dev in autd)
         {
-            var m = autd.Link().Modulation(dev.Idx(), Segment.S0);
+            var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
         autd.Send(new Static());
 
         foreach (var dev in autd)
         {
-            var m = autd.Link().Modulation(dev.Idx(), Segment.S0);
+            var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
 
-        autd.Link().BreakDown();
+        autd.Link<Audit>().BreakDown();
         Assert.Throws<AUTDException>(() => autd.Send(new Static()));
-        autd.Link().Repair();
+        autd.Link<Audit>().Repair();
     }
 
     [Fact]
@@ -127,25 +127,25 @@ public class AUTDTest
 
         foreach (var dev in autd)
         {
-            var m = autd.Link().Modulation(dev.Idx(), Segment.S0);
+            var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         autd.Send((new Static(), new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero)));
         foreach (var dev in autd)
         {
-            var m = autd.Link().Modulation(dev.Idx(), Segment.S0);
+            var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link().Drives(dev.Idx(), Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
 
-        autd.Link().BreakDown();
+        autd.Link<Audit>().BreakDown();
         Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero))));
-        autd.Link().Repair();
+        autd.Link<Audit>().Repair();
     }
 
     [Fact]
@@ -160,17 +160,17 @@ public class AUTDTest
         });
 
         {
-            var m = autd.Link().Modulation(0, Segment.S0);
+            var m = autd.Link<Audit>().Modulation(0, Segment.S0);
             Assert.Equal(2, m.Length);
             Assert.All(m, d => Assert.Equal(0xFF, d));
-            var (intensities, phases) = autd.Link().Drives(0, Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var m = autd.Link().Modulation(1, Segment.S0);
+            var m = autd.Link<Audit>().Modulation(1, Segment.S0);
             Assert.Equal(80, m.Length);
-            var (intensities, phases) = autd.Link().Drives(1, Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
@@ -181,12 +181,12 @@ public class AUTDTest
             });
 
         {
-            var (intensities, phases) = autd.Link().Drives(0, Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, _) = autd.Link().Drives(1, Segment.S0, 0);
+            var (intensities, _) = autd.Link<Audit>().Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
         }
 
@@ -199,12 +199,12 @@ public class AUTDTest
             {0, new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero)}
         });
         {
-            var (intensities, phases) = autd.Link().Drives(0, Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0xFF, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, _) = autd.Link().Drives(1, Segment.S0, 0);
+            var (intensities, _) = autd.Link<Audit>().Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
         }
     }
@@ -230,12 +230,12 @@ public class AUTDTest
         Assert.True(check[1]);
 
         {
-            var (intensities, phases) = autd.Link().Drives(0, Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(0, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
         {
-            var (intensities, phases) = autd.Link().Drives(1, Segment.S0, 0);
+            var (intensities, phases) = autd.Link<Audit>().Drives(1, Segment.S0, 0);
             Assert.All(intensities, d => Assert.Equal(0x80, d));
             Assert.All(phases, p => Assert.Equal(0x90, p));
         }

@@ -8,7 +8,7 @@ namespace Samples;
 
 internal static class GainSTMTest
 {
-    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
+    public static void Test(Controller autd)
     {
         var config = Silencer.Disable();
         autd.Send(config);
@@ -30,7 +30,7 @@ internal static class GainSTMTest
 
 internal static class FociSTMTest
 {
-    public static void Test<T>(Controller<T> autd) where T : AUTD3Sharp.Driver.Link
+    public static void Test(Controller autd)
     {
         var config = Silencer.Disable();
         autd.Send(config);

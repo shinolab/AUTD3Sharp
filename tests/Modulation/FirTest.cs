@@ -110,8 +110,8 @@ public class FirTest
         var modExpect = new byte[] { 127, 131, 136, 140, 145, 149, 153, 157, 161, 164, 168, 171, 173, 176, 178, 180, 182, 183, 184, 184, 184, 184, 184, 183, 182, 180, 178, 176, 173, 171, 168, 164, 161, 157, 153, 149, 145, 140, 136, 131, 127, 122, 118, 113, 109, 105, 100, 96, 93, 89, 86, 83, 80, 77, 75, 73, 72, 70, 70, 69, 69, 69, 70, 70, 72, 73, 75, 77, 80, 83, 86, 89, 93, 96, 100, 105, 109, 113, 118, 122 };
         foreach (var dev in autd)
         {
-            Assert.Equal(modExpect, autd.Link().Modulation(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(modExpect, autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
         }
     }
 }
