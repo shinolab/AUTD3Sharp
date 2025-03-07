@@ -44,12 +44,6 @@ namespace AUTD3Sharp
 
         public Point3 Center() => NativeMethodsBase.AUTDDeviceCenter(Ptr);
 
-        public void Translate(Vector3 t) => NativeMethodsBase.AUTDDeviceTranslate(GeoPtr, _idx, t);
-
-        public void Rotate(Quaternion r) => NativeMethodsBase.AUTDDeviceRotate(GeoPtr, _idx, r);
-
-        public void Affine(Vector3 t, Quaternion r) => NativeMethodsBase.AUTDDeviceAffine(GeoPtr, _idx, t, r);
-
         public void SetSoundSpeedFromTemp(float temp, float k = 1.4f, float r = 8.31446261815324f, float m = 28.9647e-3f) => NativeMethodsBase.AUTDDeviceSetSoundSpeedFromTemp(GeoPtr, _idx, temp, k, r, m);
 
         public float Wavelength() => NativeMethodsBase.AUTDDeviceWavelength(Ptr);

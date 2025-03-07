@@ -26,13 +26,13 @@ namespace AUTD3Sharp
         public static DebugType Direct(bool v) => new(NativeMethodsBase.AUTDDebugTypeDirect(v));
     }
 
-    public sealed class DebugSettings : IDatagram
+    public sealed class GPIOOutputs : IDatagram
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void DebugSettingsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, NativeMethods.GPIOOut gpio, DebugTypeWrap* debugType);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void GPIOOutputsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, NativeMethods.GPIOOut gpio, DebugTypeWrap* debugType);
 
-        private readonly DebugSettingsDelegate _f;
+        private readonly GPIOOutputsDelegate _f;
 
-        public DebugSettings(Func<Device, GPIOOut, DebugType> f)
+        public GPIOOutputs(Func<Device, GPIOOut, DebugType> f)
         {
             unsafe
             {
@@ -40,6 +40,6 @@ namespace AUTD3Sharp
             }
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramDebugSettings(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramGPIOOutputs(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
     }
 }

@@ -3,7 +3,7 @@ namespace tests;
 public class GeometryTest
 {
     [Fact]
-    public void AUTD3Props()
+    public void TestAUTD3Props()
     {
         Assert.Equal(10.16f, AUTD3.TransSpacing);
         Assert.Equal(10.16f, AUTD3.TransSpacingMm);
@@ -17,7 +17,7 @@ public class GeometryTest
     }
 
     [Fact]
-    public void GeometryNumDevices()
+    public void TestGeometryNumDevices()
     {
         var autd = CreateController();
         Assert.Equal(2, autd.NumDevices());
@@ -25,7 +25,7 @@ public class GeometryTest
 
 
     [Fact]
-    public void GeometryNumTransducers()
+    public void TestGeometryNumTransducers()
     {
         var autd = CreateController();
         Assert.Equal(2 * 249, autd.NumTransducers());
@@ -48,10 +48,31 @@ public class GeometryTest
     }
 
     [Fact]
-    public void GeometryCenter()
+    public void TestGeometryCenter()
     {
         var autd = CreateController();
-        Assert.Equal(new Vector3(86.625267028808594f, 66.71319580078125f, 0), autd.Center());
+        Assert.Equal(new Point3(86.625267028808594f, 66.71319580078125f, 0), autd.Center());
+    }
+
+    [Fact]
+    public void TestGeometryReconfigure()
+    {
+        var autd = CreateController();
+        Assert.Equal(new Point3(0, 0, 0), autd[0][0].Position());
+        Assert.Equal(new Quaternion(1, 0, 0, 0), autd[0].Rotation());
+        Assert.Equal(new Point3(0, 0, 0), autd[1][0].Position());
+        Assert.Equal(new Quaternion(1, 0, 0, 0), autd[1].Rotation());
+        autd.Reconfigure(d =>
+            d.Idx() switch
+            {
+                0 => new AUTD3(pos: new Point3(1, 2, 3), rot: new Quaternion(0.1825742f, 0.3651484f, 0.5477226f, 0.7302968f)),
+                _ => new AUTD3(pos: new Point3(4, 5, 6), rot: new Quaternion(0.37904903f, 0.45485884f, 0.53066862f, 0.60647845f)),
+            }
+            );
+        Assert.Equal(new Point3(1, 2, 3), autd[0][0].Position());
+        Assert.Equal(new Quaternion(0.1825742f, 0.3651484f, 0.5477226f, 0.7302968f), autd[0].Rotation());
+        Assert.Equal(new Point3(4, 5, 6), autd[1][0].Position());
+        Assert.Equal(new Quaternion(0.37904903f, 0.45485884f, 0.53066862f, 0.60647845f), autd[1].Rotation());
     }
 
     [Fact]
@@ -117,54 +138,6 @@ public class GeometryTest
             Assert.Equal(86.625267f, center.X);
             Assert.Equal(66.7131958f, center.Y);
             Assert.Equal(0.0f, center.Z);
-        }
-    }
-
-    [Fact]
-    public void TestDeviceTranslate()
-    {
-        var autd = CreateController();
-        foreach (var dev in autd)
-        {
-            var originalPos = dev.Select(tr => tr.Position()).ToArray();
-            var t = new Vector3(1, 2, 3);
-            dev.Translate(t);
-            foreach (var tr in dev)
-                Assert.Equal(tr.Position(), originalPos[tr.Idx()] + t);
-        }
-    }
-
-    [Fact]
-    public void TestDeviceRotate()
-    {
-        var autd = CreateController();
-        foreach (var dev in autd)
-        {
-            var r = new Quaternion(0.707106829f, 0, 0, 0.707106829f);
-            dev.Rotate(r);
-            Assert.Equal(r, dev.Rotation());
-        }
-    }
-
-    [Fact]
-    public void TestDeviceAffine()
-    {
-        var autd = CreateController();
-        foreach (var dev in autd)
-        {
-            var originalPos = dev.Select(tr => tr.Position()).ToArray();
-            var t = new Vector3(1, 2, 3);
-            var r = new Quaternion(0.707106829f, 0, 0, 0.707106829f);
-            dev.Affine(t, r);
-            foreach (var tr in dev)
-            {
-                var op = originalPos[tr.Idx()];
-                var expected = new Vector3(-op.Y, op.X, op.Z) + t;
-                Assert.True(Math.Abs(expected.X - tr.Position().X) < 1e-3);
-                Assert.True(Math.Abs(expected.Y - tr.Position().Y) < 1e-3);
-                Assert.True(Math.Abs(expected.Z - tr.Position().Z) < 1e-3);
-            }
-            Assert.Equal(r, dev.Rotation());
         }
     }
 
