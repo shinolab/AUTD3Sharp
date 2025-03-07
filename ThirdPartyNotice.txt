@@ -18,7 +18,7 @@ aho-corasick 1.1.3 (MIT OR Unlicense)
 https://github.com/BurntSushi/aho-corasick
 ---------------------------------------------------------
 
-anyhow 1.0.96 (Apache-2.0 OR MIT)
+anyhow 1.0.97 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/anyhow
 ---------------------------------------------------------
 
@@ -34,7 +34,7 @@ async-stream-impl 0.3.6 (MIT)
 https://github.com/tokio-rs/async-stream
 ---------------------------------------------------------
 
-async-trait 0.1.86 (Apache-2.0 OR MIT)
+async-trait 0.1.87 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/async-trait
 ---------------------------------------------------------
 
@@ -42,67 +42,67 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 30.0.1 (MIT)
+autd3 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-core 30.0.1 (MIT)
+autd3-core 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-derive 30.0.1 (MIT)
+autd3-derive 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 30.0.1 (MIT)
+autd3-driver 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 30.0.1 (MIT)
+autd3-firmware-emulator 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 30.0.1 (MIT)
+autd3-gain-holo 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 30.0.1 (MIT)
+autd3-link-simulator 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-twincat 30.0.1 (MIT)
+autd3-link-twincat 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 30.0.1 (MIT)
+autd3-modulation-audio-file 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 30.0.1 (MIT)
+autd3-protobuf 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 30.0.1 (MIT)
+autd3capi 31.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 30.0.1 (MIT)
+autd3capi-driver 31.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 30.0.1 (MIT)
+autd3capi-gain-holo 31.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 30.0.1 (MIT)
+autd3capi-link-simulator 31.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 30.0.1 (MIT)
+autd3capi-link-twincat 31.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 30.0.1 (MIT)
+autd3capi-modulation-audio-file 31.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
@@ -130,7 +130,7 @@ bitfield-struct 0.10.1 (MIT)
 https://github.com/wrenger/bitfield-struct-rs.git
 ---------------------------------------------------------
 
-bitflags 2.8.0 (Apache-2.0 OR MIT)
+bitflags 2.9.0 (Apache-2.0 OR MIT)
 https://github.com/bitflags/bitflags
 ---------------------------------------------------------
 
@@ -138,7 +138,7 @@ bvh 0.11.0 (MIT)
 https://github.com/svenstaro/bvh
 ---------------------------------------------------------
 
-bytemuck 1.21.0 (Apache-2.0 OR MIT OR Zlib)
+bytemuck 1.22.0 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/bytemuck
 ---------------------------------------------------------
 
@@ -146,7 +146,7 @@ byteorder 1.5.0 (MIT OR Unlicense)
 https://github.com/BurntSushi/byteorder
 ---------------------------------------------------------
 
-bytes 1.10.0 (MIT)
+bytes 1.10.1 (MIT)
 https://github.com/tokio-rs/bytes
 ---------------------------------------------------------
 
@@ -190,7 +190,7 @@ derive_more-impl 2.0.1 (MIT)
 https://github.com/JelteF/derive_more
 ---------------------------------------------------------
 
-either 1.14.0 (Apache-2.0 OR MIT)
+either 1.15.0 (Apache-2.0 OR MIT)
 https://github.com/rayon-rs/either
 ---------------------------------------------------------
 
@@ -230,7 +230,7 @@ getrandom 0.3.1 (Apache-2.0 OR MIT)
 https://github.com/rust-random/getrandom
 ---------------------------------------------------------
 
-getset 0.1.4 (MIT)
+getset 0.1.5 (MIT)
 https://github.com/jbaublitz/getset
 ---------------------------------------------------------
 
@@ -266,7 +266,7 @@ http-body-util 0.1.2 (MIT)
 https://github.com/hyperium/http-body
 ---------------------------------------------------------
 
-httparse 1.10.0 (Apache-2.0 OR MIT)
+httparse 1.10.1 (Apache-2.0 OR MIT)
 https://github.com/seanmonstar/httparse
 ---------------------------------------------------------
 
@@ -298,7 +298,7 @@ itertools 0.14.0 (Apache-2.0 OR MIT)
 https://github.com/rust-itertools/itertools
 ---------------------------------------------------------
 
-itoa 1.0.14 (Apache-2.0 OR MIT)
+itoa 1.0.15 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/itoa
 ---------------------------------------------------------
 
@@ -306,7 +306,7 @@ lazy_static 1.5.0 (Apache-2.0 OR MIT)
 https://github.com/rust-lang-nursery/lazy-static.rs
 ---------------------------------------------------------
 
-libc 0.2.169 (Apache-2.0 OR MIT)
+libc 0.2.170 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/libc
 ---------------------------------------------------------
 
@@ -418,11 +418,11 @@ percent-encoding 2.3.1 (Apache-2.0 OR MIT)
 https://github.com/servo/rust-url/
 ---------------------------------------------------------
 
-pin-project 1.1.9 (Apache-2.0 OR MIT)
+pin-project 1.1.10 (Apache-2.0 OR MIT)
 https://github.com/taiki-e/pin-project
 ---------------------------------------------------------
 
-pin-project-internal 1.1.9 (Apache-2.0 OR MIT)
+pin-project-internal 1.1.10 (Apache-2.0 OR MIT)
 https://github.com/taiki-e/pin-project
 ---------------------------------------------------------
 
@@ -450,7 +450,7 @@ proc-macro-error2 2.0.1 (Apache-2.0 OR MIT)
 https://github.com/GnomedDev/proc-macro-error-2
 ---------------------------------------------------------
 
-proc-macro2 1.0.93 (Apache-2.0 OR MIT)
+proc-macro2 1.0.94 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/proc-macro2
 ---------------------------------------------------------
 
@@ -462,7 +462,7 @@ prost-derive 0.13.5 (Apache-2.0)
 https://github.com/tokio-rs/prost
 ---------------------------------------------------------
 
-quote 1.0.38 (Apache-2.0 OR MIT)
+quote 1.0.39 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/quote
 ---------------------------------------------------------
 
@@ -486,7 +486,7 @@ rand_core 0.6.4 (Apache-2.0 OR MIT)
 https://github.com/rust-random/rand
 ---------------------------------------------------------
 
-rand_core 0.9.2 (Apache-2.0 OR MIT)
+rand_core 0.9.3 (Apache-2.0 OR MIT)
 https://github.com/rust-random/rand
 ---------------------------------------------------------
 
@@ -526,11 +526,11 @@ rustc-demangle 0.1.24 (Apache-2.0 OR MIT)
 https://github.com/rust-lang/rustc-demangle
 ---------------------------------------------------------
 
-rustversion 1.0.19 (Apache-2.0 OR MIT)
+rustversion 1.0.20 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/rustversion
 ---------------------------------------------------------
 
-ryu 1.0.19 (Apache-2.0 OR BSL-1.0)
+ryu 1.0.20 (Apache-2.0 OR BSL-1.0)
 https://github.com/dtolnay/ryu
 ---------------------------------------------------------
 
@@ -538,7 +538,7 @@ safe_arch 0.7.4 (Apache-2.0 OR MIT OR Zlib)
 https://github.com/Lokathor/safe_arch
 ---------------------------------------------------------
 
-seq-macro 0.3.5 (Apache-2.0 OR MIT)
+seq-macro 0.3.6 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/seq-macro
 ---------------------------------------------------------
 
@@ -574,7 +574,7 @@ spin_sleep 1.3.0 (Apache-2.0)
 https://github.com/alexheretic/spin-sleep
 ---------------------------------------------------------
 
-syn 2.0.98 (Apache-2.0 OR MIT)
+syn 2.0.99 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/syn
 ---------------------------------------------------------
 
@@ -582,11 +582,11 @@ sync_wrapper 1.0.2 (Apache-2.0)
 https://github.com/Actyx/sync_wrapper
 ---------------------------------------------------------
 
-thiserror 2.0.11 (Apache-2.0 OR MIT)
+thiserror 2.0.12 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
-thiserror-impl 2.0.11 (Apache-2.0 OR MIT)
+thiserror-impl 2.0.12 (Apache-2.0 OR MIT)
 https://github.com/dtolnay/thiserror
 ---------------------------------------------------------
 
@@ -594,15 +594,15 @@ thread_local 1.1.8 (Apache-2.0 OR MIT)
 https://github.com/Amanieu/thread_local-rs
 ---------------------------------------------------------
 
-time 0.3.37 (Apache-2.0 OR MIT)
+time 0.3.39 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
-time-core 0.1.2 (Apache-2.0 OR MIT)
+time-core 0.1.3 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
-time-macros 0.2.19 (Apache-2.0 OR MIT)
+time-macros 0.2.20 (Apache-2.0 OR MIT)
 https://github.com/time-rs/time
 ---------------------------------------------------------
 
@@ -670,7 +670,7 @@ typenum 1.18.0 (Apache-2.0 OR MIT)
 https://github.com/paholg/typenum
 ---------------------------------------------------------
 
-unicode-ident 1.0.17 ((MIT OR Apache-2.0) AND Unicode-3.0)
+unicode-ident 1.0.18 ((MIT OR Apache-2.0) AND Unicode-3.0)
 https://github.com/dtolnay/unicode-ident
 ---------------------------------------------------------
 
@@ -798,7 +798,7 @@ zerocopy 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
-zerocopy 0.8.20 (Apache-2.0 OR BSD-2-Clause OR MIT)
+zerocopy 0.8.23 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
@@ -806,7 +806,7 @@ zerocopy-derive 0.7.35 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 
-zerocopy-derive 0.8.20 (Apache-2.0 OR BSD-2-Clause OR MIT)
+zerocopy-derive 0.8.23 (Apache-2.0 OR BSD-2-Clause OR MIT)
 https://github.com/google/zerocopy
 ---------------------------------------------------------
 

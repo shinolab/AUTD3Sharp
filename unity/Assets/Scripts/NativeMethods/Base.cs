@@ -64,8 +64,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDatagramClear", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramClear();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDatagramDebugSettings", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DatagramPtr AUTDDatagramDebugSettings(ConstPtr f, ConstPtr context, GeometryPtr geometry);
+        [DllImport(__DllName, EntryPoint = "AUTDDatagramGPIOOutputs", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern DatagramPtr AUTDDatagramGPIOOutputs(ConstPtr f, ConstPtr context, GeometryPtr geometry);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramForceFan", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramForceFan(ConstPtr f, ConstPtr context, GeometryPtr geometry);
@@ -318,15 +318,6 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDeviceCenter", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Point3 AUTDDeviceCenter(DevicePtr dev);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDeviceTranslate", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDDeviceTranslate(GeometryPtr geo, ushort dev_idx, Vector3 t);
-
-        [DllImport(__DllName, EntryPoint = "AUTDDeviceRotate", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDDeviceRotate(GeometryPtr geo, ushort dev_idx, Quaternion r);
-
-        [DllImport(__DllName, EntryPoint = "AUTDDeviceAffine", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDDeviceAffine(GeometryPtr geo, ushort dev_idx, Vector3 t, Quaternion r);
-
         [DllImport(__DllName, EntryPoint = "AUTDDeviceEnableSet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void AUTDDeviceEnableSet(GeometryPtr geo, ushort dev_idx, [MarshalAs(UnmanagedType.U1)] bool value);
 
@@ -363,6 +354,9 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDGeometrCenter", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Point3 AUTDGeometrCenter(GeometryPtr geo);
+
+        [DllImport(__DllName, EntryPoint = "AUTDGeometryReconfigure", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern void AUTDGeometryReconfigure(GeometryPtr geo, Point3* pos, Quaternion* rot);
 
         [DllImport(__DllName, EntryPoint = "AUTDRotationFromEulerXYZ", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Quaternion AUTDRotationFromEulerXYZ(float x, float y, float z);

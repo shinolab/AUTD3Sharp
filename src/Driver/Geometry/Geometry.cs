@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace AUTD3Sharp
     public class Geometry : IEnumerable<Device>
     {
         internal readonly GeometryPtr GeometryPtr;
-        private readonly List<Device> _devices;
+        private List<Device> _devices;
 
         internal Geometry(GeometryPtr geometryPtr)
         {
@@ -36,6 +37,22 @@ namespace AUTD3Sharp
         public void SetSoundSpeedFromTemp(float temp, float k = 1.4f, float r = 8.31446261815324f, float m = 28.9647e-3f)
         {
             foreach (var dev in Devices()) dev.SetSoundSpeedFromTemp(temp, k, r, m);
+        }
+
+        public void Reconfigure(Func<Device, AUTD3> f)
+        {
+            var devices = _devices.Select(d => f(d)).ToArray();
+            var pos = devices.Select(d => d.Pos).ToArray();
+            var rot = devices.Select(d => d.Rot).ToArray();
+            unsafe
+            {
+                fixed (Point3* pPos = &pos[0])
+                fixed (Quaternion* pRot = &rot[0])
+                {
+                    NativeMethodsBase.AUTDGeometryReconfigure(GeometryPtr, pPos, pRot);
+                    _devices = Enumerable.Range(0, (int)NativeMethodsBase.AUTDGeometryNumDevices(GeometryPtr)).Select(x => new Device((ushort)x, GeometryPtr)).ToList();
+                }
+            }
         }
     }
 }

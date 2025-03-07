@@ -39,11 +39,21 @@ public class Vector3Test
         var vector1 = new Vector3(1, 2, 3);
         var vector2 = new Vector3(4, 5, 6);
 
-        var result = Vector3.Add(vector1, vector2);
+        {
 
-        Assert.Equal(5, result.X);
-        Assert.Equal(7, result.Y);
-        Assert.Equal(9, result.Z);
+            var result = Vector3.Add(vector1, vector2);
+            Assert.Equal(5, result.X);
+            Assert.Equal(7, result.Y);
+            Assert.Equal(9, result.Z);
+        }
+
+        {
+
+            var result = vector1 + vector2;
+            Assert.Equal(5, result.X);
+            Assert.Equal(7, result.Y);
+            Assert.Equal(9, result.Z);
+        }
     }
 
     [Fact]

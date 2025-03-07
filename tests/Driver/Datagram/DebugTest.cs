@@ -3,7 +3,7 @@ namespace tests.Driver.Datagram;
 public class DebugTest
 {
     [Fact]
-    public void TestDebugSettings()
+    public void TestGPIOOutputs()
     {
         using var autd = CreateController();
 
@@ -13,7 +13,7 @@ public class DebugTest
             Assert.Equal([0x0000, 0x0000, 0x0000, 0x0000], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
 
-        autd.Send(new DebugSettings((_, gpio) => gpio switch
+        autd.Send(new GPIOOutputs((_, gpio) => gpio switch
         {
             AUTD3Sharp.GPIOOut.O0 => DebugType.None,
             AUTD3Sharp.GPIOOut.O1 => DebugType.BaseSignal,
@@ -28,7 +28,7 @@ public class DebugTest
             Assert.Equal([0x0000, 0x0000, 0x0000, 0x0000], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
 
-        autd.Send(new DebugSettings((_, gpio) => gpio switch
+        autd.Send(new GPIOOutputs((_, gpio) => gpio switch
         {
             AUTD3Sharp.GPIOOut.O0 => DebugType.Sync,
             AUTD3Sharp.GPIOOut.O1 => DebugType.ModSegment,
@@ -42,7 +42,7 @@ public class DebugTest
             Assert.Equal([0x0000, 0x0000, 0x0001, 0x0000], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
 
-        autd.Send(new DebugSettings((dev, gpio) => gpio switch
+        autd.Send(new GPIOOutputs((dev, gpio) => gpio switch
         {
             AUTD3Sharp.GPIOOut.O0 => DebugType.StmIdx(0x02),
             AUTD3Sharp.GPIOOut.O1 => DebugType.IsStmMode,
@@ -57,7 +57,7 @@ public class DebugTest
         }
 
         var sysTime = DcSysTime.Now;
-        autd.Send(new DebugSettings((dev, gpio) => gpio switch
+        autd.Send(new GPIOOutputs((dev, gpio) => gpio switch
                 {
 
                     AUTD3Sharp.GPIOOut.O0 => DebugType.SysTimeEq(sysTime),
