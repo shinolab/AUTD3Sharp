@@ -98,17 +98,17 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern DatagramPtr AUTDDatagramSwapSegmentGain(Segment segment, TransitionModeWrap transition_mode);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromUpdateRate", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DatagramPtr AUTDDatagramSilencerFromUpdateRate(FixedUpdateRate config, SilencerTarget target);
+        internal static extern DatagramPtr AUTDDatagramSilencerFromUpdateRate(FixedUpdateRate config);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromCompletionSteps", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DatagramPtr AUTDDatagramSilencerFromCompletionSteps(FixedCompletionSteps config, SilencerTarget target);
+        internal static extern DatagramPtr AUTDDatagramSilencerFromCompletionSteps(FixedCompletionSteps config);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFromCompletionTime", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DatagramPtr AUTDDatagramSilencerFromCompletionTime(FixedCompletionTime config, SilencerTarget target);
+        internal static extern DatagramPtr AUTDDatagramSilencerFromCompletionTime(FixedCompletionTime config);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSilencerFixedCompletionStepsIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        internal static extern bool AUTDDatagramSilencerFixedCompletionStepsIsDefault(FixedCompletionSteps config, SilencerTarget target);
+        internal static extern bool AUTDDatagramSilencerFixedCompletionStepsIsDefault(FixedCompletionSteps config);
 
         [DllImport(__DllName, EntryPoint = "AUTDSTMFoci", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern FociSTMPtr AUTDSTMFoci(SamplingConfigWrap config, ConstPtr points, ushort size, byte n);
@@ -152,44 +152,44 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDcSysTimeNow", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DcSysTime AUTDDcSysTimeNow();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeNone", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeNone();
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeNone", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeNone();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeBaseSignal", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeBaseSignal();
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeBaseSignal", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeBaseSignal();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeThermo", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeThermo();
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeThermo", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeThermo();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeForceFan", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeForceFan();
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeForceFan", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeForceFan();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeSync", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeSync();
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeSync", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeSync();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeModSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeModSegment();
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeModSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeModSegment();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeModIdx", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeModIdx(ushort value);
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeModIdx", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeModIdx(ushort value);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeStmSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeStmSegment();
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeStmSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeStmSegment();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeStmIdx", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeStmIdx(ushort value);
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeStmIdx", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeStmIdx(ushort value);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeIsStmMode", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeIsStmMode();
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeIsStmMode", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeIsStmMode();
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypePwmOut", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypePwmOut(TransducerPtr value);
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypePwmOut", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypePwmOut(TransducerPtr value);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeDirect", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeDirect([MarshalAs(UnmanagedType.U1)] bool value);
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeDirect", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeDirect([MarshalAs(UnmanagedType.U1)] bool value);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDebugTypeSysTimeEq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DebugTypeWrap AUTDDebugTypeSysTimeEq(DcSysTime sys_time);
+        [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeSysTimeEq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeSysTimeEq(DcSysTime sys_time);
 
         [DllImport(__DllName, EntryPoint = "AUTDLoopBehaviorInfinite", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern LoopBehavior AUTDLoopBehaviorInfinite();
@@ -432,11 +432,8 @@ namespace AUTD3Sharp.NativeMethods
         [return: MarshalAs(UnmanagedType.U1)]
         internal static extern bool AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(LinkPtr audit, ushort idx);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSilencerTarget", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern SilencerTarget AUTDLinkAuditFpgaSilencerTarget(LinkPtr audit, ushort idx);
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaDebugTypes", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDLinkAuditFpgaDebugTypes(LinkPtr audit, ushort idx, byte* ty);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaGPIOOutputTypes", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern void AUTDLinkAuditFpgaGPIOOutputTypes(LinkPtr audit, ushort idx, byte* ty);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaDebugValues", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void AUTDLinkAuditFpgaDebugValues(LinkPtr audit, ushort idx, ulong* value);
@@ -469,7 +466,7 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern void AUTDLinkAuditFpgaDrivesAt(LinkPtr audit, Segment segment, ushort idx, ushort stm_idx, Drive* drive);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaPulseWidthEncoderTable", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDLinkAuditFpgaPulseWidthEncoderTable(LinkPtr audit, ushort idx, byte* dst);
+        internal static extern void AUTDLinkAuditFpgaPulseWidthEncoderTable(LinkPtr audit, ushort idx, ushort* dst);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkGet", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern LinkPtr AUTDLinkGet(ControllerPtr cnt);

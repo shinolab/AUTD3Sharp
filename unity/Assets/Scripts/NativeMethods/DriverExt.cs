@@ -25,12 +25,6 @@ namespace AUTD3Sharp
         S1
     }
 
-    public enum SilencerTarget
-    {
-        Intensity,
-        PulseWidth
-    }
-
     public enum GPIOIn
     {
         I0,

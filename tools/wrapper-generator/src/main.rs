@@ -79,12 +79,11 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "DevicePtr",
         "GeometryPtr",
         "LinkPtr",
-        "DebugTypeWrap",
+        "GPIOOutputTypeWrap",
         "FociSTMPtr",
         "GainSTMPtr",
         "GPIOIn",
         "GPIOOut",
-        "SilencerTarget",
         "GainSTMMode",
         "FocusOption",
         "BesselOption",
@@ -136,7 +135,7 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
     // Following substitutions are required to avoid alignment issues
     let content = content.replace("public DcSysTime sys_time;", "public ulong sys_time;");
     let content = content.replace("public GPIOIn gpio_in;", "public byte gpio_in;");
-    let content = content.replace("public DebugTypeValue value;", "public ulong value;");
+    let content = content.replace("public GPIOOutputTypeValue value;", "public ulong value;");
 
     std::fs::write(&out_file, content)?;
 
