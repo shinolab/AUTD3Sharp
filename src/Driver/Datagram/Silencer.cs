@@ -9,7 +9,7 @@ namespace AUTD3Sharp
 {
     public interface ISilencer
     {
-        internal DatagramPtr RawPtr(SilencerTarget target);
+        internal DatagramPtr RawPtr();
     }
 
     public class FixedCompletionTime : ISilencer
@@ -18,12 +18,12 @@ namespace AUTD3Sharp
         public Duration Phase { get; init; } = Duration.FromMillis(1);
         public bool StrictMode { get; init; } = true;
 
-        DatagramPtr ISilencer.RawPtr(SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(new NativeMethods.FixedCompletionTime
+        DatagramPtr ISilencer.RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(new NativeMethods.FixedCompletionTime
         {
             intensity = Intensity,
             phase = Phase,
             strict_mode = StrictMode
-        }, target);
+        });
     }
 
     public class FixedCompletionSteps : ISilencer
@@ -39,7 +39,7 @@ namespace AUTD3Sharp
             strict_mode = StrictMode
         };
 
-        DatagramPtr ISilencer.RawPtr(SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(ToNative(), target);
+        DatagramPtr ISilencer.RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(ToNative());
     }
 
     public class FixedUpdateRate : ISilencer
@@ -53,24 +53,22 @@ namespace AUTD3Sharp
             phase = Phase
         };
 
-        DatagramPtr ISilencer.RawPtr(SilencerTarget target) => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(ToNative(), target);
+        DatagramPtr ISilencer.RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromUpdateRate(ToNative());
     }
 
     public sealed class Silencer : IDatagram
     {
         public ISilencer Config = new FixedCompletionSteps();
-        public SilencerTarget Target = SilencerTarget.Intensity;
 
-        public Silencer(ISilencer config, SilencerTarget target)
+        public Silencer(ISilencer config)
         {
             Config = config;
-            Target = target;
         }
 
         public Silencer() { }
 
-        public static Silencer Disable() => new(new FixedCompletionSteps { Intensity = 1, Phase = 1 }, SilencerTarget.Intensity);
+        public static Silencer Disable() => new(new FixedCompletionSteps { Intensity = 1, Phase = 1 });
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => Config.RawPtr(Target);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => Config.RawPtr();
     }
 }

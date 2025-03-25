@@ -17,15 +17,13 @@ namespace AUTD3Sharp.Link
         public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(Ptr, (ushort)idx);
         public bool SilencerStrictMode(int idx) => NativeMethodsBase.AUTDLinkAuditCpuSilencerStrictMode(Ptr, (ushort)idx);
 
-        public SilencerTarget SilencerTarget(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerTarget(Ptr, (ushort)idx);
-
-        public byte[] DebugTypes(int idx)
+        public byte[] GPIOOutputTypes(int idx)
         {
             var ty = new byte[4];
             unsafe
             {
                 fixed (byte* p = &ty[0])
-                    NativeMethodsBase.AUTDLinkAuditFpgaDebugTypes(Ptr, (ushort)idx, p);
+                    NativeMethodsBase.AUTDLinkAuditFpgaGPIOOutputTypes(Ptr, (ushort)idx, p);
             }
             return ty;
         }
@@ -85,12 +83,12 @@ namespace AUTD3Sharp.Link
         public LoopBehavior StmLoopBehavior(int idx, Segment segment) => new(NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(Ptr, segment.ToNative(), (ushort)idx));
         public Segment CurrentStmSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(Ptr, (ushort)idx).ToManaged();
 
-        public byte[] PulseWidthEncoderTable(int idx)
+        public ushort[] PulseWidthEncoderTable(int idx)
         {
-            var table = new byte[256];
+            var table = new ushort[256];
             unsafe
             {
-                fixed (byte* p = &table[0])
+                fixed (ushort* p = &table[0])
                     NativeMethodsBase.AUTDLinkAuditFpgaPulseWidthEncoderTable(Ptr, (ushort)idx, p);
             }
             return table;

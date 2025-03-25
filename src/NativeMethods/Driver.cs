@@ -34,7 +34,7 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Explicit)]
-    internal unsafe partial struct DebugTypeValue
+    internal unsafe partial struct GPIOOutputTypeValue
     {
         [FieldOffset(0)]
         public ulong @null;
@@ -47,9 +47,9 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct DebugTypeWrap
+    internal unsafe partial struct GPIOOutputTypeWrap
     {
-        public DebugTypeTag ty;
+        public GPIOOutputTypeTag ty;
         public ulong value;
     }
 
@@ -240,7 +240,7 @@ namespace AUTD3Sharp.NativeMethods
     }
 
 
-    internal enum DebugTypeTag : byte
+    internal enum GPIOOutputTypeTag : byte
     {
         None = 0,
         BaseSignal = 1,

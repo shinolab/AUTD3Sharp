@@ -5,34 +5,34 @@ using System;
 
 namespace AUTD3Sharp
 {
-    public class DebugType
+    public class GPIOOutputType
     {
-        internal DebugTypeWrap Inner;
+        internal GPIOOutputTypeWrap Inner;
 
-        private DebugType(DebugTypeWrap inner) { Inner = inner; }
+        private GPIOOutputType(GPIOOutputTypeWrap inner) { Inner = inner; }
 
-        public static DebugType None => new(NativeMethodsBase.AUTDDebugTypeNone());
-        public static DebugType BaseSignal => new(NativeMethodsBase.AUTDDebugTypeBaseSignal());
-        public static DebugType Thermo => new(NativeMethodsBase.AUTDDebugTypeThermo());
-        public static DebugType ForceFan => new(NativeMethodsBase.AUTDDebugTypeForceFan());
-        public static DebugType Sync => new(NativeMethodsBase.AUTDDebugTypeSync());
-        public static DebugType ModSegment => new(NativeMethodsBase.AUTDDebugTypeModSegment());
-        public static DebugType ModIdx(ushort idx) => new(NativeMethodsBase.AUTDDebugTypeModIdx(idx));
-        public static DebugType StmSegment => new(NativeMethodsBase.AUTDDebugTypeStmSegment());
-        public static DebugType StmIdx(ushort idx) => new(NativeMethodsBase.AUTDDebugTypeStmIdx(idx));
-        public static DebugType IsStmMode => new(NativeMethodsBase.AUTDDebugTypeIsStmMode());
-        public static DebugType SysTimeEq(DcSysTime sysTime) => new(NativeMethodsBase.AUTDDebugTypeSysTimeEq(sysTime));
-        public static DebugType PwmOut(Transducer tr) => new(NativeMethodsBase.AUTDDebugTypePwmOut(tr.Ptr));
-        public static DebugType Direct(bool v) => new(NativeMethodsBase.AUTDDebugTypeDirect(v));
+        public static GPIOOutputType None => new(NativeMethodsBase.AUTDGPIOOutputTypeNone());
+        public static GPIOOutputType BaseSignal => new(NativeMethodsBase.AUTDGPIOOutputTypeBaseSignal());
+        public static GPIOOutputType Thermo => new(NativeMethodsBase.AUTDGPIOOutputTypeThermo());
+        public static GPIOOutputType ForceFan => new(NativeMethodsBase.AUTDGPIOOutputTypeForceFan());
+        public static GPIOOutputType Sync => new(NativeMethodsBase.AUTDGPIOOutputTypeSync());
+        public static GPIOOutputType ModSegment => new(NativeMethodsBase.AUTDGPIOOutputTypeModSegment());
+        public static GPIOOutputType ModIdx(ushort idx) => new(NativeMethodsBase.AUTDGPIOOutputTypeModIdx(idx));
+        public static GPIOOutputType StmSegment => new(NativeMethodsBase.AUTDGPIOOutputTypeStmSegment());
+        public static GPIOOutputType StmIdx(ushort idx) => new(NativeMethodsBase.AUTDGPIOOutputTypeStmIdx(idx));
+        public static GPIOOutputType IsStmMode => new(NativeMethodsBase.AUTDGPIOOutputTypeIsStmMode());
+        public static GPIOOutputType SysTimeEq(DcSysTime sysTime) => new(NativeMethodsBase.AUTDGPIOOutputTypeSysTimeEq(sysTime));
+        public static GPIOOutputType PwmOut(Transducer tr) => new(NativeMethodsBase.AUTDGPIOOutputTypePwmOut(tr.Ptr));
+        public static GPIOOutputType Direct(bool v) => new(NativeMethodsBase.AUTDGPIOOutputTypeDirect(v));
     }
 
     public sealed class GPIOOutputs : IDatagram
     {
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void GPIOOutputsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, NativeMethods.GPIOOut gpio, DebugTypeWrap* debugType);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl)] internal unsafe delegate void GPIOOutputsDelegate(IntPtr context, GeometryPtr geometryPtr, ushort devIdx, NativeMethods.GPIOOut gpio, GPIOOutputTypeWrap* debugType);
 
         private readonly GPIOOutputsDelegate _f;
 
-        public GPIOOutputs(Func<Device, GPIOOut, DebugType> f)
+        public GPIOOutputs(Func<Device, GPIOOut, GPIOOutputType> f)
         {
             unsafe
             {

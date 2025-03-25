@@ -23,8 +23,7 @@ namespace AUTD3Sharp.NativeMethods
         internal const byte TRANSITION_MODE_NONE = 254;
         internal const byte TRANSITION_MODE_IMMEDIATE = 255;
         internal const float ABSOLUTE_THRESHOLD_OF_HEARING = 0.00002f;
-        internal const nuint ULTRASOUND_PERIOD_COUNT = 256;
-        internal const nuint DRP_ROM_SIZE = 32;
+        internal const nuint ULTRASOUND_PERIOD_COUNT_BITS = 9;
         internal const nuint EC_OUTPUT_FRAME_SIZE = 626;
         internal const nuint EC_INPUT_FRAME_SIZE = 2;
         internal const double EPSILON = 0.000001;
