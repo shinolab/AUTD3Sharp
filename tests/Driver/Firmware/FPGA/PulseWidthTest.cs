@@ -8,7 +8,7 @@ public class PulseWidthTest
         for (ushort i = 0; i < 512; i++)
             Assert.Equal(i, new PulseWidth(i).Value);
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => new PulseWidth(512));
+        Assert.Throws<AUTDException>(() => new PulseWidth(512));
     }
 
     [Fact]
@@ -17,8 +17,8 @@ public class PulseWidthTest
         for (ushort i = 0; i < 512; i++)
             Assert.Equal(i, PulseWidth.FromDuty((float)i / 512.0f).Value);
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => PulseWidth.FromDuty(-1.0f));
-        Assert.Throws<ArgumentOutOfRangeException>(() => PulseWidth.FromDuty(1.0f));
+        Assert.Throws<AUTDException>(() => PulseWidth.FromDuty(-1.0f));
+        Assert.Throws<AUTDException>(() => PulseWidth.FromDuty(1.0f));
     }
 
     [Fact]

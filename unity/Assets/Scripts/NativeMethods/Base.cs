@@ -203,6 +203,12 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDPhaseToRad", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern float AUTDPhaseToRad(Phase value);
 
+        [DllImport(__DllName, EntryPoint = "AUTDPulseWidth", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern ResultU16 AUTDPulseWidth(ushort value);
+
+        [DllImport(__DllName, EntryPoint = "AUTDPulseWidthFromDuty", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern ResultU16 AUTDPulseWidthFromDuty(float duty);
+
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultSamplingConfig AUTDSamplingConfigFromDivision(ushort div);
 
@@ -500,6 +506,9 @@ namespace AUTD3Sharp.NativeMethods
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationSamplingConfig", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern SamplingConfigWrap AUTDModulationSamplingConfig(ModulationPtr m);
+
+        [DllImport(__DllName, EntryPoint = "AUTDModulationExpectedRadiationPressure", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern ResultF32 AUTDModulationExpectedRadiationPressure(ModulationPtr m);
 
         [DllImport(__DllName, EntryPoint = "AUTDModulationIntoDatagramWithSegment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDModulationIntoDatagramWithSegment(ModulationPtr m, Segment segment, TransitionModeWrap transition_mode);

@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
+using AUTD3Sharp.NativeMethods;
 
 #if UNITY_2020_2_OR_NEWER
 #nullable enable
@@ -9,16 +10,24 @@ namespace AUTD3Sharp
 {
     public class PulseWidth : IEquatable<PulseWidth>
     {
-        public readonly ushort Value;
+        private ushort _pulseWidth;
+
+        public ushort Value => _pulseWidth;
+
+        private PulseWidth()
+        {
+            _pulseWidth = 0;
+        }
 
         public PulseWidth(ushort pulseWidth)
         {
-            if (512 <= pulseWidth)
-                throw new ArgumentOutOfRangeException(nameof(pulseWidth), "PulseWidth must be in range [0, 511]");
-            Value = pulseWidth;
+            _pulseWidth = NativeMethodsBase.AUTDPulseWidth(pulseWidth).Validate();
         }
 
-        public static PulseWidth FromDuty(float duty) => new((ushort)(512.0f * duty));
+        public static PulseWidth FromDuty(float duty) => new PulseWidth
+        {
+            _pulseWidth = NativeMethodsBase.AUTDPulseWidthFromDuty(duty).Validate()
+        };
 
         public static bool operator ==(PulseWidth left, PulseWidth right) => left.Equals(right);
         public static bool operator !=(PulseWidth left, PulseWidth right) => !left.Equals(right);
