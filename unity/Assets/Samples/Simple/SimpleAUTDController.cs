@@ -24,9 +24,9 @@ public class SimpleAUTDController : MonoBehaviour
         {
             _autd = Controller.Open(new[] { new AUTD3(pos: gameObject.transform.position, rot: gameObject.transform.rotation) }, new AUTD3Sharp.Link.Simulator(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080)));
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-
+            UnityEngine.Debug.LogError(ex);
             UnityEngine.Debug.LogError("Before running this sample, install autd3-server (https://github.com/shinolab/autd3-server) and run simulator with unity option.");
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
