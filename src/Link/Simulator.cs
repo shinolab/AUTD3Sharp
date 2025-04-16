@@ -11,7 +11,7 @@ namespace AUTD3Sharp.Link
 
         public override LinkPtr Resolve()
         {
-            var addr = Ffi.ToNullTerminatedUtf8(Addr.Address.ToString());
+            var addr = Ffi.ToNullTerminatedUtf8(Addr.ToString());
             unsafe
             {
                 fixed (byte* addrPtr = &addr[0])
