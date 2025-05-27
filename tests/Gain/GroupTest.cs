@@ -11,7 +11,7 @@ public class GroupTest
 
         var cx = autd.Center().X;
 
-        autd.Send(new Group(
+        autd.Send(new AUTD3Sharp.Gain.Group(
             keyMap: _ => tr => tr.Position().X switch
             {
                 var x when x < cx => "uniform",
@@ -39,7 +39,7 @@ public class GroupTest
             }
         }
 
-        autd.Send(new Group(keyMap: _ => tr => tr.Position().X switch
+        autd.Send(new AUTD3Sharp.Gain.Group(keyMap: _ => tr => tr.Position().X switch
             {
                 var x when x > cx => "uniform",
                 _ => null
@@ -75,7 +75,7 @@ public class GroupTest
 
         var exception = Record.Exception(() =>
         {
-            autd.Send(new Group(_ => _ => "null", new Dictionary<object, IGain>()
+            autd.Send(new AUTD3Sharp.Gain.Group(_ => _ => "null", new Dictionary<object, IGain>()
             {
                 {"null", new Null()},
                 {"uniform", new Uniform(intensity: new EmitIntensity(0x80), phase: new Phase(0x90))}
@@ -96,7 +96,7 @@ public class GroupTest
 
         autd[0].Enable = false;
 
-        autd.Send(new Group(dev => _ =>
+        autd.Send(new AUTD3Sharp.Gain.Group(dev => _ =>
             {
                 check[dev.Idx()] = true;
                 return "uniform";

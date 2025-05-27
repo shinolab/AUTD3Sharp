@@ -22,7 +22,7 @@ public class SquareTest
 #pragma warning restore IDE0230
             Assert.Equal(modExpect, mod);
             Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }
 
@@ -46,7 +46,7 @@ public class SquareTest
 #pragma warning restore IDE0230
             Assert.Equal(modExpect, mod);
             Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }
 

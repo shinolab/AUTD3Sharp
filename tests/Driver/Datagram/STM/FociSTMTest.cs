@@ -17,14 +17,14 @@ public class FociSTMTest
         var autd = CreateController();
         autd.Send(Silencer.Disable());
         var stm = new FociSTM(foci: CreateFoci(2), config: 1.0f * Hz);
-        Assert.Equal(20000u, stm.SamplingConfig().Division);
+        Assert.Equal(20000u, stm.SamplingConfig().Divide);
         autd.Send(stm);
         foreach (var dev in autd)
         {
             Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
             Assert.Equal(2, autd.Link<Audit>().StmCycle(dev.Idx(), Segment.S0));
-            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
             {
                 var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
@@ -49,7 +49,7 @@ public class FociSTMTest
         {
             Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
             {
                 var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
@@ -74,7 +74,7 @@ public class FociSTMTest
         {
             Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
             {
                 var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
@@ -99,7 +99,7 @@ public class FociSTMTest
         {
             Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(20000u, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
             {
                 var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
@@ -124,7 +124,7 @@ public class FociSTMTest
         {
             Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(1, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(1, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
             {
                 var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
@@ -147,11 +147,11 @@ public class FociSTMTest
         autd.Send(new WithLoopBehavior(stm, LoopBehavior.Once, Segment.S1, TransitionMode.SyncIdx));
         foreach (var dev in autd)
         {
-            Assert.Equal(1u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S1));
+            Assert.Equal(1u, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S1));
             Assert.Equal(LoopBehavior.Once, autd.Link<Audit>().StmLoopBehavior(dev.Idx(), Segment.S1));
             Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S1));
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S1));
-            Assert.Equal(1, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S1));
+            Assert.Equal(1, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S1));
             {
                 var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S1, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));
@@ -167,11 +167,11 @@ public class FociSTMTest
         autd.Send(new WithLoopBehavior(stm, LoopBehavior.Finite(10), Segment.S0, null));
         foreach (var dev in autd)
         {
-            Assert.Equal(1u, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(1u, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
             Assert.Equal(LoopBehavior.Finite(10), autd.Link<Audit>().StmLoopBehavior(dev.Idx(), Segment.S0));
             Assert.False(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
             Assert.Equal((uint)(dev.SoundSpeed / 1000.0f * 64.0f), autd.Link<Audit>().StmSoundSpeed(dev.Idx(), Segment.S0));
-            Assert.Equal(1, autd.Link<Audit>().StmFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(1, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
             {
                 var (intensities, phases) = autd.Link<Audit>().Drives(dev.Idx(), Segment.S0, 0);
                 Assert.All(intensities, d => Assert.Equal(0xFF, d));

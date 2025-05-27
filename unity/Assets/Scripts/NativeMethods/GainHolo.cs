@@ -125,7 +125,7 @@ namespace AUTD3Sharp.NativeMethods
     internal unsafe partial struct GreedyOption
     {
         public EmissionConstraintWrap constraint;
-        public byte phase_div;
+        public byte phase_quantization_levels;
     }
 
     [StructLayout(LayoutKind.Sequential)]

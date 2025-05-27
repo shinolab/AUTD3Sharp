@@ -15,7 +15,7 @@ public class DebugTest
 
         autd.Send(new GPIOOutputs((_, gpio) => gpio switch
         {
-            AUTD3Sharp.GPIOOut.O0 => GPIOOutputType.None,
+            AUTD3Sharp.GPIOOut.O0 => null,
             AUTD3Sharp.GPIOOut.O1 => GPIOOutputType.BaseSignal,
             AUTD3Sharp.GPIOOut.O2 => GPIOOutputType.Thermo,
             AUTD3Sharp.GPIOOut.O3 => GPIOOutputType.ForceFan,
@@ -61,9 +61,9 @@ public class DebugTest
                 {
 
                     AUTD3Sharp.GPIOOut.O0 => GPIOOutputType.SysTimeEq(sysTime),
-                    AUTD3Sharp.GPIOOut.O1 => GPIOOutputType.None,
-                    AUTD3Sharp.GPIOOut.O2 => GPIOOutputType.None,
-                    AUTD3Sharp.GPIOOut.O3 => GPIOOutputType.None,
+                    AUTD3Sharp.GPIOOut.O1 => null,
+                    AUTD3Sharp.GPIOOut.O2 => null,
+                    AUTD3Sharp.GPIOOut.O3 => null,
                     _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
                 }));
         foreach (var dev in autd)

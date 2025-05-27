@@ -13,7 +13,7 @@ public class CustomTest
         {
             var mod = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.Equal(modExpect, mod);
-            Assert.Equal(10, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(10, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }
 }

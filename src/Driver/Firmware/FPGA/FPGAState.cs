@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 #nullable enable
 #endif
 
-namespace AUTD3Sharp.Driver.FPGA.Defined
+namespace AUTD3Sharp.Driver.FPGA.Common
 {
     public class FPGAState : IEquatable<FPGAState>
     {
