@@ -22,7 +22,7 @@ namespace AUTD3Sharp.Modulation
             offset = Offset,
             phase = Phase.ToNative(),
             clamp = Clamp,
-            sampling_config_div= SamplingConfig.Division
+            sampling_config_div = SamplingConfig.Divide
         };
     }
 

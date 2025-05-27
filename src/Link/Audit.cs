@@ -55,7 +55,7 @@ namespace AUTD3Sharp.Link
             return buf;
         }
 
-        public ushort ModulationFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivision(Ptr, segment.ToNative(), (ushort)idx);
+        public ushort ModulationFreqDivide(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivide(Ptr, segment.ToNative(), (ushort)idx);
 
         public LoopBehavior ModulationLoopBehavior(int idx, Segment segment) =>
             new(NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopBehavior(Ptr, segment.ToNative(), (ushort)idx));
@@ -78,7 +78,7 @@ namespace AUTD3Sharp.Link
 
         public ushort StmCycle(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmCycle(Ptr, segment.ToNative(), (ushort)idx);
         public bool IsStmGainMode(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaIsStmGainMode(Ptr, segment.ToNative(), (ushort)idx);
-        public ushort StmFreqDivision(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmFreqDivision(Ptr, segment.ToNative(), (ushort)idx);
+        public ushort StmFreqDivide(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmFreqDivide(Ptr, segment.ToNative(), (ushort)idx);
         public ushort StmSoundSpeed(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(Ptr, segment.ToNative(), (ushort)idx);
         public LoopBehavior StmLoopBehavior(int idx, Segment segment) => new(NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(Ptr, segment.ToNative(), (ushort)idx));
         public Segment CurrentStmSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(Ptr, (ushort)idx).ToManaged();

@@ -57,9 +57,8 @@ namespace AUTD3Sharp
     {
         public Duration SendInterval = Duration.FromMillis(1);
         public Duration ReceiveInterval = Duration.FromMillis(1);
-        public Duration? Timeout = null;
+        public Duration? Timeout = Duration.FromMillis(200);
         public ParallelMode Parallel = ParallelMode.Auto;
-        public ISleeper Sleeper = new SpinSleeper();
 
         internal NativeMethods.SenderOption ToNative() => new()
         {
@@ -67,7 +66,6 @@ namespace AUTD3Sharp
             receive_interval = ReceiveInterval,
             timeout = Timeout.ToNative(),
             parallel = Parallel.ToNative(),
-            sleeper = Sleeper.ToNative()
         };
     }
 

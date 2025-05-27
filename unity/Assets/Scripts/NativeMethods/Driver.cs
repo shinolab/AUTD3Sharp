@@ -63,7 +63,7 @@ namespace AUTD3Sharp.NativeMethods
     internal unsafe partial struct SamplingConfigValue
     {
         [FieldOffset(0)]
-        public ushort division;
+        public ushort divide;
         [FieldOffset(0)]
         public float freq;
         [FieldOffset(0)]
@@ -259,7 +259,7 @@ namespace AUTD3Sharp.NativeMethods
 
     internal enum SamplingConfigTag : byte
     {
-        Division = 0,
+        Divide = 0,
         Frequency = 1,
         Period = 2,
         FrequencyNearest = 3,

@@ -16,14 +16,14 @@ namespace AUTD3Sharp.NativeMethods
     {
         const string __DllName = "autd3_core";
 
+        internal const float ABSOLUTE_THRESHOLD_OF_HEARING = 0.00002f;
+        internal const nuint ULTRASOUND_PERIOD_COUNT_BITS = 9;
         internal const byte TRANSITION_MODE_SYNC_IDX = 0;
         internal const byte TRANSITION_MODE_SYS_TIME = 1;
         internal const byte TRANSITION_MODE_GPIO = 2;
         internal const byte TRANSITION_MODE_EXT = 240;
         internal const byte TRANSITION_MODE_NONE = 254;
         internal const byte TRANSITION_MODE_IMMEDIATE = 255;
-        internal const float ABSOLUTE_THRESHOLD_OF_HEARING = 0.00002f;
-        internal const nuint ULTRASOUND_PERIOD_COUNT_BITS = 9;
         internal const nuint EC_OUTPUT_FRAME_SIZE = 626;
         internal const nuint EC_INPUT_FRAME_SIZE = 2;
         internal const double EPSILON = 0.000001;

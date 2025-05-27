@@ -21,7 +21,7 @@ namespace AUTD3Sharp
 
         internal SamplingConfig(SamplingConfigWrap config) { Inner = config; }
 
-        public SamplingConfig(ushort div) : this(NativeMethodsBase.AUTDSamplingConfigFromDivision(div).Validate()) { }
+        public SamplingConfig(ushort div) : this(NativeMethodsBase.AUTDSamplingConfigFromDivide(div).Validate()) { }
         public SamplingConfig(Freq<float> f) : this(NativeMethodsBase.AUTDSamplingConfigFromFreq(f.Hz)) { }
         public SamplingConfig(Duration period) : this(NativeMethodsBase.AUTDSamplingConfigFromPeriod(period)) { }
 
@@ -30,7 +30,7 @@ namespace AUTD3Sharp
 
         public SamplingConfig IntoNearest() => new(NativeMethodsBase.AUTDSamplingConfigIntoNearest(Inner));
 
-        public ushort Division => NativeMethodsBase.AUTDSamplingConfigDivision(Inner).Validate();
+        public ushort Divide => NativeMethodsBase.AUTDSamplingConfigDivide(Inner).Validate();
         public Freq<float> Freq() => NativeMethodsBase.AUTDSamplingConfigFreq(Inner).Validate() * Hz;
         public Duration Period() => NativeMethodsBase.AUTDSamplingConfigPeriod(Inner).Validate();
 
@@ -38,7 +38,7 @@ namespace AUTD3Sharp
         public static bool operator !=(SamplingConfig left, SamplingConfig right) => !left.Equals(right);
         public bool Equals(SamplingConfig? other) => other is not null && NativeMethodsBase.AUTDSamplingConfigEq(Inner, other.Inner);
         public override bool Equals(object? obj) => obj is SamplingConfig other && Equals(other);
-        [ExcludeFromCodeCoverage] public override int GetHashCode() => Division.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Divide.GetHashCode();
     }
 }
 

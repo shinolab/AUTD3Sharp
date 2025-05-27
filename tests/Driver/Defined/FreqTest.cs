@@ -1,4 +1,4 @@
-namespace tests.Driver.Defined;
+namespace tests.Driver.Common;
 
 public class FreqTest
 {

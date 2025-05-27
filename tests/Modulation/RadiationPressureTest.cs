@@ -14,7 +14,7 @@ public class RadiationPressureTest
         foreach (var dev in autd)
         {
             Assert.Equal(modExpect, autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }
 

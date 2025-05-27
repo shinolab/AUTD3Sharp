@@ -3,6 +3,10 @@ using AUTD3Sharp.Driver.Datagram;
 using System.Runtime.InteropServices;
 using System;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public class GPIOOutputType
@@ -11,7 +15,6 @@ namespace AUTD3Sharp
 
         private GPIOOutputType(GPIOOutputTypeWrap inner) { Inner = inner; }
 
-        public static GPIOOutputType None => new(NativeMethodsBase.AUTDGPIOOutputTypeNone());
         public static GPIOOutputType BaseSignal => new(NativeMethodsBase.AUTDGPIOOutputTypeBaseSignal());
         public static GPIOOutputType Thermo => new(NativeMethodsBase.AUTDGPIOOutputTypeThermo());
         public static GPIOOutputType ForceFan => new(NativeMethodsBase.AUTDGPIOOutputTypeForceFan());
@@ -32,14 +35,18 @@ namespace AUTD3Sharp
 
         private readonly GPIOOutputsDelegate _f;
 
-        public GPIOOutputs(Func<Device, GPIOOut, GPIOOutputType> f)
+        public GPIOOutputs(Func<Device, GPIOOut, GPIOOutputType?> f)
         {
             unsafe
             {
-                _f = (_, geometryPtr, devIdx, gpio, debugType) => { *debugType = f(new Device(devIdx, geometryPtr), gpio.ToManaged()).Inner; };
+                _f = (_, geometryPtr, devIdx, gpio, debugType) => { *debugType = f(new Device(devIdx, geometryPtr), gpio.ToManaged())?.Inner ?? NativeMethodsBase.AUTDGPIOOutputTypeNone(); };
             }
         }
 
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramGPIOOutputs(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif

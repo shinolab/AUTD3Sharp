@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics.CodeAnalysis;
 using AUTD3Sharp.Driver;
-using AUTD3Sharp.Driver.FPGA.Defined;
+using AUTD3Sharp.Driver.FPGA.Common;
 using AUTD3Sharp.NativeMethods;
 using AUTD3Sharp.Utils;
 using AUTD3Sharp.Driver.Datagram;
@@ -19,16 +19,24 @@ namespace AUTD3Sharp
         private bool _isDisposed;
         internal ControllerPtr Ptr;
         private readonly LinkPtr _linkPtr;
+        private SenderOption _defaultSenderOption;
 
-        internal Controller(GeometryPtr geometry, ControllerPtr ptr, LinkPtr linkPtr) : base(geometry)
+        public SenderOption DefaultSenderOption
+        {
+            get { return _defaultSenderOption; }
+            set { _defaultSenderOption = value; NativeMethodsBase.AUTDSetDefaultSenderOption(Ptr, _defaultSenderOption.ToNative()); }
+        }
+
+        internal Controller(GeometryPtr geometry, ControllerPtr ptr, LinkPtr linkPtr, SenderOption option) : base(geometry)
         {
             Ptr = ptr;
             _linkPtr = linkPtr;
+            _defaultSenderOption = option;
         }
 
-        public static Controller Open<T>(IEnumerable<AUTD3> devices, T link) where T : Driver.Link => OpenWithOption(devices, link, new SenderOption());
+        public static Controller Open<T>(IEnumerable<AUTD3> devices, T link) where T : Driver.Link => OpenWithOption(devices, link, new SenderOption(), new SpinSleeper());
 
-        public static Controller OpenWithOption<T>(IEnumerable<AUTD3> devices, T link, SenderOption option)
+        public static Controller OpenWithOption<T>(IEnumerable<AUTD3> devices, T link, SenderOption option, ISleeper sleeper)
             where T : Driver.Link
         {
             var devicesArray = devices as AUTD3[] ?? devices.ToArray();
@@ -40,18 +48,17 @@ namespace AUTD3Sharp
                 fixed (Point3* pPos = &pos[0])
                 fixed (Quaternion* pRot = &rot[0])
                 {
-                    var ptr = NativeMethodsBase.AUTDControllerOpen(pPos, pRot, (ushort)devicesArray.Length, linkPtr, option.ToNative()).Validate();
+                    var ptr = NativeMethodsBase.AUTDControllerOpen(pPos, pRot, (ushort)devicesArray.Length, linkPtr, option.ToNative(), sleeper.ToNative()).Validate();
                     var geometryPtr = NativeMethodsBase.AUTDGeometry(ptr);
-                    return new Controller(geometryPtr, ptr, NativeMethodsBase.AUTDLinkGet(ptr));
+                    return new Controller(geometryPtr, ptr, NativeMethodsBase.AUTDLinkGet(ptr), option);
                 }
             }
         }
 
-        public Sender Sender(SenderOption option) => new(NativeMethodsBase.AUTDSender(Ptr, option.ToNative()), Geometry());
+        public Sender Sender(SenderOption option, ISleeper sleeper) => new(NativeMethodsBase.AUTDSender(Ptr, option.ToNative(), sleeper.ToNative()), Geometry());
 
-        public void Send<TD>(TD d) where TD : IDatagram => Sender(new SenderOption()).Send(d);
-        public void Send<TD1, TD2>((TD1, TD2) d) where TD1 : IDatagram where TD2 : IDatagram => Sender(new SenderOption()).Send(d);
-        public void GroupSend(Func<Device, object?> keyMap, GroupDictionary datagramMap) => Sender(new SenderOption()).GroupSend(keyMap, datagramMap);
+        public void Send<TD>(TD d) where TD : IDatagram => Sender(_defaultSenderOption, new SpinSleeper()).Send(d);
+        public void Send<TD1, TD2>((TD1, TD2) d) where TD1 : IDatagram where TD2 : IDatagram => Sender(_defaultSenderOption, new SpinSleeper()).Send(d);
 
         private static FirmwareVersion GetFirmwareVersion(FirmwareVersionListPtr handle, uint i)
         {
@@ -107,7 +114,7 @@ namespace AUTD3Sharp
 
         public Geometry Geometry() => this;
 
-        public T Link<T>() where T: Driver.ILink , new()
+        public T Link<T>() where T : Driver.ILink, new()
         {
             var link = new T();
             link.Resolve(_linkPtr);

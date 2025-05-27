@@ -12,12 +12,12 @@ namespace AUTD3Sharp.Gain.Holo
 {
     public class GreedyOption
     {
-        public byte PhaseDiv { get; init; } = 16;
+        public byte PhaseQuantizationLevels { get; init; } = 16;
         public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Uniform(EmitIntensity.Max);
 
         internal NativeMethods.GreedyOption ToNative() => new()
         {
-            phase_div = PhaseDiv,
+            phase_quantization_levels = PhaseQuantizationLevels,
             constraint = EmissionConstraint.Inner
         };
     }

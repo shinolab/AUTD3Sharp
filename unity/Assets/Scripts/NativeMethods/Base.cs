@@ -18,11 +18,8 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
-        [DllImport(__DllName, EntryPoint = "AUTDControllerGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultStatus AUTDControllerGroup(SenderPtr sender, ConstPtr f, ConstPtr context, GeometryPtr geometry, int* keys, DatagramPtr* d, ushort n);
-
         [DllImport(__DllName, EntryPoint = "AUTDControllerOpen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultController AUTDControllerOpen(Point3* pos, Quaternion* rot, ushort len, LinkPtr link, SenderOption option);
+        internal static extern ResultController AUTDControllerOpen(Point3* pos, Quaternion* rot, ushort len, LinkPtr link, SenderOption option, SleeperWrap sleeper);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerClose", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultStatus AUTDControllerClose(ControllerPtr cnt);
@@ -48,8 +45,11 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDFirmwareLatest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void AUTDFirmwareLatest(byte* latest);
 
+        [DllImport(__DllName, EntryPoint = "AUTDSetDefaultSenderOption", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern void AUTDSetDefaultSenderOption(ControllerPtr cnt, SenderOption option);
+
         [DllImport(__DllName, EntryPoint = "AUTDSender", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern SenderPtr AUTDSender(ControllerPtr cnt, SenderOption option);
+        internal static extern SenderPtr AUTDSender(ControllerPtr cnt, SenderOption option, SleeperWrap sleeper);
 
         [DllImport(__DllName, EntryPoint = "AUTDSenderSend", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultStatus AUTDSenderSend(SenderPtr sender, DatagramPtr d);
@@ -70,8 +70,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDatagramForceFan", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramForceFan(ConstPtr f, ConstPtr context, GeometryPtr geometry);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDatagramTuple", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DatagramPtr AUTDDatagramTuple(DatagramPtr d1, DatagramPtr d2);
+        [DllImport(__DllName, EntryPoint = "AUTDDatagramGroup", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern DatagramPtr AUTDDatagramGroup(ConstPtr f, ConstPtr context, GeometryPtr geometry, int* keys, DatagramPtr* d, ushort n);
 
         [DllImport(__DllName, EntryPoint = "AUTDDatagramPhaseCorr", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramPhaseCorr(ConstPtr f, ConstPtr context, GeometryPtr geometry);
@@ -149,6 +149,9 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDatagramSynchronize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramSynchronize();
 
+        [DllImport(__DllName, EntryPoint = "AUTDDatagramTuple", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern DatagramPtr AUTDDatagramTuple(DatagramPtr d1, DatagramPtr d2);
+
         [DllImport(__DllName, EntryPoint = "AUTDDcSysTimeNow", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DcSysTime AUTDDcSysTimeNow();
 
@@ -209,8 +212,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDPulseWidthFromDuty", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultU16 AUTDPulseWidthFromDuty(float duty);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultSamplingConfig AUTDSamplingConfigFromDivision(ushort div);
+        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromDivide", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern ResultSamplingConfig AUTDSamplingConfigFromDivide(ushort div);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern SamplingConfigWrap AUTDSamplingConfigFromFreq(float f);
@@ -221,8 +224,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigIntoNearest", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern SamplingConfigWrap AUTDSamplingConfigIntoNearest(SamplingConfigWrap config);
 
-        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultU16 AUTDSamplingConfigDivision(SamplingConfigWrap c);
+        [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigDivide", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern ResultU16 AUTDSamplingConfigDivide(SamplingConfigWrap c);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultF32 AUTDSamplingConfigFreq(SamplingConfigWrap c);
@@ -444,8 +447,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaDebugValues", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern void AUTDLinkAuditFpgaDebugValues(LinkPtr audit, ushort idx, ulong* value);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaStmFreqDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ushort AUTDLinkAuditFpgaStmFreqDivision(LinkPtr audit, Segment segment, ushort idx);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaStmFreqDivide", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern ushort AUTDLinkAuditFpgaStmFreqDivide(LinkPtr audit, Segment segment, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaStmCycle", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ushort AUTDLinkAuditFpgaStmCycle(LinkPtr audit, Segment segment, ushort idx);
@@ -456,8 +459,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaStmLoopBehavior", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern LoopBehavior AUTDLinkAuditFpgaStmLoopBehavior(LinkPtr audit, Segment segment, ushort idx);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulationFreqDivision", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ushort AUTDLinkAuditFpgaModulationFreqDivision(LinkPtr audit, Segment segment, ushort idx);
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulationFreqDivide", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern ushort AUTDLinkAuditFpgaModulationFreqDivide(LinkPtr audit, Segment segment, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulationCycle", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ushort AUTDLinkAuditFpgaModulationCycle(LinkPtr audit, Segment segment, ushort idx);
@@ -604,7 +607,6 @@ namespace AUTD3Sharp.NativeMethods
         public Duration receive_interval;
         public OptionDuration timeout;
         public ParallelMode parallel;
-        public SleeperWrap sleeper;
     }
 
     [StructLayout(LayoutKind.Sequential)]

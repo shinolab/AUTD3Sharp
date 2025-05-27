@@ -1,4 +1,4 @@
-﻿using AUTD3Sharp.Driver.FPGA.Defined;
+﻿using AUTD3Sharp.Driver.FPGA.Common;
 
 namespace tests.Driver.Firmware.FPGA;
 

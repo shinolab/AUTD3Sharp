@@ -25,7 +25,7 @@ public class SineTest
                     127, 123, 115, 105, 93,  78, 64, 49, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 44, 58, 74, 88, 101, 112, 121, 126};
             Assert.Equal(modExpect, mod);
             Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }
 
@@ -49,7 +49,7 @@ public class SineTest
                     127, 123, 115, 105, 93,  78, 64, 49, 34, 22, 12, 4, 0, 0, 3, 9, 18, 30, 44, 58, 74, 88, 101, 112, 121, 126};
             Assert.Equal(modExpect, mod);
             Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
-            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
 
     }

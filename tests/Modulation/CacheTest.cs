@@ -10,7 +10,7 @@ public class CacheTest
         foreach (var dev in autd)
         {
             Assert.Equal([0x80, 0x81], autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0));
-            Assert.Equal(0xFFFF, autd.Link<Audit>().ModulationFreqDivision(dev.Idx(), Segment.S0));
+            Assert.Equal(0xFFFF, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }
 }
