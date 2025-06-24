@@ -3,26 +3,26 @@ namespace tests.Driver.Firmware.FPGA;
 public class DriveTest
 {
     [Fact]
-    public void Equals_EmitIntensity()
+    public void Equals_Intensity()
     {
         var m1 = new Drive
         {
-            Intensity = new EmitIntensity(1),
+            Intensity = new Intensity(1),
             Phase = new Phase(1),
         };
         var m2 = new Drive
         {
-            Intensity = new EmitIntensity(1),
+            Intensity = new Intensity(1),
             Phase = new Phase(1),
         }; ;
         var m3 = new Drive
         {
-            Intensity = new EmitIntensity(2),
+            Intensity = new Intensity(2),
             Phase = new Phase(1),
         };
         var m4 = new Drive
         {
-            Intensity = new EmitIntensity(1),
+            Intensity = new Intensity(1),
             Phase = new Phase(2),
         };
 

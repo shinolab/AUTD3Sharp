@@ -3,12 +3,6 @@ namespace tests;
 public class AUTDTest
 {
     [Fact]
-    public void TestTracingInit()
-    {
-        Tracing.Init();
-    }
-
-    [Fact]
     public void TestControllerIsDefault()
     {
         Assert.True(AUTD3Sharp.NativeMethods.NativeMethodsBase.AUTDSenderOptionIsDefault(new SenderOption().ToNative()));
@@ -60,13 +54,13 @@ public class AUTDTest
     {
         using var autd = CreateController();
 
-        Assert.Equal("v11.0.0", AUTD3Sharp.Driver.FirmwareVersion.LatestVersion);
+        Assert.Equal("v12.0.0", AUTD3Sharp.Driver.FirmwareVersion.LatestVersion);
 
         {
             foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v11.0.0, FPGA = v11.0.0 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v11.0.0, FPGA = v11.0.0 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v12.0.0, FPGA = v12.0.0 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v12.0.0, FPGA = v12.0.0 [Emulator]");
             }
         }
 
@@ -93,6 +87,38 @@ public class AUTDTest
 
             autd.Link<Audit>().BreakDown();
             Assert.Throws<AUTDException>(() => autd.Close());
+        }
+    }
+
+    [Fact]
+    public void TestSender()
+    {
+        var autd = CreateController();
+
+        foreach (var dev in autd)
+        {
+            var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
+            Assert.All(m, d => Assert.Equal(0xFF, d));
+        }
+
+        autd.Sender(new SenderOption(), new FixedSchedule(new StdSleeper())).Send(new Static()
+        {
+            Intensity = 0x80,
+        });
+        foreach (var dev in autd)
+        {
+            var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
+            Assert.All(m, d => Assert.Equal(0x80, d));
+        }
+
+        autd.Sender(new SenderOption(), new FixedDelay(new SpinWaitSleeper())).Send(new Static()
+        {
+            Intensity = 0x81,
+        });
+        foreach (var dev in autd)
+        {
+            var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
+            Assert.All(m, d => Assert.Equal(0x81, d));
         }
     }
 
@@ -132,7 +158,7 @@ public class AUTDTest
             Assert.All(intensities, d => Assert.Equal(0, d));
             Assert.All(phases, p => Assert.Equal(0, p));
         }
-        autd.Send((new Static(), new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero)));
+        autd.Send((new Static(), new Uniform(intensity: Intensity.Max, phase: Phase.Zero)));
         foreach (var dev in autd)
         {
             var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
@@ -143,7 +169,7 @@ public class AUTDTest
         }
 
         autd.Link<Audit>().BreakDown();
-        Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero))));
+        Assert.Throws<AUTDException>(() => autd.Send((new Static(), new Uniform(intensity: Intensity.Max, phase: Phase.Zero))));
         autd.Link<Audit>().Repair();
     }
 
@@ -153,7 +179,7 @@ public class AUTDTest
         var autd = CreateController();
         var option = new SenderOption
         {
-            SendInterval =Duration.FromMillis(2),
+            SendInterval = Duration.FromMillis(2),
             ReceiveInterval = Duration.FromMillis(3),
             Timeout = null,
             Parallel = ParallelMode.Off,

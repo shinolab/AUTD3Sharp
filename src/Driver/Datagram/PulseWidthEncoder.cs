@@ -17,15 +17,15 @@ namespace AUTD3Sharp
 
         private readonly PulseWidthEncoderDelegate? _f;
 
-        public PulseWidthEncoder(Func<Device, Func<EmitIntensity, PulseWidth>> f)
+        public PulseWidthEncoder(Func<Device, Func<Intensity, PulseWidth>> f)
         {
-            ConcurrentDictionary<ushort, Func<EmitIntensity, PulseWidth>> cache = new();
-            _f = (_, geometryPtr, devIdx, idx) => cache.GetOrAdd(devIdx, f(new Device(devIdx, geometryPtr)))(new EmitIntensity(idx)).Value;
+            ConcurrentDictionary<ushort, Func<Intensity, PulseWidth>> cache = new();
+            _f = (_, geometryPtr, devIdx, idx) => cache.GetOrAdd(devIdx, f(new Device(devIdx, geometryPtr)))(new Intensity(idx)).Value;
         }
 
         public PulseWidthEncoder() => _f = null;
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => _f == null ? NativeMethodsBase.AUTDDatagramPulseWidthEncoderDefault() : NativeMethodsBase.AUTDDatagramPulseWidthEncoder(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => _f == null ? NativeMethodsBase.AUTDDatagramPulseWidthEncoder512Default() : NativeMethodsBase.AUTDDatagramPulseWidthEncoder512(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
     }
 }
 

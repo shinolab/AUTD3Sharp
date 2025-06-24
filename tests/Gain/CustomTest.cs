@@ -10,8 +10,8 @@ public class CustomTest
         autd.Send(new AUTD3Sharp.Gain.Custom(dev => tr =>
             (dev.Idx(), tr.Idx()) switch
             {
-                (0, 0) => new Drive() { Phase = new Phase(0x90), Intensity = new EmitIntensity(0x80) },
-                (1, 248) => new Drive(new Phase(0x91), new EmitIntensity(0x81)),
+                (0, 0) => new Drive() { Phase = new Phase(0x90), Intensity = new Intensity(0x80) },
+                (1, 248) => new Drive(new Phase(0x91), new Intensity(0x81)),
                 _ => Drive.Null,
             }));
         {

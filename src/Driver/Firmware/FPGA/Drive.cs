@@ -11,9 +11,9 @@ namespace AUTD3Sharp
     public readonly struct Drive : IEquatable<Drive>
     {
         public Phase Phase { get; init; }
-        public EmitIntensity Intensity { get; init; }
+        public Intensity Intensity { get; init; }
 
-        public Drive(Phase phase, EmitIntensity intensity)
+        public Drive(Phase phase, Intensity intensity)
         {
             Phase = phase;
             Intensity = intensity;
@@ -21,7 +21,7 @@ namespace AUTD3Sharp
 
         public static Drive Null => new()
         {
-            Intensity = EmitIntensity.Min,
+            Intensity = Intensity.Min,
             Phase = Phase.Zero
         };
 

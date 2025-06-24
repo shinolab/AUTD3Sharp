@@ -9,10 +9,10 @@ namespace AUTD3Sharp.Gain
 {
     public class Uniform : IGain
     {
-        public EmitIntensity Intensity { get; init; }
+        public Intensity Intensity { get; init; }
         public Phase Phase { get; init; }
 
-        public Uniform(EmitIntensity intensity, Phase phase)
+        public Uniform(Intensity intensity, Phase phase)
         {
             Intensity = intensity;
             Phase = phase;

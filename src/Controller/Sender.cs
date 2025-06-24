@@ -16,22 +16,19 @@ namespace AUTD3Sharp
 
     public class StdSleeper : ISleeper
     {
-        public uint? TimerResolution = 1;
-
         SleeperWrap ISleeper.ToNative() => new()
         {
             tag = SleeperTag.Std,
-            value = TimerResolution ?? 0,
+            value = 0,
             spin_strategy = NativeMethods.SpinStrategyTag.SpinLoopHint
         };
     }
 
-    [ExcludeFromCodeCoverage]
-    public readonly struct WaitableSleeper : ISleeper
+    public readonly struct SpinWaitSleeper : ISleeper
     {
         SleeperWrap ISleeper.ToNative() => new()
         {
-            tag = SleeperTag.Waitable,
+            tag = SleeperTag.SpinWait,
             value = 0,
             spin_strategy = NativeMethods.SpinStrategyTag.SpinLoopHint
         };
@@ -53,19 +50,58 @@ namespace AUTD3Sharp
         };
     }
 
+    public interface ITimerStrategy
+    {
+        internal TimerStrategyWrap ToNative();
+    }
+
+    public readonly struct FixedSchedule : ITimerStrategy
+    {
+        private readonly ISleeper? _sleeper;
+
+        public FixedSchedule(ISleeper? sleeper = null)
+        {
+            _sleeper = sleeper;
+        }
+
+        TimerStrategyWrap ITimerStrategy.ToNative() => new()
+        {
+            tag = TimerStrategyTag.FixedSchedule,
+            sleep = (_sleeper ?? new SpinSleeper()).ToNative()
+        };
+    }
+
+    public readonly struct FixedDelay : ITimerStrategy
+    {
+        private readonly ISleeper _sleeper;
+
+        public FixedDelay(ISleeper sleeper)
+        {
+            _sleeper = sleeper;
+        }
+
+        TimerStrategyWrap ITimerStrategy.ToNative() => new()
+        {
+            tag = TimerStrategyTag.FixedDelay,
+            sleep = _sleeper.ToNative()
+        };
+    }
+
     public class SenderOption
     {
         public Duration SendInterval = Duration.FromMillis(1);
         public Duration ReceiveInterval = Duration.FromMillis(1);
-        public Duration? Timeout = Duration.FromMillis(200);
+        public Duration? Timeout = null;
         public ParallelMode Parallel = ParallelMode.Auto;
+        public bool Strict = true;
 
         internal NativeMethods.SenderOption ToNative() => new()
         {
             send_interval = SendInterval,
             receive_interval = ReceiveInterval,
             timeout = Timeout.ToNative(),
-            parallel = Parallel.ToNative(),
+            parallel = Parallel,
+            strict = true
         };
     }
 

@@ -18,12 +18,6 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCATTracingInit", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDLinkTwinCATTracingInit();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCATTracingInitWithFile", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultStatus AUTDLinkTwinCATTracingInitWithFile(byte* path);
-
         [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultLink AUTDLinkTwinCAT();
 

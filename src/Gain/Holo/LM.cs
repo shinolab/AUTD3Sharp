@@ -18,7 +18,7 @@ namespace AUTD3Sharp.Gain.Holo
         public float Tau { get; init; } = 1e-3f;
         public uint KMax { get; init; } = 5;
         public float[] Initial { get; init; } = Array.Empty<float>();
-        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
+        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(Intensity.Min, Intensity.Max);
 
         internal NativeMethods.LMOption ToNative()
         {

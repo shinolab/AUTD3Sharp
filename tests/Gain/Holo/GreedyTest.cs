@@ -8,7 +8,7 @@ public class GreedyTest
     public void Greedy()
     {
         var autd = AUTD3Sharp.Controller.Open([new AUTD3()], new Audit());
-        var g = new Greedy(new float[] { -40, 40 }.Select(x => (autd.Center() + new Vector3(x, 0, 150), 5e3f * Pa)), new GreedyOption { EmissionConstraint = EmissionConstraint.Uniform(new EmitIntensity(0x80)) });
+        var g = new Greedy(new float[] { -40, 40 }.Select(x => (autd.Center() + new Vector3(x, 0, 150), 5e3f * Pa)), new GreedyOption { EmissionConstraint = EmissionConstraint.Uniform(new Intensity(0x80)) });
         autd.Send(g);
         foreach (var dev in autd)
         {

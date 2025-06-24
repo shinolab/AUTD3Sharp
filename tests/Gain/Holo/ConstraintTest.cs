@@ -8,7 +8,7 @@ public class ConstraintTest
     public void Uniform()
     {
         var autd = CreateController();
-        var g = new Greedy([(autd.Center() + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center() + new Vector3(-30, 0, 150), 5e3f * Pa)], new GreedyOption { EmissionConstraint = EmissionConstraint.Uniform(new EmitIntensity(0x80)) });
+        var g = new Greedy([(autd.Center() + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center() + new Vector3(-30, 0, 150), 5e3f * Pa)], new GreedyOption { EmissionConstraint = EmissionConstraint.Uniform(new Intensity(0x80)) });
         autd.Send(g);
         foreach (var dev in autd)
         {
@@ -37,7 +37,7 @@ public class ConstraintTest
     {
         var autd = CreateController();
         {
-            var g = new Greedy([(autd.Center() + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center() + new Vector3(-30, 0, 150), 5e3f * Pa)], new GreedyOption { EmissionConstraint = EmissionConstraint.Clamp(new EmitIntensity(67), new EmitIntensity(85)) });
+            var g = new Greedy([(autd.Center() + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center() + new Vector3(-30, 0, 150), 5e3f * Pa)], new GreedyOption { EmissionConstraint = EmissionConstraint.Clamp(new Intensity(67), new Intensity(85)) });
             autd.Send(g);
             foreach (var dev in autd)
             {
@@ -49,7 +49,7 @@ public class ConstraintTest
         }
 
         {
-            var g = new Greedy([(autd.Center() + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center() + new Vector3(-30, 0, 150), 5e3f * Pa)], new GreedyOption { EmissionConstraint = EmissionConstraint.Clamp(new EmitIntensity(10), new EmitIntensity(20)) });
+            var g = new Greedy([(autd.Center() + new Vector3(30, 0, 150), 5e3f * Pa), (autd.Center() + new Vector3(-30, 0, 150), 5e3f * Pa)], new GreedyOption { EmissionConstraint = EmissionConstraint.Clamp(new Intensity(10), new Intensity(20)) });
             autd.Send(g);
             foreach (var dev in autd)
             {

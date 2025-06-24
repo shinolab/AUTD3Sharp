@@ -18,12 +18,12 @@ internal static class CustomGain
                 (0, 0) => new Drive
                 {
                     Phase = Phase.Zero,
-                    Intensity = EmitIntensity.Max
+                    Intensity = Intensity.Max
                 },
                 (0, 248) => new Drive
                 {
                     Phase = Phase.Zero,
-                    Intensity = EmitIntensity.Max
+                    Intensity = Intensity.Max
                 },
                 _ => Drive.Null
             }

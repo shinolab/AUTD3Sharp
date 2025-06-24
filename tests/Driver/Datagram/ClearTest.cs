@@ -6,7 +6,7 @@ public class ClearTest
     public void TestClear()
     {
         using var autd = CreateController();
-        autd.Send(new Uniform(intensity: EmitIntensity.Max, phase: new Phase(0x90)));
+        autd.Send(new Uniform(intensity: Intensity.Max, phase: new Phase(0x90)));
         foreach (var dev in autd)
         {
             var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);

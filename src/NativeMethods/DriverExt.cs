@@ -47,11 +47,11 @@ namespace AUTD3Sharp
         SpinLoopHint
     }
 
-    public enum ParallelMode
+    public enum ParallelMode: byte
     {
-        Auto,
-        On,
-        Off
+        Auto = 0,
+        On = 1,
+        Off = 2
     }
 
     namespace NativeMethods
@@ -96,14 +96,6 @@ namespace AUTD3Sharp
                 AUTD3Sharp.SpinStrategyTag.YieldThread => SpinStrategyTag.YieldThread,
                 AUTD3Sharp.SpinStrategyTag.SpinLoopHint => SpinStrategyTag.SpinLoopHint,
                 _ => throw new ArgumentOutOfRangeException(nameof(tag), tag, null)
-            };
-
-            internal static ParallelMode ToNative(this AUTD3Sharp.ParallelMode mode) => mode switch
-            {
-                AUTD3Sharp.ParallelMode.Auto => ParallelMode.Auto,
-                AUTD3Sharp.ParallelMode.On => ParallelMode.On,
-                AUTD3Sharp.ParallelMode.Off => ParallelMode.Off,
-                _ => throw new ArgumentOutOfRangeException(nameof(mode), mode, null)
             };
         }
 

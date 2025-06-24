@@ -10,7 +10,7 @@ namespace AUTD3Sharp.Gain
 {
     public class BesselOption
     {
-        public EmitIntensity Intensity { get; init; } = EmitIntensity.Max;
+        public Intensity Intensity { get; init; } = Intensity.Max;
         public Phase PhaseOffset { get; init; } = Phase.Zero;
 
         internal NativeMethods.BesselOption ToNative() => new()

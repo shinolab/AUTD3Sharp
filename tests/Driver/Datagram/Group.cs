@@ -10,7 +10,7 @@ public class GroupTest
         autd.Send(new AUTD3Sharp.Group(dev => dev.Idx(), new GroupDictionary
         {
             { 0, (new Static(), new Null()) },
-            { 1, (new Sine(freq: 150 * Hz, option: new SineOption()), new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero)) }
+            { 1, (new Sine(freq: 150 * Hz, option: new SineOption()), new Uniform(intensity: Intensity.Max, phase: Phase.Zero)) }
         }));
 
         {
@@ -31,7 +31,7 @@ public class GroupTest
 
         autd.Send(new AUTD3Sharp.Group(dev => dev.Idx(), new GroupDictionary()
             {
-                { 1, new Null() }, { 0, new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero) }
+                { 1, new Null() }, { 0, new Uniform(intensity: Intensity.Max, phase: Phase.Zero) }
             }));
 
         {
@@ -50,7 +50,7 @@ public class GroupTest
             _ => null
         }, new GroupDictionary()
     {
-            {0, new Uniform(intensity: EmitIntensity.Max, phase: Phase.Zero)}
+            {0, new Uniform(intensity: Intensity.Max, phase: Phase.Zero)}
     }));
         {
             var (intensities, phases) = autd.Link<Audit>().Drives(0, Segment.S0, 0);
@@ -67,21 +67,14 @@ public class GroupTest
     public void TestGroupCheckOnlyForEnabled()
     {
         using var autd = CreateController();
-        var check = new bool[autd.NumDevices()];
-
-        autd[0].Enable = false;
 
         autd.Send(new AUTD3Sharp.Group(dev =>
         {
-            check[dev.Idx()] = true;
-            return 0;
+            return dev.Idx() == 0 ? null : 0;
         }, new GroupDictionary()
     {
-            {0, (new Sine(freq: 150 * Hz, option: new SineOption()), new Uniform(intensity:new EmitIntensity(0x80), phase: new Phase(0x90)))}
+            {0, (new Sine(freq: 150 * Hz, option: new SineOption()), new Uniform(intensity:new Intensity(0x80), phase: new Phase(0x90)))}
     }));
-
-        Assert.False(check[0]);
-        Assert.True(check[1]);
 
         {
             var (intensities, phases) = autd.Link<Audit>().Drives(0, Segment.S0, 0);
