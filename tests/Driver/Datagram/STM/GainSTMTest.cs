@@ -6,7 +6,7 @@ public class GainSTMTest
 {
 
     private static IEnumerable<Uniform> CreateGains(int size) =>
-        Enumerable.Range(0, size).Select(_ => new Uniform(intensity: EmitIntensity.Max, phase: new Phase(0xFF)));
+        Enumerable.Range(0, size).Select(_ => new Uniform(intensity: Intensity.Max, phase: new Phase(0xFF)));
 
     [Fact]
     public void TestGainSTMFreq()

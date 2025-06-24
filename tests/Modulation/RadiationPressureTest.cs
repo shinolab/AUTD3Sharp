@@ -17,12 +17,4 @@ public class RadiationPressureTest
             Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }
-
-    [Fact]
-    public void ExpectedRadiationPressure()
-    {
-        Assert.Equal(1.0f, new Static(0xFF).ExpectedRadiationPressure());
-        Assert.Equal(0.25196465849876404f, new Static(0x80).ExpectedRadiationPressure());
-        Assert.Equal(0.503821611404419f, new RadiationPressure(new Static(0x80)).ExpectedRadiationPressure());
-    }
 }

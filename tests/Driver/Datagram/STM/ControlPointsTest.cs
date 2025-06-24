@@ -33,10 +33,10 @@ public class ControlPointsTest
     [Fact]
     public void ControlPoints()
     {
-        var c1 = new ControlPoints(points: [new ControlPoint()], intensity: EmitIntensity.Max);
-        var c2 = new ControlPoints(points: [new ControlPoint()], intensity: EmitIntensity.Max);
-        var c3 = new ControlPoints(points: [new ControlPoint()], intensity: EmitIntensity.Min);
-        var c4 = new ControlPoints(points: [new ControlPoint(), new ControlPoint()], intensity: EmitIntensity.Max);
+        var c1 = new ControlPoints(points: [new ControlPoint()], intensity: Intensity.Max);
+        var c2 = new ControlPoints(points: [new ControlPoint()], intensity: Intensity.Max);
+        var c3 = new ControlPoints(points: [new ControlPoint()], intensity: Intensity.Min);
+        var c4 = new ControlPoints(points: [new ControlPoint(), new ControlPoint()], intensity: Intensity.Max);
 
         Assert.True(c1 == c2);
         Assert.True(c1 != c3);

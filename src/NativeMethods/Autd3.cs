@@ -17,31 +17,24 @@ namespace AUTD3Sharp.NativeMethods
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct BesselOption
     {
-        public EmitIntensity intensity;
+        public Intensity intensity;
         public Phase phase_offset;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct FocusOption
     {
-        public EmitIntensity intensity;
+        public Intensity intensity;
         public Phase phase_offset;
     }
 
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct PlaneOption
     {
-        public EmitIntensity intensity;
+        public Intensity intensity;
         public Phase phase_offset;
     }
 
-
-    internal enum ParallelMode : byte
-    {
-        Auto = 0,
-        On = 1,
-        Off = 2,
-    }
 
 
 }

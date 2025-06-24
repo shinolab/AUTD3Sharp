@@ -21,12 +21,12 @@ namespace AUTD3Sharp
 
         public PulseWidth(ushort pulseWidth)
         {
-            _pulseWidth = NativeMethodsBase.AUTDPulseWidth(pulseWidth).Validate();
+            _pulseWidth = NativeMethodsBase.AUTDPulseWidth512(pulseWidth).Validate();
         }
 
         public static PulseWidth FromDuty(float duty) => new PulseWidth
         {
-            _pulseWidth = NativeMethodsBase.AUTDPulseWidthFromDuty(duty).Validate()
+            _pulseWidth = NativeMethodsBase.AUTDPulseWidth512FromDuty(duty).Validate()
         };
 
         public static bool operator ==(PulseWidth left, PulseWidth right) => left.Equals(right);

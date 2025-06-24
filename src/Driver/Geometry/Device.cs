@@ -31,12 +31,6 @@ namespace AUTD3Sharp
             set => NativeMethodsBase.AUTDDeviceSetSoundSpeed(GeoPtr, _idx, value);
         }
 
-        public bool Enable
-        {
-            get => NativeMethodsBase.AUTDDeviceEnableGet(Ptr);
-            set => NativeMethodsBase.AUTDDeviceEnableSet(GeoPtr, _idx, value);
-        }
-
         public Quaternion Rotation() => NativeMethodsBase.AUTDDeviceRotation(Ptr);
         public Vector3 XDirection() => NativeMethodsBase.AUTDDeviceDirectionX(Ptr);
         public Vector3 YDirection() => NativeMethodsBase.AUTDDeviceDirectionY(Ptr);

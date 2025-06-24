@@ -13,7 +13,7 @@ public class LMTest
         var g = new LM(
             new float[] { -40, 40 }.Select(x => (autd.Center() + new Vector3(x, 0, 150), 5e3f * Pa)), new LMOption
             {
-                EmissionConstraint = EmissionConstraint.Uniform(new EmitIntensity(0x80)),
+                EmissionConstraint = EmissionConstraint.Uniform(new Intensity(0x80)),
                 Initial = [1.0f]
             }, backend);
         autd.Send(g);

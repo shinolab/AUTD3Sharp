@@ -107,18 +107,6 @@ public class GeometryTest
     }
 
     [Fact]
-    public void TestDeviceEnable()
-    {
-        var autd = CreateController();
-        foreach (var dev in autd)
-        {
-            Assert.True(dev.Enable);
-            dev.Enable = false;
-            Assert.False(dev.Enable);
-        }
-    }
-
-    [Fact]
     public void TestDeviceNumTransducers()
     {
         var autd = CreateController();

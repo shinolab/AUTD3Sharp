@@ -12,7 +12,7 @@ namespace AUTD3Sharp.Gain.Holo
 {
     public class NaiveOption
     {
-        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
+        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(Intensity.Min, Intensity.Max);
 
         internal NativeMethods.NaiveOption ToNative() => new()
         {

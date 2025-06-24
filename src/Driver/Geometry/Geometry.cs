@@ -27,16 +27,14 @@ namespace AUTD3Sharp
         public IEnumerator<Device> GetEnumerator() => _devices.GetEnumerator();
         [ExcludeFromCodeCoverage] System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => GetEnumerator();
 
-        public IEnumerable<Device> Devices() => _devices.Where(x => x.Enable);
-
         public void SetSoundSpeed(float c)
         {
-            foreach (var dev in Devices()) dev.SoundSpeed = c;
+            foreach (var dev in this) dev.SoundSpeed = c;
         }
 
         public void SetSoundSpeedFromTemp(float temp, float k = 1.4f, float r = 8.31446261815324f, float m = 28.9647e-3f)
         {
-            foreach (var dev in Devices()) dev.SetSoundSpeedFromTemp(temp, k, r, m);
+            foreach (var dev in this) dev.SetSoundSpeedFromTemp(temp, k, r, m);
         }
 
         public void Reconfigure(Func<Device, AUTD3> f)

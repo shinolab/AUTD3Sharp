@@ -27,6 +27,7 @@ namespace AUTD3Sharp
         public static GPIOOutputType SysTimeEq(DcSysTime sysTime) => new(NativeMethodsBase.AUTDGPIOOutputTypeSysTimeEq(sysTime));
         public static GPIOOutputType PwmOut(Transducer tr) => new(NativeMethodsBase.AUTDGPIOOutputTypePwmOut(tr.Ptr));
         public static GPIOOutputType Direct(bool v) => new(NativeMethodsBase.AUTDGPIOOutputTypeDirect(v));
+        public static GPIOOutputType SyncDiff => new(NativeMethodsBase.AUTDGPIOOutputTypeSyncDiff());
     }
 
     public sealed class GPIOOutputs : IDatagram

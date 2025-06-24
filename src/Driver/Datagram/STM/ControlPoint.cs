@@ -24,56 +24,56 @@ namespace AUTD3Sharp
         internal struct ControlPoints1
         {
             internal ControlPoint points;
-            internal EmitIntensity intensity;
+            internal Intensity intensity;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct ControlPoints2
         {
             internal (ControlPoint, ControlPoint) points;
-            internal EmitIntensity intensity;
+            internal Intensity intensity;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct ControlPoints3
         {
             internal (ControlPoint, ControlPoint, ControlPoint) points;
-            internal EmitIntensity intensity;
+            internal Intensity intensity;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct ControlPoints4
         {
             internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
-            internal EmitIntensity intensity;
+            internal Intensity intensity;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct ControlPoints5
         {
             internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
-            internal EmitIntensity intensity;
+            internal Intensity intensity;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct ControlPoints6
         {
             internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
-            internal EmitIntensity intensity;
+            internal Intensity intensity;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct ControlPoints7
         {
             internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
-            internal EmitIntensity intensity;
+            internal Intensity intensity;
         }
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct ControlPoints8
         {
             internal (ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint, ControlPoint) points;
-            internal EmitIntensity intensity;
+            internal Intensity intensity;
         }
     }
 
@@ -110,14 +110,14 @@ namespace AUTD3Sharp
     public class ControlPoints : IEquatable<ControlPoints>
     {
         public ControlPoint[] Points { get; init; }
-        public EmitIntensity Intensity { get; init; }
+        public Intensity Intensity { get; init; }
 
-        public ControlPoints(IEnumerable<ControlPoint> points, EmitIntensity intensity)
+        public ControlPoints(IEnumerable<ControlPoint> points, Intensity intensity)
         {
             Points = points as ControlPoint[] ?? points.ToArray();
             Intensity = intensity;
         }
-        public ControlPoints(IEnumerable<ControlPoint> points) : this(points, EmitIntensity.Max) { }
+        public ControlPoints(IEnumerable<ControlPoint> points) : this(points, Intensity.Max) { }
         public ControlPoints(IEnumerable<Point3> points) : this(points.Select(v => new ControlPoint(v))) { }
 
         public static bool operator ==(ControlPoints left, ControlPoints right) => left.Equals(right);

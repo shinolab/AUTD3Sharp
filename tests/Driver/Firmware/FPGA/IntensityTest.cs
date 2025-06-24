@@ -1,32 +1,32 @@
 namespace tests.Driver.Firmware.FPGA;
 
-public class EmitIntensityTest
+public class IntensityTest
 {
     [Fact]
-    public void EmitIntensityNew()
+    public void IntensityNew()
     {
         for (var i = 0; i <= 0xFF; i++)
         {
-            var intensity = new EmitIntensity((byte)i);
+            var intensity = new Intensity((byte)i);
             Assert.Equal(i, intensity.Item1);
         }
     }
 
 
     [Fact]
-    public void EmitIntensityDiv()
+    public void IntensityDiv()
     {
-        var intensity = new EmitIntensity(0x80);
+        var intensity = new Intensity(0x80);
         var div = intensity / 2;
         Assert.Equal(0x40, div.Item1);
     }
 
     [Fact]
-    public void Equals_EmitIntensity()
+    public void Equals_Intensity()
     {
-        var m1 = new EmitIntensity(1);
-        var m2 = new EmitIntensity(1);
-        var m3 = new EmitIntensity(2);
+        var m1 = new Intensity(1);
+        var m2 = new Intensity(1);
+        var m3 = new Intensity(2);
 
         Assert.True(m1 == m2);
         Assert.True(m1 != m3);

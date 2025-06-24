@@ -8,13 +8,9 @@ public class SenderTest
     [Fact]
     public void ToNative_StdSleeper()
     {
-        var s = new StdSleeper()
-        {
-            TimerResolution = 1,
-        };
+        var s = new StdSleeper();
         var sn = ((ISleeper)s).ToNative();
         Assert.Equal(SleeperTag.Std, sn.tag);
-        Assert.Equal(1u, sn.value);
     }
 
     [Fact]
@@ -30,4 +26,13 @@ public class SenderTest
         Assert.Equal(700_000u, sn.value);
         Assert.Equal(AUTD3Sharp.NativeMethods.SpinStrategyTag.SpinLoopHint, sn.spin_strategy);
     }
+
+    [Fact]
+    public void ToNative_SpinWaitSleeper()
+    {
+        var s = new SpinWaitSleeper();
+        var sn = ((ISleeper)s).ToNative();
+        Assert.Equal(SleeperTag.SpinWait, sn.tag);
+    }
+
 }

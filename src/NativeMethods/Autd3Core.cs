@@ -17,7 +17,13 @@ namespace AUTD3Sharp.NativeMethods
         const string __DllName = "autd3_core";
 
         internal const float ABSOLUTE_THRESHOLD_OF_HEARING = 0.00002f;
-        internal const nuint ULTRASOUND_PERIOD_COUNT_BITS = 9;
+        internal const int FOCI_STM_TR_X_MAX = 6908;
+        internal const int FOCI_STM_TR_Y_MAX = 5283;
+        internal const nuint MOD_BUF_SIZE_MIN = 2;
+        internal const nuint STM_BUF_SIZE_MIN = 2;
+        internal const nuint FOCI_STM_FOCI_NUM_MIN = 1;
+        internal const ushort SILENCER_STEPS_INTENSITY_DEFAULT = 10;
+        internal const ushort SILENCER_STEPS_PHASE_DEFAULT = 40;
         internal const byte TRANSITION_MODE_SYNC_IDX = 0;
         internal const byte TRANSITION_MODE_SYS_TIME = 1;
         internal const byte TRANSITION_MODE_GPIO = 2;
@@ -42,11 +48,11 @@ namespace AUTD3Sharp.NativeMethods
     internal unsafe partial struct Drive
     {
         public Phase phase;
-        public EmitIntensity intensity;
+        public Intensity intensity;
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct EmitIntensity
+    internal unsafe partial struct Intensity
     {
         public byte Item1;
     }

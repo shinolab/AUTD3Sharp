@@ -9,7 +9,7 @@ public class BesselTest
 
         var g = new Bessel(autd.Center(), new Vector3(0, 0, 1), MathF.PI / 4 * rad, new BesselOption
         {
-            Intensity = new EmitIntensity(0x80)
+            Intensity = new Intensity(0x80)
         });
         autd.Send(g);
         foreach (var dev in autd)

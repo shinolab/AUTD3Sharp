@@ -9,8 +9,8 @@ namespace AUTD3Sharp.Gain.Holo
         private EmissionConstraint(EmissionConstraintWrap inner) => Inner = inner;
 
         public static EmissionConstraint Normalize => new(NativeMethodsGainHolo.AUTDGainHoloConstraintNormalize());
-        public static EmissionConstraint Uniform(EmitIntensity value) => new(NativeMethodsGainHolo.AUTDGainHoloConstraintUniform(value.Inner));
-        public static EmissionConstraint Clamp(EmitIntensity min, EmitIntensity max) => new(NativeMethodsGainHolo.AUTDGainHoloConstraintClamp(min.Inner, max.Inner));
+        public static EmissionConstraint Uniform(Intensity value) => new(NativeMethodsGainHolo.AUTDGainHoloConstraintUniform(value.Inner));
+        public static EmissionConstraint Clamp(Intensity min, Intensity max) => new(NativeMethodsGainHolo.AUTDGainHoloConstraintClamp(min.Inner, max.Inner));
         public static EmissionConstraint Multiply(float value) => new(NativeMethodsGainHolo.AUTDGainHoloConstraintMultiply(value));
     }
 }

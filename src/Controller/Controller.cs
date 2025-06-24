@@ -34,9 +34,9 @@ namespace AUTD3Sharp
             _defaultSenderOption = option;
         }
 
-        public static Controller Open<T>(IEnumerable<AUTD3> devices, T link) where T : Driver.Link => OpenWithOption(devices, link, new SenderOption(), new SpinSleeper());
+        public static Controller Open<T>(IEnumerable<AUTD3> devices, T link) where T : Driver.Link => OpenWithOption(devices, link, new SenderOption(), new FixedSchedule());
 
-        public static Controller OpenWithOption<T>(IEnumerable<AUTD3> devices, T link, SenderOption option, ISleeper sleeper)
+        public static Controller OpenWithOption<T>(IEnumerable<AUTD3> devices, T link, SenderOption option, ITimerStrategy strategy)
             where T : Driver.Link
         {
             var devicesArray = devices as AUTD3[] ?? devices.ToArray();
@@ -48,17 +48,17 @@ namespace AUTD3Sharp
                 fixed (Point3* pPos = &pos[0])
                 fixed (Quaternion* pRot = &rot[0])
                 {
-                    var ptr = NativeMethodsBase.AUTDControllerOpen(pPos, pRot, (ushort)devicesArray.Length, linkPtr, option.ToNative(), sleeper.ToNative()).Validate();
+                    var ptr = NativeMethodsBase.AUTDControllerOpen(pPos, pRot, (ushort)devicesArray.Length, linkPtr, option.ToNative(), strategy.ToNative()).Validate();
                     var geometryPtr = NativeMethodsBase.AUTDGeometry(ptr);
                     return new Controller(geometryPtr, ptr, NativeMethodsBase.AUTDLinkGet(ptr), option);
                 }
             }
         }
 
-        public Sender Sender(SenderOption option, ISleeper sleeper) => new(NativeMethodsBase.AUTDSender(Ptr, option.ToNative(), sleeper.ToNative()), Geometry());
+        public Sender Sender(SenderOption option, ITimerStrategy strategy) => new(NativeMethodsBase.AUTDSender(Ptr, option.ToNative(), strategy.ToNative()), Geometry());
 
-        public void Send<TD>(TD d) where TD : IDatagram => Sender(_defaultSenderOption, new SpinSleeper()).Send(d);
-        public void Send<TD1, TD2>((TD1, TD2) d) where TD1 : IDatagram where TD2 : IDatagram => Sender(_defaultSenderOption, new SpinSleeper()).Send(d);
+        public void Send<TD>(TD d) where TD : IDatagram => Sender(_defaultSenderOption, new FixedSchedule()).Send(d);
+        public void Send<TD1, TD2>((TD1, TD2) d) where TD1 : IDatagram where TD2 : IDatagram => Sender(_defaultSenderOption, new FixedSchedule()).Send(d);
 
         private static FirmwareVersion GetFirmwareVersion(FirmwareVersionListPtr handle, uint i)
         {

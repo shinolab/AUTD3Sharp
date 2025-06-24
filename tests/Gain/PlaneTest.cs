@@ -9,7 +9,7 @@ public class PlaneTest
 
         autd.Send(new Plane(new Vector3(0, 0, 1), new PlaneOption
         {
-            Intensity = new EmitIntensity(0x80),
+            Intensity = new Intensity(0x80),
             PhaseOffset = new Phase(0x81),
         }));
         foreach (var dev in autd)

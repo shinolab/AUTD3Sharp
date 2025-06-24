@@ -13,7 +13,7 @@ namespace AUTD3Sharp.Gain.Holo
     public class GSPATOption
     {
         public uint Repeat { get; init; } = 100;
-        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(EmitIntensity.Min, EmitIntensity.Max);
+        public EmissionConstraint EmissionConstraint { get; init; } = EmissionConstraint.Clamp(Intensity.Min, Intensity.Max);
 
         internal NativeMethods.GSPATOption ToNative() => new()
         {

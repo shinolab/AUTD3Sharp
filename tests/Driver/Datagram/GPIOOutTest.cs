@@ -61,14 +61,14 @@ public class DebugTest
                 {
 
                     AUTD3Sharp.GPIOOut.O0 => GPIOOutputType.SysTimeEq(sysTime),
-                    AUTD3Sharp.GPIOOut.O1 => null,
+                    AUTD3Sharp.GPIOOut.O1 => GPIOOutputType.SyncDiff,
                     AUTD3Sharp.GPIOOut.O2 => null,
                     AUTD3Sharp.GPIOOut.O3 => null,
                     _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
                 }));
         foreach (var dev in autd)
         {
-            Assert.Equal([0x60, 0x00, 0x00, 0x00], autd.Link<Audit>().GPIOOutputTypes(dev.Idx()));
+            Assert.Equal([0x60, 0x70, 0x00, 0x00], autd.Link<Audit>().GPIOOutputTypes(dev.Idx()));
             Assert.Equal([(sysTime.SysTime / 3125) >> 3, 0x0000, 0x0000, 0x0000], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
     }

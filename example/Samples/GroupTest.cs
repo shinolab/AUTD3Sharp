@@ -14,7 +14,7 @@ internal static class GroupByDeviceTest
         var config = new Silencer();
         autd.Send(config);
 
-        autd.Send(new AUTD3Sharp.Group(dev => dev.Idx() switch
+        autd.Send(new Group(dev => dev.Idx() switch
         {
             0 => "null",
             1 => "focus",
@@ -39,7 +39,7 @@ internal static class GroupByTransducerTest
         var g1 = new Focus(pos: autd.Center() + new Vector3(0, 0, 150), option: new FocusOption());
         var g2 = new Null();
 
-        var g = new AUTD3Sharp.Gain.Group(
+        var g = new GainGroup(
             _ => tr => tr.Position().X < cx ? "focus" : "null",
             new Dictionary<object, IGain>
             {

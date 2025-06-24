@@ -22,13 +22,13 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern EmissionConstraintWrap AUTDGainHoloConstraintNormalize();
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintUniform", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern EmissionConstraintWrap AUTDGainHoloConstraintUniform(EmitIntensity intensity);
+        internal static extern EmissionConstraintWrap AUTDGainHoloConstraintUniform(Intensity intensity);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintMultiply", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern EmissionConstraintWrap AUTDGainHoloConstraintMultiply(float v);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintClamp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern EmissionConstraintWrap AUTDGainHoloConstraintClamp(EmitIntensity min_v, EmitIntensity max_v);
+        internal static extern EmissionConstraintWrap AUTDGainHoloConstraintClamp(Intensity min_v, Intensity max_v);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloGreedySphere", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern GainPtr AUTDGainHoloGreedySphere(Point3* points, float* amps, uint size, GreedyOption option);
@@ -105,13 +105,13 @@ namespace AUTD3Sharp.NativeMethods
     internal unsafe partial struct EmissionConstraintValue
     {
         [FieldOffset(0)]
-        public EmitIntensity @null;
+        public Intensity @null;
         [FieldOffset(0)]
-        public EmitIntensity uniform;
+        public Intensity uniform;
         [FieldOffset(0)]
         public float multiply;
         [FieldOffset(0)]
-        public fixed byte/* EmitIntensity, this length is invalid so must keep pointer and can't edit from C# */ clamp[2];
+        public fixed byte/* Intensity, this length is invalid so must keep pointer and can't edit from C# */ clamp[2];
     }
 
     [StructLayout(LayoutKind.Sequential)]

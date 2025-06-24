@@ -11,7 +11,7 @@ public class GroupTest
 
         var cx = autd.Center().X;
 
-        autd.Send(new AUTD3Sharp.Gain.Group(
+        autd.Send(new AUTD3Sharp.Gain.GainGroup(
             keyMap: _ => tr => tr.Position().X switch
             {
                 var x when x < cx => "uniform",
@@ -19,7 +19,7 @@ public class GroupTest
             },
             gainMap: new Dictionary<object, IGain>
             {
-                { "uniform", new Uniform(intensity: new EmitIntensity(0x80), phase: new Phase(0x90)) }, { "null", new Null() }
+                { "uniform", new Uniform(intensity: new Intensity(0x80), phase: new Phase(0x90)) }, { "null", new Null() }
             }));
         foreach (var dev in autd)
         {
@@ -39,14 +39,14 @@ public class GroupTest
             }
         }
 
-        autd.Send(new AUTD3Sharp.Gain.Group(keyMap: _ => tr => tr.Position().X switch
+        autd.Send(new AUTD3Sharp.Gain.GainGroup(keyMap: _ => tr => tr.Position().X switch
             {
                 var x when x > cx => "uniform",
                 _ => null
             },
             new Dictionary<object, IGain>
             {
-                {"uniform", new Uniform(intensity: new EmitIntensity(0x81), phase: new Phase(0x91))}
+                {"uniform", new Uniform(intensity: new Intensity(0x81), phase: new Phase(0x91))}
             }
             ));
         foreach (var dev in autd)
@@ -75,10 +75,10 @@ public class GroupTest
 
         var exception = Record.Exception(() =>
         {
-            autd.Send(new AUTD3Sharp.Gain.Group(_ => _ => "null", new Dictionary<object, IGain>()
+            autd.Send(new AUTD3Sharp.Gain.GainGroup(_ => _ => "null", new Dictionary<object, IGain>()
             {
                 {"null", new Null()},
-                {"uniform", new Uniform(intensity: new EmitIntensity(0x80), phase: new Phase(0x90))}
+                {"uniform", new Uniform(intensity: new Intensity(0x80), phase: new Phase(0x90))}
             }
             ));
         });
@@ -92,18 +92,11 @@ public class GroupTest
     public void GroupCheckOnlyForEnabled()
     {
         var autd = CreateController();
-        var check = new bool[autd.NumDevices()];
 
-        autd[0].Enable = false;
-
-        autd.Send(new AUTD3Sharp.Gain.Group(dev => _ =>
+        autd.Send(new AUTD3Sharp.Gain.GainGroup(dev => _ =>
             {
-                check[dev.Idx()] = true;
-                return "uniform";
-            }, new Dictionary<object, IGain> { { "uniform", new Uniform(intensity: new EmitIntensity(0x80), phase: new Phase(0x90)) } }));
-
-        Assert.False(check[0]);
-        Assert.True(check[1]);
+                return dev.Idx() == 0 ? null : "uniform";
+            }, new Dictionary<object, IGain> { { "uniform", new Uniform(intensity: new Intensity(0x80), phase: new Phase(0x90)) } }));
 
         {
             var (intensities, phases) = autd.Link<Audit>().Drives(0, Segment.S0, 0);

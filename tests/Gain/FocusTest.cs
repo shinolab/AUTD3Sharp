@@ -6,7 +6,7 @@ public class FocusTest
     public void Focus()
     {
         var autd = CreateController();
-        var g = new Focus(autd.Center(), new FocusOption { Intensity = new EmitIntensity(0x81) });
+        var g = new Focus(autd.Center(), new FocusOption { Intensity = new Intensity(0x81) });
         autd.Send(g);
         foreach (var dev in autd)
         {

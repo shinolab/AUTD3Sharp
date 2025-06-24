@@ -10,12 +10,12 @@ using AUTD3Sharp.NativeMethods;
 
 namespace AUTD3Sharp.Gain
 {
-    public sealed class Group : IGain
+    public sealed class GainGroup : IGain
     {
         public Func<Device, Func<Transducer, object?>> KeyMap;
         public Dictionary<object, IGain> GainMap;
 
-        public Group(Func<Device, Func<Transducer, object?>> keyMap, Dictionary<object, IGain> gainMap)
+        public GainGroup(Func<Device, Func<Transducer, object?>> keyMap, Dictionary<object, IGain> gainMap)
         {
             KeyMap = keyMap;
             GainMap = gainMap;
@@ -24,14 +24,14 @@ namespace AUTD3Sharp.Gain
         GainPtr IGain.GainPtr(Geometry geometry)
         {
             var keymap = new Dictionary<object, int>();
-            var deviceIndices = geometry.Devices().Select(dev => (ushort)dev.Idx()).ToArray();
+            var deviceIndices = geometry.Select(dev => (ushort)dev.Idx()).ToArray();
             unsafe
             {
                 fixed (ushort* deviceIndicesPtr = &deviceIndices[0])
                 {
                     var map = NativeMethodsBase.AUTDGainGroupCreateMap(deviceIndicesPtr, (ushort)deviceIndices.Length);
                     var k = 0;
-                    foreach (var dev in geometry.Devices())
+                    foreach (var dev in geometry)
                     {
                         var m = new int[dev.NumTransducers()];
                         foreach (var tr in dev)
