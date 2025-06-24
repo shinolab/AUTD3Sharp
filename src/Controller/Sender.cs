@@ -11,7 +11,7 @@ namespace AUTD3Sharp
 {
     public interface ISleeper
     {
-        internal SleeperWrap ToNative();
+        public SleeperWrap ToNative();
     }
 
     public class StdSleeper : ISleeper
