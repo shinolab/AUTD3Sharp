@@ -131,6 +131,15 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "internal unsafe partial struct Duration",
         "internal unsafe partial struct Duration_",
     );
+    let content = content.replace(
+        "internal unsafe partial struct SleeperWrap",
+        "public unsafe partial struct SleeperWrap",
+    );
+    let content = content.replace("internal enum SleeperTag", "public enum SleeperTag");
+    let content = content.replace(
+        "internal enum SpinStrategyTag",
+        "public enum SpinStrategyTag",
+    );
 
     let content = content.replace("internal enum AUTDStatus", "public enum AUTDStatus");
 

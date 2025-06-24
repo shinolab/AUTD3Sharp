@@ -240,7 +240,7 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct SleeperWrap
+    public unsafe partial struct SleeperWrap
     {
         public SleeperTag tag;
         public uint value;
@@ -299,14 +299,14 @@ namespace AUTD3Sharp.NativeMethods
         AUTDErr = 2,
     }
 
-    internal enum SleeperTag : byte
+    public enum SleeperTag : byte
     {
         Std = 0,
         Spin = 1,
         SpinWait = 4,
     }
 
-    internal enum SpinStrategyTag : byte
+    public enum SpinStrategyTag : byte
     {
         YieldThread = 0,
         SpinLoopHint = 1,
