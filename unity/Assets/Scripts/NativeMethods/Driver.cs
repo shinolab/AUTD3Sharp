@@ -120,6 +120,12 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct EnvironmentPtr
+    {
+        public IntPtr Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct GainPtr
     {
         public IntPtr Item1;

@@ -32,22 +32,6 @@ public class GeometryTest
     }
 
     [Fact]
-    public void TestGeometrySoundSpeed()
-    {
-        var autd = CreateController();
-        autd.SetSoundSpeed(350e3f);
-        foreach (var dev in autd) Assert.Equal(350e3f, dev.SoundSpeed);
-    }
-
-    [Fact]
-    public void TestGeometrySetSoundSpeedFromTemp()
-    {
-        var autd = CreateController();
-        autd.SetSoundSpeedFromTemp(15);
-        foreach (var dev in autd) Assert.Equal(340.29525e3f, dev.SoundSpeed);
-    }
-
-    [Fact]
     public void TestGeometryCenter()
     {
         var autd = CreateController();
@@ -84,29 +68,6 @@ public class GeometryTest
     }
 
     [Fact]
-    public void TestDeviceSoundSpeed()
-    {
-        var autd = CreateController();
-        foreach (var dev in autd)
-        {
-            Assert.Equal(340e3f, dev.SoundSpeed);
-            dev.SoundSpeed = 350e3f;
-            Assert.Equal(350e3f, dev.SoundSpeed);
-        }
-    }
-
-    [Fact]
-    public void TestDeviceSetSoundSpeedFromTemp()
-    {
-        var autd = CreateController();
-        foreach (var dev in autd)
-        {
-            dev.SetSoundSpeedFromTemp(15);
-            Assert.Equal(340.29525e3f, dev.SoundSpeed);
-        }
-    }
-
-    [Fact]
     public void TestDeviceNumTransducers()
     {
         var autd = CreateController();
@@ -126,26 +87,6 @@ public class GeometryTest
             Assert.Equal(86.625267f, center.X);
             Assert.Equal(66.7131958f, center.Y);
             Assert.Equal(0.0f, center.Z);
-        }
-    }
-
-    [Fact]
-    public void TestDeviceWavelength()
-    {
-        var autd = CreateController();
-        foreach (var dev in autd)
-        {
-            Assert.Equal(340e3f / 40e3f, dev.Wavelength());
-        }
-    }
-
-    [Fact]
-    public void TestDeviceWavenumber()
-    {
-        var autd = CreateController();
-        foreach (var dev in autd)
-        {
-            Assert.Equal(2.0f * MathF.PI * 40e3f / 340e3f, dev.Wavenumber());
         }
     }
 

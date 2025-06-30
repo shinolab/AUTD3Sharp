@@ -76,6 +76,9 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDatagramPhaseCorr", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramPhaseCorr(ConstPtr f, ConstPtr context, GeometryPtr geometry);
 
+        [DllImport(__DllName, EntryPoint = "AUTDDatagramOutputMask", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern DatagramPtr AUTDDatagramOutputMask(ConstPtr f, ConstPtr context, GeometryPtr geometry);
+
         [DllImport(__DllName, EntryPoint = "AUTDDatagramPulseWidthEncoder256", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramPulseWidthEncoder256(ConstPtr f, ConstPtr context, GeometryPtr geometry);
 
@@ -270,6 +273,24 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDTransitionModeNone", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern TransitionModeWrap AUTDTransitionModeNone();
 
+        [DllImport(__DllName, EntryPoint = "AUTDEnvironment", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern EnvironmentPtr AUTDEnvironment(ControllerPtr cnt);
+
+        [DllImport(__DllName, EntryPoint = "AUTDEnvironmentGetSoundSpeed", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern float AUTDEnvironmentGetSoundSpeed(EnvironmentPtr env);
+
+        [DllImport(__DllName, EntryPoint = "AUTDEnvironmentSetSoundSpeed", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern void AUTDEnvironmentSetSoundSpeed(EnvironmentPtr env, float value);
+
+        [DllImport(__DllName, EntryPoint = "AUTDEnvironmentSetSoundSpeedFromTemp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern void AUTDEnvironmentSetSoundSpeedFromTemp(EnvironmentPtr env, float temp, float k, float r, float m);
+
+        [DllImport(__DllName, EntryPoint = "AUTDEnvironmentWavelength", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern float AUTDEnvironmentWavelength(EnvironmentPtr env);
+
+        [DllImport(__DllName, EntryPoint = "AUTDEnvironmentWavenumber", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern float AUTDEnvironmentWavenumber(EnvironmentPtr env);
+
         [DllImport(__DllName, EntryPoint = "AUTDGainBessel", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern GainPtr AUTDGainBessel(Point3 pos, Vector3 dir, Angle theta, BesselOption option);
 
@@ -321,23 +342,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDeviceNumTransducers", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern uint AUTDDeviceNumTransducers(DevicePtr dev);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDeviceGetSoundSpeed", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern float AUTDDeviceGetSoundSpeed(DevicePtr dev);
-
-        [DllImport(__DllName, EntryPoint = "AUTDDeviceSetSoundSpeed", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDDeviceSetSoundSpeed(GeometryPtr geo, ushort dev_idx, float value);
-
-        [DllImport(__DllName, EntryPoint = "AUTDDeviceSetSoundSpeedFromTemp", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDDeviceSetSoundSpeedFromTemp(GeometryPtr geo, ushort dev_idx, float temp, float k, float r, float m);
-
         [DllImport(__DllName, EntryPoint = "AUTDDeviceCenter", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Point3 AUTDDeviceCenter(DevicePtr dev);
-
-        [DllImport(__DllName, EntryPoint = "AUTDDeviceWavelength", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern float AUTDDeviceWavelength(DevicePtr dev);
-
-        [DllImport(__DllName, EntryPoint = "AUTDDeviceWavenumber", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern float AUTDDeviceWavenumber(DevicePtr dev);
 
         [DllImport(__DllName, EntryPoint = "AUTDDeviceRotation", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern Quaternion AUTDDeviceRotation(DevicePtr dev);
@@ -414,9 +420,9 @@ namespace AUTD3Sharp.NativeMethods
         [return: MarshalAs(UnmanagedType.U1)]
         internal static extern bool AUTDLinkAuditFpgaIsStmGainMode(LinkPtr audit, Segment segment, ushort idx);
 
-        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditCpuSilencerStrictMode", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        [DllImport(__DllName, EntryPoint = "AUTDLinkAuditCpuSilencerStrict", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
-        internal static extern bool AUTDLinkAuditCpuSilencerStrictMode(LinkPtr audit, ushort idx);
+        internal static extern bool AUTDLinkAuditCpuSilencerStrict(LinkPtr audit, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaSilencerUpdateRateIntensity", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ushort AUTDLinkAuditFpgaSilencerUpdateRateIntensity(LinkPtr audit, ushort idx);
@@ -596,7 +602,7 @@ namespace AUTD3Sharp.NativeMethods
     {
         public Duration intensity;
         public Duration phase;
-        [MarshalAs(UnmanagedType.U1)] public bool strict_mode;
+        [MarshalAs(UnmanagedType.U1)] public bool strict;
     }
 
     [StructLayout(LayoutKind.Sequential)]

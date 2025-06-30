@@ -16,13 +16,13 @@ namespace AUTD3Sharp
     {
         public Duration Intensity { get; init; } = Duration.FromMicros(250);
         public Duration Phase { get; init; } = Duration.FromMillis(1);
-        public bool StrictMode { get; init; } = true;
+        public bool Strict { get; init; } = true;
 
         DatagramPtr ISilencer.RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromCompletionTime(new NativeMethods.FixedCompletionTime
         {
             intensity = Intensity,
             phase = Phase,
-            strict_mode = StrictMode
+            strict = Strict
         });
     }
 
@@ -30,13 +30,13 @@ namespace AUTD3Sharp
     {
         public ushort Intensity { get; init; } = 10;
         public ushort Phase { get; init; } = 40;
-        public bool StrictMode { get; init; } = true;
+        public bool Strict { get; init; } = true;
 
         internal NativeMethods.FixedCompletionSteps ToNative() => new()
         {
             intensity = Intensity,
             phase = Phase,
-            strict_mode = StrictMode
+            strict = Strict
         };
 
         DatagramPtr ISilencer.RawPtr() => NativeMethodsBase.AUTDDatagramSilencerFromCompletionSteps(ToNative());

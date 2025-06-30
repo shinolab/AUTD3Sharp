@@ -30,7 +30,7 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 34.0.0 (MIT)
+autd3 35.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -46,6 +46,10 @@ autd3-core 34.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
+autd3-core 35.0.0 (MIT)
+https://github.com/shinolab/autd3-rs
+---------------------------------------------------------
+
 autd3-derive 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
@@ -55,6 +59,10 @@ https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
 autd3-derive 34.0.0 (MIT)
+https://github.com/shinolab/autd3-rs
+---------------------------------------------------------
+
+autd3-derive 35.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -70,6 +78,10 @@ autd3-driver 34.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
+autd3-driver 35.0.0 (MIT)
+https://github.com/shinolab/autd3-rs
+---------------------------------------------------------
+
 autd3-firmware-emulator 31.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
@@ -82,47 +94,51 @@ autd3-firmware-emulator 34.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 34.0.0 (MIT)
+autd3-firmware-emulator 35.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 34.0.0 (MIT)
+autd3-gain-holo 35.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-twincat 34.0.0 (MIT)
+autd3-link-simulator 35.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 34.0.0 (MIT)
+autd3-link-twincat 35.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 34.0.0 (MIT)
+autd3-modulation-audio-file 35.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 34.0.0 (MIT)
+autd3-protobuf 35.0.0 (MIT)
+https://github.com/shinolab/autd3-rs
+---------------------------------------------------------
+
+autd3capi 35.0.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 34.0.0 (MIT)
+autd3capi-driver 35.0.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 34.0.0 (MIT)
+autd3capi-gain-holo 35.0.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 34.0.0 (MIT)
+autd3capi-link-simulator 35.0.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 34.0.0 (MIT)
+autd3capi-link-twincat 35.0.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 34.0.0 (MIT)
+autd3capi-modulation-audio-file 35.0.0 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
@@ -294,7 +310,7 @@ hyper-util 0.1.14 (MIT)
 https://github.com/hyperium/hyper-util
 ---------------------------------------------------------
 
-indexmap 2.9.0 (Apache-2.0 OR MIT)
+indexmap 2.10.0 (Apache-2.0 OR MIT)
 https://github.com/indexmap-rs/indexmap
 ---------------------------------------------------------
 
