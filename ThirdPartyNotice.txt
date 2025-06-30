@@ -30,7 +30,7 @@ atomic-waker 1.1.2 (Apache-2.0 OR MIT)
 https://github.com/smol-rs/atomic-waker
 ---------------------------------------------------------
 
-autd3 35.0.0 (MIT)
+autd3 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -46,7 +46,7 @@ autd3-core 34.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-core 35.0.0 (MIT)
+autd3-core 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -62,7 +62,7 @@ autd3-derive 34.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-derive 35.0.0 (MIT)
+autd3-derive 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -78,7 +78,7 @@ autd3-driver 34.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-driver 35.0.0 (MIT)
+autd3-driver 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
@@ -94,51 +94,51 @@ autd3-firmware-emulator 34.0.0 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-firmware-emulator 35.0.0 (MIT)
+autd3-firmware-emulator 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-gain-holo 35.0.0 (MIT)
+autd3-gain-holo 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-simulator 35.0.0 (MIT)
+autd3-link-simulator 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-link-twincat 35.0.0 (MIT)
+autd3-link-twincat 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-modulation-audio-file 35.0.0 (MIT)
+autd3-modulation-audio-file 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3-protobuf 35.0.0 (MIT)
+autd3-protobuf 35.0.1 (MIT)
 https://github.com/shinolab/autd3-rs
 ---------------------------------------------------------
 
-autd3capi 35.0.0 (MIT)
+autd3capi 35.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-driver 35.0.0 (MIT)
+autd3capi-driver 35.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-gain-holo 35.0.0 (MIT)
+autd3capi-gain-holo 35.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-simulator 35.0.0 (MIT)
+autd3capi-link-simulator 35.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-link-twincat 35.0.0 (MIT)
+autd3capi-link-twincat 35.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 
-autd3capi-modulation-audio-file 35.0.0 (MIT)
+autd3capi-modulation-audio-file 35.0.1 (MIT)
 https://github.com/shinolab/autd3-capi
 ---------------------------------------------------------
 

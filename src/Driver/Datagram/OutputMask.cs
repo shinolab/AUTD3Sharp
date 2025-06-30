@@ -6,7 +6,7 @@ using System.Collections.Concurrent;
 
 namespace AUTD3Sharp
 {
-    public sealed class OutputMask : IDatagram
+    public sealed class OutputMask : IDatagram, IDatagramS
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -25,5 +25,7 @@ namespace AUTD3Sharp
         }
 
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramOutputMask(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
+
+        DatagramPtr IDatagramS.WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? _transitionMode) => NativeMethodsBase.AUTDDatagramOutputMaskWithSegment(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr, segment.ToNative());
     }
 }
