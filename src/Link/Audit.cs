@@ -15,7 +15,7 @@ namespace AUTD3Sharp.Link
         public ushort SilencerCompletionStepsIntensity(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsIntensity(Ptr, (ushort)idx);
         public ushort SilencerCompletionStepsPhase(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerCompletionStepsPhase(Ptr, (ushort)idx);
         public bool SilencerFixedCompletionStepsMode(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaSilencerFixedCompletionStepsMode(Ptr, (ushort)idx);
-        public bool SilencerStrictMode(int idx) => NativeMethodsBase.AUTDLinkAuditCpuSilencerStrictMode(Ptr, (ushort)idx);
+        public bool SilencerStrict(int idx) => NativeMethodsBase.AUTDLinkAuditCpuSilencerStrict(Ptr, (ushort)idx);
 
         public byte[] GPIOOutputTypes(int idx)
         {

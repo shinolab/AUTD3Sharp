@@ -47,7 +47,7 @@ namespace AUTD3Sharp
         SpinLoopHint
     }
 
-    public enum ParallelMode: byte
+    public enum ParallelMode : byte
     {
         Auto = 0,
         On = 1,
@@ -230,7 +230,7 @@ namespace AUTD3Sharp
             internal ushort intensity;
             internal ushort phase;
             [MarshalAs(UnmanagedType.U1)]
-            internal bool strict_mode;
+            internal bool strict;
         }
 
         [StructLayout(LayoutKind.Sequential)]

@@ -20,6 +20,7 @@ namespace AUTD3Sharp
         internal ControllerPtr Ptr;
         private readonly LinkPtr _linkPtr;
         private SenderOption _defaultSenderOption;
+        public Environment Environment { get; }
 
         public SenderOption DefaultSenderOption
         {
@@ -32,6 +33,7 @@ namespace AUTD3Sharp
             Ptr = ptr;
             _linkPtr = linkPtr;
             _defaultSenderOption = option;
+            Environment = new Environment(NativeMethodsBase.AUTDEnvironment(Ptr));
         }
 
         public static Controller Open<T>(IEnumerable<AUTD3> devices, T link) where T : Driver.Link => OpenWithOption(devices, link, new SenderOption(), new FixedSchedule());

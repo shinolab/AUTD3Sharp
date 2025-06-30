@@ -25,12 +25,6 @@ namespace AUTD3Sharp
 
         public int NumTransducers() => _transducers.Count;
 
-        public float SoundSpeed
-        {
-            get => NativeMethodsBase.AUTDDeviceGetSoundSpeed(Ptr);
-            set => NativeMethodsBase.AUTDDeviceSetSoundSpeed(GeoPtr, _idx, value);
-        }
-
         public Quaternion Rotation() => NativeMethodsBase.AUTDDeviceRotation(Ptr);
         public Vector3 XDirection() => NativeMethodsBase.AUTDDeviceDirectionX(Ptr);
         public Vector3 YDirection() => NativeMethodsBase.AUTDDeviceDirectionY(Ptr);
@@ -38,10 +32,6 @@ namespace AUTD3Sharp
 
         public Point3 Center() => NativeMethodsBase.AUTDDeviceCenter(Ptr);
 
-        public void SetSoundSpeedFromTemp(float temp, float k = 1.4f, float r = 8.31446261815324f, float m = 28.9647e-3f) => NativeMethodsBase.AUTDDeviceSetSoundSpeedFromTemp(GeoPtr, _idx, temp, k, r, m);
-
-        public float Wavelength() => NativeMethodsBase.AUTDDeviceWavelength(Ptr);
-        public float Wavenumber() => NativeMethodsBase.AUTDDeviceWavenumber(Ptr);
 
         public Transducer this[int index] => _transducers[index];
 

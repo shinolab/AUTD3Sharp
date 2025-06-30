@@ -54,13 +54,13 @@ public class AUTDTest
     {
         using var autd = CreateController();
 
-        Assert.Equal("v12.0.0", AUTD3Sharp.Driver.FirmwareVersion.LatestVersion);
+        Assert.Equal("v12.1.0", AUTD3Sharp.Driver.FirmwareVersion.LatestVersion);
 
         {
             foreach (var (info, i) in autd.FirmwareVersion().Select((info, i) => (info, i)))
             {
-                Assert.Equal(info.Info, $"{i}: CPU = v12.0.0, FPGA = v12.0.0 [Emulator]");
-                Assert.Equal($"{info}", $"{i}: CPU = v12.0.0, FPGA = v12.0.0 [Emulator]");
+                Assert.Equal(info.Info, $"{i}: CPU = v12.1.0, FPGA = v12.1.0 [Emulator]");
+                Assert.Equal($"{info}", $"{i}: CPU = v12.1.0, FPGA = v12.1.0 [Emulator]");
             }
         }
 
