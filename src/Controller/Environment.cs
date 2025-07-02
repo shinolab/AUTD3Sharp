@@ -1,6 +1,6 @@
 using AUTD3Sharp.NativeMethods;
 
-namespace AUTD3Sharp
+namespace AUTD3Sharp.Internal
 {
     public sealed class Environment
     {
