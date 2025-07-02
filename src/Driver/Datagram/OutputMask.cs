@@ -4,6 +4,10 @@ using System.Runtime.InteropServices;
 using System;
 using System.Collections.Concurrent;
 
+#if UNITY_2020_2_OR_NEWER
+#nullable enable
+#endif
+
 namespace AUTD3Sharp
 {
     public sealed class OutputMask : IDatagram, IDatagramS
@@ -29,3 +33,7 @@ namespace AUTD3Sharp
         DatagramPtr IDatagramS.WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? _transitionMode) => NativeMethodsBase.AUTDDatagramOutputMaskWithSegment(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr, segment.ToNative());
     }
 }
+
+#if UNITY_2020_2_OR_NEWER
+#nullable restore
+#endif
