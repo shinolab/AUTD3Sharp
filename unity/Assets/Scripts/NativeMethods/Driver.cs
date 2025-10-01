@@ -53,12 +53,6 @@ namespace AUTD3Sharp.NativeMethods
         public ulong value;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct LoopBehavior
-    {
-        public ushort rep;
-    }
-
     [StructLayout(LayoutKind.Explicit)]
     internal unsafe partial struct SamplingConfigValue
     {
@@ -214,14 +208,6 @@ namespace AUTD3Sharp.NativeMethods
     }
 
     [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct ResultU8
-    {
-        public byte result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct ResultU16
     {
         public ushort result;
@@ -241,6 +227,14 @@ namespace AUTD3Sharp.NativeMethods
     internal unsafe partial struct ResultDuration
     {
         public Duration result;
+        public uint err_len;
+        public ConstPtr err;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct ResultPulseWidth
+    {
+        public PulseWidth result;
         public uint err_len;
         public ConstPtr err;
     }
@@ -290,12 +284,12 @@ namespace AUTD3Sharp.NativeMethods
 
     internal enum TransitionModeTag : byte
     {
-        SyncIdx = 0,
-        SysTime = 1,
-        Gpio = 2,
-        Ext = 3,
-        Immediate = 4,
-        None = 255,
+        Immediate = 0,
+        Ext = 1,
+        SyncIdx = 2,
+        SysTime = 3,
+        Gpio = 4,
+        Later = 255,
     }
 
     public enum AUTDStatus : byte

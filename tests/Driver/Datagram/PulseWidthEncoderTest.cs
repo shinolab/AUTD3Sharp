@@ -9,9 +9,9 @@ public class PulseWidthEncoderTest
         var autd = CreateController();
 
         var rnd = new Random();
-        var buf = Enumerable.Range(0, 256).Select(_ => (ushort)rnd.Next(0, 512)).ToArray();
+        var buf = Enumerable.Range(0, 256).Select(_ => new PulseWidth((uint)rnd.Next(0, 512))).ToArray();
 
-        autd.Send(new AUTD3Sharp.PulseWidthEncoder(dev => i => new PulseWidth(buf[i.Item1])));
+        autd.Send(new AUTD3Sharp.PulseWidthEncoder(dev => i => buf[i.Item1]));
         foreach (var dev in autd)
         {
             Assert.Equal(buf, autd.Link<Audit>().PulseWidthEncoderTable(dev.Idx()));
@@ -25,7 +25,7 @@ public class PulseWidthEncoderTest
         var autd = CreateController();
 
         var buf = Enumerable.Range(0, 256).Select(i =>
-            (ushort)Math.Round(Math.Asin((float)i / 255) / MathF.PI * 512)
+            new PulseWidth((uint)Math.Round(Math.Asin((float)i / 255) / MathF.PI * 512))
         ).ToArray();
 
         autd.Send(new AUTD3Sharp.PulseWidthEncoder());

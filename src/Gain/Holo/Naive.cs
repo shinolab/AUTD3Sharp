@@ -24,15 +24,23 @@ namespace AUTD3Sharp.Gain.Holo
     {
         public (Point3, Amplitude)[] Foci;
         public NaiveOption Option;
-        public Backend Backend;
 
-        public Naive(IEnumerable<(Point3, Amplitude)> foci, NaiveOption option, Backend backend)
+        public Naive(IEnumerable<(Point3, Amplitude)> foci, NaiveOption option)
         {
             Foci = foci as (Point3, Amplitude)[] ?? foci.ToArray();
             Option = option;
-            Backend = backend;
         }
 
-        GainPtr IGain.GainPtr(Geometry _) => Backend.Naive(Foci, Option.ToNative());
+        GainPtr IGain.GainPtr(Geometry _)
+        {
+            var points = Foci.Select(f => f.Item1).ToArray();
+            var amps = Foci.Select(f => f.Item2.Pascal()).ToArray();
+            unsafe
+            {
+                fixed (Point3* pPoints = &points[0])
+                fixed (float* pAmps = &amps[0])
+                    return NativeMethodsGainHolo.AUTDGainHoloNaiveSphere(pPoints, pAmps, (uint)Foci.Length, Option.ToNative());
+            }
+        }
     }
 }

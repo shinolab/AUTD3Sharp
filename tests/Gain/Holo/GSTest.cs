@@ -9,8 +9,7 @@ public class GSTest
     {
         var autd = CreateController(1);
 
-        var backend = new NalgebraBackend();
-        var g = new GS(new float[] { -40, 40 }.Select(x => (autd.Center() + new Vector3(x, 0, 150), 5e3f * Pa)), new GSOption { EmissionConstraint = EmissionConstraint.Uniform(new Intensity(0x80)) }, backend);
+        var g = new GS(new float[] { -40, 40 }.Select(x => (autd.Center() + new Vector3(x, 0, 150), 5e3f * Pa)), new GSOption { EmissionConstraint = EmissionConstraint.Uniform(new Intensity(0x80)) });
 
         autd.Send(g);
 

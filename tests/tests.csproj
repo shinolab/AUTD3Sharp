@@ -22,14 +22,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="autd3capi_backend_cuda.dll" />
-    <None Remove="autd3capi_link_visualizer.dll" />
-    <None Remove="libautd3capi_backend_cuda.so" />
-    <None Remove="libautd3capi_link_visualizer.dylib" />
-    <None Remove="libautd3capi_link_visualizer.so" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="xunit.runner.json"> 
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -71,6 +63,12 @@
     <None Update="libautd3capi_link_simulator.dylib">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="libautd3capi_link_remote.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libautd3capi_link_ethercrab.dylib">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="libautd3capi.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -87,6 +85,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="libautd3capi_link_simulator.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libautd3capi_link_remote.so">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libautd3capi_link_ethercrab.so">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="autd3capi.dll">
@@ -123,6 +127,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="autd3capi_modulation_audio_file.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="autd3capi_link_remote.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="autd3capi_link_remote.pdb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="autd3capi_link_ethercrab.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="autd3capi_link_ethercrab.pdb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="sin150.wav">

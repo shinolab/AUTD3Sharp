@@ -13,8 +13,8 @@ namespace AUTD3Sharp.Driver.Datagram
         internal abstract ModulationPtr ModulationPtr();
         public SamplingConfig SamplingConfig() => new(NativeMethodsBase.AUTDModulationSamplingConfig(ModulationPtr()));
 
-        DatagramPtr IDatagramS.WithSegmentTransition(Geometry _, Segment segment, TransitionMode? transitionMode) => NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(ModulationPtr(), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner);
-        DatagramPtr IDatagramL.WithLoopBehavior(Geometry _, Segment segment, TransitionMode? transitionMode, LoopBehavior loopBehavior) => NativeMethodsBase.AUTDModulationIntoDatagramWithLoopBehavior(ModulationPtr(), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner, loopBehavior.Inner);
+        DatagramPtr IDatagramS.WithSegmentTransition(Geometry _, Segment segment, IInfiniteTransitionMode transitionMode) => NativeMethodsBase.AUTDModulationIntoDatagramWithSegment(ModulationPtr(), segment.ToNative(), transitionMode.Inner);
+        DatagramPtr IDatagramL.WithFiniteLoop(Geometry _, Segment segment, IFiniteTransitionMode transitionMode, ushort loopCount) => NativeMethodsBase.AUTDModulationIntoDatagramWithFiniteLoop(ModulationPtr(), segment.ToNative(), transitionMode.Inner, loopCount);
         DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDModulationIntoDatagram(ModulationPtr());
     }
 }

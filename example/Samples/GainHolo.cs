@@ -15,8 +15,7 @@ internal static class GainHoloTest
 
         var center = autd.Center() + new Vector3(0, 0, 150);
 
-        var backend = new NalgebraBackend();
-        var g = new GSPAT(foci: [(center + 20.0f * Vector3.UnitX, 5e3f * Pa), (center - 20.0f * Vector3.UnitX, 5e3f * Pa)], option: new GSPATOption(), backend: backend);
+        var g = new GSPAT(foci: [(center + 20.0f * Vector3.UnitX, 5e3f * Pa), (center - 20.0f * Vector3.UnitX, 5e3f * Pa)], option: new GSPATOption());
 
         var m = new Sine(freq: 150 * Hz, option: new SineOption());
 

@@ -12,7 +12,7 @@ namespace AUTD3Sharp
         [ComVisible(false)]
         public interface IDatagramS
         {
-            internal DatagramPtr WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? transitionMode);
+            internal DatagramPtr WithSegmentTransition(Geometry geometry, Segment segment, IInfiniteTransitionMode transitionMode);
         }
     }
 
@@ -20,9 +20,9 @@ namespace AUTD3Sharp
     {
         public Driver.Datagram.IDatagramS Inner;
         public Segment Segment;
-        public TransitionMode? TransitionMode;
+        public IInfiniteTransitionMode TransitionMode;
 
-        public WithSegment(Driver.Datagram.IDatagramS inner, Segment segment, TransitionMode? transitionMode)
+        public WithSegment(Driver.Datagram.IDatagramS inner, Segment segment, IInfiniteTransitionMode transitionMode)
         {
             Inner = inner;
             Segment = segment;

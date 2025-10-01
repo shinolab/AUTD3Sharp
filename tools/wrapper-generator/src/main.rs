@@ -97,6 +97,9 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "ResultDuration",
         "TimerStrategyWrap",
         "EnvironmentPtr",
+        "PulseWidth",
+        "ResultPulseWidth",
+        "Status",
     ])
     .csharp_dll_name(dll_name)
     .csharp_class_name(format!("NativeMethods{}", class_name))
@@ -116,6 +119,7 @@ fn generate<P1: AsRef<Path>, P2: AsRef<Path>>(crate_path: P1, path: P2) -> Resul
         "internal unsafe partial struct ConstPtr",
         "public unsafe partial struct ConstPtr",
     );
+    let content = content.replace("PulseWidthInner", "ulong");
     let content = content.replace(
         "internal unsafe partial struct ResultLink",
         "public unsafe partial struct ResultLink",
@@ -163,6 +167,11 @@ fn main() -> Result<()> {
     }
     {
         let crate_path = format!("{}/autd3/autd3", home);
+        generate(&crate_path, "../../src/NativeMethods")?;
+        generate(&crate_path, "../../unity/Assets/Scripts/NativeMethods")?;
+    }
+    {
+        let crate_path = format!("{}/autd3/autd3-link-ethercrab", home);
         generate(&crate_path, "../../src/NativeMethods")?;
         generate(&crate_path, "../../unity/Assets/Scripts/NativeMethods")?;
     }
