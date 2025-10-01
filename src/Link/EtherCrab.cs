@@ -113,7 +113,6 @@ namespace AUTD3Sharp.Link
             }
 #else
 #pragma warning disable CA2255
-            [ModuleInitializer]
             public static void Init()
             {
                 NativeMethodsLinkEthercrab.AUTDLinkEtherCrabTracingInit();
