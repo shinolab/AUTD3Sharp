@@ -131,16 +131,16 @@ public class GainSTMTest
     }
 
     [Fact]
-    public void TestGainSTMWithLoopBehavior()
+    public void TestGainSTMWithFiniteLoop()
     {
         var autd = CreateController();
         autd.Send(Silencer.Disable());
         var stm = new GainSTM(CreateGains(2), new SamplingConfig(1), new GainSTMOption());
-        autd.Send(new WithLoopBehavior(stm, LoopBehavior.Once, Segment.S1, TransitionMode.SyncIdx));
+        autd.Send(new WithFiniteLoop(stm, 1, Segment.S1, new AUTD3Sharp.TransitionMode.SyncIdx()));
         foreach (var dev in autd)
         {
             Assert.Equal(1u, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S1));
-            Assert.Equal(LoopBehavior.Once, autd.Link<Audit>().StmLoopBehavior(dev.Idx(), Segment.S1));
+            Assert.Equal(0, autd.Link<Audit>().StmLoopCount(dev.Idx(), Segment.S1));
             Assert.True(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S1));
             Assert.Equal(1, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S1));
             {
@@ -155,11 +155,11 @@ public class GainSTMTest
             }
         }
 
-        autd.Send(new WithLoopBehavior(stm, LoopBehavior.Finite(10), Segment.S0, null));
+        autd.Send(new WithFiniteLoop(stm, 10, Segment.S0, new AUTD3Sharp.TransitionMode.Later()));
         foreach (var dev in autd)
         {
             Assert.Equal(1u, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
-            Assert.Equal(LoopBehavior.Finite(10), autd.Link<Audit>().StmLoopBehavior(dev.Idx(), Segment.S0));
+            Assert.Equal(9, autd.Link<Audit>().StmLoopCount(dev.Idx(), Segment.S0));
             Assert.True(autd.Link<Audit>().IsStmGainMode(dev.Idx(), Segment.S0));
             Assert.Equal(1, autd.Link<Audit>().StmFreqDivide(dev.Idx(), Segment.S0));
             {
@@ -195,19 +195,19 @@ public class GainSTMTest
         Assert.Null(infos[0]?.CurrentGainSegment());
         Assert.Equal(Segment.S0, infos[0]?.CurrentSTMSegment());
 
-        autd.Send(new WithSegment(stm, Segment.S1, TransitionMode.Immediate));
+        autd.Send(new WithSegment(stm, Segment.S1, new AUTD3Sharp.TransitionMode.Immediate()));
         Assert.Equal(Segment.S1, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Null(infos[0]?.CurrentGainSegment());
         Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment());
 
-        autd.Send(new WithSegment(stm, Segment.S0, null));
+        autd.Send(new WithSegment(stm, Segment.S0, new AUTD3Sharp.TransitionMode.Later()));
         Assert.Equal(Segment.S1, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Null(infos[0]?.CurrentGainSegment());
         Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment());
 
-        autd.Send(SwapSegment.GainSTM(Segment.S0, TransitionMode.Immediate));
+        autd.Send(SwapSegment.GainSTM(Segment.S0, new AUTD3Sharp.TransitionMode.Immediate()));
         Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Null(infos[0]?.CurrentGainSegment());

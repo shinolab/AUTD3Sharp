@@ -102,8 +102,8 @@ namespace AUTD3Sharp
             }
         }
 
-        DatagramPtr IDatagramS.WithSegmentTransition(Geometry _, Segment segment, TransitionMode? transitionMode) => NativeMethodsBase.AUTDSTMFociIntoDatagramWithSegment(RawPtr(), N(), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner);
-        DatagramPtr IDatagramL.WithLoopBehavior(Geometry _, Segment segment, TransitionMode? transitionMode, LoopBehavior loopBehavior) => NativeMethodsBase.AUTDSTMFociIntoDatagramWithLoopBehavior(RawPtr(), N(), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner, loopBehavior.Inner);
+        DatagramPtr IDatagramS.WithSegmentTransition(Geometry _, Segment segment, IInfiniteTransitionMode transitionMode) => NativeMethodsBase.AUTDSTMFociIntoDatagramWithSegment(RawPtr(), N(), segment.ToNative(), transitionMode.Inner);
+        DatagramPtr IDatagramL.WithFiniteLoop(Geometry _, Segment segment, IFiniteTransitionMode transitionMode, ushort loopCount) => NativeMethodsBase.AUTDSTMFociIntoDatagramWithFiniteLoop(RawPtr(), N(), segment.ToNative(), transitionMode.Inner, loopCount);
         DatagramPtr IDatagram.Ptr(Geometry _) => NativeMethodsBase.AUTDSTMFociIntoDatagram(RawPtr(), N());
 
         private byte N()

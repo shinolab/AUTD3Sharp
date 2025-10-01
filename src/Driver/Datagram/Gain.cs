@@ -13,7 +13,7 @@ namespace AUTD3Sharp.Driver.Datagram
         internal GainPtr GainPtr(Geometry geometry);
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDGainIntoDatagram(GainPtr(geometry));
 
-        DatagramPtr IDatagramS.WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? transitionMode) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(GainPtr(geometry), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner);
+        DatagramPtr IDatagramS.WithSegmentTransition(Geometry geometry, Segment segment, IInfiniteTransitionMode transitionMode) => NativeMethodsBase.AUTDGainIntoDatagramWithSegment(GainPtr(geometry), segment.ToNative(), transitionMode.Inner);
     }
 }
 

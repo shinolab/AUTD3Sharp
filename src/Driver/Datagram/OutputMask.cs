@@ -10,15 +10,16 @@ using System.Collections.Concurrent;
 
 namespace AUTD3Sharp
 {
-    public sealed class OutputMask : IDatagram, IDatagramS
+    public sealed class OutputMask : IDatagram
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.U1)]
         private delegate bool OutputMaskDelegate(ConstPtr context, GeometryPtr geometryPtr, ushort devIdx, byte idx);
 
         private readonly OutputMaskDelegate _f;
+        private readonly Segment _segment;
 
-        public OutputMask(Func<Device, Func<Transducer, bool>> f)
+        private OutputMask(Func<Device, Func<Transducer, bool>> f, Segment segment)
         {
             ConcurrentDictionary<ushort, Func<Transducer, bool>> cache = new();
             _f = (_, geometryPtr, devIdx, idx) =>
@@ -26,11 +27,14 @@ namespace AUTD3Sharp
                 var dev = new Device(devIdx, geometryPtr);
                 return cache.GetOrAdd(devIdx, f(dev))(new Transducer(idx, devIdx, dev.Ptr));
             };
+            _segment = segment;
         }
 
-        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramOutputMask(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr);
+        public OutputMask(Func<Device, Func<Transducer, bool>> f) : this(f, Segment.S0) { }
 
-        DatagramPtr IDatagramS.WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? _transitionMode) => NativeMethodsBase.AUTDDatagramOutputMaskWithSegment(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr, segment.ToNative());
+        public static OutputMask WithSegment(Func<Device, Func<Transducer, bool>> f, Segment segment) => new(f, segment);
+
+        DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramOutputMaskWithSegment(new ConstPtr { Item1 = Marshal.GetFunctionPointerForDelegate(_f) }, new ConstPtr { Item1 = IntPtr.Zero }, geometry.GeometryPtr, _segment.ToNative());
     }
 }
 

@@ -36,8 +36,8 @@ namespace AUTD3Sharp
             }
         }
 
-        DatagramPtr IDatagramS.WithSegmentTransition(Geometry geometry, Segment segment, TransitionMode? transitionMode) => NativeMethodsBase.AUTDSTMGainIntoDatagramWithSegment(RawPtr(geometry), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner);
-        DatagramPtr IDatagramL.WithLoopBehavior(Geometry geometry, Segment segment, TransitionMode? transitionMode, LoopBehavior loopBehavior) => NativeMethodsBase.AUTDSTMGainIntoDatagramWithLoopBehavior(RawPtr(geometry), segment.ToNative(), (transitionMode ?? TransitionMode.None).Inner, loopBehavior.Inner);
+        DatagramPtr IDatagramS.WithSegmentTransition(Geometry geometry, Segment segment, IInfiniteTransitionMode transitionMode) => NativeMethodsBase.AUTDSTMGainIntoDatagramWithSegment(RawPtr(geometry), segment.ToNative(), transitionMode.Inner);
+        DatagramPtr IDatagramL.WithFiniteLoop(Geometry geometry, Segment segment, IFiniteTransitionMode transitionMode, ushort loopCount) => NativeMethodsBase.AUTDSTMGainIntoDatagramWithFiniteLoop(RawPtr(geometry), segment.ToNative(), transitionMode.Inner, loopCount);
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDSTMGainIntoDatagram(RawPtr(geometry));
     }
 }

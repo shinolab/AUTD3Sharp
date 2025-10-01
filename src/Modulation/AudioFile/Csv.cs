@@ -10,6 +10,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
     public class CsvOption
     {
         public char Delimiter { get; init; } = ',';
+        public bool HasHeaders { get; init; } = false;
     }
 
     public sealed class Csv : Driver.Datagram.Modulation
@@ -31,7 +32,7 @@ namespace AUTD3Sharp.Modulation.AudioFile
             unsafe
             {
                 fixed (byte* fp = &filenameBytes[0])
-                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, Config.Inner, Convert.ToByte(Option.Delimiter)).Validate();
+                    return NativeMethodsModulationAudioFile.AUTDModulationAudioFileCsv(fp, Config.Inner, Convert.ToByte(Option.Delimiter), Option.HasHeaders).Validate();
             }
         }
     }

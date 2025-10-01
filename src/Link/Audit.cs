@@ -57,8 +57,8 @@ namespace AUTD3Sharp.Link
 
         public ushort ModulationFreqDivide(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaModulationFreqDivide(Ptr, segment.ToNative(), (ushort)idx);
 
-        public LoopBehavior ModulationLoopBehavior(int idx, Segment segment) =>
-            new(NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopBehavior(Ptr, segment.ToNative(), (ushort)idx));
+        public ushort ModulationLoopCount(int idx, Segment segment) =>
+            NativeMethodsBase.AUTDLinkAuditFpgaModulationLoopCount(Ptr, segment.ToNative(), (ushort)idx);
 
         public Segment CurrentModulationSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentModSegment(Ptr, (ushort)idx).ToManaged();
 
@@ -80,18 +80,18 @@ namespace AUTD3Sharp.Link
         public bool IsStmGainMode(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaIsStmGainMode(Ptr, segment.ToNative(), (ushort)idx);
         public ushort StmFreqDivide(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmFreqDivide(Ptr, segment.ToNative(), (ushort)idx);
         public ushort StmSoundSpeed(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaSoundSpeed(Ptr, segment.ToNative(), (ushort)idx);
-        public LoopBehavior StmLoopBehavior(int idx, Segment segment) => new(NativeMethodsBase.AUTDLinkAuditFpgaStmLoopBehavior(Ptr, segment.ToNative(), (ushort)idx));
+        public ushort StmLoopCount(int idx, Segment segment) => NativeMethodsBase.AUTDLinkAuditFpgaStmLoopCount(Ptr, segment.ToNative(), (ushort)idx);
         public Segment CurrentStmSegment(int idx) => NativeMethodsBase.AUTDLinkAuditFpgaCurrentStmSegment(Ptr, (ushort)idx).ToManaged();
 
-        public ushort[] PulseWidthEncoderTable(int idx)
+        public PulseWidth[] PulseWidthEncoderTable(int idx)
         {
-            var table = new ushort[256];
+            var table = new ulong[256];
             unsafe
             {
-                fixed (ushort* p = &table[0])
+                fixed (ulong* p = &table[0])
                     NativeMethodsBase.AUTDLinkAuditFpgaPulseWidthEncoderTable(Ptr, (ushort)idx, p);
             }
-            return table;
+            return table.Select(t => PulseWidth.FromNative(t)).ToArray();
         }
 
         public override LinkPtr Resolve() => NativeMethodsBase.AUTDLinkAudit();

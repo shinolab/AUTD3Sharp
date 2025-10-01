@@ -1,5 +1,3 @@
-using AUTD3Sharp.Driver.Datagram;
-
 namespace tests.Driver.Datagram.Gain;
 
 public class SegmentTest
@@ -22,19 +20,19 @@ public class SegmentTest
         Assert.Equal(Segment.S0, infos[0]?.CurrentGainSegment());
         Assert.Null(infos[0]?.CurrentSTMSegment());
 
-        autd.Send(new WithSegment(g, Segment.S1, TransitionMode.Immediate));
+        autd.Send(new WithSegment(g, Segment.S1, new AUTD3Sharp.TransitionMode.Immediate()));
         Assert.Equal(Segment.S1, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S1, infos[0]?.CurrentGainSegment());
         Assert.Null(infos[0]?.CurrentSTMSegment());
 
-        autd.Send(new WithSegment(g, Segment.S0, null));
+        autd.Send(new WithSegment(g, Segment.S0, new AUTD3Sharp.TransitionMode.Later()));
         Assert.Equal(Segment.S1, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S1, infos[0]?.CurrentGainSegment());
         Assert.Null(infos[0]?.CurrentSTMSegment());
 
-        autd.Send(SwapSegment.Gain(Segment.S0, TransitionMode.Immediate));
+        autd.Send(SwapSegment.Gain(Segment.S0));
         Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S0, infos[0]?.CurrentGainSegment());

@@ -26,15 +26,23 @@ namespace AUTD3Sharp.Gain.Holo
     {
         public (Point3, Amplitude)[] Foci;
         public GSPATOption Option;
-        public Backend Backend;
 
-        public GSPAT(IEnumerable<(Point3, Amplitude)> foci, GSPATOption option, Backend backend)
+        public GSPAT(IEnumerable<(Point3, Amplitude)> foci, GSPATOption option)
         {
             Foci = foci as (Point3, Amplitude)[] ?? foci.ToArray();
             Option = option;
-            Backend = backend;
         }
 
-        GainPtr IGain.GainPtr(Geometry _) => Backend.Gspat(Foci, Option.ToNative());
+        GainPtr IGain.GainPtr(Geometry _)
+        {
+            var points = Foci.Select(f => f.Item1).ToArray();
+            var amps = Foci.Select(f => f.Item2.Pascal()).ToArray();
+            unsafe
+            {
+                fixed (Point3* pPoints = &points[0])
+                fixed (float* pAmps = &amps[0])
+                    return NativeMethodsGainHolo.AUTDGainHoloGSPATSphere(pPoints, pAmps, (uint)Foci.Length, Option.ToNative());
+            }
+        }
     }
 }

@@ -21,7 +21,7 @@ public class SquareTest
             var modExpect = new byte[] { 85, 85, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 };
 #pragma warning restore IDE0230
             Assert.Equal(modExpect, mod);
-            Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
+            Assert.Equal(0xFFFF, autd.Link<Audit>().ModulationLoopCount(dev.Idx(), Segment.S0));
             Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }
@@ -45,7 +45,7 @@ public class SquareTest
             var modExpect = new byte[] { 85, 85, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32 };
 #pragma warning restore IDE0230
             Assert.Equal(modExpect, mod);
-            Assert.Equal(LoopBehavior.Infinite, autd.Link<Audit>().ModulationLoopBehavior(dev.Idx(), Segment.S0));
+            Assert.Equal(0xFFFF, autd.Link<Audit>().ModulationLoopCount(dev.Idx(), Segment.S0));
             Assert.Equal(10u, autd.Link<Audit>().ModulationFreqDivide(dev.Idx(), Segment.S0));
         }
     }

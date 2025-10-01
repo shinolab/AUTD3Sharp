@@ -10,30 +10,37 @@ namespace AUTD3Sharp
 {
     public class PulseWidth : IEquatable<PulseWidth>
     {
-        private ushort _pulseWidth;
+        private NativeMethods.PulseWidth _pulseWidth;
 
-        public ushort Value => _pulseWidth;
+        internal NativeMethods.PulseWidth ToNative() => _pulseWidth;
 
         private PulseWidth()
         {
-            _pulseWidth = 0;
+            _pulseWidth = new NativeMethods.PulseWidth { inner = 0 };
         }
 
-        public PulseWidth(ushort pulseWidth)
+        internal static PulseWidth FromNative(ulong pw) => new PulseWidth
         {
-            _pulseWidth = NativeMethodsBase.AUTDPulseWidth512(pulseWidth).Validate();
+            _pulseWidth = new NativeMethods.PulseWidth { inner = pw }
+        };
+
+        public PulseWidth(uint pulseWidth)
+        {
+            _pulseWidth = NativeMethodsBase.AUTDPulseWidth(pulseWidth);
         }
 
         public static PulseWidth FromDuty(float duty) => new PulseWidth
         {
-            _pulseWidth = NativeMethodsBase.AUTDPulseWidth512FromDuty(duty).Validate()
+            _pulseWidth = NativeMethodsBase.AUTDPulseWidthFromDuty(duty).Validate()
         };
+
+        public ushort Value(uint period) => NativeMethodsBase.AUTDPulseWidthPulseWidth(_pulseWidth, period).Validate();
 
         public static bool operator ==(PulseWidth left, PulseWidth right) => left.Equals(right);
         public static bool operator !=(PulseWidth left, PulseWidth right) => !left.Equals(right);
-        public bool Equals(PulseWidth? other) => other is not null && Value.Equals(other.Value);
+        public bool Equals(PulseWidth? other) => other is not null && Value(512).Equals(other.Value(512));
         public override bool Equals(object? obj) => obj is PulseWidth other && Equals(other);
-        [ExcludeFromCodeCoverage] public override int GetHashCode() => Value.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => _pulseWidth.inner.GetHashCode();
     }
 }
 

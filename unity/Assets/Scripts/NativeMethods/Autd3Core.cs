@@ -24,14 +24,15 @@ namespace AUTD3Sharp.NativeMethods
         internal const nuint FOCI_STM_FOCI_NUM_MIN = 1;
         internal const ushort SILENCER_STEPS_INTENSITY_DEFAULT = 10;
         internal const ushort SILENCER_STEPS_PHASE_DEFAULT = 40;
+        internal const ushort INFINITE_REP = 65535;
+        internal const nuint EC_OUTPUT_FRAME_SIZE = 626;
+        internal const nuint EC_INPUT_FRAME_SIZE = 2;
         internal const byte TRANSITION_MODE_SYNC_IDX = 0;
         internal const byte TRANSITION_MODE_SYS_TIME = 1;
         internal const byte TRANSITION_MODE_GPIO = 2;
         internal const byte TRANSITION_MODE_EXT = 240;
         internal const byte TRANSITION_MODE_NONE = 254;
         internal const byte TRANSITION_MODE_IMMEDIATE = 255;
-        internal const nuint EC_OUTPUT_FRAME_SIZE = 626;
-        internal const nuint EC_INPUT_FRAME_SIZE = 2;
         internal const double EPSILON = 0.000001;
 
 
@@ -61,6 +62,12 @@ namespace AUTD3Sharp.NativeMethods
     internal unsafe partial struct Phase
     {
         public byte Item1;
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct PulseWidth
+    {
+        public ulong inner;
     }
 
 

@@ -9,11 +9,10 @@ public class NaiveTest
     {
         var autd = CreateController(1);
 
-        var backend = new NalgebraBackend();
         var g = new Naive(new float[] { -40, 40 }.Select(x => (autd.Center() + new Vector3(x, 0, 150), 5e3f * Pa)), new NaiveOption()
         {
             EmissionConstraint = EmissionConstraint.Uniform(new Intensity(0x80))
-        }, backend);
+        });
 
         autd.Send(g);
 

@@ -107,7 +107,7 @@ args = ["nuget", "locals", "all", "-c"]
 [tasks.cs-test]
 cwd = "./tests"
 command = "dotnet"
-args = ["test"]
+args = ["test", "${@}"]
 
 [tasks.cov]
 dependencies = ["cs-cov-check-native-methods", "build", "cs-cov", "cs-cov-report"]
