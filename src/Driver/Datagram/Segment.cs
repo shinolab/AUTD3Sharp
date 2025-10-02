@@ -8,7 +8,7 @@ namespace AUTD3Sharp
         private readonly Segment _segment;
         private readonly ITransitionMode _transitionMode;
 
-        internal SwapSegmentModulation(Segment segment, ITransitionMode transitionMode)
+        public SwapSegmentModulation(Segment segment, ITransitionMode transitionMode)
         {
             _segment = segment;
             _transitionMode = transitionMode;
@@ -22,7 +22,7 @@ namespace AUTD3Sharp
         private readonly Segment _segment;
         private readonly ITransitionMode _transitionMode;
 
-        internal SwapSegmentFociSTM(Segment segment, ITransitionMode transitionMode)
+        public SwapSegmentFociSTM(Segment segment, ITransitionMode transitionMode)
         {
             _segment = segment;
             _transitionMode = transitionMode;
@@ -36,7 +36,7 @@ namespace AUTD3Sharp
         private readonly Segment _segment;
         private readonly ITransitionMode _transitionMode;
 
-        internal SwapSegmentGainSTM(Segment segment, ITransitionMode transitionMode)
+        public SwapSegmentGainSTM(Segment segment, ITransitionMode transitionMode)
         {
             _segment = segment;
             _transitionMode = transitionMode;
@@ -49,19 +49,11 @@ namespace AUTD3Sharp
     {
         private readonly Segment _segment;
 
-        internal SwapSegmentGain(Segment segment)
+        public SwapSegmentGain(Segment segment)
         {
             _segment = segment;
         }
 
         DatagramPtr IDatagram.Ptr(Geometry geometry) => NativeMethodsBase.AUTDDatagramSwapSegmentGain(_segment.ToNative());
-    }
-
-    public static class SwapSegment
-    {
-        public static SwapSegmentModulation Modulation(Segment segment, ITransitionMode transitionMode) => new(segment, transitionMode);
-        public static SwapSegmentFociSTM FociSTM(Segment segment, ITransitionMode transitionMode) => new(segment, transitionMode);
-        public static SwapSegmentGainSTM GainSTM(Segment segment, ITransitionMode transitionMode) => new(segment, transitionMode);
-        public static SwapSegmentGain Gain(Segment segment) => new(segment);
     }
 }

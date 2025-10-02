@@ -30,7 +30,7 @@ public class SegmentTest
         infos = autd.FPGAState();
         Assert.Equal(Segment.S1, infos[0]?.CurrentModSegment());
 
-        autd.Send(SwapSegment.Modulation(Segment.S0, new AUTD3Sharp.TransitionMode.Immediate()));
+        autd.Send(new SwapSegmentModulation(Segment.S0, new AUTD3Sharp.TransitionMode.Immediate()));
         Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentModulationSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S0, infos[0]?.CurrentModSegment());
