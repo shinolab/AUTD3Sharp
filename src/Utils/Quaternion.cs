@@ -22,10 +22,10 @@ namespace AUTD3Sharp.Utils
         #endregion
 
         #region property
+        public float W { get; }
         public float X { get; }
         public float Y { get; }
         public float Z { get; }
-        public float W { get; }
 
         public static Quaternion Identity => new(1, 0, 0, 0);
         #endregion

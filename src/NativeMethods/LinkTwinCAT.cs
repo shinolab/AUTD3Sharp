@@ -18,11 +18,10 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
+
+
         [DllImport(__DllName, EntryPoint = "AUTDLinkTwinCAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultLink AUTDLinkTwinCAT();
-
-        [DllImport(__DllName, EntryPoint = "AUTDLinkRemoteTwinCAT", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultLink AUTDLinkRemoteTwinCAT(byte* server_ams_net_id, byte* server_ip, byte* client_ams_net_id);
 
 
     }

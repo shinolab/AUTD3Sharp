@@ -9,10 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Simulator", "Simulator\Simu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TwinCAT", "TwinCAT\TwinCAT.csproj", "{15EB7722-FE8F-4780-A471-5707E94EB419}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RemoveTwinCAT", "RemoveTwinCAT\RemoveTwinCAT.csproj", "{34B5F5DE-B9E9-455B-B810-408996B4F1A2}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EtherCrab", "EtherCrab\EtherCrab.csproj", "{B1F0D98C-B007-1323-18DF-FE3957CC8516}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,14 +27,6 @@ Global
 		{15EB7722-FE8F-4780-A471-5707E94EB419}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15EB7722-FE8F-4780-A471-5707E94EB419}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15EB7722-FE8F-4780-A471-5707E94EB419}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34B5F5DE-B9E9-455B-B810-408996B4F1A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34B5F5DE-B9E9-455B-B810-408996B4F1A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34B5F5DE-B9E9-455B-B810-408996B4F1A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34B5F5DE-B9E9-455B-B810-408996B4F1A2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B1F0D98C-B007-1323-18DF-FE3957CC8516}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B1F0D98C-B007-1323-18DF-FE3957CC8516}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B1F0D98C-B007-1323-18DF-FE3957CC8516}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B1F0D98C-B007-1323-18DF-FE3957CC8516}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -6,16 +6,16 @@ public class PulseWidthTest
     public void PulseWidthNew()
     {
         for (ushort i = 0; i < 512; i++)
-            Assert.Equal(i, new PulseWidth(i).Value(512));
+            Assert.Equal(i, new PulseWidth(i).Value());
 
-        Assert.Throws<AUTDException>(() => new PulseWidth(512).Value(512));
+        Assert.Throws<AUTDException>(() => new PulseWidth(512).Value());
     }
 
     [Fact]
     public void PulseWidthFromDuty()
     {
         for (ushort i = 0; i < 512; i++)
-            Assert.Equal(i, PulseWidth.FromDuty((float)i / 512.0f).Value(512));
+            Assert.Equal(i, PulseWidth.FromDuty((float)i / 512.0f).Value());
 
         Assert.Throws<AUTDException>(() => PulseWidth.FromDuty(-1.0f));
         Assert.Throws<AUTDException>(() => PulseWidth.FromDuty(1.0f));

@@ -18,6 +18,8 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
+
+
         [DllImport(__DllName, EntryPoint = "AUTDGainHoloConstraintNormalize", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern EmissionConstraintWrap AUTDGainHoloConstraintNormalize();
 

@@ -101,7 +101,7 @@ public class AUTDTest
             Assert.All(m, d => Assert.Equal(0xFF, d));
         }
 
-        autd.Sender(new SenderOption(), new FixedSchedule(new StdSleeper())).Send(new Static()
+        autd.Sender(new SenderOption()).Send(new Static()
         {
             Intensity = 0x80,
         });
@@ -109,16 +109,6 @@ public class AUTDTest
         {
             var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
             Assert.All(m, d => Assert.Equal(0x80, d));
-        }
-
-        autd.Sender(new SenderOption(), new FixedDelay(new SpinWaitSleeper())).Send(new Static()
-        {
-            Intensity = 0x81,
-        });
-        foreach (var dev in autd)
-        {
-            var m = autd.Link<Audit>().Modulation(dev.Idx(), Segment.S0);
-            Assert.All(m, d => Assert.Equal(0x81, d));
         }
     }
 
@@ -182,7 +172,6 @@ public class AUTDTest
             SendInterval = Duration.FromMillis(2),
             ReceiveInterval = Duration.FromMillis(3),
             Timeout = null,
-            Parallel = ParallelMode.Off,
         };
         autd.DefaultSenderOption = option;
         Assert.Equal(option, autd.DefaultSenderOption);

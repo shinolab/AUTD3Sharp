@@ -56,7 +56,7 @@ public class DebugTest
             Assert.Equal([0x0002, 0x0000, 0x0003, 0x0001], autd.Link<Audit>().DebugValues(dev.Idx()));
         }
 
-        var sysTime = DcSysTime.Now;
+        var sysTime = new DcSysTime(1000);
         autd.Send(new GPIOOutputs((dev, gpio) => gpio switch
                 {
 
