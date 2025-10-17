@@ -14,24 +14,51 @@ namespace AUTD3Sharp.NativeMethods
 {
     
 
+    /// <summary>
+    ///  The option of [`Bessel`].
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct BesselOption
     {
+        /// <summary>
+        ///  The intensity of the beam.
+        /// </summary>
         public Intensity intensity;
+        /// <summary>
+        ///  The phase offset of the beam.
+        /// </summary>
         public Phase phase_offset;
     }
 
+    /// <summary>
+    ///  The option of [`Focus`].
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct FocusOption
     {
+        /// <summary>
+        ///  The intensity of the focus.
+        /// </summary>
         public Intensity intensity;
+        /// <summary>
+        ///  The phase offset of the focus.
+        /// </summary>
         public Phase phase_offset;
     }
 
+    /// <summary>
+    ///  The option of [`Plane`].
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct PlaneOption
     {
+        /// <summary>
+        ///  The intensity of the wave.
+        /// </summary>
         public Intensity intensity;
+        /// <summary>
+        ///  The phase offset of the wave.
+        /// </summary>
         public Phase phase_offset;
     }
 

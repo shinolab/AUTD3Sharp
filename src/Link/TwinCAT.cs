@@ -10,36 +10,4 @@ namespace AUTD3Sharp.Link
     {
         public override LinkPtr Resolve() => NativeMethodsLinkTwinCAT.AUTDLinkTwinCAT().Validate();
     }
-
-    public class RemoteTwinCATOption
-    {
-        public string ServerIp { get; init; } = "";
-        public string ClientAmsNetId { get; init; } = "";
-    }
-
-    public sealed class RemoteTwinCAT : Driver.Link
-    {
-        public string ServerAmsNetId;
-        public RemoteTwinCATOption Option;
-
-        public RemoteTwinCAT(string serverAmsNetId, RemoteTwinCATOption option)
-        {
-            ServerAmsNetId = serverAmsNetId;
-            Option = option;
-        }
-
-        public override LinkPtr Resolve()
-        {
-            var serverAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(ServerAmsNetId);
-            var clientAmsNetIdBytes = Ffi.ToNullTerminatedUtf8(Option.ClientAmsNetId);
-            var serverIpBytes = Ffi.ToNullTerminatedUtf8(Option.ServerIp);
-            unsafe
-            {
-                fixed (byte* serverAmsNetIdPtr = &serverAmsNetIdBytes[0])
-                fixed (byte* clientAmsNetIdPtr = &clientAmsNetIdBytes[0])
-                fixed (byte* serverIpPtr = &serverIpBytes[0])
-                    return NativeMethodsLinkTwinCAT.AUTDLinkRemoteTwinCAT(serverAmsNetIdPtr, serverIpPtr, clientAmsNetIdPtr).Validate();
-            }
-        }
-    }
 }

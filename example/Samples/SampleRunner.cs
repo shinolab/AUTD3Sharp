@@ -13,7 +13,6 @@ public class SampleRunner
         var examples = new List<(TestFn, string)> { (FocusTest.Test, "Single focus test"),
             (BesselBeamTest.Test, "Bessel beam test"),
             (PlaneWaveTest.Test, "Plane wave test"),
-            (WavTest.Test, "Wav modulation test"),
             (FociSTMTest.Test, "FociSTM test"),
             (GainSTMTest.Test, "GainSTM test"),
             (GainHoloTest.Test, "Multiple foci test"),

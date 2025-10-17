@@ -32,7 +32,7 @@ public class SegmentTest
         Assert.Equal(Segment.S1, infos[0]?.CurrentGainSegment());
         Assert.Null(infos[0]?.CurrentSTMSegment());
 
-        autd.Send(SwapSegment.Gain(Segment.S0));
+        autd.Send(new SwapSegmentGain(Segment.S0));
         Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Equal(Segment.S0, infos[0]?.CurrentGainSegment());

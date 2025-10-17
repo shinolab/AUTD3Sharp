@@ -207,7 +207,7 @@ public class GainSTMTest
         Assert.Null(infos[0]?.CurrentGainSegment());
         Assert.Equal(Segment.S1, infos[0]?.CurrentSTMSegment());
 
-        autd.Send(SwapSegment.GainSTM(Segment.S0, new AUTD3Sharp.TransitionMode.Immediate()));
+        autd.Send(new SwapSegmentGainSTM(Segment.S0, new AUTD3Sharp.TransitionMode.Immediate()));
         Assert.Equal(Segment.S0, autd.Link<Audit>().CurrentStmSegment(0));
         infos = autd.FPGAState();
         Assert.Null(infos[0]?.CurrentGainSegment());

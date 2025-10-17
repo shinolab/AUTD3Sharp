@@ -155,8 +155,7 @@ for file in Path("src/NativeMethods").rglob("*.cs"):
             if result:
                 defined_methods.add(result.group(1))
 defined_methods = set(filter(lambda x: not x.endswith("T4010A1"), defined_methods))
-defined_methods = set(filter(lambda x: "PulseWidthEncoder256" not in x, defined_methods))
-defined_methods = set(filter(lambda x: "PulseWidth256" not in x, defined_methods))
+defined_methods = set(filter(lambda x: "AUTDDcSysTimeNew" not in x, defined_methods))
 used_methods = set()
 pattern = re.compile("NativeMethods.*?\\.(AUTD.*?)\\(")
 paths: set[Path] = set()
@@ -219,16 +218,28 @@ shutil.copy(
 '''
 
 [tasks.generate-wrapper]
-dependencies = ["generate-wrapper-pre", "generate-wrapper-main"]
+dependencies = ["generate-wrapper-pre", "generate-wrapper-main", "generate-wrapper-post"]
 
 [tasks.generate-wrapper-pre]
-command = "git"
-args = ["submodule", "update", "--init"]
+ignore_errors = true
+script_runner = "@shell"
+script = '''
+git submodule update --init
+rm -rf ./tools/wrapper-generator/autd3/autd3-core/src/geometry/math
+'''
 
 [tasks.generate-wrapper-main]
 cwd = "./tools/wrapper-generator"
 command = "cargo"
 args = ["r", "--release"]
+
+[tasks.generate-wrapper-post]
+ignore_errors = true
+script_runner = "@shell"
+script = '''
+cd ./tools/wrapper-generator/autd3
+git reset --hard
+'''
 
 [tasks.update-bin]
 script_runner = "python"
@@ -290,7 +301,7 @@ with Path("src/AUTD3Sharp.csproj").open() as f:
     content = f.read()
     version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
     version = (
-        ".".join(version[:4]) if version[2].endswith("rc") else ".".join(version[:3])
+        ".".join(version[:4]) if version[2].endswith("alpha") or version[2].endswith("rc") else ".".join(version[:3])
     )
 
 if not should_update_dll(version):
@@ -298,24 +309,21 @@ if not should_update_dll(version):
 
 base_url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}"
 download_and_extract(
-    f"{base_url}/autd3-v{version}-win-x64.zip",
+    f"{base_url}/autd3-capi-v{version}-win-x64.zip",
     "src/native/windows/x64",
     "tests",
 )
 download_and_extract(
-    f"{base_url}/autd3-v{version}-macos-aarch64.tar.gz",
+    f"{base_url}/autd3-capi-v{version}-macos-aarch64.tar.gz",
     "src/native/osx/aarch64",
     "tests",
 )
 download_and_extract(
-    f"{base_url}/autd3-v{version}-linux-x64.tar.gz",
+    f"{base_url}/autd3-capi-v{version}-linux-x64.tar.gz",
     "src/native/linux/x64",
     "tests",
 )
 shutil.copyfile("LICENSE", "src/LICENSE.txt")
-with Path("src/LICENSE.txt").open("a") as f:
-    f.write("\n=========================================================\n")
-    f.write(Path("ThirdPartyNotice.txt").read_text())
 
 Path("VERSION").write_text(version)
 '''
@@ -378,7 +386,7 @@ with Path("src/AUTD3Sharp.csproj").open() as f:
     content = f.read()
     version = re.search(r"<Version>(.*)</Version>", content).group(1).split(".")
     version = (
-        ".".join(version[:4]) if version[2].endswith("rc") else ".".join(version[:3])
+        ".".join(version[:4]) if version[2].endswith("alpha") or version[2].endswith("rc") else ".".join(version[:3])
     )
 
 if not should_update_dll(version):
@@ -386,21 +394,18 @@ if not should_update_dll(version):
 
 base_url = f"https://github.com/shinolab/autd3-capi/releases/download/v{version}"
 download_and_extract(
-    f"{base_url}/autd3-v{version}-win-x64-unity.zip",
+    f"{base_url}/autd3-capi-v{version}-win-x64-unity.zip",
     "unity/Assets/Plugins/x86_64"
 )
 download_and_extract(
-    f"{base_url}/autd3-v{version}-macos-aarch64-unity.tar.gz",
+    f"{base_url}/autd3-capi-v{version}-macos-aarch64-unity.tar.gz",
     "unity/Assets/Plugins/aarch64",
 )
 download_and_extract(
-    f"{base_url}/autd3-v{version}-linux-x64-unity.tar.gz",
+    f"{base_url}/autd3-capi-v{version}-linux-x64-unity.tar.gz",
     "unity/Assets/Plugins/x86_64",
 )
 shutil.copyfile("LICENSE", "unity/Assets/LICENSE.md")
-with Path("unity/Assets/LICENSE.md").open("a") as f:
-    f.write("\n=========================================================\n")
-    f.write(Path("ThirdPartyNotice.txt").read_text())
 shutil.copy("CHANGELOG.md", "unity/Assets/CHANGELOG.md")
 Path("UNITY_VERSION").write_text(version)
 '''

@@ -15,7 +15,7 @@ public class TransitionModeTest
     [Fact]
     public void Constructor_SysTime()
     {
-        var now = DcSysTime.Now;
+        var now = new DcSysTime(1000);
         var m = ((ITransitionMode)new AUTD3Sharp.TransitionMode.SysTime(now)).Inner;
         Assert.Equal(TransitionModeTag.SysTime, m.tag);
         Assert.Equal(now.SysTime, m.value.sys_time);

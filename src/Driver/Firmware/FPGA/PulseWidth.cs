@@ -34,11 +34,11 @@ namespace AUTD3Sharp
             _pulseWidth = NativeMethodsBase.AUTDPulseWidthFromDuty(duty).Validate()
         };
 
-        public ushort Value(uint period) => NativeMethodsBase.AUTDPulseWidthPulseWidth(_pulseWidth, period).Validate();
+        public ushort Value() => NativeMethodsBase.AUTDPulseWidthPulseWidth(_pulseWidth).Validate();
 
         public static bool operator ==(PulseWidth left, PulseWidth right) => left.Equals(right);
         public static bool operator !=(PulseWidth left, PulseWidth right) => !left.Equals(right);
-        public bool Equals(PulseWidth? other) => other is not null && Value(512).Equals(other.Value(512));
+        public bool Equals(PulseWidth? other) => other is not null && Value().Equals(other.Value());
         public override bool Equals(object? obj) => obj is PulseWidth other && Equals(other);
         [ExcludeFromCodeCoverage] public override int GetHashCode() => _pulseWidth.inner.GetHashCode();
     }

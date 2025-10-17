@@ -26,7 +26,7 @@
 
 ## LICENSE
 
-See [LICENSE](./LICENSE) and [ThirdPartyNotice](./ThirdPartyNotice.txt).
+MIT
 
 # Author
 

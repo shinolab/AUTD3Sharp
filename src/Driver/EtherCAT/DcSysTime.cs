@@ -14,9 +14,7 @@ namespace AUTD3Sharp
     {
         public ulong SysTime { get; }
 
-        private DcSysTime(ulong sysTime) => SysTime = sysTime;
-
-        public static DcSysTime Now => NativeMethodsBase.AUTDDcSysTimeNow();
+        public DcSysTime(ulong sysTime) => SysTime = sysTime;
 
         public static DcSysTime operator +(DcSysTime a, Duration b) => new(a.SysTime + b.AsNanos());
         public static DcSysTime operator -(DcSysTime a, Duration b) => new(a.SysTime - b.AsNanos());

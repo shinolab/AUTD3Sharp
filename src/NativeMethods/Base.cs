@@ -18,8 +18,10 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
+
+
         [DllImport(__DllName, EntryPoint = "AUTDControllerOpen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultController AUTDControllerOpen(Point3* pos, Quaternion* rot, ushort len, LinkPtr link, SenderOption option, TimerStrategyWrap timer_strategy);
+        internal static extern ResultController AUTDControllerOpen(Point3* pos, Quaternion* rot, ushort len, LinkPtr link, SenderOption option, SleeperTag sleeper);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerClose", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultStatus AUTDControllerClose(ControllerPtr cnt);
@@ -49,13 +51,10 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern void AUTDSetDefaultSenderOption(ControllerPtr cnt, SenderOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDSender", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern SenderPtr AUTDSender(ControllerPtr cnt, SenderOption option, TimerStrategyWrap timer_strategy);
+        internal static extern SenderPtr AUTDSender(ControllerPtr cnt, SenderOption option, SleeperTag sleeper);
 
         [DllImport(__DllName, EntryPoint = "AUTDSenderSend", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultStatus AUTDSenderSend(SenderPtr sender, DatagramPtr d);
-
-        [DllImport(__DllName, EntryPoint = "AUTDSpinSleepDefaultAccuracy", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern uint AUTDSpinSleepDefaultAccuracy();
 
         [DllImport(__DllName, EntryPoint = "AUTDSenderOptionIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -155,8 +154,8 @@ namespace AUTD3Sharp.NativeMethods
         [DllImport(__DllName, EntryPoint = "AUTDDatagramTuple", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern DatagramPtr AUTDDatagramTuple(DatagramPtr d1, DatagramPtr d2);
 
-        [DllImport(__DllName, EntryPoint = "AUTDDcSysTimeNow", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern DcSysTime AUTDDcSysTimeNow();
+        [DllImport(__DllName, EntryPoint = "AUTDDcSysTimeNew", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
+        internal static extern DcSysTime AUTDDcSysTimeNew(ulong sys_time);
 
         [DllImport(__DllName, EntryPoint = "AUTDGPIOOutputTypeNone", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern GPIOOutputTypeWrap AUTDGPIOOutputTypeNone();
@@ -213,7 +212,7 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern ResultPulseWidth AUTDPulseWidthFromDuty(float duty);
 
         [DllImport(__DllName, EntryPoint = "AUTDPulseWidthPulseWidth", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultU16 AUTDPulseWidthPulseWidth(PulseWidth pulse_width, uint period);
+        internal static extern ResultU16 AUTDPulseWidthPulseWidth(PulseWidth pulse_width);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromDivide", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultSamplingConfig AUTDSamplingConfigFromDivide(ushort div);
@@ -578,8 +577,6 @@ namespace AUTD3Sharp.NativeMethods
         public Duration send_interval;
         public Duration receive_interval;
         public OptionDuration timeout;
-        public ParallelMode parallel;
-        [MarshalAs(UnmanagedType.U1)] public bool strict;
     }
 
     [StructLayout(LayoutKind.Sequential)]

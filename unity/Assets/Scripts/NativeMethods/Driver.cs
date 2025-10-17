@@ -25,6 +25,8 @@ namespace AUTD3Sharp.NativeMethods
 
 
 
+
+
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -239,21 +241,6 @@ namespace AUTD3Sharp.NativeMethods
         public ConstPtr err;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    public unsafe partial struct SleeperWrap
-    {
-        public SleeperTag tag;
-        public uint value;
-        public SpinStrategyTag spin_strategy;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct TimerStrategyWrap
-    {
-        public TimerStrategyTag tag;
-        public SleeperWrap sleep;
-    }
-
 
     internal enum GPIOOutputTypeTag : byte
     {
@@ -299,23 +286,10 @@ namespace AUTD3Sharp.NativeMethods
         AUTDErr = 2,
     }
 
-    public enum SleeperTag : byte
+    internal enum SleeperTag : byte
     {
         Std = 0,
-        Spin = 1,
         SpinWait = 4,
-    }
-
-    public enum SpinStrategyTag : byte
-    {
-        YieldThread = 0,
-        SpinLoopHint = 1,
-    }
-
-    internal enum TimerStrategyTag : byte
-    {
-        FixedSchedule = 0,
-        FixedDelay = 1,
     }
 
 
