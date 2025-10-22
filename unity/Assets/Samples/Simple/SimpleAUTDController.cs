@@ -22,7 +22,8 @@ public class SimpleAUTDController : MonoBehaviour
     {
         try
         {
-            _autd = Controller.Open(new[] { new AUTD3(pos: gameObject.transform.position, rot: gameObject.transform.rotation) }, new AUTD3Sharp.Link.Simulator(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080)));
+            _autd = Controller.Open(new[] { new AUTD3(pos: gameObject.transform.position, rot: gameObject.transform.rotation) },
+                new AUTD3Sharp.Link.Remote(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080), new AUTD3Sharp.Link.RemoteOption()));
         }
         catch (Exception ex)
         {

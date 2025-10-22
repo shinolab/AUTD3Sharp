@@ -21,9 +21,15 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkRemote", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultLink AUTDLinkRemote(byte* addr);
+        internal static extern ResultLink AUTDLinkRemote(byte* addr, RemoteOption option);
 
 
+    }
+
+    [StructLayout(LayoutKind.Sequential)]
+    internal unsafe partial struct RemoteOption
+    {
+        public OptionDuration timeout;
     }
 
 

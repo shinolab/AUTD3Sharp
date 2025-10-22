@@ -23,8 +23,6 @@ rm -rf ./example/RemoteTwinCAT/bin
 rm -rf ./example/RemoteTwinCAT/obj
 rm -rf ./example/Samples/bin
 rm -rf ./example/Samples/obj
-rm -rf ./example/Simulator/bin
-rm -rf ./example/Simulator/obj
 rm -rf ./example/TwinCAT/bin
 rm -rf ./example/TwinCAT/obj
 rm -rf ./example/*/obj
@@ -199,7 +197,6 @@ shutil.copytree(
     ignore=ignore,
 )
 os.remove("unity/Assets/Scripts/AUTD3Sharp.csproj")
-os.remove("unity/Assets/Scripts/AUTD3Sharp.nuspec")
 os.remove("unity/Assets/Scripts/.gitignore")
 with contextlib.suppress(FileNotFoundError):
     os.remove("unity/Assets/Scripts/LICENSE.txt")
@@ -436,11 +433,6 @@ substitute_in_file(
     "src/AUTD3Sharp.csproj",
     r"<Version>(.*)</Version>",
     f"<Version>{version}</Version>",
-)
-substitute_in_file(
-    "src/AUTD3Sharp.nuspec",
-    r'"AUTD3Sharp\.Derive" version="(.*)"',
-    f'"AUTD3Sharp.Derive" version="{version}"',
 )
 version_tokens = version.split(".")
 if "-" in version_tokens[2]:

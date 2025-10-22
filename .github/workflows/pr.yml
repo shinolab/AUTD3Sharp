@@ -22,7 +22,6 @@ jobs:
           files_yaml: |
             src:
               - src/AUTD3Sharp.csproj
-              - src/AUTD3Sharp.nuspec
               - '**/*.cs'
 
   test:
