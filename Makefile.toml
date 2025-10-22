@@ -23,8 +23,6 @@ rm -rf ./example/RemoteTwinCAT/bin
 rm -rf ./example/RemoteTwinCAT/obj
 rm -rf ./example/Samples/bin
 rm -rf ./example/Samples/obj
-rm -rf ./example/Simulator/bin
-rm -rf ./example/Simulator/obj
 rm -rf ./example/TwinCAT/bin
 rm -rf ./example/TwinCAT/obj
 rm -rf ./example/*/obj

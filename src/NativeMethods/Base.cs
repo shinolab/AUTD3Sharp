@@ -21,7 +21,7 @@ namespace AUTD3Sharp.NativeMethods
 
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerOpen", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultController AUTDControllerOpen(Point3* pos, Quaternion* rot, ushort len, LinkPtr link, SenderOption option, SleeperTag sleeper);
+        internal static extern ResultController AUTDControllerOpen(Point3* pos, Quaternion* rot, ushort len, LinkPtr link, SenderOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDControllerClose", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultStatus AUTDControllerClose(ControllerPtr cnt);
@@ -51,7 +51,7 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern void AUTDSetDefaultSenderOption(ControllerPtr cnt, SenderOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDSender", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern SenderPtr AUTDSender(ControllerPtr cnt, SenderOption option, SleeperTag sleeper);
+        internal static extern SenderPtr AUTDSender(ControllerPtr cnt, SenderOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDSenderSend", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultStatus AUTDSenderSend(SenderPtr sender, DatagramPtr d);

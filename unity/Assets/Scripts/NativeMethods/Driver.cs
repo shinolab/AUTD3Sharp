@@ -286,11 +286,5 @@ namespace AUTD3Sharp.NativeMethods
         AUTDErr = 2,
     }
 
-    internal enum SleeperTag : byte
-    {
-        Std = 0,
-        SpinWait = 4,
-    }
-
 
 }
