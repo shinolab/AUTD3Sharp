@@ -208,6 +208,8 @@ with contextlib.suppress(FileNotFoundError):
     shutil.rmtree("unity/Assets/Scripts/bin")
 with contextlib.suppress(FileNotFoundError):
     shutil.rmtree("unity/Assets/Scripts/native")
+with contextlib.suppress(FileNotFoundError):
+    shutil.rmtree("unity/Assets/Scripts/build")
 shutil.copy(
     "src/NativeMethods/DriverExt.cs",
     "unity/Assets/Scripts/NativeMethods/DriverExt.cs",
