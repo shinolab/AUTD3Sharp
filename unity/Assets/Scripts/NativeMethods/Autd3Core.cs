@@ -113,6 +113,8 @@ namespace AUTD3Sharp.NativeMethods
 
     /// <summary>
     ///  The intensity of the ultrasound.
+    ///
+    ///  The arithmetic operations of [`Intensity`] are saturated.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct Intensity
