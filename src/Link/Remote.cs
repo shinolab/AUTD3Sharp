@@ -31,7 +31,7 @@ namespace AUTD3Sharp.Link
         [ExcludeFromCodeCoverage]
         public override LinkPtr Resolve()
         {
-            var ipBytes = Ffi.ToNullTerminatedUtf8(_ip.Address.ToString());
+            var ipBytes = Ffi.ToNullTerminatedUtf8(_ip.ToString());
             unsafe
             {
                 fixed (byte* ipPtr = &ipBytes[0])
