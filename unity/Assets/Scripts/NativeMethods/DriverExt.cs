@@ -124,17 +124,6 @@ namespace AUTD3Sharp
                 throw new AUTDException(err);
             }
 
-            internal static PulseWidth Validate(this ResultPulseWidth res)
-            {
-                if (res.err_len == 0) return res.result;
-                var err = new byte[res.err_len];
-                unsafe
-                {
-                    fixed (byte* p = &err[0]) NativeMethodsBase.AUTDGetErr(res.err, p);
-                }
-                throw new AUTDException(err);
-            }
-
             internal static float Validate(this ResultF32 res)
             {
                 if (res.err_len == 0) return res.result;
