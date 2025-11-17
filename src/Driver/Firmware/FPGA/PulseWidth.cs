@@ -24,14 +24,14 @@ namespace AUTD3Sharp
             _pulseWidth = new NativeMethods.PulseWidth { inner = pw }
         };
 
-        public PulseWidth(uint pulseWidth)
+        public PulseWidth(ushort pulseWidth)
         {
             _pulseWidth = NativeMethodsBase.AUTDPulseWidth(pulseWidth);
         }
 
         public static PulseWidth FromDuty(float duty) => new PulseWidth
         {
-            _pulseWidth = NativeMethodsBase.AUTDPulseWidthFromDuty(duty).Validate()
+            _pulseWidth = NativeMethodsBase.AUTDPulseWidthFromDuty(duty)
         };
 
         public ushort Value() => NativeMethodsBase.AUTDPulseWidthPulseWidth(_pulseWidth).Validate();

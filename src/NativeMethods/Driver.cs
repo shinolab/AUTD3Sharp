@@ -233,14 +233,6 @@ namespace AUTD3Sharp.NativeMethods
         public ConstPtr err;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal unsafe partial struct ResultPulseWidth
-    {
-        public PulseWidth result;
-        public uint err_len;
-        public ConstPtr err;
-    }
-
 
     internal enum GPIOOutputTypeTag : byte
     {

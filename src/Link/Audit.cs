@@ -50,7 +50,7 @@ namespace AUTD3Sharp.Link
             unsafe
             {
                 fixed (byte* p = &buf[0])
-                    NativeMethodsBase.AUTDLinkAuditFpgaModulationBuffer(Ptr, segment.ToNative(), (ushort)idx, p, n);
+                    NativeMethodsBase.AUTDLinkAuditFpgaModulationBuffer(Ptr, segment.ToNative(), (ushort)idx, p);
             }
             return buf;
         }

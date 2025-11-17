@@ -11,14 +11,14 @@ namespace AUTD3Sharp
 {
     public class SenderOption
     {
-        public Duration SendInterval = Duration.FromMillis(1);
-        public Duration ReceiveInterval = Duration.FromMillis(1);
+        public Duration? SendInterval = Duration.FromMillis(1);
+        public Duration? ReceiveInterval = Duration.FromMillis(1);
         public Duration? Timeout = null;
 
         internal NativeMethods.SenderOption ToNative() => new()
         {
-            send_interval = SendInterval,
-            receive_interval = ReceiveInterval,
+            send_interval = SendInterval.ToNative(),
+            receive_interval = ReceiveInterval.ToNative(),
             timeout = Timeout.ToNative(),
         };
     }

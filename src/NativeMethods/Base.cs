@@ -206,16 +206,16 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern float AUTDPhaseToRad(Phase value);
 
         [DllImport(__DllName, EntryPoint = "AUTDPulseWidth", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern PulseWidth AUTDPulseWidth(uint value);
+        internal static extern PulseWidth AUTDPulseWidth(ushort value);
 
         [DllImport(__DllName, EntryPoint = "AUTDPulseWidthFromDuty", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultPulseWidth AUTDPulseWidthFromDuty(float duty);
+        internal static extern PulseWidth AUTDPulseWidthFromDuty(float duty);
 
         [DllImport(__DllName, EntryPoint = "AUTDPulseWidthPulseWidth", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ResultU16 AUTDPulseWidthPulseWidth(PulseWidth pulse_width);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromDivide", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern ResultSamplingConfig AUTDSamplingConfigFromDivide(ushort div);
+        internal static extern SamplingConfigWrap AUTDSamplingConfigFromDivide(ushort div);
 
         [DllImport(__DllName, EntryPoint = "AUTDSamplingConfigFromFreq", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern SamplingConfigWrap AUTDSamplingConfigFromFreq(float f);
@@ -276,7 +276,7 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern float AUTDEnvironmentWavenumber(EnvironmentPtr env);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainBessel", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern GainPtr AUTDGainBessel(Point3 pos, Vector3 dir, Angle theta, BesselOption option);
+        internal static extern GainPtr AUTDGainBessel(Point3 apex, Vector3 dir, Angle theta, BesselOption option);
 
         [DllImport(__DllName, EntryPoint = "AUTDGainBesselIsDefault", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         [return: MarshalAs(UnmanagedType.U1)]
@@ -449,7 +449,7 @@ namespace AUTD3Sharp.NativeMethods
         internal static extern ushort AUTDLinkAuditFpgaModulationCycle(LinkPtr audit, Segment segment, ushort idx);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulationBuffer", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
-        internal static extern void AUTDLinkAuditFpgaModulationBuffer(LinkPtr audit, Segment segment, ushort idx, byte* data, uint size);
+        internal static extern void AUTDLinkAuditFpgaModulationBuffer(LinkPtr audit, Segment segment, ushort idx, byte* data);
 
         [DllImport(__DllName, EntryPoint = "AUTDLinkAuditFpgaModulationLoopCount", CallingConvention = CallingConvention.Cdecl, ExactSpelling = true)]
         internal static extern ushort AUTDLinkAuditFpgaModulationLoopCount(LinkPtr audit, Segment segment, ushort idx);
@@ -574,8 +574,8 @@ namespace AUTD3Sharp.NativeMethods
     [StructLayout(LayoutKind.Sequential)]
     internal unsafe partial struct SenderOption
     {
-        public Duration send_interval;
-        public Duration receive_interval;
+        public OptionDuration send_interval;
+        public OptionDuration receive_interval;
         public OptionDuration timeout;
     }
 

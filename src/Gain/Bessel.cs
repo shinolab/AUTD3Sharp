@@ -22,15 +22,15 @@ namespace AUTD3Sharp.Gain
 
     public sealed class Bessel : IGain
     {
-        public Bessel(Point3 pos, Vector3 dir, Angle theta, BesselOption option)
+        public Bessel(Point3 apex, Vector3 dir, Angle theta, BesselOption option)
         {
-            Pos = pos;
+            Apex = apex;
             Dir = dir;
             Theta = theta;
             Option = option;
         }
 
-        public Point3 Pos { get; }
+        public Point3 Apex { get; }
 
         public Vector3 Dir { get; }
 
@@ -38,6 +38,6 @@ namespace AUTD3Sharp.Gain
 
         public BesselOption Option { get; set; }
 
-        GainPtr IGain.GainPtr(Geometry _) => NativeMethodsBase.AUTDGainBessel(Pos, Dir, Theta.ToNative(), Option.ToNative());
+        GainPtr IGain.GainPtr(Geometry _) => NativeMethodsBase.AUTDGainBessel(Apex, Dir, Theta.ToNative(), Option.ToNative());
     }
 }
