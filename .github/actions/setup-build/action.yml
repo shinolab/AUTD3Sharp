@@ -4,10 +4,10 @@ runs:
   steps:
     - uses: actions/setup-python@v5
       with:
-        python-version: 3.13
+        python-version: 3.14
     - uses: taiki-e/install-action@v2
       with:
         tool: cargo-make
     - uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: '8.0.416'

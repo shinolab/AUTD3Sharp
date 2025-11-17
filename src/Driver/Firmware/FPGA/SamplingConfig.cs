@@ -21,7 +21,7 @@ namespace AUTD3Sharp
 
         internal SamplingConfig(SamplingConfigWrap config) { Inner = config; }
 
-        public SamplingConfig(ushort div) : this(NativeMethodsBase.AUTDSamplingConfigFromDivide(div).Validate()) { }
+        public SamplingConfig(ushort div) : this(NativeMethodsBase.AUTDSamplingConfigFromDivide(div)) { }
         public SamplingConfig(Freq<float> f) : this(NativeMethodsBase.AUTDSamplingConfigFromFreq(f.Hz)) { }
         public SamplingConfig(Duration period) : this(NativeMethodsBase.AUTDSamplingConfigFromPeriod(period)) { }
 

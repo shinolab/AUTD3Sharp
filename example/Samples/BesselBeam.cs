@@ -15,9 +15,9 @@ internal static class BesselBeamTest
 
         var m = new Sine(freq: 150 * Hz, option: new SineOption());
 
-        var start = autd.Center();
+        var apex = autd.Center();
         var dir = Vector3.UnitZ;
-        var g = new Bessel(start, dir, 13.0f / 180.0f * MathF.PI * rad, new BesselOption());
+        var g = new Bessel(apex, dir, 13.0f / 180.0f * MathF.PI * rad, new BesselOption());
 
         autd.Send((m, g));
     }
