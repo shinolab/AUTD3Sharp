@@ -10,7 +10,7 @@ jobs:
     name: publish-unity-github
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: taiki-e/install-action@v2
         with:
           tool: cargo-make
@@ -37,7 +37,7 @@ jobs:
           git clean -fxd
           git push -f -u origin upm/latest
       - id: get_upm_tag
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
@@ -53,7 +53,7 @@ jobs:
     name: publish-nuget
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: taiki-e/install-action@v2
         with:
           tool: cargo-make
