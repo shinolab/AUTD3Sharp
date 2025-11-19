@@ -24,7 +24,7 @@ namespace AUTD3Sharp
 
         public SenderOption DefaultSenderOption
         {
-            get { return _defaultSenderOption; }
+            get => _defaultSenderOption;
             set { _defaultSenderOption = value; NativeMethodsBase.AUTDSetDefaultSenderOption(Ptr, _defaultSenderOption.ToNative()); }
         }
 
@@ -116,7 +116,7 @@ namespace AUTD3Sharp
 
         public Geometry Geometry() => this;
 
-        public T Link<T>() where T : Driver.ILink, new()
+        public T Link<T>() where T : ILink, new()
         {
             var link = new T();
             link.Resolve(_linkPtr);

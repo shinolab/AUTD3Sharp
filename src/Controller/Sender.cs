@@ -1,5 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 using AUTD3Sharp.Driver.Datagram;
 using AUTD3Sharp.NativeMethods;
 
@@ -19,11 +17,11 @@ namespace AUTD3Sharp
         {
             send_interval = SendInterval.ToNative(),
             receive_interval = ReceiveInterval.ToNative(),
-            timeout = Timeout.ToNative(),
+            timeout = Timeout.ToNative()
         };
     }
 
-    public partial class Sender
+    public class Sender
     {
         internal SenderPtr Ptr;
         internal readonly Geometry Geometry;

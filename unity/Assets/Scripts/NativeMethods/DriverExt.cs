@@ -41,12 +41,6 @@ namespace AUTD3Sharp
         O3
     }
 
-    public enum SpinStrategyTag
-    {
-        YieldThread,
-        SpinLoopHint
-    }
-
     public enum ParallelMode : byte
     {
         Auto = 0,
@@ -89,13 +83,6 @@ namespace AUTD3Sharp
                 GPIOOut.O2 => AUTD3Sharp.GPIOOut.O2,
                 GPIOOut.O3 => AUTD3Sharp.GPIOOut.O3,
                 _ => throw new ArgumentOutOfRangeException(nameof(gpio), gpio, null)
-            };
-
-            internal static SpinStrategyTag ToNative(this AUTD3Sharp.SpinStrategyTag tag) => tag switch
-            {
-                AUTD3Sharp.SpinStrategyTag.YieldThread => SpinStrategyTag.YieldThread,
-                AUTD3Sharp.SpinStrategyTag.SpinLoopHint => SpinStrategyTag.SpinLoopHint,
-                _ => throw new ArgumentOutOfRangeException(nameof(tag), tag, null)
             };
         }
 

@@ -29,7 +29,7 @@ namespace AUTD3Sharp
 
         public void Reconfigure(Func<Device, AUTD3> f)
         {
-            var devices = _devices.Select(d => f(d)).ToArray();
+            var devices = _devices.Select(f).ToArray();
             var pos = devices.Select(d => d.Pos).ToArray();
             var rot = devices.Select(d => d.Rot).ToArray();
             unsafe

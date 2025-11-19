@@ -14,9 +14,6 @@ namespace AUTD3Sharp
         public static readonly Intensity Max = new(0xFF);
         public static readonly Intensity Min = new(0x00);
 
-        [ExcludeFromCodeCoverage]
-        private Intensity() { }
-
         public Intensity(byte value)
         {
             Inner.Item1 = value;
@@ -28,9 +25,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(Intensity left, Intensity right) => left.Equals(right);
         public static bool operator !=(Intensity left, Intensity right) => !left.Equals(right);
-        public bool Equals(Intensity? other) => other is not null && Inner.Equals(other.Inner);
+        public bool Equals(Intensity? other) => other is not null && Inner.Item1.Equals(other.Inner.Item1);
         public override bool Equals(object? obj) => obj is Intensity other && Equals(other);
-        [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.Item1.GetHashCode();
     }
 }
 
