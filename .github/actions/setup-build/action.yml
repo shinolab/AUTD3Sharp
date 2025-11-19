@@ -10,4 +10,4 @@ runs:
         tool: cargo-make
     - uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.416'
+        dotnet-version: '10.0.x'

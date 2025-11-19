@@ -113,7 +113,7 @@ dependencies = ["cs-cov-check-native-methods", "build", "cs-cov", "cs-cov-report
 [tasks.cs-cov]
 cwd = "./tests"
 command = "dotnet"
-args = ["test", '--collect:"XPlat Code Coverage"', "--settings", "coverlet.runsettings"]
+args = ["test", "--collect:XPlat Code Coverage", "--settings", "coverlet.runsettings"]
 
 [tasks.cs-cov-report]
 cwd = "./tests"
