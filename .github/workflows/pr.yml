@@ -46,3 +46,17 @@ jobs:
     steps:
       - if: ${{ needs.test.result == 'failure' || needs.test.result == 'cancelled' }}
         run: exit 1
+
+  auto-merge:
+    needs:
+      - all-tests-passed
+    permissions:
+      pull-requests: write
+      contents: write
+    runs-on: ubuntu-slim
+    if: ${{ always() && !cancelled() && !failure() && github.actor == 'dependabot[bot]' }}
+    steps:
+      - run: gh pr merge --rebase --auto "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
