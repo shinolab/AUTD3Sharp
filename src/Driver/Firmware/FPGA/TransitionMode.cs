@@ -1,6 +1,4 @@
 ﻿using AUTD3Sharp.NativeMethods;
-using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 #if UNITY_2020_2_OR_NEWER
@@ -34,7 +32,7 @@ namespace AUTD3Sharp
         {
             private readonly GPIOIn _gpio;
 
-            TransitionModeWrap ITransitionMode.Inner { get => NativeMethodsBase.AUTDTransitionModeGPIO(_gpio.ToNative()); }
+            TransitionModeWrap ITransitionMode.Inner => NativeMethodsBase.AUTDTransitionModeGPIO(_gpio.ToNative());
 
             public GPIO(GPIOIn gpio)
             {
@@ -45,7 +43,7 @@ namespace AUTD3Sharp
         public sealed class SysTime : IFiniteTransitionMode
         {
             private readonly DcSysTime _sysTime;
-            TransitionModeWrap ITransitionMode.Inner { get => NativeMethodsBase.AUTDTransitionModeSysTime(_sysTime); }
+            TransitionModeWrap ITransitionMode.Inner => NativeMethodsBase.AUTDTransitionModeSysTime(_sysTime);
 
             public SysTime(DcSysTime sysTime)
             {

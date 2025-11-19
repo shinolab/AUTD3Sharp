@@ -10,29 +10,21 @@ namespace AUTD3Sharp
 {
     public class PulseWidth : IEquatable<PulseWidth>
     {
-        private NativeMethods.PulseWidth _pulseWidth;
+        private readonly NativeMethods.PulseWidth _pulseWidth;
 
         internal NativeMethods.PulseWidth ToNative() => _pulseWidth;
 
-        private PulseWidth()
+        internal PulseWidth(NativeMethods.PulseWidth inner)
         {
-            _pulseWidth = new NativeMethods.PulseWidth { inner = 0 };
+            _pulseWidth = inner;
         }
-
-        internal static PulseWidth FromNative(ulong pw) => new PulseWidth
-        {
-            _pulseWidth = new NativeMethods.PulseWidth { inner = pw }
-        };
 
         public PulseWidth(ushort pulseWidth)
         {
             _pulseWidth = NativeMethodsBase.AUTDPulseWidth(pulseWidth);
         }
 
-        public static PulseWidth FromDuty(float duty) => new PulseWidth
-        {
-            _pulseWidth = NativeMethodsBase.AUTDPulseWidthFromDuty(duty)
-        };
+        public static PulseWidth FromDuty(float duty) => new(NativeMethodsBase.AUTDPulseWidthFromDuty(duty));
 
         public ushort Value() => NativeMethodsBase.AUTDPulseWidthPulseWidth(_pulseWidth).Validate();
 

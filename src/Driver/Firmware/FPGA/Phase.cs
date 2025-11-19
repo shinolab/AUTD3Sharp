@@ -15,9 +15,6 @@ namespace AUTD3Sharp
         public static readonly Phase Zero = new(0x00);
         public static readonly Phase Pi = new(0x80);
 
-        [ExcludeFromCodeCoverage]
-        private Phase() { }
-
         public Phase(byte value) => Inner.Item1 = value;
         public Phase(Angle value) : this(NativeMethodsBase.AUTDPhaseFromRad(value.Radian)) { }
 
@@ -27,9 +24,9 @@ namespace AUTD3Sharp
 
         public static bool operator ==(Phase left, Phase right) => left.Equals(right);
         public static bool operator !=(Phase left, Phase right) => !left.Equals(right);
-        public bool Equals(Phase? other) => other is not null && Inner.Equals(other.Inner);
+        public bool Equals(Phase? other) => other is not null && Inner.Item1.Equals(other.Inner.Item1);
         public override bool Equals(object? obj) => obj is Phase other && Equals(other);
-        [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.GetHashCode();
+        [ExcludeFromCodeCoverage] public override int GetHashCode() => Inner.Item1.GetHashCode();
     }
 }
 

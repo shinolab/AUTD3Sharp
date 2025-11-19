@@ -91,12 +91,10 @@ namespace AUTD3Sharp.Link
                 fixed (ulong* p = &table[0])
                     NativeMethodsBase.AUTDLinkAuditFpgaPulseWidthEncoderTable(Ptr, (ushort)idx, p);
             }
-            return table.Select(t => PulseWidth.FromNative(t)).ToArray();
+            return table.Select(p => new PulseWidth(new NativeMethods.PulseWidth {inner = p})).ToArray();
         }
 
         public override LinkPtr Resolve() => NativeMethodsBase.AUTDLinkAudit();
-
-        public Audit() { }
 
         void Driver.ILink.Resolve(LinkPtr ptr) => Ptr = ptr;
     }

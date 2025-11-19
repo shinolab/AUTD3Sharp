@@ -12,7 +12,7 @@ namespace AUTD3Sharp.Link
         {
             return new NativeMethods.RemoteOption
             {
-                timeout = Timeout.ToNative(),
+                timeout = Timeout.ToNative()
             };
         }
     }
