@@ -4,7 +4,7 @@
 ![build](https://github.com/shinolab/AUTD3Sharp/workflows/build/badge.svg)
 [![codecov](https://codecov.io/gh/shinolab/AUTD3Sharp/graph/badge.svg?precision=2)](https://codecov.io/gh/shinolab/AUTD3Sharp)
 
-[autd3](https://github.com/shinolab/autd3-rs) wrapper for .NET 8+.
+[autd3](https://github.com/shinolab/autd3-rs) wrapper for .NET 10+.
 
 ## Install
 
