@@ -41,13 +41,6 @@ namespace AUTD3Sharp
         O3
     }
 
-    public enum ParallelMode : byte
-    {
-        Auto = 0,
-        On = 1,
-        Off = 2
-    }
-
     namespace NativeMethods
     {
         [ExcludeFromCodeCoverage]
