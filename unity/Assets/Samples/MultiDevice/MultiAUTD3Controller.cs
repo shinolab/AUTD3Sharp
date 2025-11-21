@@ -20,7 +20,7 @@ public class MultiAUTD3Controller : MonoBehaviour
         try
         {
             _autd = Controller.Open(
-                    FindObjectsByType<AUTD3Device>(FindObjectsSortMode.InstanceID).Select(obj => new AUTD3(pos: obj.transform.position, rot: obj.transform.rotation)),
+                    FindObjectsByType<AUTD3Device>(FindObjectsSortMode.None).OrderBy(obj => obj.ID).Select(obj => new AUTD3(pos: obj.transform.position, rot: obj.transform.rotation)),
                     new AUTD3Sharp.Link.Remote(new IPEndPoint(IPAddress.Parse("127.0.0.1"), 8080), new AUTD3Sharp.Link.RemoteOption())
                 );
         }
