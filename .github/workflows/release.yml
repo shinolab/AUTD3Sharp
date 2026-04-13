@@ -37,7 +37,7 @@ jobs:
           git clean -fxd
           git push -f -u origin upm/latest
       - id: get_upm_tag
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           result-encoding: string
