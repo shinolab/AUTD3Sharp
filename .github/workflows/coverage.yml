@@ -19,7 +19,7 @@ jobs:
       - run: |
           cargo make cov
           cp $(find tests -name "coverage.cobertura.xml") ./
-      - uses: codecov/codecov-action@v6
+      - uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: coverage.cobertura.xml
